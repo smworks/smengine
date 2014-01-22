@@ -1,0 +1,848 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="Debug|Win32">
+      <Configuration>Debug</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|Win32">
+      <Configuration>Release</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+  </ItemGroup>
+  <PropertyGroup Label="Globals">
+    <ProjectGuid>{E8CB018D-9AC8-4F67-BDF7-468173257EF8}</ProjectGuid>
+    <Keyword>Win32Proj</Keyword>
+    <RootNamespace>GhostEngine</RootNamespace>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <UseDebugLibraries>true</UseDebugLibraries>
+    <CharacterSet>Unicode</CharacterSet>
+    <PlatformToolset>v110</PlatformToolset>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <UseDebugLibraries>false</UseDebugLibraries>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
+    <CharacterSet>Unicode</CharacterSet>
+    <PlatformToolset>v110</PlatformToolset>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+  <ImportGroup Label="ExtensionSettings">
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <PropertyGroup Label="UserMacros" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <LinkIncremental>true</LinkIncremental>
+    <IncludePath>$(SolutionDir)\dependencies\includes\glew;$(SolutionDir)\dependencies\includes\freetype;$(SolutionDir)\dependencies\includes\lua;$(IncludePath)</IncludePath>
+    <LibraryPath>$(SolutionDir)\dependencies\libs\win32;$(LibraryPath)</LibraryPath>
+    <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
+    <OutDir>C:\Cache\Visual Studio\$(Configuration)\</OutDir>
+    <IntDir>C:\Cache\Visual Studio\$(Configuration)\</IntDir>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <LinkIncremental>false</LinkIncremental>
+    <IncludePath>$(SolutionDir)\dependencies\includes\glew;$(SolutionDir)\dependencies\includes\devil;$(SolutionDir)\dependencies\includes\freetype;$(SolutionDir)\dependencies\includes\lua;$(IncludePath)</IncludePath>
+    <LibraryPath>$(SolutionDir)\dependencies\libs\win32;$(LibraryPath)</LibraryPath>
+    <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
+    <OutDir>C:\Cache\Visual Studio\$(Configuration)\</OutDir>
+    <IntDir>C:\Cache\Visual Studio\$(Configuration)\</IntDir>
+  </PropertyGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <ClCompile>
+      <PrecompiledHeader>
+      </PrecompiledHeader>
+      <WarningLevel>Level3</WarningLevel>
+      <Optimization>Disabled</Optimization>
+      <PreprocessorDefinitions>WIN32;_DEBUG;_WINDOWS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <BrowseInformation>true</BrowseInformation>
+      <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
+      <AdditionalIncludeDirectories>%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+    </ClCompile>
+    <Link>
+      <SubSystem>Windows</SubSystem>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <AdditionalDependencies>%(AdditionalDependencies);fmodexL_vc.lib</AdditionalDependencies>
+      <AdditionalLibraryDirectories>%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <ShowProgress>LinkVerbose</ShowProgress>
+      <LinkStatus>
+      </LinkStatus>
+      <SuppressStartupBanner>true</SuppressStartupBanner>
+    </Link>
+    <Bscmake>
+      <PreserveSbr>true</PreserveSbr>
+    </Bscmake>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <PrecompiledHeader>
+      </PrecompiledHeader>
+      <Optimization>MaxSpeed</Optimization>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <IntrinsicFunctions>true</IntrinsicFunctions>
+      <PreprocessorDefinitions>WIN32;NDEBUG;_WINDOWS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
+      <BrowseInformation>true</BrowseInformation>
+    </ClCompile>
+    <Link>
+      <SubSystem>Windows</SubSystem>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <EnableCOMDATFolding>true</EnableCOMDATFolding>
+      <OptimizeReferences>true</OptimizeReferences>
+      <AdditionalDependencies>%(AdditionalDependencies);fmodex_vc.lib</AdditionalDependencies>
+      <AdditionalLibraryDirectories>%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+    </Link>
+    <Bscmake>
+      <PreserveSbr>true</PreserveSbr>
+    </Bscmake>
+  </ItemDefinitionGroup>
+  <ItemGroup>
+    <ClCompile Include="dependencies\includes\bullet\BulletCollision\BroadphaseCollision\btAxisSweep3.cpp" />
+    <ClCompile Include="dependencies\includes\bullet\BulletCollision\BroadphaseCollision\btBroadphaseProxy.cpp" />
+    <ClCompile Include="dependencies\includes\bullet\BulletCollision\BroadphaseCollision\btCollisionAlgorithm.cpp" />
+    <ClCompile Include="dependencies\includes\bullet\BulletCollision\BroadphaseCollision\btDbvt.cpp" />
+    <ClCompile Include="dependencies\includes\bullet\BulletCollision\BroadphaseCollision\btDbvtBroadphase.cpp" />
+    <ClCompile Include="dependencies\includes\bullet\BulletCollision\BroadphaseCollision\btDispatcher.cpp" />
+    <ClCompile Include="dependencies\includes\bullet\BulletCollision\BroadphaseCollision\btMultiSapBroadphase.cpp" />
+    <ClCompile Include="dependencies\includes\bullet\BulletCollision\BroadphaseCollision\btOverlappingPairCache.cpp" />
+    <ClCompile Include="dependencies\includes\bullet\BulletCollision\BroadphaseCollision\btQuantizedBvh.cpp" />
+    <ClCompile Include="dependencies\includes\bullet\BulletCollision\BroadphaseCollision\btSimpleBroadphase.cpp" />
+    <ClCompile Include="dependencies\includes\bullet\BulletCollision\CollisionDispatch\btActivatingCollisionAlgorithm.cpp" />
+    <ClCompile Include="dependencies\includes\bullet\BulletCollision\CollisionDispatch\btBox2dBox2dCollisionAlgorithm.cpp" />
+    <ClCompile Include="dependencies\includes\bullet\BulletCollision\CollisionDispatch\btBoxBoxCollisionAlgorithm.cpp" />
+    <ClCompile Include="dependencies\includes\bullet\BulletCollision\CollisionDispatch\btBoxBoxDetector.cpp" />
+    <ClCompile Include="dependencies\includes\bullet\BulletCollision\CollisionDispatch\btCollisionDispatcher.cpp" />
+    <ClCompile Include="dependencies\includes\bullet\BulletCollision\CollisionDispatch\btCollisionObject.cpp" />
+    <ClCompile Include="dependencies\includes\bullet\BulletCollision\CollisionDispatch\btCollisionWorld.cpp" />
+    <ClCompile Include="dependencies\includes\bullet\BulletCollision\CollisionDispatch\btCompoundCollisionAlgorithm.cpp" />
+    <ClCompile Include="dependencies\includes\bullet\BulletCollision\CollisionDispatch\btConvex2dConvex2dAlgorithm.cpp" />
+    <ClCompile Include="dependencies\includes\bullet\BulletCollision\CollisionDispatch\btConvexConcaveCollisionAlgorithm.cpp" />
+    <ClCompile Include="dependencies\includes\bullet\BulletCollision\CollisionDispatch\btConvexConvexAlgorithm.cpp" />
+    <ClCompile Include="dependencies\includes\bullet\BulletCollision\CollisionDispatch\btConvexPlaneCollisionAlgorithm.cpp" />
+    <ClCompile Include="dependencies\includes\bullet\BulletCollision\CollisionDispatch\btDefaultCollisionConfiguration.cpp" />
+    <ClCompile Include="dependencies\includes\bullet\BulletCollision\CollisionDispatch\btEmptyCollisionAlgorithm.cpp" />
+    <ClCompile Include="dependencies\includes\bullet\BulletCollision\CollisionDispatch\btGhostObject.cpp" />
+    <ClCompile Include="dependencies\includes\bullet\BulletCollision\CollisionDispatch\btInternalEdgeUtility.cpp" />
+    <ClCompile Include="dependencies\includes\bullet\BulletCollision\CollisionDispatch\btManifoldResult.cpp" />
+    <ClCompile Include="dependencies\includes\bullet\BulletCollision\CollisionDispatch\btSimulationIslandManager.cpp" />
+    <ClCompile Include="dependencies\includes\bullet\BulletCollision\CollisionDispatch\btSphereBoxCollisionAlgorithm.cpp" />
+    <ClCompile Include="dependencies\includes\bullet\BulletCollision\CollisionDispatch\btSphereSphereCollisionAlgorithm.cpp" />
+    <ClCompile Include="dependencies\includes\bullet\BulletCollision\CollisionDispatch\btSphereTriangleCollisionAlgorithm.cpp" />
+    <ClCompile Include="dependencies\includes\bullet\BulletCollision\CollisionDispatch\btUnionFind.cpp" />
+    <ClCompile Include="dependencies\includes\bullet\BulletCollision\CollisionDispatch\SphereTriangleDetector.cpp" />
+    <ClCompile Include="dependencies\includes\bullet\BulletCollision\CollisionShapes\btBox2dShape.cpp" />
+    <ClCompile Include="dependencies\includes\bullet\BulletCollision\CollisionShapes\btBoxShape.cpp" />
+    <ClCompile Include="dependencies\includes\bullet\BulletCollision\CollisionShapes\btBvhTriangleMeshShape.cpp" />
+    <ClCompile Include="dependencies\includes\bullet\BulletCollision\CollisionShapes\btCapsuleShape.cpp" />
+    <ClCompile Include="dependencies\includes\bullet\BulletCollision\CollisionShapes\btCollisionShape.cpp" />
+    <ClCompile Include="dependencies\includes\bullet\BulletCollision\CollisionShapes\btCompoundShape.cpp" />
+    <ClCompile Include="dependencies\includes\bullet\BulletCollision\CollisionShapes\btConcaveShape.cpp" />
+    <ClCompile Include="dependencies\includes\bullet\BulletCollision\CollisionShapes\btConeShape.cpp" />
+    <ClCompile Include="dependencies\includes\bullet\BulletCollision\CollisionShapes\btConvex2dShape.cpp" />
+    <ClCompile Include="dependencies\includes\bullet\BulletCollision\CollisionShapes\btConvexHullShape.cpp" />
+    <ClCompile Include="dependencies\includes\bullet\BulletCollision\CollisionShapes\btConvexInternalShape.cpp" />
+    <ClCompile Include="dependencies\includes\bullet\BulletCollision\CollisionShapes\btConvexPointCloudShape.cpp" />
+    <ClCompile Include="dependencies\includes\bullet\BulletCollision\CollisionShapes\btConvexPolyhedron.cpp" />
+    <ClCompile Include="dependencies\includes\bullet\BulletCollision\CollisionShapes\btConvexShape.cpp" />
+    <ClCompile Include="dependencies\includes\bullet\BulletCollision\CollisionShapes\btConvexTriangleMeshShape.cpp" />
+    <ClCompile Include="dependencies\includes\bullet\BulletCollision\CollisionShapes\btCylinderShape.cpp" />
+    <ClCompile Include="dependencies\includes\bullet\BulletCollision\CollisionShapes\btEmptyShape.cpp" />
+    <ClCompile Include="dependencies\includes\bullet\BulletCollision\CollisionShapes\btHeightfieldTerrainShape.cpp" />
+    <ClCompile Include="dependencies\includes\bullet\BulletCollision\CollisionShapes\btMinkowskiSumShape.cpp" />
+    <ClCompile Include="dependencies\includes\bullet\BulletCollision\CollisionShapes\btMultimaterialTriangleMeshShape.cpp" />
+    <ClCompile Include="dependencies\includes\bullet\BulletCollision\CollisionShapes\btMultiSphereShape.cpp" />
+    <ClCompile Include="dependencies\includes\bullet\BulletCollision\CollisionShapes\btOptimizedBvh.cpp" />
+    <ClCompile Include="dependencies\includes\bullet\BulletCollision\CollisionShapes\btPolyhedralConvexShape.cpp" />
+    <ClCompile Include="dependencies\includes\bullet\BulletCollision\CollisionShapes\btScaledBvhTriangleMeshShape.cpp" />
+    <ClCompile Include="dependencies\includes\bullet\BulletCollision\CollisionShapes\btShapeHull.cpp" />
+    <ClCompile Include="dependencies\includes\bullet\BulletCollision\CollisionShapes\btSphereShape.cpp" />
+    <ClCompile Include="dependencies\includes\bullet\BulletCollision\CollisionShapes\btStaticPlaneShape.cpp" />
+    <ClCompile Include="dependencies\includes\bullet\BulletCollision\CollisionShapes\btStridingMeshInterface.cpp" />
+    <ClCompile Include="dependencies\includes\bullet\BulletCollision\CollisionShapes\btTetrahedronShape.cpp" />
+    <ClCompile Include="dependencies\includes\bullet\BulletCollision\CollisionShapes\btTriangleBuffer.cpp" />
+    <ClCompile Include="dependencies\includes\bullet\BulletCollision\CollisionShapes\btTriangleCallback.cpp" />
+    <ClCompile Include="dependencies\includes\bullet\BulletCollision\CollisionShapes\btTriangleIndexVertexArray.cpp" />
+    <ClCompile Include="dependencies\includes\bullet\BulletCollision\CollisionShapes\btTriangleIndexVertexMaterialArray.cpp" />
+    <ClCompile Include="dependencies\includes\bullet\BulletCollision\CollisionShapes\btTriangleMesh.cpp" />
+    <ClCompile Include="dependencies\includes\bullet\BulletCollision\CollisionShapes\btTriangleMeshShape.cpp" />
+    <ClCompile Include="dependencies\includes\bullet\BulletCollision\CollisionShapes\btUniformScalingShape.cpp" />
+    <ClCompile Include="dependencies\includes\bullet\BulletCollision\Gimpact\btContactProcessing.cpp" />
+    <ClCompile Include="dependencies\includes\bullet\BulletCollision\Gimpact\btGenericPoolAllocator.cpp" />
+    <ClCompile Include="dependencies\includes\bullet\BulletCollision\Gimpact\btGImpactBvh.cpp" />
+    <ClCompile Include="dependencies\includes\bullet\BulletCollision\Gimpact\btGImpactCollisionAlgorithm.cpp" />
+    <ClCompile Include="dependencies\includes\bullet\BulletCollision\Gimpact\btGImpactQuantizedBvh.cpp" />
+    <ClCompile Include="dependencies\includes\bullet\BulletCollision\Gimpact\btGImpactShape.cpp" />
+    <ClCompile Include="dependencies\includes\bullet\BulletCollision\Gimpact\btTriangleShapeEx.cpp" />
+    <ClCompile Include="dependencies\includes\bullet\BulletCollision\Gimpact\gim_box_set.cpp" />
+    <ClCompile Include="dependencies\includes\bullet\BulletCollision\Gimpact\gim_contact.cpp" />
+    <ClCompile Include="dependencies\includes\bullet\BulletCollision\Gimpact\gim_memory.cpp" />
+    <ClCompile Include="dependencies\includes\bullet\BulletCollision\Gimpact\gim_tri_collision.cpp" />
+    <ClCompile Include="dependencies\includes\bullet\BulletCollision\NarrowPhaseCollision\btContinuousConvexCollision.cpp" />
+    <ClCompile Include="dependencies\includes\bullet\BulletCollision\NarrowPhaseCollision\btConvexCast.cpp" />
+    <ClCompile Include="dependencies\includes\bullet\BulletCollision\NarrowPhaseCollision\btGjkConvexCast.cpp" />
+    <ClCompile Include="dependencies\includes\bullet\BulletCollision\NarrowPhaseCollision\btGjkEpa2.cpp" />
+    <ClCompile Include="dependencies\includes\bullet\BulletCollision\NarrowPhaseCollision\btGjkEpaPenetrationDepthSolver.cpp" />
+    <ClCompile Include="dependencies\includes\bullet\BulletCollision\NarrowPhaseCollision\btGjkPairDetector.cpp" />
+    <ClCompile Include="dependencies\includes\bullet\BulletCollision\NarrowPhaseCollision\btMinkowskiPenetrationDepthSolver.cpp" />
+    <ClCompile Include="dependencies\includes\bullet\BulletCollision\NarrowPhaseCollision\btPersistentManifold.cpp" />
+    <ClCompile Include="dependencies\includes\bullet\BulletCollision\NarrowPhaseCollision\btPolyhedralContactClipping.cpp" />
+    <ClCompile Include="dependencies\includes\bullet\BulletCollision\NarrowPhaseCollision\btRaycastCallback.cpp" />
+    <ClCompile Include="dependencies\includes\bullet\BulletCollision\NarrowPhaseCollision\btSubSimplexConvexCast.cpp" />
+    <ClCompile Include="dependencies\includes\bullet\BulletCollision\NarrowPhaseCollision\btVoronoiSimplexSolver.cpp" />
+    <ClCompile Include="dependencies\includes\bullet\BulletDynamics\Character\btKinematicCharacterController.cpp" />
+    <ClCompile Include="dependencies\includes\bullet\BulletDynamics\ConstraintSolver\btConeTwistConstraint.cpp" />
+    <ClCompile Include="dependencies\includes\bullet\BulletDynamics\ConstraintSolver\btContactConstraint.cpp" />
+    <ClCompile Include="dependencies\includes\bullet\BulletDynamics\ConstraintSolver\btGearConstraint.cpp" />
+    <ClCompile Include="dependencies\includes\bullet\BulletDynamics\ConstraintSolver\btGeneric6DofConstraint.cpp" />
+    <ClCompile Include="dependencies\includes\bullet\BulletDynamics\ConstraintSolver\btGeneric6DofSpringConstraint.cpp" />
+    <ClCompile Include="dependencies\includes\bullet\BulletDynamics\ConstraintSolver\btHinge2Constraint.cpp" />
+    <ClCompile Include="dependencies\includes\bullet\BulletDynamics\ConstraintSolver\btHingeConstraint.cpp" />
+    <ClCompile Include="dependencies\includes\bullet\BulletDynamics\ConstraintSolver\btPoint2PointConstraint.cpp" />
+    <ClCompile Include="dependencies\includes\bullet\BulletDynamics\ConstraintSolver\btSequentialImpulseConstraintSolver.cpp" />
+    <ClCompile Include="dependencies\includes\bullet\BulletDynamics\ConstraintSolver\btSliderConstraint.cpp" />
+    <ClCompile Include="dependencies\includes\bullet\BulletDynamics\ConstraintSolver\btSolve2LinearConstraint.cpp" />
+    <ClCompile Include="dependencies\includes\bullet\BulletDynamics\ConstraintSolver\btTypedConstraint.cpp" />
+    <ClCompile Include="dependencies\includes\bullet\BulletDynamics\ConstraintSolver\btUniversalConstraint.cpp" />
+    <ClCompile Include="dependencies\includes\bullet\BulletDynamics\Dynamics\btDiscreteDynamicsWorld.cpp" />
+    <ClCompile Include="dependencies\includes\bullet\BulletDynamics\Dynamics\btRigidBody.cpp" />
+    <ClCompile Include="dependencies\includes\bullet\BulletDynamics\Dynamics\btSimpleDynamicsWorld.cpp" />
+    <ClCompile Include="dependencies\includes\bullet\BulletDynamics\Vehicle\btRaycastVehicle.cpp" />
+    <ClCompile Include="dependencies\includes\bullet\BulletDynamics\Vehicle\btWheelInfo.cpp" />
+    <ClCompile Include="dependencies\includes\bullet\LinearMath\btAlignedAllocator.cpp" />
+    <ClCompile Include="dependencies\includes\bullet\LinearMath\btConvexHull.cpp" />
+    <ClCompile Include="dependencies\includes\bullet\LinearMath\btConvexHullComputer.cpp" />
+    <ClCompile Include="dependencies\includes\bullet\LinearMath\btGeometryUtil.cpp" />
+    <ClCompile Include="dependencies\includes\bullet\LinearMath\btPolarDecomposition.cpp" />
+    <ClCompile Include="dependencies\includes\bullet\LinearMath\btQuickprof.cpp" />
+    <ClCompile Include="dependencies\includes\bullet\LinearMath\btSerializer.cpp" />
+    <ClCompile Include="dependencies\includes\bullet\LinearMath\btVector3.cpp" />
+    <ClCompile Include="dependencies\includes\freetype\autofit.c" />
+    <ClCompile Include="dependencies\includes\freetype\bdf.c" />
+    <ClCompile Include="dependencies\includes\freetype\cff.c" />
+    <ClCompile Include="dependencies\includes\freetype\ftbase.c" />
+    <ClCompile Include="dependencies\includes\freetype\ftbbox.c" />
+    <ClCompile Include="dependencies\includes\freetype\ftbitmap.c" />
+    <ClCompile Include="dependencies\includes\freetype\ftcache.c" />
+    <ClCompile Include="dependencies\includes\freetype\ftdebug.c" />
+    <ClCompile Include="dependencies\includes\freetype\ftfstype.c" />
+    <ClCompile Include="dependencies\includes\freetype\ftgasp.c" />
+    <ClCompile Include="dependencies\includes\freetype\ftglyph.c" />
+    <ClCompile Include="dependencies\includes\freetype\ftgxval.c" />
+    <ClCompile Include="dependencies\includes\freetype\ftgzip.c" />
+    <ClCompile Include="dependencies\includes\freetype\ftinit.c" />
+    <ClCompile Include="dependencies\includes\freetype\ftlcdfil.c" />
+    <ClCompile Include="dependencies\includes\freetype\ftlzw.c" />
+    <ClCompile Include="dependencies\includes\freetype\ftmm.c" />
+    <ClCompile Include="dependencies\includes\freetype\ftotval.c" />
+    <ClCompile Include="dependencies\includes\freetype\ftpatent.c" />
+    <ClCompile Include="dependencies\includes\freetype\ftpfr.c" />
+    <ClCompile Include="dependencies\includes\freetype\ftstroke.c" />
+    <ClCompile Include="dependencies\includes\freetype\ftsynth.c" />
+    <ClCompile Include="dependencies\includes\freetype\ftsystem.c" />
+    <ClCompile Include="dependencies\includes\freetype\fttype1.c" />
+    <ClCompile Include="dependencies\includes\freetype\ftwinfnt.c" />
+    <ClCompile Include="dependencies\includes\freetype\ftxf86.c" />
+    <ClCompile Include="dependencies\includes\freetype\pcf.c" />
+    <ClCompile Include="dependencies\includes\freetype\pfr.c" />
+    <ClCompile Include="dependencies\includes\freetype\psaux.c" />
+    <ClCompile Include="dependencies\includes\freetype\pshinter.c" />
+    <ClCompile Include="dependencies\includes\freetype\psmodule.c" />
+    <ClCompile Include="dependencies\includes\freetype\raster.c" />
+    <ClCompile Include="dependencies\includes\freetype\sfnt.c" />
+    <ClCompile Include="dependencies\includes\freetype\smooth.c" />
+    <ClCompile Include="dependencies\includes\freetype\truetype.c" />
+    <ClCompile Include="dependencies\includes\freetype\type1.c" />
+    <ClCompile Include="dependencies\includes\freetype\type1cid.c" />
+    <ClCompile Include="dependencies\includes\freetype\type42.c" />
+    <ClCompile Include="dependencies\includes\freetype\winfnt.c" />
+    <ClCompile Include="dependencies\includes\libpng\png.c" />
+    <ClCompile Include="dependencies\includes\libpng\pngerror.c" />
+    <ClCompile Include="dependencies\includes\libpng\pngget.c" />
+    <ClCompile Include="dependencies\includes\libpng\pngmem.c" />
+    <ClCompile Include="dependencies\includes\libpng\pngpread.c" />
+    <ClCompile Include="dependencies\includes\libpng\pngread.c" />
+    <ClCompile Include="dependencies\includes\libpng\pngrio.c" />
+    <ClCompile Include="dependencies\includes\libpng\pngrtran.c" />
+    <ClCompile Include="dependencies\includes\libpng\pngrutil.c" />
+    <ClCompile Include="dependencies\includes\libpng\pngset.c" />
+    <ClCompile Include="dependencies\includes\libpng\pngtrans.c" />
+    <ClCompile Include="dependencies\includes\libpng\pngwio.c" />
+    <ClCompile Include="dependencies\includes\libpng\pngwrite.c" />
+    <ClCompile Include="dependencies\includes\libpng\pngwtran.c" />
+    <ClCompile Include="dependencies\includes\libpng\pngwutil.c" />
+    <ClCompile Include="dependencies\includes\lua\lapi.c" />
+    <ClCompile Include="dependencies\includes\lua\lauxlib.c" />
+    <ClCompile Include="dependencies\includes\lua\lbaselib.c" />
+    <ClCompile Include="dependencies\includes\lua\lbitlib.c" />
+    <ClCompile Include="dependencies\includes\lua\lcode.c" />
+    <ClCompile Include="dependencies\includes\lua\lcorolib.c" />
+    <ClCompile Include="dependencies\includes\lua\lctype.c" />
+    <ClCompile Include="dependencies\includes\lua\ldblib.c" />
+    <ClCompile Include="dependencies\includes\lua\ldebug.c" />
+    <ClCompile Include="dependencies\includes\lua\ldo.c" />
+    <ClCompile Include="dependencies\includes\lua\ldump.c" />
+    <ClCompile Include="dependencies\includes\lua\lfunc.c" />
+    <ClCompile Include="dependencies\includes\lua\lgc.c" />
+    <ClCompile Include="dependencies\includes\lua\linit.c" />
+    <ClCompile Include="dependencies\includes\lua\liolib.c" />
+    <ClCompile Include="dependencies\includes\lua\llex.c" />
+    <ClCompile Include="dependencies\includes\lua\lmathlib.c" />
+    <ClCompile Include="dependencies\includes\lua\lmem.c" />
+    <ClCompile Include="dependencies\includes\lua\loadlib.c" />
+    <ClCompile Include="dependencies\includes\lua\lobject.c" />
+    <ClCompile Include="dependencies\includes\lua\lopcodes.c" />
+    <ClCompile Include="dependencies\includes\lua\loslib.c" />
+    <ClCompile Include="dependencies\includes\lua\lparser.c" />
+    <ClCompile Include="dependencies\includes\lua\lstate.c" />
+    <ClCompile Include="dependencies\includes\lua\lstring.c" />
+    <ClCompile Include="dependencies\includes\lua\lstrlib.c" />
+    <ClCompile Include="dependencies\includes\lua\ltable.c" />
+    <ClCompile Include="dependencies\includes\lua\ltablib.c" />
+    <ClCompile Include="dependencies\includes\lua\ltm.c" />
+    <ClCompile Include="dependencies\includes\lua\lundump.c" />
+    <ClCompile Include="dependencies\includes\lua\lvm.c" />
+    <ClCompile Include="dependencies\includes\lua\lzio.c" />
+    <ClCompile Include="dependencies\includes\zlib\adler32.c" />
+    <ClCompile Include="dependencies\includes\zlib\compress.c" />
+    <ClCompile Include="dependencies\includes\zlib\crc32.c" />
+    <ClCompile Include="dependencies\includes\zlib\deflate.c" />
+    <ClCompile Include="dependencies\includes\zlib\gzclose.c" />
+    <ClCompile Include="dependencies\includes\zlib\gzlib.c" />
+    <ClCompile Include="dependencies\includes\zlib\gzread.c" />
+    <ClCompile Include="dependencies\includes\zlib\gzwrite.c" />
+    <ClCompile Include="dependencies\includes\zlib\infback.c" />
+    <ClCompile Include="dependencies\includes\zlib\inffast.c" />
+    <ClCompile Include="dependencies\includes\zlib\inflate.c" />
+    <ClCompile Include="dependencies\includes\zlib\inftrees.c" />
+    <ClCompile Include="dependencies\includes\zlib\trees.c" />
+    <ClCompile Include="dependencies\includes\zlib\uncompr.c" />
+    <ClCompile Include="dependencies\includes\zlib\zutil.c" />
+    <ClCompile Include="ghost\BoundingBox.cpp" />
+    <ClCompile Include="ghost\BoundingSphere.cpp" />
+    <ClCompile Include="ghost\Extensions\Vehicle.cpp" />
+    <ClCompile Include="ghost\HttpRequest.cpp" />
+    <ClCompile Include="ghost\HttpResponse.cpp" />
+    <ClCompile Include="ghost\ModelData.cpp" />
+    <ClCompile Include="ghost\Multiplatform\GraphicsManager.cpp" />
+    <ClCompile Include="ghost\Multiplatform\ServiceLocator.cpp" />
+    <ClCompile Include="ghost\Multiplatform\Win32\WindowsSocket.cpp" />
+    <ClCompile Include="ghost\NetworkManager.cpp" />
+    <ClCompile Include="ghost\Resources\Symbol.cpp" />
+    <ClCompile Include="ghost\ScriptBindings.cpp" />
+    <ClCompile Include="ghost\ShapeParser.cpp" />
+    <ClCompile Include="ghost\Camera.cpp" />
+    <ClCompile Include="ghost\Color.cpp" />
+    <ClCompile Include="ghost\Console.cpp" />
+    <ClCompile Include="ghost\Engine.cpp" />
+    <ClCompile Include="ghost\Environment.cpp" />
+    <ClCompile Include="ghost\FrameBuffer.cpp" />
+    <ClCompile Include="ghost\GUIManager.cpp" />
+    <ClCompile Include="ghost\MD2Parser.cpp" />
+    <ClCompile Include="ghost\Multiplatform\Win32\WindowsGhost.cpp" />
+    <ClCompile Include="ghost\Multiplatform\Win32\WindowsFileManager.cpp" />
+    <ClCompile Include="ghost\Multiplatform\Win32\WindowsGraphicsManager.cpp" />
+    <ClCompile Include="ghost\Multiplatform\Win32\WindowsServiceLocator.cpp" />
+    <ClCompile Include="ghost\Multiplatform\Win32\WindowsThread.cpp" />
+    <ClCompile Include="ghost\PhysicsManager.cpp" />
+    <ClCompile Include="ghost\Quaternion.cpp" />
+    <ClCompile Include="ghost\RenderPass.cpp" />
+    <ClCompile Include="ghost\Resources\AtlasTexture.cpp" />
+    <ClCompile Include="ghost\Resources\Attributes.cpp" />
+    <ClCompile Include="ghost\Resources\CubeMap.cpp" />
+    <ClCompile Include="ghost\Resources\DynamicObject.cpp" />
+    <ClCompile Include="ghost\Resources\Geometry.cpp" />
+    <ClCompile Include="ghost\Resources\GUIButton.cpp" />
+    <ClCompile Include="ghost\Resources\GUIImage.cpp" />
+    <ClCompile Include="ghost\Resources\GUIInput.cpp" />
+    <ClCompile Include="ghost\Resources\GUIText.cpp" />
+    <ClCompile Include="ghost\Resources\Light.cpp" />
+    <ClCompile Include="ghost\Resources\Script.cpp" />
+    <ClCompile Include="ghost\Resources\Sound.cpp" />
+    <ClCompile Include="ghost\Resources\Sprite.cpp" />
+    <ClCompile Include="ghost\Resources\Resource.cpp" />
+    <ClCompile Include="ghost\Resources\Shader.cpp" />
+    <ClCompile Include="ghost\Resources\StaticObject.cpp" />
+    <ClCompile Include="ghost\Resources\Texture.cpp" />
+    <ClCompile Include="ghost\Resources\TextureMono.cpp" />
+    <ClCompile Include="ghost\Resources\TextureRGBA.cpp" />
+    <ClCompile Include="ghost\Resources\GUISurface.cpp" />
+    <ClCompile Include="ghost\ScriptManager.cpp" />
+    <ClCompile Include="ghost\Input.cpp" />
+    <ClCompile Include="ghost\Matrix.cpp" />
+    <ClCompile Include="ghost\Node.cpp" />
+    <ClCompile Include="ghost\ObjParser.cpp" />
+    <ClCompile Include="ghost\ResourceManager.cpp" />
+    <ClCompile Include="ghost\Settings.cpp" />
+    <ClCompile Include="ghost\Shapes.cpp" />
+    <ClCompile Include="ghost\SoundManager.cpp" />
+    <ClCompile Include="ghost\TerrainParser.cpp" />
+    <ClCompile Include="ghost\TextManager.cpp" />
+    <ClCompile Include="ghost\TextureAtlas.cpp" />
+    <ClCompile Include="ghost\ThreadManager.cpp" />
+    <ClCompile Include="ghost\Utils.cpp" />
+    <ClCompile Include="ghost\Vec3.cpp" />
+    <ClCompile Include="ghost\WaterLoader.cpp" />
+    <ClCompile Include="ghost\Xml.cpp" />
+    <ClCompile Include="main_windows.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="dependencies\includes\bullet\btBulletCollisionCommon.h" />
+    <ClInclude Include="dependencies\includes\bullet\btBulletDynamicsCommon.h" />
+    <ClInclude Include="dependencies\includes\bullet\BulletCollision\BroadphaseCollision\btAxisSweep3.h" />
+    <ClInclude Include="dependencies\includes\bullet\BulletCollision\BroadphaseCollision\btBroadphaseInterface.h" />
+    <ClInclude Include="dependencies\includes\bullet\BulletCollision\BroadphaseCollision\btBroadphaseProxy.h" />
+    <ClInclude Include="dependencies\includes\bullet\BulletCollision\BroadphaseCollision\btCollisionAlgorithm.h" />
+    <ClInclude Include="dependencies\includes\bullet\BulletCollision\BroadphaseCollision\btDbvt.h" />
+    <ClInclude Include="dependencies\includes\bullet\BulletCollision\BroadphaseCollision\btDbvtBroadphase.h" />
+    <ClInclude Include="dependencies\includes\bullet\BulletCollision\BroadphaseCollision\btDispatcher.h" />
+    <ClInclude Include="dependencies\includes\bullet\BulletCollision\BroadphaseCollision\btMultiSapBroadphase.h" />
+    <ClInclude Include="dependencies\includes\bullet\BulletCollision\BroadphaseCollision\btOverlappingPairCache.h" />
+    <ClInclude Include="dependencies\includes\bullet\BulletCollision\BroadphaseCollision\btOverlappingPairCallback.h" />
+    <ClInclude Include="dependencies\includes\bullet\BulletCollision\BroadphaseCollision\btQuantizedBvh.h" />
+    <ClInclude Include="dependencies\includes\bullet\BulletCollision\BroadphaseCollision\btSimpleBroadphase.h" />
+    <ClInclude Include="dependencies\includes\bullet\BulletCollision\CollisionDispatch\btActivatingCollisionAlgorithm.h" />
+    <ClInclude Include="dependencies\includes\bullet\BulletCollision\CollisionDispatch\btBox2dBox2dCollisionAlgorithm.h" />
+    <ClInclude Include="dependencies\includes\bullet\BulletCollision\CollisionDispatch\btBoxBoxCollisionAlgorithm.h" />
+    <ClInclude Include="dependencies\includes\bullet\BulletCollision\CollisionDispatch\btBoxBoxDetector.h" />
+    <ClInclude Include="dependencies\includes\bullet\BulletCollision\CollisionDispatch\btCollisionConfiguration.h" />
+    <ClInclude Include="dependencies\includes\bullet\BulletCollision\CollisionDispatch\btCollisionCreateFunc.h" />
+    <ClInclude Include="dependencies\includes\bullet\BulletCollision\CollisionDispatch\btCollisionDispatcher.h" />
+    <ClInclude Include="dependencies\includes\bullet\BulletCollision\CollisionDispatch\btCollisionObject.h" />
+    <ClInclude Include="dependencies\includes\bullet\BulletCollision\CollisionDispatch\btCollisionObjectWrapper.h" />
+    <ClInclude Include="dependencies\includes\bullet\BulletCollision\CollisionDispatch\btCollisionWorld.h" />
+    <ClInclude Include="dependencies\includes\bullet\BulletCollision\CollisionDispatch\btCompoundCollisionAlgorithm.h" />
+    <ClInclude Include="dependencies\includes\bullet\BulletCollision\CollisionDispatch\btConvex2dConvex2dAlgorithm.h" />
+    <ClInclude Include="dependencies\includes\bullet\BulletCollision\CollisionDispatch\btConvexConcaveCollisionAlgorithm.h" />
+    <ClInclude Include="dependencies\includes\bullet\BulletCollision\CollisionDispatch\btConvexConvexAlgorithm.h" />
+    <ClInclude Include="dependencies\includes\bullet\BulletCollision\CollisionDispatch\btConvexPlaneCollisionAlgorithm.h" />
+    <ClInclude Include="dependencies\includes\bullet\BulletCollision\CollisionDispatch\btDefaultCollisionConfiguration.h" />
+    <ClInclude Include="dependencies\includes\bullet\BulletCollision\CollisionDispatch\btEmptyCollisionAlgorithm.h" />
+    <ClInclude Include="dependencies\includes\bullet\BulletCollision\CollisionDispatch\btGhostObject.h" />
+    <ClInclude Include="dependencies\includes\bullet\BulletCollision\CollisionDispatch\btInternalEdgeUtility.h" />
+    <ClInclude Include="dependencies\includes\bullet\BulletCollision\CollisionDispatch\btManifoldResult.h" />
+    <ClInclude Include="dependencies\includes\bullet\BulletCollision\CollisionDispatch\btSimulationIslandManager.h" />
+    <ClInclude Include="dependencies\includes\bullet\BulletCollision\CollisionDispatch\btSphereBoxCollisionAlgorithm.h" />
+    <ClInclude Include="dependencies\includes\bullet\BulletCollision\CollisionDispatch\btSphereSphereCollisionAlgorithm.h" />
+    <ClInclude Include="dependencies\includes\bullet\BulletCollision\CollisionDispatch\btSphereTriangleCollisionAlgorithm.h" />
+    <ClInclude Include="dependencies\includes\bullet\BulletCollision\CollisionDispatch\btUnionFind.h" />
+    <ClInclude Include="dependencies\includes\bullet\BulletCollision\CollisionDispatch\SphereTriangleDetector.h" />
+    <ClInclude Include="dependencies\includes\bullet\BulletCollision\CollisionShapes\btBox2dShape.h" />
+    <ClInclude Include="dependencies\includes\bullet\BulletCollision\CollisionShapes\btBoxShape.h" />
+    <ClInclude Include="dependencies\includes\bullet\BulletCollision\CollisionShapes\btBvhTriangleMeshShape.h" />
+    <ClInclude Include="dependencies\includes\bullet\BulletCollision\CollisionShapes\btCapsuleShape.h" />
+    <ClInclude Include="dependencies\includes\bullet\BulletCollision\CollisionShapes\btCollisionMargin.h" />
+    <ClInclude Include="dependencies\includes\bullet\BulletCollision\CollisionShapes\btCollisionShape.h" />
+    <ClInclude Include="dependencies\includes\bullet\BulletCollision\CollisionShapes\btCompoundShape.h" />
+    <ClInclude Include="dependencies\includes\bullet\BulletCollision\CollisionShapes\btConcaveShape.h" />
+    <ClInclude Include="dependencies\includes\bullet\BulletCollision\CollisionShapes\btConeShape.h" />
+    <ClInclude Include="dependencies\includes\bullet\BulletCollision\CollisionShapes\btConvex2dShape.h" />
+    <ClInclude Include="dependencies\includes\bullet\BulletCollision\CollisionShapes\btConvexHullShape.h" />
+    <ClInclude Include="dependencies\includes\bullet\BulletCollision\CollisionShapes\btConvexInternalShape.h" />
+    <ClInclude Include="dependencies\includes\bullet\BulletCollision\CollisionShapes\btConvexPointCloudShape.h" />
+    <ClInclude Include="dependencies\includes\bullet\BulletCollision\CollisionShapes\btConvexPolyhedron.h" />
+    <ClInclude Include="dependencies\includes\bullet\BulletCollision\CollisionShapes\btConvexShape.h" />
+    <ClInclude Include="dependencies\includes\bullet\BulletCollision\CollisionShapes\btConvexTriangleMeshShape.h" />
+    <ClInclude Include="dependencies\includes\bullet\BulletCollision\CollisionShapes\btCylinderShape.h" />
+    <ClInclude Include="dependencies\includes\bullet\BulletCollision\CollisionShapes\btEmptyShape.h" />
+    <ClInclude Include="dependencies\includes\bullet\BulletCollision\CollisionShapes\btHeightfieldTerrainShape.h" />
+    <ClInclude Include="dependencies\includes\bullet\BulletCollision\CollisionShapes\btMaterial.h" />
+    <ClInclude Include="dependencies\includes\bullet\BulletCollision\CollisionShapes\btMinkowskiSumShape.h" />
+    <ClInclude Include="dependencies\includes\bullet\BulletCollision\CollisionShapes\btMultimaterialTriangleMeshShape.h" />
+    <ClInclude Include="dependencies\includes\bullet\BulletCollision\CollisionShapes\btMultiSphereShape.h" />
+    <ClInclude Include="dependencies\includes\bullet\BulletCollision\CollisionShapes\btOptimizedBvh.h" />
+    <ClInclude Include="dependencies\includes\bullet\BulletCollision\CollisionShapes\btPolyhedralConvexShape.h" />
+    <ClInclude Include="dependencies\includes\bullet\BulletCollision\CollisionShapes\btScaledBvhTriangleMeshShape.h" />
+    <ClInclude Include="dependencies\includes\bullet\BulletCollision\CollisionShapes\btShapeHull.h" />
+    <ClInclude Include="dependencies\includes\bullet\BulletCollision\CollisionShapes\btSphereShape.h" />
+    <ClInclude Include="dependencies\includes\bullet\BulletCollision\CollisionShapes\btStaticPlaneShape.h" />
+    <ClInclude Include="dependencies\includes\bullet\BulletCollision\CollisionShapes\btStridingMeshInterface.h" />
+    <ClInclude Include="dependencies\includes\bullet\BulletCollision\CollisionShapes\btTetrahedronShape.h" />
+    <ClInclude Include="dependencies\includes\bullet\BulletCollision\CollisionShapes\btTriangleBuffer.h" />
+    <ClInclude Include="dependencies\includes\bullet\BulletCollision\CollisionShapes\btTriangleCallback.h" />
+    <ClInclude Include="dependencies\includes\bullet\BulletCollision\CollisionShapes\btTriangleIndexVertexArray.h" />
+    <ClInclude Include="dependencies\includes\bullet\BulletCollision\CollisionShapes\btTriangleIndexVertexMaterialArray.h" />
+    <ClInclude Include="dependencies\includes\bullet\BulletCollision\CollisionShapes\btTriangleInfoMap.h" />
+    <ClInclude Include="dependencies\includes\bullet\BulletCollision\CollisionShapes\btTriangleMesh.h" />
+    <ClInclude Include="dependencies\includes\bullet\BulletCollision\CollisionShapes\btTriangleMeshShape.h" />
+    <ClInclude Include="dependencies\includes\bullet\BulletCollision\CollisionShapes\btTriangleShape.h" />
+    <ClInclude Include="dependencies\includes\bullet\BulletCollision\CollisionShapes\btUniformScalingShape.h" />
+    <ClInclude Include="dependencies\includes\bullet\BulletCollision\Gimpact\btBoxCollision.h" />
+    <ClInclude Include="dependencies\includes\bullet\BulletCollision\Gimpact\btClipPolygon.h" />
+    <ClInclude Include="dependencies\includes\bullet\BulletCollision\Gimpact\btContactProcessing.h" />
+    <ClInclude Include="dependencies\includes\bullet\BulletCollision\Gimpact\btGenericPoolAllocator.h" />
+    <ClInclude Include="dependencies\includes\bullet\BulletCollision\Gimpact\btGeometryOperations.h" />
+    <ClInclude Include="dependencies\includes\bullet\BulletCollision\Gimpact\btGImpactBvh.h" />
+    <ClInclude Include="dependencies\includes\bullet\BulletCollision\Gimpact\btGImpactCollisionAlgorithm.h" />
+    <ClInclude Include="dependencies\includes\bullet\BulletCollision\Gimpact\btGImpactMassUtil.h" />
+    <ClInclude Include="dependencies\includes\bullet\BulletCollision\Gimpact\btGImpactQuantizedBvh.h" />
+    <ClInclude Include="dependencies\includes\bullet\BulletCollision\Gimpact\btGImpactShape.h" />
+    <ClInclude Include="dependencies\includes\bullet\BulletCollision\Gimpact\btQuantization.h" />
+    <ClInclude Include="dependencies\includes\bullet\BulletCollision\Gimpact\btTriangleShapeEx.h" />
+    <ClInclude Include="dependencies\includes\bullet\BulletCollision\Gimpact\gim_array.h" />
+    <ClInclude Include="dependencies\includes\bullet\BulletCollision\Gimpact\gim_basic_geometry_operations.h" />
+    <ClInclude Include="dependencies\includes\bullet\BulletCollision\Gimpact\gim_bitset.h" />
+    <ClInclude Include="dependencies\includes\bullet\BulletCollision\Gimpact\gim_box_collision.h" />
+    <ClInclude Include="dependencies\includes\bullet\BulletCollision\Gimpact\gim_box_set.h" />
+    <ClInclude Include="dependencies\includes\bullet\BulletCollision\Gimpact\gim_clip_polygon.h" />
+    <ClInclude Include="dependencies\includes\bullet\BulletCollision\Gimpact\gim_contact.h" />
+    <ClInclude Include="dependencies\includes\bullet\BulletCollision\Gimpact\gim_geometry.h" />
+    <ClInclude Include="dependencies\includes\bullet\BulletCollision\Gimpact\gim_geom_types.h" />
+    <ClInclude Include="dependencies\includes\bullet\BulletCollision\Gimpact\gim_hash_table.h" />
+    <ClInclude Include="dependencies\includes\bullet\BulletCollision\Gimpact\gim_linear_math.h" />
+    <ClInclude Include="dependencies\includes\bullet\BulletCollision\Gimpact\gim_math.h" />
+    <ClInclude Include="dependencies\includes\bullet\BulletCollision\Gimpact\gim_memory.h" />
+    <ClInclude Include="dependencies\includes\bullet\BulletCollision\Gimpact\gim_radixsort.h" />
+    <ClInclude Include="dependencies\includes\bullet\BulletCollision\Gimpact\gim_tri_collision.h" />
+    <ClInclude Include="dependencies\includes\bullet\BulletCollision\NarrowPhaseCollision\btContinuousConvexCollision.h" />
+    <ClInclude Include="dependencies\includes\bullet\BulletCollision\NarrowPhaseCollision\btConvexCast.h" />
+    <ClInclude Include="dependencies\includes\bullet\BulletCollision\NarrowPhaseCollision\btConvexPenetrationDepthSolver.h" />
+    <ClInclude Include="dependencies\includes\bullet\BulletCollision\NarrowPhaseCollision\btDiscreteCollisionDetectorInterface.h" />
+    <ClInclude Include="dependencies\includes\bullet\BulletCollision\NarrowPhaseCollision\btGjkConvexCast.h" />
+    <ClInclude Include="dependencies\includes\bullet\BulletCollision\NarrowPhaseCollision\btGjkEpa2.h" />
+    <ClInclude Include="dependencies\includes\bullet\BulletCollision\NarrowPhaseCollision\btGjkEpaPenetrationDepthSolver.h" />
+    <ClInclude Include="dependencies\includes\bullet\BulletCollision\NarrowPhaseCollision\btGjkPairDetector.h" />
+    <ClInclude Include="dependencies\includes\bullet\BulletCollision\NarrowPhaseCollision\btManifoldPoint.h" />
+    <ClInclude Include="dependencies\includes\bullet\BulletCollision\NarrowPhaseCollision\btMinkowskiPenetrationDepthSolver.h" />
+    <ClInclude Include="dependencies\includes\bullet\BulletCollision\NarrowPhaseCollision\btPersistentManifold.h" />
+    <ClInclude Include="dependencies\includes\bullet\BulletCollision\NarrowPhaseCollision\btPointCollector.h" />
+    <ClInclude Include="dependencies\includes\bullet\BulletCollision\NarrowPhaseCollision\btPolyhedralContactClipping.h" />
+    <ClInclude Include="dependencies\includes\bullet\BulletCollision\NarrowPhaseCollision\btRaycastCallback.h" />
+    <ClInclude Include="dependencies\includes\bullet\BulletCollision\NarrowPhaseCollision\btSimplexSolverInterface.h" />
+    <ClInclude Include="dependencies\includes\bullet\BulletCollision\NarrowPhaseCollision\btSubSimplexConvexCast.h" />
+    <ClInclude Include="dependencies\includes\bullet\BulletCollision\NarrowPhaseCollision\btVoronoiSimplexSolver.h" />
+    <ClInclude Include="dependencies\includes\bullet\BulletDynamics\Character\btCharacterControllerInterface.h" />
+    <ClInclude Include="dependencies\includes\bullet\BulletDynamics\Character\btKinematicCharacterController.h" />
+    <ClInclude Include="dependencies\includes\bullet\BulletDynamics\ConstraintSolver\btConeTwistConstraint.h" />
+    <ClInclude Include="dependencies\includes\bullet\BulletDynamics\ConstraintSolver\btConstraintSolver.h" />
+    <ClInclude Include="dependencies\includes\bullet\BulletDynamics\ConstraintSolver\btContactConstraint.h" />
+    <ClInclude Include="dependencies\includes\bullet\BulletDynamics\ConstraintSolver\btContactSolverInfo.h" />
+    <ClInclude Include="dependencies\includes\bullet\BulletDynamics\ConstraintSolver\btGearConstraint.h" />
+    <ClInclude Include="dependencies\includes\bullet\BulletDynamics\ConstraintSolver\btGeneric6DofConstraint.h" />
+    <ClInclude Include="dependencies\includes\bullet\BulletDynamics\ConstraintSolver\btGeneric6DofSpringConstraint.h" />
+    <ClInclude Include="dependencies\includes\bullet\BulletDynamics\ConstraintSolver\btHinge2Constraint.h" />
+    <ClInclude Include="dependencies\includes\bullet\BulletDynamics\ConstraintSolver\btHingeConstraint.h" />
+    <ClInclude Include="dependencies\includes\bullet\BulletDynamics\ConstraintSolver\btJacobianEntry.h" />
+    <ClInclude Include="dependencies\includes\bullet\BulletDynamics\ConstraintSolver\btPoint2PointConstraint.h" />
+    <ClInclude Include="dependencies\includes\bullet\BulletDynamics\ConstraintSolver\btSequentialImpulseConstraintSolver.h" />
+    <ClInclude Include="dependencies\includes\bullet\BulletDynamics\ConstraintSolver\btSliderConstraint.h" />
+    <ClInclude Include="dependencies\includes\bullet\BulletDynamics\ConstraintSolver\btSolve2LinearConstraint.h" />
+    <ClInclude Include="dependencies\includes\bullet\BulletDynamics\ConstraintSolver\btSolverBody.h" />
+    <ClInclude Include="dependencies\includes\bullet\BulletDynamics\ConstraintSolver\btSolverConstraint.h" />
+    <ClInclude Include="dependencies\includes\bullet\BulletDynamics\ConstraintSolver\btTypedConstraint.h" />
+    <ClInclude Include="dependencies\includes\bullet\BulletDynamics\ConstraintSolver\btUniversalConstraint.h" />
+    <ClInclude Include="dependencies\includes\bullet\BulletDynamics\Dynamics\btActionInterface.h" />
+    <ClInclude Include="dependencies\includes\bullet\BulletDynamics\Dynamics\btDiscreteDynamicsWorld.h" />
+    <ClInclude Include="dependencies\includes\bullet\BulletDynamics\Dynamics\btDynamicsWorld.h" />
+    <ClInclude Include="dependencies\includes\bullet\BulletDynamics\Dynamics\btRigidBody.h" />
+    <ClInclude Include="dependencies\includes\bullet\BulletDynamics\Dynamics\btSimpleDynamicsWorld.h" />
+    <ClInclude Include="dependencies\includes\bullet\BulletDynamics\Vehicle\btRaycastVehicle.h" />
+    <ClInclude Include="dependencies\includes\bullet\BulletDynamics\Vehicle\btVehicleRaycaster.h" />
+    <ClInclude Include="dependencies\includes\bullet\BulletDynamics\Vehicle\btWheelInfo.h" />
+    <ClInclude Include="dependencies\includes\bullet\LinearMath\btAabbUtil2.h" />
+    <ClInclude Include="dependencies\includes\bullet\LinearMath\btAlignedAllocator.h" />
+    <ClInclude Include="dependencies\includes\bullet\LinearMath\btAlignedObjectArray.h" />
+    <ClInclude Include="dependencies\includes\bullet\LinearMath\btConvexHull.h" />
+    <ClInclude Include="dependencies\includes\bullet\LinearMath\btConvexHullComputer.h" />
+    <ClInclude Include="dependencies\includes\bullet\LinearMath\btDefaultMotionState.h" />
+    <ClInclude Include="dependencies\includes\bullet\LinearMath\btGeometryUtil.h" />
+    <ClInclude Include="dependencies\includes\bullet\LinearMath\btGrahamScan2dConvexHull.h" />
+    <ClInclude Include="dependencies\includes\bullet\LinearMath\btHashMap.h" />
+    <ClInclude Include="dependencies\includes\bullet\LinearMath\btIDebugDraw.h" />
+    <ClInclude Include="dependencies\includes\bullet\LinearMath\btList.h" />
+    <ClInclude Include="dependencies\includes\bullet\LinearMath\btMatrix3x3.h" />
+    <ClInclude Include="dependencies\includes\bullet\LinearMath\btMinMax.h" />
+    <ClInclude Include="dependencies\includes\bullet\LinearMath\btMotionState.h" />
+    <ClInclude Include="dependencies\includes\bullet\LinearMath\btPolarDecomposition.h" />
+    <ClInclude Include="dependencies\includes\bullet\LinearMath\btPoolAllocator.h" />
+    <ClInclude Include="dependencies\includes\bullet\LinearMath\btQuadWord.h" />
+    <ClInclude Include="dependencies\includes\bullet\LinearMath\btQuaternion.h" />
+    <ClInclude Include="dependencies\includes\bullet\LinearMath\btQuickprof.h" />
+    <ClInclude Include="dependencies\includes\bullet\LinearMath\btRandom.h" />
+    <ClInclude Include="dependencies\includes\bullet\LinearMath\btScalar.h" />
+    <ClInclude Include="dependencies\includes\bullet\LinearMath\btSerializer.h" />
+    <ClInclude Include="dependencies\includes\bullet\LinearMath\btStackAlloc.h" />
+    <ClInclude Include="dependencies\includes\bullet\LinearMath\btTransform.h" />
+    <ClInclude Include="dependencies\includes\bullet\LinearMath\btTransformUtil.h" />
+    <ClInclude Include="dependencies\includes\bullet\LinearMath\btVector3.h" />
+    <ClInclude Include="dependencies\includes\libpng\config.h" />
+    <ClInclude Include="dependencies\includes\libpng\png.h" />
+    <ClInclude Include="dependencies\includes\libpng\pngconf.h" />
+    <ClInclude Include="dependencies\includes\libpng\pngpriv.h" />
+    <ClInclude Include="dependencies\includes\lua\lapi.h" />
+    <ClInclude Include="dependencies\includes\lua\lauxlib.h" />
+    <ClInclude Include="dependencies\includes\lua\lcode.h" />
+    <ClInclude Include="dependencies\includes\lua\lctype.h" />
+    <ClInclude Include="dependencies\includes\lua\ldebug.h" />
+    <ClInclude Include="dependencies\includes\lua\ldo.h" />
+    <ClInclude Include="dependencies\includes\lua\lfunc.h" />
+    <ClInclude Include="dependencies\includes\lua\lgc.h" />
+    <ClInclude Include="dependencies\includes\lua\llex.h" />
+    <ClInclude Include="dependencies\includes\lua\llimits.h" />
+    <ClInclude Include="dependencies\includes\lua\lmem.h" />
+    <ClInclude Include="dependencies\includes\lua\lobject.h" />
+    <ClInclude Include="dependencies\includes\lua\lopcodes.h" />
+    <ClInclude Include="dependencies\includes\lua\lparser.h" />
+    <ClInclude Include="dependencies\includes\lua\lstate.h" />
+    <ClInclude Include="dependencies\includes\lua\lstring.h" />
+    <ClInclude Include="dependencies\includes\lua\ltable.h" />
+    <ClInclude Include="dependencies\includes\lua\ltm.h" />
+    <ClInclude Include="dependencies\includes\lua\lua.h" />
+    <ClInclude Include="dependencies\includes\lua\lua.hpp" />
+    <ClInclude Include="dependencies\includes\lua\luaconf.h" />
+    <ClInclude Include="dependencies\includes\lua\lualib.h" />
+    <ClInclude Include="dependencies\includes\lua\lundump.h" />
+    <ClInclude Include="dependencies\includes\lua\lvm.h" />
+    <ClInclude Include="dependencies\includes\lua\lzio.h" />
+    <ClInclude Include="dependencies\includes\zlib\crc32.h" />
+    <ClInclude Include="dependencies\includes\zlib\deflate.h" />
+    <ClInclude Include="dependencies\includes\zlib\gzguts.h" />
+    <ClInclude Include="dependencies\includes\zlib\inffast.h" />
+    <ClInclude Include="dependencies\includes\zlib\inffixed.h" />
+    <ClInclude Include="dependencies\includes\zlib\inflate.h" />
+    <ClInclude Include="dependencies\includes\zlib\inftrees.h" />
+    <ClInclude Include="dependencies\includes\zlib\trees.h" />
+    <ClInclude Include="dependencies\includes\zlib\zconf.h" />
+    <ClInclude Include="dependencies\includes\zlib\zlib.h" />
+    <ClInclude Include="dependencies\includes\zlib\zutil.h" />
+    <ClInclude Include="ghost\BoundingBox.h" />
+    <ClInclude Include="ghost\BoundingSphere.h" />
+    <ClInclude Include="ghost\BoundingVolume.h" />
+    <ClInclude Include="ghost\Extensions\Vehicle.h" />
+    <ClInclude Include="ghost\HttpRequest.h" />
+    <ClInclude Include="ghost\HttpResponse.h" />
+    <ClInclude Include="ghost\ModelData.h" />
+    <ClInclude Include="ghost\Multiplatform\ServiceLocator.h" />
+    <ClInclude Include="ghost\Multiplatform\Socket.h" />
+    <ClInclude Include="ghost\Multiplatform\Win32\WindowsSocket.h" />
+    <ClInclude Include="ghost\NetworkManager.h" />
+    <ClInclude Include="ghost\Resources\Symbol.h" />
+    <ClInclude Include="ghost\ScriptBindings.h" />
+    <ClInclude Include="ghost\ShapeParser.h" />
+    <ClInclude Include="ghost\Camera.h" />
+    <ClInclude Include="ghost\Color.h" />
+    <ClInclude Include="ghost\Console.h" />
+    <ClInclude Include="ghost\Engine.h" />
+    <ClInclude Include="ghost\Environment.h" />
+    <ClInclude Include="ghost\FrameBuffer.h" />
+    <ClInclude Include="ghost\GUIManager.h" />
+    <ClInclude Include="ghost\MD2Parser.h" />
+    <ClInclude Include="ghost\Multiplatform\FileManager.h" />
+    <ClInclude Include="ghost\Multiplatform\Ghost.h" />
+    <ClInclude Include="ghost\Multiplatform\GraphicsManager.h" />
+    <ClInclude Include="ghost\Multiplatform\Thread.h" />
+    <ClInclude Include="ghost\Multiplatform\Win32\WindowsGhost.h" />
+    <ClInclude Include="ghost\Multiplatform\Win32\WindowsFileManager.h" />
+    <ClInclude Include="ghost\Multiplatform\Win32\WindowsGraphicsManager.h" />
+    <ClInclude Include="ghost\Multiplatform\Win32\WindowsServiceLocator.h" />
+    <ClInclude Include="ghost\Multiplatform\Win32\WindowsThread.h" />
+    <ClInclude Include="ghost\PhysicsManager.h" />
+    <ClInclude Include="ghost\Quaternion.h" />
+    <ClInclude Include="ghost\RenderPass.h" />
+    <ClInclude Include="ghost\Resources\Animatable.h" />
+    <ClInclude Include="ghost\Resources\AtlasTexture.h" />
+    <ClInclude Include="ghost\Resources\Attributes.h" />
+    <ClInclude Include="ghost\Resources\CubeMap.h" />
+    <ClInclude Include="ghost\Resources\DynamicObject.h" />
+    <ClInclude Include="ghost\Resources\Geometry.h" />
+    <ClInclude Include="ghost\Resources\GUIButton.h" />
+    <ClInclude Include="ghost\Resources\GUIImage.h" />
+    <ClInclude Include="ghost\Resources\GUIInput.h" />
+    <ClInclude Include="ghost\Resources\GUIText.h" />
+    <ClInclude Include="ghost\Resources\Light.h" />
+    <ClInclude Include="ghost\Resources\Script.h" />
+    <ClInclude Include="ghost\Resources\Renderable.h" />
+    <ClInclude Include="ghost\Resources\Sound.h" />
+    <ClInclude Include="ghost\Resources\Sprite.h" />
+    <ClInclude Include="ghost\Resources\Resource.h" />
+    <ClInclude Include="ghost\Resources\Shader.h" />
+    <ClInclude Include="ghost\Resources\StaticObject.h" />
+    <ClInclude Include="ghost\Resources\Texture.h" />
+    <ClInclude Include="ghost\Resources\TextureMono.h" />
+    <ClInclude Include="ghost\Resources\TextureRGBA.h" />
+    <ClInclude Include="ghost\Resources\Vertex.h" />
+    <ClInclude Include="ghost\Resources\GUISurface.h" />
+    <ClInclude Include="ghost\ScriptManager.h" />
+    <ClInclude Include="ghost\Input.h" />
+    <ClInclude Include="ghost\Matrix.h" />
+    <ClInclude Include="ghost\Node.h" />
+    <ClInclude Include="ghost\ObjParser.h" />
+    <ClInclude Include="ghost\ResourceManager.h" />
+    <ClInclude Include="ghost\Settings.h" />
+    <ClInclude Include="ghost\Shapes.h" />
+    <ClInclude Include="ghost\SoundManager.h" />
+    <ClInclude Include="ghost\TerrainParser.h" />
+    <ClInclude Include="ghost\TextManager.h" />
+    <ClInclude Include="ghost\TextureAtlas.h" />
+    <ClInclude Include="ghost\ThreadManager.h" />
+    <ClInclude Include="ghost\HashMap.h" />
+    <ClInclude Include="ghost\Utils.h" />
+    <ClInclude Include="ghost\Vec3.h" />
+    <ClInclude Include="ghost\WaterLoader.h" />
+    <ClInclude Include="ghost\Xml.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="resources\models\box.mtl">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">true</ExcludedFromBuild>
+    </None>
+    <None Include="resources\models\building.mtl">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">true</ExcludedFromBuild>
+    </None>
+    <None Include="resources\models\car_body.mtl">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">true</ExcludedFromBuild>
+    </None>
+    <None Include="resources\models\car_wheel.mtl">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">true</ExcludedFromBuild>
+    </None>
+    <None Include="resources\models\inverted_box.mtl">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">true</ExcludedFromBuild>
+    </None>
+    <None Include="resources\models\smooth_sphere.mtl">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">true</ExcludedFromBuild>
+    </None>
+    <None Include="resources\models\sphere.mtl">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">true</ExcludedFromBuild>
+    </None>
+    <None Include="resources\scenes\level.cfg">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="resources\scripts\game_loop_old.lua" />
+    <None Include="resources\scripts\helper_methods.lua" />
+    <None Include="resources\scripts\game_loop.lua" />
+    <None Include="resources\scripts\maze.lua" />
+    <None Include="resources\scripts\winter.lua" />
+    <None Include="resources\shaders\default_model.frag" />
+    <None Include="resources\shaders\default_model.vert" />
+    <None Include="resources\shaders\default_sprite.frag" />
+    <None Include="resources\shaders\default_sprite.vert" />
+    <None Include="resources\shaders\font.frag" />
+    <None Include="resources\shaders\font.vert" />
+    <None Include="resources\shaders\horizontal_blur.frag" />
+    <None Include="resources\shaders\horizontal_blur.vert" />
+    <None Include="resources\shaders\loading.frag" />
+    <None Include="resources\shaders\loading.vert" />
+    <None Include="resources\shaders\object.frag" />
+    <None Include="resources\shaders\object.vert" />
+    <None Include="resources\shaders\openglimmediate.frag" />
+    <None Include="resources\shaders\openglimmediate.vert" />
+    <None Include="resources\shaders\red.frag" />
+    <None Include="resources\shaders\red.vert" />
+    <None Include="resources\shaders\skybox.frag" />
+    <None Include="resources\shaders\skybox.vert" />
+    <None Include="resources\shaders\surface_bckg_color.frag" />
+    <None Include="resources\shaders\surface_bckg_color.vert" />
+    <None Include="resources\shaders\surface_bckg_image.frag" />
+    <None Include="resources\shaders\surface_bckg_image.vert" />
+    <None Include="resources\shaders\terrain.frag" />
+    <None Include="resources\shaders\terrain.vert" />
+    <None Include="resources\shaders\vertical_blur.frag" />
+    <None Include="resources\shaders\vertical_blur.vert" />
+    <None Include="resources\shaders\wall.frag" />
+    <None Include="resources\shaders\wall.vert" />
+    <None Include="resources\shaders\water.frag" />
+    <None Include="resources\shaders\water.vert" />
+  </ItemGroup>
+  <ItemGroup>
+    <Xml Include="dependencies\includes\zlib\treebuild.xml" />
+    <Xml Include="resources\scenes\start.xml">
+      <SubType>Designer</SubType>
+    </Xml>
+    <Xml Include="resources\scenes\start_old.xml">
+      <SubType>Designer</SubType>
+    </Xml>
+  </ItemGroup>
+  <ItemGroup>
+    <Media Include="resources\sounds\click.mp3" />
+    <Media Include="resources\sounds\memories.mp3" />
+    <Media Include="resources\sounds\select.mp3" />
+  </ItemGroup>
+  <ItemGroup>
+    <Font Include="resources\fonts\arial.ttf" />
+    <Font Include="resources\fonts\arialbd.ttf" />
+    <Font Include="resources\fonts\arialbi.ttf" />
+    <Font Include="resources\fonts\ariali.ttf" />
+    <Font Include="resources\fonts\ariblk.ttf" />
+    <Font Include="resources\fonts\font.ttf" />
+    <Font Include="resources\fonts\font2.otf" />
+    <Font Include="resources\fonts\GlametrixBold.otf" />
+    <Font Include="resources\fonts\GlametrixLight.otf" />
+    <Font Include="resources\fonts\oneway.ttf" />
+  </ItemGroup>
+  <ItemGroup>
+    <Object Include="resources\models\box.obj">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">true</ExcludedFromBuild>
+    </Object>
+    <Object Include="resources\models\building.obj">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">true</ExcludedFromBuild>
+    </Object>
+    <Object Include="resources\models\car_body.obj">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">true</ExcludedFromBuild>
+    </Object>
+    <Object Include="resources\models\car_wheel.obj">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">true</ExcludedFromBuild>
+    </Object>
+    <Object Include="resources\models\inverted_box.obj">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">true</ExcludedFromBuild>
+    </Object>
+    <Object Include="resources\models\smooth_sphere.obj">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">true</ExcludedFromBuild>
+    </Object>
+    <Object Include="resources\models\sphere.obj">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">true</ExcludedFromBuild>
+    </Object>
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="resources\textures\camaro.png" />
+    <Image Include="resources\textures\credits.png" />
+    <Image Include="resources\textures\dirt.png" />
+    <Image Include="resources\textures\exit.png" />
+    <Image Include="resources\textures\fac_231.png" />
+    <Image Include="resources\textures\font.png" />
+    <Image Include="resources\textures\font_re.png" />
+    <Image Include="resources\textures\grass.png" />
+    <Image Include="resources\textures\loading.png" />
+    <Image Include="resources\textures\main.png" />
+    <Image Include="resources\textures\negx.png" />
+    <Image Include="resources\textures\negy.png" />
+    <Image Include="resources\textures\negz.png" />
+    <Image Include="resources\textures\options.png" />
+    <Image Include="resources\textures\posx.png" />
+    <Image Include="resources\textures\posy.png" />
+    <Image Include="resources\textures\posz.png" />
+    <Image Include="resources\textures\rock.png" />
+    <Image Include="resources\textures\smoke.png" />
+    <Image Include="resources\textures\start_game.png" />
+    <Image Include="resources\textures\terrain_blend.png" />
+    <Image Include="resources\textures\terrain_blend_long.png" />
+    <Image Include="resources\textures\terrain_blend_old.png" />
+    <Image Include="resources\textures\terrain_height.png" />
+    <Image Include="resources\textures\terrain_height_long.png" />
+    <Image Include="resources\textures\terrain_height_old.png" />
+    <Image Include="resources\textures\wave0.png" />
+    <Image Include="resources\textures\wave1.png" />
+  </ItemGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+  <ImportGroup Label="ExtensionTargets">
+  </ImportGroup>
+</Project>

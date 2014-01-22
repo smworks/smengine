@@ -1,0 +1,786 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes" ?>
+<CodeBlocks_project_file>
+	<FileVersion major="1" minor="6" />
+	<Project>
+		<Option title="GameEngine" />
+		<Option pch_mode="2" />
+		<Option compiler="gcc" />
+		<Build>
+			<Target title="Debug">
+				<Option output="Debug/bin/GameEngine" prefix_auto="1" extension_auto="1" />
+				<Option object_output="Debug/obj/" />
+				<Option type="1" />
+				<Option compiler="gcc" />
+				<Compiler>
+					<Add option="-std=c++0x" />
+					<Add option="-g" />
+					<Add option="-D_DEBUG" />
+				</Compiler>
+				<Linker>
+					<Add option="-lglut" />
+					<Add option="-lfmodex" />
+					<Add option="-lz" />
+					<Add option="-lGLEW" />
+				</Linker>
+			</Target>
+			<Target title="Release">
+				<Option output="Release/bin/GameEngine" prefix_auto="1" extension_auto="1" />
+				<Option object_output="Release/obj/" />
+				<Option type="1" />
+				<Option compiler="gcc" />
+				<Compiler>
+					<Add option="-O2" />
+					<Add option="-std=c++0x" />
+				</Compiler>
+				<Linker>
+					<Add option="-s" />
+					<Add option="-lglut" />
+					<Add option="-lfmodex" />
+					<Add option="-lz" />
+					<Add option="-lGLEW" />
+				</Linker>
+			</Target>
+		</Build>
+		<Compiler>
+			<Add option="-Wall" />
+		</Compiler>
+		<Unit filename="dependencies/includes/bullet/BulletCollision/BroadphaseCollision/btAxisSweep3.cpp" />
+		<Unit filename="dependencies/includes/bullet/BulletCollision/BroadphaseCollision/btAxisSweep3.h" />
+		<Unit filename="dependencies/includes/bullet/BulletCollision/BroadphaseCollision/btBroadphaseInterface.h" />
+		<Unit filename="dependencies/includes/bullet/BulletCollision/BroadphaseCollision/btBroadphaseProxy.cpp" />
+		<Unit filename="dependencies/includes/bullet/BulletCollision/BroadphaseCollision/btBroadphaseProxy.h" />
+		<Unit filename="dependencies/includes/bullet/BulletCollision/BroadphaseCollision/btCollisionAlgorithm.cpp" />
+		<Unit filename="dependencies/includes/bullet/BulletCollision/BroadphaseCollision/btCollisionAlgorithm.h" />
+		<Unit filename="dependencies/includes/bullet/BulletCollision/BroadphaseCollision/btDbvt.cpp" />
+		<Unit filename="dependencies/includes/bullet/BulletCollision/BroadphaseCollision/btDbvt.h" />
+		<Unit filename="dependencies/includes/bullet/BulletCollision/BroadphaseCollision/btDbvtBroadphase.cpp" />
+		<Unit filename="dependencies/includes/bullet/BulletCollision/BroadphaseCollision/btDbvtBroadphase.h" />
+		<Unit filename="dependencies/includes/bullet/BulletCollision/BroadphaseCollision/btDispatcher.cpp" />
+		<Unit filename="dependencies/includes/bullet/BulletCollision/BroadphaseCollision/btDispatcher.h" />
+		<Unit filename="dependencies/includes/bullet/BulletCollision/BroadphaseCollision/btMultiSapBroadphase.cpp" />
+		<Unit filename="dependencies/includes/bullet/BulletCollision/BroadphaseCollision/btMultiSapBroadphase.h" />
+		<Unit filename="dependencies/includes/bullet/BulletCollision/BroadphaseCollision/btOverlappingPairCache.cpp" />
+		<Unit filename="dependencies/includes/bullet/BulletCollision/BroadphaseCollision/btOverlappingPairCache.h" />
+		<Unit filename="dependencies/includes/bullet/BulletCollision/BroadphaseCollision/btOverlappingPairCallback.h" />
+		<Unit filename="dependencies/includes/bullet/BulletCollision/BroadphaseCollision/btQuantizedBvh.cpp" />
+		<Unit filename="dependencies/includes/bullet/BulletCollision/BroadphaseCollision/btQuantizedBvh.h" />
+		<Unit filename="dependencies/includes/bullet/BulletCollision/BroadphaseCollision/btSimpleBroadphase.cpp" />
+		<Unit filename="dependencies/includes/bullet/BulletCollision/BroadphaseCollision/btSimpleBroadphase.h" />
+		<Unit filename="dependencies/includes/bullet/BulletCollision/CollisionDispatch/SphereTriangleDetector.cpp" />
+		<Unit filename="dependencies/includes/bullet/BulletCollision/CollisionDispatch/SphereTriangleDetector.h" />
+		<Unit filename="dependencies/includes/bullet/BulletCollision/CollisionDispatch/btActivatingCollisionAlgorithm.cpp" />
+		<Unit filename="dependencies/includes/bullet/BulletCollision/CollisionDispatch/btActivatingCollisionAlgorithm.h" />
+		<Unit filename="dependencies/includes/bullet/BulletCollision/CollisionDispatch/btBox2dBox2dCollisionAlgorithm.cpp" />
+		<Unit filename="dependencies/includes/bullet/BulletCollision/CollisionDispatch/btBox2dBox2dCollisionAlgorithm.h" />
+		<Unit filename="dependencies/includes/bullet/BulletCollision/CollisionDispatch/btBoxBoxCollisionAlgorithm.cpp" />
+		<Unit filename="dependencies/includes/bullet/BulletCollision/CollisionDispatch/btBoxBoxCollisionAlgorithm.h" />
+		<Unit filename="dependencies/includes/bullet/BulletCollision/CollisionDispatch/btBoxBoxDetector.cpp" />
+		<Unit filename="dependencies/includes/bullet/BulletCollision/CollisionDispatch/btBoxBoxDetector.h" />
+		<Unit filename="dependencies/includes/bullet/BulletCollision/CollisionDispatch/btCollisionConfiguration.h" />
+		<Unit filename="dependencies/includes/bullet/BulletCollision/CollisionDispatch/btCollisionCreateFunc.h" />
+		<Unit filename="dependencies/includes/bullet/BulletCollision/CollisionDispatch/btCollisionDispatcher.cpp" />
+		<Unit filename="dependencies/includes/bullet/BulletCollision/CollisionDispatch/btCollisionDispatcher.h" />
+		<Unit filename="dependencies/includes/bullet/BulletCollision/CollisionDispatch/btCollisionObject.cpp" />
+		<Unit filename="dependencies/includes/bullet/BulletCollision/CollisionDispatch/btCollisionObject.h" />
+		<Unit filename="dependencies/includes/bullet/BulletCollision/CollisionDispatch/btCollisionObjectWrapper.h" />
+		<Unit filename="dependencies/includes/bullet/BulletCollision/CollisionDispatch/btCollisionWorld.cpp" />
+		<Unit filename="dependencies/includes/bullet/BulletCollision/CollisionDispatch/btCollisionWorld.h" />
+		<Unit filename="dependencies/includes/bullet/BulletCollision/CollisionDispatch/btCompoundCollisionAlgorithm.cpp" />
+		<Unit filename="dependencies/includes/bullet/BulletCollision/CollisionDispatch/btCompoundCollisionAlgorithm.h" />
+		<Unit filename="dependencies/includes/bullet/BulletCollision/CollisionDispatch/btConvex2dConvex2dAlgorithm.cpp" />
+		<Unit filename="dependencies/includes/bullet/BulletCollision/CollisionDispatch/btConvex2dConvex2dAlgorithm.h" />
+		<Unit filename="dependencies/includes/bullet/BulletCollision/CollisionDispatch/btConvexConcaveCollisionAlgorithm.cpp" />
+		<Unit filename="dependencies/includes/bullet/BulletCollision/CollisionDispatch/btConvexConcaveCollisionAlgorithm.h" />
+		<Unit filename="dependencies/includes/bullet/BulletCollision/CollisionDispatch/btConvexConvexAlgorithm.cpp" />
+		<Unit filename="dependencies/includes/bullet/BulletCollision/CollisionDispatch/btConvexConvexAlgorithm.h" />
+		<Unit filename="dependencies/includes/bullet/BulletCollision/CollisionDispatch/btConvexPlaneCollisionAlgorithm.cpp" />
+		<Unit filename="dependencies/includes/bullet/BulletCollision/CollisionDispatch/btConvexPlaneCollisionAlgorithm.h" />
+		<Unit filename="dependencies/includes/bullet/BulletCollision/CollisionDispatch/btDefaultCollisionConfiguration.cpp" />
+		<Unit filename="dependencies/includes/bullet/BulletCollision/CollisionDispatch/btDefaultCollisionConfiguration.h" />
+		<Unit filename="dependencies/includes/bullet/BulletCollision/CollisionDispatch/btEmptyCollisionAlgorithm.cpp" />
+		<Unit filename="dependencies/includes/bullet/BulletCollision/CollisionDispatch/btEmptyCollisionAlgorithm.h" />
+		<Unit filename="dependencies/includes/bullet/BulletCollision/CollisionDispatch/btGhostObject.cpp" />
+		<Unit filename="dependencies/includes/bullet/BulletCollision/CollisionDispatch/btGhostObject.h" />
+		<Unit filename="dependencies/includes/bullet/BulletCollision/CollisionDispatch/btInternalEdgeUtility.cpp" />
+		<Unit filename="dependencies/includes/bullet/BulletCollision/CollisionDispatch/btInternalEdgeUtility.h" />
+		<Unit filename="dependencies/includes/bullet/BulletCollision/CollisionDispatch/btManifoldResult.cpp" />
+		<Unit filename="dependencies/includes/bullet/BulletCollision/CollisionDispatch/btManifoldResult.h" />
+		<Unit filename="dependencies/includes/bullet/BulletCollision/CollisionDispatch/btSimulationIslandManager.cpp" />
+		<Unit filename="dependencies/includes/bullet/BulletCollision/CollisionDispatch/btSimulationIslandManager.h" />
+		<Unit filename="dependencies/includes/bullet/BulletCollision/CollisionDispatch/btSphereBoxCollisionAlgorithm.cpp" />
+		<Unit filename="dependencies/includes/bullet/BulletCollision/CollisionDispatch/btSphereBoxCollisionAlgorithm.h" />
+		<Unit filename="dependencies/includes/bullet/BulletCollision/CollisionDispatch/btSphereSphereCollisionAlgorithm.cpp" />
+		<Unit filename="dependencies/includes/bullet/BulletCollision/CollisionDispatch/btSphereSphereCollisionAlgorithm.h" />
+		<Unit filename="dependencies/includes/bullet/BulletCollision/CollisionDispatch/btSphereTriangleCollisionAlgorithm.cpp" />
+		<Unit filename="dependencies/includes/bullet/BulletCollision/CollisionDispatch/btSphereTriangleCollisionAlgorithm.h" />
+		<Unit filename="dependencies/includes/bullet/BulletCollision/CollisionDispatch/btUnionFind.cpp" />
+		<Unit filename="dependencies/includes/bullet/BulletCollision/CollisionDispatch/btUnionFind.h" />
+		<Unit filename="dependencies/includes/bullet/BulletCollision/CollisionShapes/btBox2dShape.cpp" />
+		<Unit filename="dependencies/includes/bullet/BulletCollision/CollisionShapes/btBox2dShape.h" />
+		<Unit filename="dependencies/includes/bullet/BulletCollision/CollisionShapes/btBoxShape.cpp" />
+		<Unit filename="dependencies/includes/bullet/BulletCollision/CollisionShapes/btBoxShape.h" />
+		<Unit filename="dependencies/includes/bullet/BulletCollision/CollisionShapes/btBvhTriangleMeshShape.cpp" />
+		<Unit filename="dependencies/includes/bullet/BulletCollision/CollisionShapes/btBvhTriangleMeshShape.h" />
+		<Unit filename="dependencies/includes/bullet/BulletCollision/CollisionShapes/btCapsuleShape.cpp" />
+		<Unit filename="dependencies/includes/bullet/BulletCollision/CollisionShapes/btCapsuleShape.h" />
+		<Unit filename="dependencies/includes/bullet/BulletCollision/CollisionShapes/btCollisionMargin.h" />
+		<Unit filename="dependencies/includes/bullet/BulletCollision/CollisionShapes/btCollisionShape.cpp" />
+		<Unit filename="dependencies/includes/bullet/BulletCollision/CollisionShapes/btCollisionShape.h" />
+		<Unit filename="dependencies/includes/bullet/BulletCollision/CollisionShapes/btCompoundShape.cpp" />
+		<Unit filename="dependencies/includes/bullet/BulletCollision/CollisionShapes/btCompoundShape.h" />
+		<Unit filename="dependencies/includes/bullet/BulletCollision/CollisionShapes/btConcaveShape.cpp" />
+		<Unit filename="dependencies/includes/bullet/BulletCollision/CollisionShapes/btConcaveShape.h" />
+		<Unit filename="dependencies/includes/bullet/BulletCollision/CollisionShapes/btConeShape.cpp" />
+		<Unit filename="dependencies/includes/bullet/BulletCollision/CollisionShapes/btConeShape.h" />
+		<Unit filename="dependencies/includes/bullet/BulletCollision/CollisionShapes/btConvex2dShape.cpp" />
+		<Unit filename="dependencies/includes/bullet/BulletCollision/CollisionShapes/btConvex2dShape.h" />
+		<Unit filename="dependencies/includes/bullet/BulletCollision/CollisionShapes/btConvexHullShape.cpp" />
+		<Unit filename="dependencies/includes/bullet/BulletCollision/CollisionShapes/btConvexHullShape.h" />
+		<Unit filename="dependencies/includes/bullet/BulletCollision/CollisionShapes/btConvexInternalShape.cpp" />
+		<Unit filename="dependencies/includes/bullet/BulletCollision/CollisionShapes/btConvexInternalShape.h" />
+		<Unit filename="dependencies/includes/bullet/BulletCollision/CollisionShapes/btConvexPointCloudShape.cpp" />
+		<Unit filename="dependencies/includes/bullet/BulletCollision/CollisionShapes/btConvexPointCloudShape.h" />
+		<Unit filename="dependencies/includes/bullet/BulletCollision/CollisionShapes/btConvexPolyhedron.cpp" />
+		<Unit filename="dependencies/includes/bullet/BulletCollision/CollisionShapes/btConvexPolyhedron.h" />
+		<Unit filename="dependencies/includes/bullet/BulletCollision/CollisionShapes/btConvexShape.cpp" />
+		<Unit filename="dependencies/includes/bullet/BulletCollision/CollisionShapes/btConvexShape.h" />
+		<Unit filename="dependencies/includes/bullet/BulletCollision/CollisionShapes/btConvexTriangleMeshShape.cpp" />
+		<Unit filename="dependencies/includes/bullet/BulletCollision/CollisionShapes/btConvexTriangleMeshShape.h" />
+		<Unit filename="dependencies/includes/bullet/BulletCollision/CollisionShapes/btCylinderShape.cpp" />
+		<Unit filename="dependencies/includes/bullet/BulletCollision/CollisionShapes/btCylinderShape.h" />
+		<Unit filename="dependencies/includes/bullet/BulletCollision/CollisionShapes/btEmptyShape.cpp" />
+		<Unit filename="dependencies/includes/bullet/BulletCollision/CollisionShapes/btEmptyShape.h" />
+		<Unit filename="dependencies/includes/bullet/BulletCollision/CollisionShapes/btHeightfieldTerrainShape.cpp" />
+		<Unit filename="dependencies/includes/bullet/BulletCollision/CollisionShapes/btHeightfieldTerrainShape.h" />
+		<Unit filename="dependencies/includes/bullet/BulletCollision/CollisionShapes/btMaterial.h" />
+		<Unit filename="dependencies/includes/bullet/BulletCollision/CollisionShapes/btMinkowskiSumShape.cpp" />
+		<Unit filename="dependencies/includes/bullet/BulletCollision/CollisionShapes/btMinkowskiSumShape.h" />
+		<Unit filename="dependencies/includes/bullet/BulletCollision/CollisionShapes/btMultiSphereShape.cpp" />
+		<Unit filename="dependencies/includes/bullet/BulletCollision/CollisionShapes/btMultiSphereShape.h" />
+		<Unit filename="dependencies/includes/bullet/BulletCollision/CollisionShapes/btMultimaterialTriangleMeshShape.cpp" />
+		<Unit filename="dependencies/includes/bullet/BulletCollision/CollisionShapes/btMultimaterialTriangleMeshShape.h" />
+		<Unit filename="dependencies/includes/bullet/BulletCollision/CollisionShapes/btOptimizedBvh.cpp" />
+		<Unit filename="dependencies/includes/bullet/BulletCollision/CollisionShapes/btOptimizedBvh.h" />
+		<Unit filename="dependencies/includes/bullet/BulletCollision/CollisionShapes/btPolyhedralConvexShape.cpp" />
+		<Unit filename="dependencies/includes/bullet/BulletCollision/CollisionShapes/btPolyhedralConvexShape.h" />
+		<Unit filename="dependencies/includes/bullet/BulletCollision/CollisionShapes/btScaledBvhTriangleMeshShape.cpp" />
+		<Unit filename="dependencies/includes/bullet/BulletCollision/CollisionShapes/btScaledBvhTriangleMeshShape.h" />
+		<Unit filename="dependencies/includes/bullet/BulletCollision/CollisionShapes/btShapeHull.cpp" />
+		<Unit filename="dependencies/includes/bullet/BulletCollision/CollisionShapes/btShapeHull.h" />
+		<Unit filename="dependencies/includes/bullet/BulletCollision/CollisionShapes/btSphereShape.cpp" />
+		<Unit filename="dependencies/includes/bullet/BulletCollision/CollisionShapes/btSphereShape.h" />
+		<Unit filename="dependencies/includes/bullet/BulletCollision/CollisionShapes/btStaticPlaneShape.cpp" />
+		<Unit filename="dependencies/includes/bullet/BulletCollision/CollisionShapes/btStaticPlaneShape.h" />
+		<Unit filename="dependencies/includes/bullet/BulletCollision/CollisionShapes/btStridingMeshInterface.cpp" />
+		<Unit filename="dependencies/includes/bullet/BulletCollision/CollisionShapes/btStridingMeshInterface.h" />
+		<Unit filename="dependencies/includes/bullet/BulletCollision/CollisionShapes/btTetrahedronShape.cpp" />
+		<Unit filename="dependencies/includes/bullet/BulletCollision/CollisionShapes/btTetrahedronShape.h" />
+		<Unit filename="dependencies/includes/bullet/BulletCollision/CollisionShapes/btTriangleBuffer.cpp" />
+		<Unit filename="dependencies/includes/bullet/BulletCollision/CollisionShapes/btTriangleBuffer.h" />
+		<Unit filename="dependencies/includes/bullet/BulletCollision/CollisionShapes/btTriangleCallback.cpp" />
+		<Unit filename="dependencies/includes/bullet/BulletCollision/CollisionShapes/btTriangleCallback.h" />
+		<Unit filename="dependencies/includes/bullet/BulletCollision/CollisionShapes/btTriangleIndexVertexArray.cpp" />
+		<Unit filename="dependencies/includes/bullet/BulletCollision/CollisionShapes/btTriangleIndexVertexArray.h" />
+		<Unit filename="dependencies/includes/bullet/BulletCollision/CollisionShapes/btTriangleIndexVertexMaterialArray.cpp" />
+		<Unit filename="dependencies/includes/bullet/BulletCollision/CollisionShapes/btTriangleIndexVertexMaterialArray.h" />
+		<Unit filename="dependencies/includes/bullet/BulletCollision/CollisionShapes/btTriangleInfoMap.h" />
+		<Unit filename="dependencies/includes/bullet/BulletCollision/CollisionShapes/btTriangleMesh.cpp" />
+		<Unit filename="dependencies/includes/bullet/BulletCollision/CollisionShapes/btTriangleMesh.h" />
+		<Unit filename="dependencies/includes/bullet/BulletCollision/CollisionShapes/btTriangleMeshShape.cpp" />
+		<Unit filename="dependencies/includes/bullet/BulletCollision/CollisionShapes/btTriangleMeshShape.h" />
+		<Unit filename="dependencies/includes/bullet/BulletCollision/CollisionShapes/btTriangleShape.h" />
+		<Unit filename="dependencies/includes/bullet/BulletCollision/CollisionShapes/btUniformScalingShape.cpp" />
+		<Unit filename="dependencies/includes/bullet/BulletCollision/CollisionShapes/btUniformScalingShape.h" />
+		<Unit filename="dependencies/includes/bullet/BulletCollision/Gimpact/btBoxCollision.h" />
+		<Unit filename="dependencies/includes/bullet/BulletCollision/Gimpact/btClipPolygon.h" />
+		<Unit filename="dependencies/includes/bullet/BulletCollision/Gimpact/btContactProcessing.cpp" />
+		<Unit filename="dependencies/includes/bullet/BulletCollision/Gimpact/btContactProcessing.h" />
+		<Unit filename="dependencies/includes/bullet/BulletCollision/Gimpact/btGImpactBvh.cpp" />
+		<Unit filename="dependencies/includes/bullet/BulletCollision/Gimpact/btGImpactBvh.h" />
+		<Unit filename="dependencies/includes/bullet/BulletCollision/Gimpact/btGImpactCollisionAlgorithm.cpp" />
+		<Unit filename="dependencies/includes/bullet/BulletCollision/Gimpact/btGImpactCollisionAlgorithm.h" />
+		<Unit filename="dependencies/includes/bullet/BulletCollision/Gimpact/btGImpactMassUtil.h" />
+		<Unit filename="dependencies/includes/bullet/BulletCollision/Gimpact/btGImpactQuantizedBvh.cpp" />
+		<Unit filename="dependencies/includes/bullet/BulletCollision/Gimpact/btGImpactQuantizedBvh.h" />
+		<Unit filename="dependencies/includes/bullet/BulletCollision/Gimpact/btGImpactShape.cpp" />
+		<Unit filename="dependencies/includes/bullet/BulletCollision/Gimpact/btGImpactShape.h" />
+		<Unit filename="dependencies/includes/bullet/BulletCollision/Gimpact/btGenericPoolAllocator.cpp" />
+		<Unit filename="dependencies/includes/bullet/BulletCollision/Gimpact/btGenericPoolAllocator.h" />
+		<Unit filename="dependencies/includes/bullet/BulletCollision/Gimpact/btGeometryOperations.h" />
+		<Unit filename="dependencies/includes/bullet/BulletCollision/Gimpact/btQuantization.h" />
+		<Unit filename="dependencies/includes/bullet/BulletCollision/Gimpact/btTriangleShapeEx.cpp" />
+		<Unit filename="dependencies/includes/bullet/BulletCollision/Gimpact/btTriangleShapeEx.h" />
+		<Unit filename="dependencies/includes/bullet/BulletCollision/Gimpact/gim_array.h" />
+		<Unit filename="dependencies/includes/bullet/BulletCollision/Gimpact/gim_basic_geometry_operations.h" />
+		<Unit filename="dependencies/includes/bullet/BulletCollision/Gimpact/gim_bitset.h" />
+		<Unit filename="dependencies/includes/bullet/BulletCollision/Gimpact/gim_box_collision.h" />
+		<Unit filename="dependencies/includes/bullet/BulletCollision/Gimpact/gim_box_set.cpp" />
+		<Unit filename="dependencies/includes/bullet/BulletCollision/Gimpact/gim_box_set.h" />
+		<Unit filename="dependencies/includes/bullet/BulletCollision/Gimpact/gim_clip_polygon.h" />
+		<Unit filename="dependencies/includes/bullet/BulletCollision/Gimpact/gim_contact.cpp" />
+		<Unit filename="dependencies/includes/bullet/BulletCollision/Gimpact/gim_contact.h" />
+		<Unit filename="dependencies/includes/bullet/BulletCollision/Gimpact/gim_geom_types.h" />
+		<Unit filename="dependencies/includes/bullet/BulletCollision/Gimpact/gim_geometry.h" />
+		<Unit filename="dependencies/includes/bullet/BulletCollision/Gimpact/gim_hash_table.h" />
+		<Unit filename="dependencies/includes/bullet/BulletCollision/Gimpact/gim_linear_math.h" />
+		<Unit filename="dependencies/includes/bullet/BulletCollision/Gimpact/gim_math.h" />
+		<Unit filename="dependencies/includes/bullet/BulletCollision/Gimpact/gim_memory.cpp" />
+		<Unit filename="dependencies/includes/bullet/BulletCollision/Gimpact/gim_memory.h" />
+		<Unit filename="dependencies/includes/bullet/BulletCollision/Gimpact/gim_radixsort.h" />
+		<Unit filename="dependencies/includes/bullet/BulletCollision/Gimpact/gim_tri_collision.cpp" />
+		<Unit filename="dependencies/includes/bullet/BulletCollision/Gimpact/gim_tri_collision.h" />
+		<Unit filename="dependencies/includes/bullet/BulletCollision/NarrowPhaseCollision/btContinuousConvexCollision.cpp" />
+		<Unit filename="dependencies/includes/bullet/BulletCollision/NarrowPhaseCollision/btContinuousConvexCollision.h" />
+		<Unit filename="dependencies/includes/bullet/BulletCollision/NarrowPhaseCollision/btConvexCast.cpp" />
+		<Unit filename="dependencies/includes/bullet/BulletCollision/NarrowPhaseCollision/btConvexCast.h" />
+		<Unit filename="dependencies/includes/bullet/BulletCollision/NarrowPhaseCollision/btConvexPenetrationDepthSolver.h" />
+		<Unit filename="dependencies/includes/bullet/BulletCollision/NarrowPhaseCollision/btDiscreteCollisionDetectorInterface.h" />
+		<Unit filename="dependencies/includes/bullet/BulletCollision/NarrowPhaseCollision/btGjkConvexCast.cpp" />
+		<Unit filename="dependencies/includes/bullet/BulletCollision/NarrowPhaseCollision/btGjkConvexCast.h" />
+		<Unit filename="dependencies/includes/bullet/BulletCollision/NarrowPhaseCollision/btGjkEpa2.cpp" />
+		<Unit filename="dependencies/includes/bullet/BulletCollision/NarrowPhaseCollision/btGjkEpa2.h" />
+		<Unit filename="dependencies/includes/bullet/BulletCollision/NarrowPhaseCollision/btGjkEpaPenetrationDepthSolver.cpp" />
+		<Unit filename="dependencies/includes/bullet/BulletCollision/NarrowPhaseCollision/btGjkEpaPenetrationDepthSolver.h" />
+		<Unit filename="dependencies/includes/bullet/BulletCollision/NarrowPhaseCollision/btGjkPairDetector.cpp" />
+		<Unit filename="dependencies/includes/bullet/BulletCollision/NarrowPhaseCollision/btGjkPairDetector.h" />
+		<Unit filename="dependencies/includes/bullet/BulletCollision/NarrowPhaseCollision/btManifoldPoint.h" />
+		<Unit filename="dependencies/includes/bullet/BulletCollision/NarrowPhaseCollision/btMinkowskiPenetrationDepthSolver.cpp" />
+		<Unit filename="dependencies/includes/bullet/BulletCollision/NarrowPhaseCollision/btMinkowskiPenetrationDepthSolver.h" />
+		<Unit filename="dependencies/includes/bullet/BulletCollision/NarrowPhaseCollision/btPersistentManifold.cpp" />
+		<Unit filename="dependencies/includes/bullet/BulletCollision/NarrowPhaseCollision/btPersistentManifold.h" />
+		<Unit filename="dependencies/includes/bullet/BulletCollision/NarrowPhaseCollision/btPointCollector.h" />
+		<Unit filename="dependencies/includes/bullet/BulletCollision/NarrowPhaseCollision/btPolyhedralContactClipping.cpp" />
+		<Unit filename="dependencies/includes/bullet/BulletCollision/NarrowPhaseCollision/btPolyhedralContactClipping.h" />
+		<Unit filename="dependencies/includes/bullet/BulletCollision/NarrowPhaseCollision/btRaycastCallback.cpp" />
+		<Unit filename="dependencies/includes/bullet/BulletCollision/NarrowPhaseCollision/btRaycastCallback.h" />
+		<Unit filename="dependencies/includes/bullet/BulletCollision/NarrowPhaseCollision/btSimplexSolverInterface.h" />
+		<Unit filename="dependencies/includes/bullet/BulletCollision/NarrowPhaseCollision/btSubSimplexConvexCast.cpp" />
+		<Unit filename="dependencies/includes/bullet/BulletCollision/NarrowPhaseCollision/btSubSimplexConvexCast.h" />
+		<Unit filename="dependencies/includes/bullet/BulletCollision/NarrowPhaseCollision/btVoronoiSimplexSolver.cpp" />
+		<Unit filename="dependencies/includes/bullet/BulletCollision/NarrowPhaseCollision/btVoronoiSimplexSolver.h" />
+		<Unit filename="dependencies/includes/bullet/BulletDynamics/Character/btCharacterControllerInterface.h" />
+		<Unit filename="dependencies/includes/bullet/BulletDynamics/Character/btKinematicCharacterController.cpp" />
+		<Unit filename="dependencies/includes/bullet/BulletDynamics/Character/btKinematicCharacterController.h" />
+		<Unit filename="dependencies/includes/bullet/BulletDynamics/ConstraintSolver/btConeTwistConstraint.cpp" />
+		<Unit filename="dependencies/includes/bullet/BulletDynamics/ConstraintSolver/btConeTwistConstraint.h" />
+		<Unit filename="dependencies/includes/bullet/BulletDynamics/ConstraintSolver/btConstraintSolver.h" />
+		<Unit filename="dependencies/includes/bullet/BulletDynamics/ConstraintSolver/btContactConstraint.cpp" />
+		<Unit filename="dependencies/includes/bullet/BulletDynamics/ConstraintSolver/btContactConstraint.h" />
+		<Unit filename="dependencies/includes/bullet/BulletDynamics/ConstraintSolver/btContactSolverInfo.h" />
+		<Unit filename="dependencies/includes/bullet/BulletDynamics/ConstraintSolver/btGearConstraint.cpp" />
+		<Unit filename="dependencies/includes/bullet/BulletDynamics/ConstraintSolver/btGearConstraint.h" />
+		<Unit filename="dependencies/includes/bullet/BulletDynamics/ConstraintSolver/btGeneric6DofConstraint.cpp" />
+		<Unit filename="dependencies/includes/bullet/BulletDynamics/ConstraintSolver/btGeneric6DofConstraint.h" />
+		<Unit filename="dependencies/includes/bullet/BulletDynamics/ConstraintSolver/btGeneric6DofSpringConstraint.cpp" />
+		<Unit filename="dependencies/includes/bullet/BulletDynamics/ConstraintSolver/btGeneric6DofSpringConstraint.h" />
+		<Unit filename="dependencies/includes/bullet/BulletDynamics/ConstraintSolver/btHinge2Constraint.cpp" />
+		<Unit filename="dependencies/includes/bullet/BulletDynamics/ConstraintSolver/btHinge2Constraint.h" />
+		<Unit filename="dependencies/includes/bullet/BulletDynamics/ConstraintSolver/btHingeConstraint.cpp" />
+		<Unit filename="dependencies/includes/bullet/BulletDynamics/ConstraintSolver/btHingeConstraint.h" />
+		<Unit filename="dependencies/includes/bullet/BulletDynamics/ConstraintSolver/btJacobianEntry.h" />
+		<Unit filename="dependencies/includes/bullet/BulletDynamics/ConstraintSolver/btPoint2PointConstraint.cpp" />
+		<Unit filename="dependencies/includes/bullet/BulletDynamics/ConstraintSolver/btPoint2PointConstraint.h" />
+		<Unit filename="dependencies/includes/bullet/BulletDynamics/ConstraintSolver/btSequentialImpulseConstraintSolver.cpp" />
+		<Unit filename="dependencies/includes/bullet/BulletDynamics/ConstraintSolver/btSequentialImpulseConstraintSolver.h" />
+		<Unit filename="dependencies/includes/bullet/BulletDynamics/ConstraintSolver/btSliderConstraint.cpp" />
+		<Unit filename="dependencies/includes/bullet/BulletDynamics/ConstraintSolver/btSliderConstraint.h" />
+		<Unit filename="dependencies/includes/bullet/BulletDynamics/ConstraintSolver/btSolve2LinearConstraint.cpp" />
+		<Unit filename="dependencies/includes/bullet/BulletDynamics/ConstraintSolver/btSolve2LinearConstraint.h" />
+		<Unit filename="dependencies/includes/bullet/BulletDynamics/ConstraintSolver/btSolverBody.h" />
+		<Unit filename="dependencies/includes/bullet/BulletDynamics/ConstraintSolver/btSolverConstraint.h" />
+		<Unit filename="dependencies/includes/bullet/BulletDynamics/ConstraintSolver/btTypedConstraint.cpp" />
+		<Unit filename="dependencies/includes/bullet/BulletDynamics/ConstraintSolver/btTypedConstraint.h" />
+		<Unit filename="dependencies/includes/bullet/BulletDynamics/ConstraintSolver/btUniversalConstraint.cpp" />
+		<Unit filename="dependencies/includes/bullet/BulletDynamics/ConstraintSolver/btUniversalConstraint.h" />
+		<Unit filename="dependencies/includes/bullet/BulletDynamics/Dynamics/btActionInterface.h" />
+		<Unit filename="dependencies/includes/bullet/BulletDynamics/Dynamics/btDiscreteDynamicsWorld.cpp" />
+		<Unit filename="dependencies/includes/bullet/BulletDynamics/Dynamics/btDiscreteDynamicsWorld.h" />
+		<Unit filename="dependencies/includes/bullet/BulletDynamics/Dynamics/btDynamicsWorld.h" />
+		<Unit filename="dependencies/includes/bullet/BulletDynamics/Dynamics/btRigidBody.cpp" />
+		<Unit filename="dependencies/includes/bullet/BulletDynamics/Dynamics/btRigidBody.h" />
+		<Unit filename="dependencies/includes/bullet/BulletDynamics/Dynamics/btSimpleDynamicsWorld.cpp" />
+		<Unit filename="dependencies/includes/bullet/BulletDynamics/Dynamics/btSimpleDynamicsWorld.h" />
+		<Unit filename="dependencies/includes/bullet/BulletDynamics/Vehicle/btRaycastVehicle.cpp" />
+		<Unit filename="dependencies/includes/bullet/BulletDynamics/Vehicle/btRaycastVehicle.h" />
+		<Unit filename="dependencies/includes/bullet/BulletDynamics/Vehicle/btVehicleRaycaster.h" />
+		<Unit filename="dependencies/includes/bullet/BulletDynamics/Vehicle/btWheelInfo.cpp" />
+		<Unit filename="dependencies/includes/bullet/BulletDynamics/Vehicle/btWheelInfo.h" />
+		<Unit filename="dependencies/includes/bullet/LinearMath/btAabbUtil2.h" />
+		<Unit filename="dependencies/includes/bullet/LinearMath/btAlignedAllocator.cpp" />
+		<Unit filename="dependencies/includes/bullet/LinearMath/btAlignedAllocator.h" />
+		<Unit filename="dependencies/includes/bullet/LinearMath/btAlignedObjectArray.h" />
+		<Unit filename="dependencies/includes/bullet/LinearMath/btConvexHull.cpp" />
+		<Unit filename="dependencies/includes/bullet/LinearMath/btConvexHull.h" />
+		<Unit filename="dependencies/includes/bullet/LinearMath/btConvexHullComputer.cpp" />
+		<Unit filename="dependencies/includes/bullet/LinearMath/btConvexHullComputer.h" />
+		<Unit filename="dependencies/includes/bullet/LinearMath/btDefaultMotionState.h" />
+		<Unit filename="dependencies/includes/bullet/LinearMath/btGeometryUtil.cpp" />
+		<Unit filename="dependencies/includes/bullet/LinearMath/btGeometryUtil.h" />
+		<Unit filename="dependencies/includes/bullet/LinearMath/btGrahamScan2dConvexHull.h" />
+		<Unit filename="dependencies/includes/bullet/LinearMath/btHashMap.h" />
+		<Unit filename="dependencies/includes/bullet/LinearMath/btIDebugDraw.h" />
+		<Unit filename="dependencies/includes/bullet/LinearMath/btList.h" />
+		<Unit filename="dependencies/includes/bullet/LinearMath/btMatrix3x3.h" />
+		<Unit filename="dependencies/includes/bullet/LinearMath/btMinMax.h" />
+		<Unit filename="dependencies/includes/bullet/LinearMath/btMotionState.h" />
+		<Unit filename="dependencies/includes/bullet/LinearMath/btPolarDecomposition.cpp" />
+		<Unit filename="dependencies/includes/bullet/LinearMath/btPolarDecomposition.h" />
+		<Unit filename="dependencies/includes/bullet/LinearMath/btPoolAllocator.h" />
+		<Unit filename="dependencies/includes/bullet/LinearMath/btQuadWord.h" />
+		<Unit filename="dependencies/includes/bullet/LinearMath/btQuaternion.h" />
+		<Unit filename="dependencies/includes/bullet/LinearMath/btQuickprof.cpp" />
+		<Unit filename="dependencies/includes/bullet/LinearMath/btQuickprof.h" />
+		<Unit filename="dependencies/includes/bullet/LinearMath/btRandom.h" />
+		<Unit filename="dependencies/includes/bullet/LinearMath/btScalar.h" />
+		<Unit filename="dependencies/includes/bullet/LinearMath/btSerializer.cpp" />
+		<Unit filename="dependencies/includes/bullet/LinearMath/btSerializer.h" />
+		<Unit filename="dependencies/includes/bullet/LinearMath/btStackAlloc.h" />
+		<Unit filename="dependencies/includes/bullet/LinearMath/btTransform.h" />
+		<Unit filename="dependencies/includes/bullet/LinearMath/btTransformUtil.h" />
+		<Unit filename="dependencies/includes/bullet/LinearMath/btVector3.cpp" />
+		<Unit filename="dependencies/includes/bullet/LinearMath/btVector3.h" />
+		<Unit filename="dependencies/includes/fmod/linux/fmod.h" />
+		<Unit filename="dependencies/includes/fmod/linux/fmod.hpp" />
+		<Unit filename="dependencies/includes/fmod/linux/fmod_codec.h" />
+		<Unit filename="dependencies/includes/fmod/linux/fmod_dsp.h" />
+		<Unit filename="dependencies/includes/fmod/linux/fmod_errors.h" />
+		<Unit filename="dependencies/includes/fmod/linux/fmod_memoryinfo.h" />
+		<Unit filename="dependencies/includes/fmod/linux/fmod_output.h" />
+		<Unit filename="dependencies/includes/fmod/linux/fmodlinux.h" />
+		<Unit filename="dependencies/includes/freetype/autofit.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="dependencies/includes/freetype/bdf.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="dependencies/includes/freetype/cff.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="dependencies/includes/freetype/ftbase.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="dependencies/includes/freetype/ftbbox.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="dependencies/includes/freetype/ftbitmap.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="dependencies/includes/freetype/ftcache.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="dependencies/includes/freetype/ftdebug.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="dependencies/includes/freetype/ftfstype.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="dependencies/includes/freetype/ftgasp.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="dependencies/includes/freetype/ftglyph.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="dependencies/includes/freetype/ftgxval.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="dependencies/includes/freetype/ftgzip.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="dependencies/includes/freetype/ftinit.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="dependencies/includes/freetype/ftlcdfil.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="dependencies/includes/freetype/ftlzw.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="dependencies/includes/freetype/ftmm.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="dependencies/includes/freetype/ftotval.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="dependencies/includes/freetype/ftpatent.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="dependencies/includes/freetype/ftpfr.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="dependencies/includes/freetype/ftstroke.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="dependencies/includes/freetype/ftsynth.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="dependencies/includes/freetype/ftsystem.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="dependencies/includes/freetype/fttype1.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="dependencies/includes/freetype/ftwinfnt.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="dependencies/includes/freetype/ftxf86.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="dependencies/includes/freetype/pcf.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="dependencies/includes/freetype/pfr.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="dependencies/includes/freetype/psaux.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="dependencies/includes/freetype/pshinter.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="dependencies/includes/freetype/psmodule.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="dependencies/includes/freetype/raster.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="dependencies/includes/freetype/sfnt.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="dependencies/includes/freetype/smooth.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="dependencies/includes/freetype/truetype.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="dependencies/includes/freetype/type1.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="dependencies/includes/freetype/type1cid.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="dependencies/includes/freetype/type42.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="dependencies/includes/freetype/winfnt.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="dependencies/includes/glew/glew.h" />
+		<Unit filename="dependencies/includes/glew/glxew.h" />
+		<Unit filename="dependencies/includes/glew/wglew.h" />
+		<Unit filename="dependencies/includes/libpng/config.h" />
+		<Unit filename="dependencies/includes/libpng/png.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="dependencies/includes/libpng/png.h" />
+		<Unit filename="dependencies/includes/libpng/pngconf.h" />
+		<Unit filename="dependencies/includes/libpng/pngerror.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="dependencies/includes/libpng/pngget.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="dependencies/includes/libpng/pngmem.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="dependencies/includes/libpng/pngpread.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="dependencies/includes/libpng/pngpriv.h" />
+		<Unit filename="dependencies/includes/libpng/pngread.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="dependencies/includes/libpng/pngrio.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="dependencies/includes/libpng/pngrtran.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="dependencies/includes/libpng/pngrutil.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="dependencies/includes/libpng/pngset.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="dependencies/includes/libpng/pngtrans.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="dependencies/includes/libpng/pngwio.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="dependencies/includes/libpng/pngwrite.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="dependencies/includes/libpng/pngwtran.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="dependencies/includes/libpng/pngwutil.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="dependencies/includes/lua/lapi.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="dependencies/includes/lua/lapi.h" />
+		<Unit filename="dependencies/includes/lua/lauxlib.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="dependencies/includes/lua/lauxlib.h" />
+		<Unit filename="dependencies/includes/lua/lbaselib.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="dependencies/includes/lua/lbitlib.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="dependencies/includes/lua/lcode.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="dependencies/includes/lua/lcode.h" />
+		<Unit filename="dependencies/includes/lua/lcorolib.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="dependencies/includes/lua/lctype.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="dependencies/includes/lua/lctype.h" />
+		<Unit filename="dependencies/includes/lua/ldblib.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="dependencies/includes/lua/ldebug.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="dependencies/includes/lua/ldebug.h" />
+		<Unit filename="dependencies/includes/lua/ldo.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="dependencies/includes/lua/ldo.h" />
+		<Unit filename="dependencies/includes/lua/ldump.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="dependencies/includes/lua/lfunc.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="dependencies/includes/lua/lfunc.h" />
+		<Unit filename="dependencies/includes/lua/lgc.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="dependencies/includes/lua/lgc.h" />
+		<Unit filename="dependencies/includes/lua/linit.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="dependencies/includes/lua/liolib.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="dependencies/includes/lua/llex.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="dependencies/includes/lua/llex.h" />
+		<Unit filename="dependencies/includes/lua/llimits.h" />
+		<Unit filename="dependencies/includes/lua/lmathlib.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="dependencies/includes/lua/lmem.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="dependencies/includes/lua/lmem.h" />
+		<Unit filename="dependencies/includes/lua/loadlib.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="dependencies/includes/lua/lobject.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="dependencies/includes/lua/lobject.h" />
+		<Unit filename="dependencies/includes/lua/lopcodes.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="dependencies/includes/lua/lopcodes.h" />
+		<Unit filename="dependencies/includes/lua/loslib.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="dependencies/includes/lua/lparser.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="dependencies/includes/lua/lparser.h" />
+		<Unit filename="dependencies/includes/lua/lstate.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="dependencies/includes/lua/lstate.h" />
+		<Unit filename="dependencies/includes/lua/lstring.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="dependencies/includes/lua/lstring.h" />
+		<Unit filename="dependencies/includes/lua/lstrlib.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="dependencies/includes/lua/ltable.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="dependencies/includes/lua/ltable.h" />
+		<Unit filename="dependencies/includes/lua/ltablib.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="dependencies/includes/lua/ltm.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="dependencies/includes/lua/ltm.h" />
+		<Unit filename="dependencies/includes/lua/lua.h" />
+		<Unit filename="dependencies/includes/lua/lua.hpp" />
+		<Unit filename="dependencies/includes/lua/luaconf.h" />
+		<Unit filename="dependencies/includes/lua/lualib.h" />
+		<Unit filename="dependencies/includes/lua/lundump.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="dependencies/includes/lua/lundump.h" />
+		<Unit filename="dependencies/includes/lua/lvm.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="dependencies/includes/lua/lvm.h" />
+		<Unit filename="dependencies/includes/lua/lzio.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="dependencies/includes/lua/lzio.h" />
+		<Unit filename="ghost/BoundingBox.cpp" />
+		<Unit filename="ghost/BoundingBox.h" />
+		<Unit filename="ghost/BoundingCapsule.cpp" />
+		<Unit filename="ghost/BoundingCapsule.h" />
+		<Unit filename="ghost/BoundingMesh.cpp" />
+		<Unit filename="ghost/BoundingMesh.h" />
+		<Unit filename="ghost/BoundingSphere.cpp" />
+		<Unit filename="ghost/BoundingSphere.h" />
+		<Unit filename="ghost/BoundingTerrain.cpp" />
+		<Unit filename="ghost/BoundingTerrain.h" />
+		<Unit filename="ghost/BoundingVolume.h" />
+		<Unit filename="ghost/Camera.cpp" />
+		<Unit filename="ghost/Camera.h" />
+		<Unit filename="ghost/Color.cpp" />
+		<Unit filename="ghost/Color.h" />
+		<Unit filename="ghost/Console.cpp" />
+		<Unit filename="ghost/Console.h" />
+		<Unit filename="ghost/Engine.cpp" />
+		<Unit filename="ghost/Engine.h" />
+		<Unit filename="ghost/Environment.cpp" />
+		<Unit filename="ghost/Environment.h" />
+		<Unit filename="ghost/FrameBuffer.cpp" />
+		<Unit filename="ghost/FrameBuffer.h" />
+		<Unit filename="ghost/GUIManager.cpp" />
+		<Unit filename="ghost/GUIManager.h" />
+		<Unit filename="ghost/Input.cpp" />
+		<Unit filename="ghost/Input.h" />
+		<Unit filename="ghost/MD2Parser.cpp" />
+		<Unit filename="ghost/MD2Parser.h" />
+		<Unit filename="ghost/Matrix.cpp" />
+		<Unit filename="ghost/Matrix.h" />
+		<Unit filename="ghost/Multiplatform/FileManager.h" />
+		<Unit filename="ghost/Multiplatform/Ghost.h" />
+		<Unit filename="ghost/Multiplatform/GraphicsManager.h" />
+		<Unit filename="ghost/Multiplatform/Linux/LinuxFileManager.cpp" />
+		<Unit filename="ghost/Multiplatform/Linux/LinuxFileManager.h" />
+		<Unit filename="ghost/Multiplatform/Linux/LinuxGhost.cpp" />
+		<Unit filename="ghost/Multiplatform/Linux/LinuxGhost.h" />
+		<Unit filename="ghost/Multiplatform/Linux/LinuxGraphicsManager.cpp" />
+		<Unit filename="ghost/Multiplatform/Linux/LinuxGraphicsManager.h" />
+		<Unit filename="ghost/Multiplatform/Linux/LinuxSoundManager.cpp" />
+		<Unit filename="ghost/Multiplatform/Linux/LinuxSoundManager.h" />
+		<Unit filename="ghost/Multiplatform/Linux/LinuxSystem.cpp" />
+		<Unit filename="ghost/Multiplatform/Linux/LinuxSystem.h" />
+		<Unit filename="ghost/Multiplatform/Linux/LinuxThread.cpp" />
+		<Unit filename="ghost/Multiplatform/Linux/LinuxThread.h" />
+		<Unit filename="ghost/Multiplatform/SoundManager.h" />
+		<Unit filename="ghost/Multiplatform/System.h" />
+		<Unit filename="ghost/Multiplatform/Thread.h" />
+		<Unit filename="ghost/Node.cpp" />
+		<Unit filename="ghost/Node.h" />
+		<Unit filename="ghost/ObjParser.cpp" />
+		<Unit filename="ghost/ObjParser.h" />
+		<Unit filename="ghost/Physics/Vehicle.cpp" />
+		<Unit filename="ghost/Physics/Vehicle.h" />
+		<Unit filename="ghost/PhysicsManager.cpp" />
+		<Unit filename="ghost/PhysicsManager.h" />
+		<Unit filename="ghost/Quaternion.cpp" />
+		<Unit filename="ghost/Quaternion.h" />
+		<Unit filename="ghost/RenderManager.cpp" />
+		<Unit filename="ghost/RenderManager.h" />
+		<Unit filename="ghost/RenderPass.cpp" />
+		<Unit filename="ghost/RenderPass.h" />
+		<Unit filename="ghost/ResourceManager.cpp" />
+		<Unit filename="ghost/ResourceManager.h" />
+		<Unit filename="ghost/Resources/Animatable.h" />
+		<Unit filename="ghost/Resources/AtlasTexture.cpp" />
+		<Unit filename="ghost/Resources/AtlasTexture.h" />
+		<Unit filename="ghost/Resources/Attributes.cpp" />
+		<Unit filename="ghost/Resources/Attributes.h" />
+		<Unit filename="ghost/Resources/CubeMap.cpp" />
+		<Unit filename="ghost/Resources/CubeMap.h" />
+		<Unit filename="ghost/Resources/DynamicObject.cpp" />
+		<Unit filename="ghost/Resources/DynamicObject.h" />
+		<Unit filename="ghost/Resources/GUIButton.cpp" />
+		<Unit filename="ghost/Resources/GUIButton.h" />
+		<Unit filename="ghost/Resources/GUIContainer.cpp" />
+		<Unit filename="ghost/Resources/GUIContainer.h" />
+		<Unit filename="ghost/Resources/GUIImage.cpp" />
+		<Unit filename="ghost/Resources/GUIImage.h" />
+		<Unit filename="ghost/Resources/GUIInput.cpp" />
+		<Unit filename="ghost/Resources/GUIInput.h" />
+		<Unit filename="ghost/Resources/GUISurface.cpp" />
+		<Unit filename="ghost/Resources/GUISurface.h" />
+		<Unit filename="ghost/Resources/GUIText.cpp" />
+		<Unit filename="ghost/Resources/GUIText.h" />
+		<Unit filename="ghost/Resources/Geometry.cpp" />
+		<Unit filename="ghost/Resources/Geometry.h" />
+		<Unit filename="ghost/Resources/Light.cpp" />
+		<Unit filename="ghost/Resources/Light.h" />
+		<Unit filename="ghost/Resources/Physics.cpp" />
+		<Unit filename="ghost/Resources/Physics.h" />
+		<Unit filename="ghost/Resources/Renderable.h" />
+		<Unit filename="ghost/Resources/Resource.cpp" />
+		<Unit filename="ghost/Resources/Resource.h" />
+		<Unit filename="ghost/Resources/Script.cpp" />
+		<Unit filename="ghost/Resources/Script.h" />
+		<Unit filename="ghost/Resources/Shader.cpp" />
+		<Unit filename="ghost/Resources/Shader.h" />
+		<Unit filename="ghost/Resources/Sound.cpp" />
+		<Unit filename="ghost/Resources/Sound.h" />
+		<Unit filename="ghost/Resources/Sprite.cpp" />
+		<Unit filename="ghost/Resources/Sprite.h" />
+		<Unit filename="ghost/Resources/StaticObject.cpp" />
+		<Unit filename="ghost/Resources/StaticObject.h" />
+		<Unit filename="ghost/Resources/Texture.cpp" />
+		<Unit filename="ghost/Resources/Texture.h" />
+		<Unit filename="ghost/Resources/TextureMono.cpp" />
+		<Unit filename="ghost/Resources/TextureMono.h" />
+		<Unit filename="ghost/Resources/TextureRGBA.cpp" />
+		<Unit filename="ghost/Resources/TextureRGBA.h" />
+		<Unit filename="ghost/Resources/Vertex.h" />
+		<Unit filename="ghost/ScriptBindings.cpp" />
+		<Unit filename="ghost/ScriptBindings.h" />
+		<Unit filename="ghost/ScriptManager.cpp" />
+		<Unit filename="ghost/ScriptManager.h" />
+		<Unit filename="ghost/ServiceLocator.cpp" />
+		<Unit filename="ghost/ServiceLocator.h" />
+		<Unit filename="ghost/Settings.cpp" />
+		<Unit filename="ghost/Settings.h" />
+		<Unit filename="ghost/ShapeParser.cpp" />
+		<Unit filename="ghost/ShapeParser.h" />
+		<Unit filename="ghost/Shapes.cpp" />
+		<Unit filename="ghost/Shapes.h" />
+		<Unit filename="ghost/TerrainParser.cpp" />
+		<Unit filename="ghost/TerrainParser.h" />
+		<Unit filename="ghost/TextManager.cpp" />
+		<Unit filename="ghost/TextManager.h" />
+		<Unit filename="ghost/TextureAtlas.cpp" />
+		<Unit filename="ghost/TextureAtlas.h" />
+		<Unit filename="ghost/ThreadManager.cpp" />
+		<Unit filename="ghost/ThreadManager.h" />
+		<Unit filename="ghost/Utils.cpp" />
+		<Unit filename="ghost/Utils.h" />
+		<Unit filename="ghost/Vec3.cpp" />
+		<Unit filename="ghost/Vec3.h" />
+		<Unit filename="ghost/WaterLoader.cpp" />
+		<Unit filename="ghost/WaterLoader.h" />
+		<Unit filename="ghost/Xml.cpp" />
+		<Unit filename="ghost/Xml.h" />
+		<Unit filename="main_linux.cpp" />
+		<Extensions>
+			<code_completion />
+			<debugger />
+		</Extensions>
+	</Project>
+</CodeBlocks_project_file>

@@ -1,0 +1,124 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes" ?>
+<CodeBlocks_layout_file>
+	<ActiveTarget name="Debug" />
+	<File name="dependencies/includes/bullet/BulletCollision/Gimpact/gim_tri_collision.cpp" open="0" top="0" tabpos="0">
+		<Cursor position="10574" topLine="366" />
+	</File>
+	<File name="dependencies/includes/bullet/BulletCollision/NarrowPhaseCollision/btPolyhedralContactClipping.cpp" open="0" top="0" tabpos="2">
+		<Cursor position="8884" topLine="270" />
+	</File>
+	<File name="dependencies/includes/bullet/BulletDynamics/ConstraintSolver/btConeTwistConstraint.cpp" open="0" top="0" tabpos="0">
+		<Cursor position="18020" topLine="511" />
+	</File>
+	<File name="dependencies/includes/libpng/png.c" open="0" top="0" tabpos="0">
+		<Cursor position="3405" topLine="90" />
+	</File>
+	<File name="dependencies/includes/libpng/png.h" open="0" top="0" tabpos="0">
+		<Cursor position="17982" topLine="362" />
+	</File>
+	<File name="dependencies/includes/libpng/pngpriv.h" open="0" top="0" tabpos="0">
+		<Cursor position="32361" topLine="823" />
+	</File>
+	<File name="dependencies/includes/libpng/pngread.c" open="0" top="0" tabpos="0">
+		<Cursor position="4851" topLine="116" />
+	</File>
+	<File name="dependencies/includes/lua/lauxlib.h" open="0" top="0" tabpos="0">
+		<Cursor position="396" topLine="0" />
+	</File>
+	<File name="ghost/BoundingMesh.h" open="0" top="0" tabpos="0">
+		<Cursor position="921" topLine="0" />
+	</File>
+	<File name="ghost/Camera.cpp" open="0" top="0" tabpos="5">
+		<Cursor position="3898" topLine="107" />
+	</File>
+	<File name="ghost/Camera.h" open="0" top="0" tabpos="2">
+		<Cursor position="1872" topLine="54" />
+	</File>
+	<File name="ghost/Engine.cpp" open="0" top="0" tabpos="8">
+		<Cursor position="8262" topLine="198" />
+	</File>
+	<File name="ghost/Input.cpp" open="0" top="0" tabpos="0">
+		<Cursor position="3332" topLine="144" />
+	</File>
+	<File name="ghost/Multiplatform/Linux/LinuxFileManager.cpp" open="0" top="0" tabpos="0">
+		<Cursor position="486" topLine="0" />
+	</File>
+	<File name="ghost/Multiplatform/Linux/LinuxFileManager.h" open="0" top="0" tabpos="0">
+		<Cursor position="470" topLine="0" />
+	</File>
+	<File name="ghost/Multiplatform/Linux/LinuxGhost.cpp" open="0" top="0" tabpos="0">
+		<Cursor position="441" topLine="0" />
+	</File>
+	<File name="ghost/Multiplatform/Linux/LinuxGhost.h" open="1" top="1" tabpos="1">
+		<Cursor position="202" topLine="0" />
+	</File>
+	<File name="ghost/Multiplatform/Linux/LinuxGraphicsManager.cpp" open="0" top="0" tabpos="1">
+		<Cursor position="10056" topLine="299" />
+	</File>
+	<File name="ghost/Multiplatform/Linux/LinuxGraphicsManager.h" open="0" top="0" tabpos="0">
+		<Cursor position="618" topLine="0" />
+	</File>
+	<File name="ghost/Multiplatform/Linux/LinuxSystem.cpp" open="0" top="0" tabpos="0">
+		<Cursor position="338" topLine="6" />
+	</File>
+	<File name="ghost/Node.cpp" open="0" top="0" tabpos="7">
+		<Cursor position="16368" topLine="532" />
+	</File>
+	<File name="ghost/Node.h" open="0" top="0" tabpos="1">
+		<Cursor position="247" topLine="0" />
+	</File>
+	<File name="ghost/Physics/Vehicle.cpp" open="0" top="0" tabpos="2">
+		<Cursor position="8107" topLine="301" />
+	</File>
+	<File name="ghost/Physics/Vehicle.h" open="0" top="0" tabpos="1">
+		<Cursor position="1597" topLine="9" />
+	</File>
+	<File name="ghost/PhysicsManager.cpp" open="0" top="0" tabpos="6">
+		<Cursor position="1533" topLine="33" />
+	</File>
+	<File name="ghost/PhysicsManager.h" open="0" top="0" tabpos="3">
+		<Cursor position="694" topLine="0" />
+	</File>
+	<File name="ghost/RenderManager.cpp" open="0" top="0" tabpos="2">
+		<Cursor position="6061" topLine="169" />
+	</File>
+	<File name="ghost/RenderManager.h" open="0" top="0" tabpos="2">
+		<Cursor position="2693" topLine="89" />
+	</File>
+	<File name="ghost/RenderPass.cpp" open="0" top="0" tabpos="6">
+		<Cursor position="1177" topLine="13" />
+	</File>
+	<File name="ghost/RenderPass.h" open="0" top="0" tabpos="3">
+		<Cursor position="1131" topLine="12" />
+	</File>
+	<File name="ghost/ResourceManager.cpp" open="0" top="0" tabpos="0">
+		<Cursor position="3339" topLine="91" />
+	</File>
+	<File name="ghost/Resources/Resource.h" open="0" top="0" tabpos="0">
+		<Cursor position="0" topLine="63" />
+	</File>
+	<File name="ghost/ScriptManager.cpp" open="0" top="0" tabpos="5">
+		<Cursor position="7876" topLine="225" />
+	</File>
+	<File name="ghost/ScriptManager.h" open="0" top="0" tabpos="1">
+		<Cursor position="2704" topLine="90" />
+	</File>
+	<File name="ghost/ServiceLocator.cpp" open="0" top="0" tabpos="0">
+		<Cursor position="904" topLine="30" />
+	</File>
+	<File name="ghost/ServiceLocator.h" open="0" top="0" tabpos="0">
+		<Cursor position="0" topLine="46" />
+	</File>
+	<File name="ghost/Settings.cpp" open="1" top="0" tabpos="2">
+		<Cursor position="2103" topLine="18" />
+	</File>
+	<File name="ghost/TerrainParser.cpp" open="0" top="0" tabpos="0">
+		<Cursor position="6126" topLine="160" />
+	</File>
+	<File name="ghost/TextManager.cpp" open="0" top="0" tabpos="0">
+		<Cursor position="757" topLine="5" />
+	</File>
+	<File name="main_linux.cpp" open="0" top="0" tabpos="2">
+		<Cursor position="5114" topLine="154" />
+	</File>
+</CodeBlocks_layout_file>

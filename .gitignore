@@ -1,0 +1,31 @@
+/*
+!android/
+android/*
+!android/jni/
+!android/libs/
+!android/res/
+!android/src/
+!android/AndroidManifest.xml
+!android/project.properties
+!dependencies/
+!ghost/
+!resources/
+!main_android.cpp
+!main_linux.cpp
+!main_macosx.cpp
+!main_windows.cpp
+!.gitattributes
+!.gitignore
+# Code Blocks user files.
+!GameEngine.cbp
+!GameEngine.depend
+!GameEngine.layout
+# Visual studio project files.
+!GhostEngine.sln
+!GhostEngine.vcxproj
+!GhostEngine.vcxproj.filters
+!GhostEngine.vcxproj.user
+# XCode project file.
+!SMart Engine/
+SMart Engine/*
+!SMart Engine/SMart Engine.xcodeproj
