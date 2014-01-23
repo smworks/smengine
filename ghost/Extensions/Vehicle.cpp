@@ -256,20 +256,25 @@ void Vehicle::update() {
 	vehicle_->applyEngineForce(f1, 2);
 	vehicle_->applyEngineForce(f1, 3);
 	UINT32 wheelCount = (UINT32) vehicle_->getNumWheels();
-	Mat4 m;
+	Mat4 mat, matPosRot, matScale;
 	for (UINT32 i = 0; i < wheelCount; i++) {
 		vehicle_->updateWheelTransform(i, true);
 		if (wheels_.size() > i) {
 			btTransform& worldTrans =
 				vehicle_->getWheelInfo(i).m_worldTransform;
-			worldTrans.getOpenGLMatrix(m);
-			wheels_[i]->setMatrix(m);
-			btQuaternion rot = worldTrans.getRotation();
-			wheels_[i]->getRot().setXYZW(
-				rot.getX(), rot.getY(), rot.getZ(), rot.getW());
-			btVector3 pos = worldTrans.getOrigin();
-			wheels_[i]->getPos().setXYZ(
-				pos.getX(), pos.getY(), pos.getZ());
+			worldTrans.getOpenGLMatrix(matPosRot);
+			Vec3 vScale = wheels_[i]->getScale();
+			Matrix::scale(matScale, vScale.getX(), vScale.getY(), vScale.getZ());
+			Matrix::multiply(matPosRot, matScale, mat);
+			wheels_[i]->setMatrix(mat);
+			wheels_[i]->setState(Node::TRANSFORMABLE, false);
+			//btQuaternion rot = worldTrans.getRotation();
+			//wheels_[i]->getRot().setXYZW(
+			//	rot.getX(), rot.getY(), rot.getZ(), rot.getW());
+			//btVector3 pos = worldTrans.getOrigin();
+			//wheels_[i]->getPos().setXYZ(
+			//	pos.getX(), pos.getY(), pos.getZ());
+
 		}
 	}
 	vehicle_->setBrake(100.0f, 0);

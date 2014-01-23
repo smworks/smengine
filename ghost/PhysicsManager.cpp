@@ -19,6 +19,7 @@
 #include "Resources/StaticObject.h"
 #include "Resources/TextureRGBA.h"
 #include "Extensions/Vehicle.h"
+#include "Resources/Attributes.h"
 
 DebugDraw::DebugDraw(GraphicsManager* gm) : gm_(gm), debugMode_(0) {}
 
@@ -42,9 +43,8 @@ PhysicsManager::PhysicsManager(ServiceLocator* services) :
 	dispatcher_ = new btCollisionDispatcher(conf_);
 	pairCache_ = new btDbvtBroadphase();
 	solver_ = new btSequentialImpulseConstraintSolver();
-	dynamicsWorld_ = new btDiscreteDynamicsWorld(
-		dispatcher_, pairCache_, solver_, conf_);
-	dynamicsWorld_->setGravity(btVector3(0.0f, -9.8f, 0.0f));
+	dynamicsWorld_ = new btDiscreteDynamicsWorld(dispatcher_, pairCache_, solver_, conf_);
+	dynamicsWorld_->setGravity(btVector3(0.0f, GRAVITY, 0.0f));
 	LOGD("Created physics manager.");
 }
 
@@ -85,10 +85,9 @@ void PhysicsManager::reset() {
 }
 
 void PhysicsManager::update(double time) {
-	static float delta = 1.0f / 60.0f;
-	time *= 0.001f;
-	int maxSteps = time < delta ? 1 : (int) (time / delta);
-	dynamicsWorld_->stepSimulation(btScalar(time), maxSteps);
+	float delta = (float) time * 0.001f;
+	int maxSteps = delta < STEP_DELTA ? 1 : (int) (delta / STEP_DELTA) + 1;
+	dynamicsWorld_->stepSimulation(delta, maxSteps, STEP_DELTA);
 	SIZE size = rigidBodies_.size();
 	for (SIZE i = 0; i < size; i++) {
 		btRigidBody* body = rigidBodies_[i];
@@ -98,8 +97,7 @@ void PhysicsManager::update(double time) {
 			Node* node = static_cast<Node*>(
 				body->getUserPointer());
 			btQuaternion rot = trans.getRotation();
-			node->getRot().setXYZW(
-				rot.getX(), rot.getY(), rot.getZ(), rot.getW());
+			node->getRot().setXYZW(rot.getX(), rot.getY(), rot.getZ(), rot.getW());
 			btVector3 pos = trans.getOrigin();
 			node->getPos().setXYZ(pos.getX(), pos.getY(), pos.getZ());
 			node->setState(Node::POSITION, true);
@@ -252,10 +250,20 @@ void PhysicsManager::setGraphicsManager(GraphicsManager* gm) {
 
 void PhysicsManager::addBox(Node* node) {
 	StaticObject* model = static_cast<StaticObject*>(node->getResource(Resource::STATIC_OBJECT));
-	btCollisionShape* groundShape = new btBoxShape(btVector3(
+	btVector3 dimensions = btVector3(
 		toFloat(model->getAttribute(Resource::ATTR_WIDTH).c_str()) * 0.5f * node->getScale().getX(),
 		toFloat(model->getAttribute(Resource::ATTR_HEIGHT).c_str()) * 0.5f * node->getScale().getY(),
-		toFloat(model->getAttribute(Resource::ATTR_DEPTH).c_str()) * 0.5f * node->getScale().getZ()));
+		toFloat(model->getAttribute(Resource::ATTR_DEPTH).c_str()) * 0.5f * node->getScale().getZ());
+	btCollisionShape* shape = 0;
+	if (fabs(dimensions.y()) < GHOST_DELTA &&
+		(fabs(dimensions.x()) > MAX_SIZE || fabs(dimensions.y()) > MAX_SIZE)) {
+		shape = new btStaticPlaneShape(btVector3(0, 1, 0), node->getPos().getY());
+		LOGD("Using infinite plate instead of box, because box height is 0 and other "
+			"dimensions are bigger than maximum recommended %f.", MAX_SIZE);
+	}
+	else {
+		shape = new btBoxShape(dimensions);
+	}
 	btTransform startTransform;
 	startTransform.setIdentity();
 	startTransform.setOrigin(
@@ -270,16 +278,16 @@ void PhysicsManager::addBox(Node* node) {
 	btVector3 localInertia(0.0f, 0.0f, 0.0f);
 	float mass = toFloat(model->getAttribute(Resource::ATTR_MASS).c_str());
 	if (mass > GHOST_DELTA) {
-		groundShape->calculateLocalInertia(
+		shape->calculateLocalInertia(
 			toFloat(model->getAttribute(Resource::ATTR_MASS).c_str()), localInertia);
 	}
 	btDefaultMotionState* myMotionState =
 		new btDefaultMotionState(startTransform);
 	btRigidBody::btRigidBodyConstructionInfo rbInfo(
-		mass, myMotionState, groundShape, localInertia);
-	rbInfo.m_friction = toFloat(model->getAttribute(Resource::ATTR_FRICTION).c_str());
+		mass, myMotionState, shape, localInertia);
 	btRigidBody* body = new btRigidBody(rbInfo);
 	body->setUserPointer(static_cast<void*>(node));
+	setupAttributes(body, model->getAttributes());
 	//if (pa->getDisableRotation()) {
 	//	body->setInvInertiaDiagLocal(btVector3(0.0f, 0.0f, 0.0f));
 	//	body->updateInertiaTensor();
@@ -293,39 +301,31 @@ void PhysicsManager::addSphere(Node* node) {
 	float mass = toFloat(model->getAttribute(Resource::ATTR_MASS).c_str());
 	float scale = node->getScale().getMaxVal();
 	float radius = toFloat(model->getAttribute(Resource::ATTR_RADIUS).c_str()) * scale;
-	btCollisionShape* colShape = new btSphereShape(
-		btScalar(radius));
+	btCollisionShape* colShape = new btSphereShape(radius);
 	btTransform startTransform;
 	startTransform.setIdentity();
-	startTransform.setOrigin(
-		btVector3(
-			node->getPos().getX(),
-			node->getPos().getY(),
-			node->getPos().getZ()));
+	startTransform.setOrigin(btVector3(
+		node->getPos().getX(), node->getPos().getY(), node->getPos().getZ()));
 	Quaternion& q = node->getRot();
 	float* arr = q.toArray();
-	startTransform.setRotation(btQuaternion(
-		arr[0], arr[1], arr[2], arr[3]));
+	startTransform.setRotation(btQuaternion(arr[0], arr[1], arr[2], arr[3]));
 	btVector3 localInertia(0.0f, 0.0f, 0.0f);
 	if (mass > GHOST_DELTA) {
 		colShape->calculateLocalInertia(mass, localInertia);
 	}
-	btDefaultMotionState* myMotionState =
-		new btDefaultMotionState(startTransform);
-	btRigidBody::btRigidBodyConstructionInfo rbInfo(
-		mass, myMotionState, colShape, localInertia);
-	rbInfo.m_angularDamping = mass;
+	btDefaultMotionState* motionState = new btDefaultMotionState(startTransform);
+	btRigidBody::btRigidBodyConstructionInfo rbInfo(mass, motionState, colShape, localInertia);
 	btRigidBody* body = new btRigidBody(rbInfo);
 	body->setUserPointer(static_cast<void*>(node));
-	body->setDamping(0.8f, 0.0f);
+	setupAttributes(body, model->getAttributes());
 	//if (pa->getDisableRotation()) {
 	//	//body->setInvInertiaDiagLocal(btVector3(0.0f, 0.0f, 0.0f));
 	//	//body->updateInertiaTensor();
 	//	body->setSleepingThresholds(0.0f, 0.0f);
 	//	body->setAngularFactor(0.0);
 	//}
-	body->setCcdMotionThreshold(radius);
-	body->setCcdSweptSphereRadius(0.9f * radius);
+	//body->setCcdMotionThreshold(radius);
+	//body->setCcdSweptSphereRadius(0.9f * radius);
 	dynamicsWorld_->addRigidBody(body);
 	rigidBodies_.push_back(body);
 }
@@ -363,7 +363,6 @@ void PhysicsManager::addMesh(Node* node) {
 		}
 	}
 	float mass = toFloat(model->getAttribute(Resource::ATTR_MASS).c_str());
-	float friction = toFloat(model->getAttribute(Resource::ATTR_FRICTION).c_str());
 	if (toBool(model->getAttribute(Resource::ATTR_APPROXIMATION))) {
 		btConvexHullShape* originalConvexShape = new btConvexHullShape;
 		SIZE size = vert.size();
@@ -441,7 +440,7 @@ void PhysicsManager::addMesh(Node* node) {
 	btRigidBody* body = new btRigidBody(rbInfo);
 	body->setCenterOfMassTransform(startTransform);
 	body->setUserPointer(static_cast<void*>(node));
-	rbInfo.m_friction = friction;
+	setupAttributes(body, model->getAttributes());
 	dynamicsWorld_->addRigidBody(body);
 	rigidBodies_.push_back(body);
 }
@@ -503,7 +502,7 @@ void PhysicsManager::addTerrain(Node* node) {
 	heightMaps_.push_back(vector<float>());
 	vector<float>& vert = heightMaps_[heightMaps_.size() - 1];
 	for (SIZE i = 0; i < vertexCount; i++) {
-		vert.push_back(data[i * floatStride + 1] * node->getScale().getY());
+		vert.push_back(data[i * floatStride + 1]);
 		if (minHeight > vert[i]) {
 			minHeight = vert[i];
 		}
@@ -513,7 +512,7 @@ void PhysicsManager::addTerrain(Node* node) {
 	}
 	TextureRGBA* map = static_cast<TextureRGBA*>(services_->getRM()->get(
 		Resource::TEXTURE_2D, model->getAttribute(Resource::ATTR_FILE)));
-	btHeightfieldTerrainShape * heightfieldShape = new btHeightfieldTerrainShape(
+	btHeightfieldTerrainShape* heightfieldShape = new btHeightfieldTerrainShape(
 		map->getWidth(),
 		map->getHeight(),
 		&vert[0],
@@ -521,7 +520,9 @@ void PhysicsManager::addTerrain(Node* node) {
 		minHeight, maxHeight,
 		1, // 1 - y up.
 		PHY_FLOAT, false);
-	heightfieldShape->setLocalScaling(btVector3(0.75f, 1.0f, 0.75f));
+	Vec3& scale = node->getScale();
+	heightfieldShape->setLocalScaling(
+		btVector3(0.5f * scale.getX(), 1.0f * scale.getY(), 0.5f * scale.getZ()));
 	btTransform tr;
 	tr.setIdentity();
 	tr.setOrigin(btVector3(
@@ -535,6 +536,7 @@ void PhysicsManager::addTerrain(Node* node) {
 		0.0f, myMotionState, heightfieldShape, localInertia);
 	btRigidBody* body = new btRigidBody(cInfo);
 	body->setUserPointer(static_cast<void*>(node));
+	setupAttributes(body, model->getAttributes());
 	dynamicsWorld_->addRigidBody(body);
 	rigidBodies_.push_back(body);
 }
@@ -548,4 +550,18 @@ Vehicle* PhysicsManager::getVehicle(Node* node) {
 		it++;
 	}
 	return 0;
+}
+
+void PhysicsManager::setupAttributes(btRigidBody* body, Attributes& attributes) {
+	float friction = attributes.getString(Resource::ATTR_FRICTION) == Resource::VAL_NOT_SET ?
+		DEFAULT_FRICTION : toFloat(attributes.getString(Resource::ATTR_FRICTION).c_str());
+	float linearDamping = attributes.getString(Resource::ATTR_LINEAR_DAMPING) == Resource::VAL_NOT_SET ?
+		DEFAULT_LINEAR_DAMPING : toFloat(attributes.getString(Resource::ATTR_LINEAR_DAMPING).c_str());
+	float angularDamping = attributes.getString(Resource::ATTR_ANGULAR_DAMPING) == Resource::VAL_NOT_SET ?
+		DEFAULT_ANGULAR_DAMPING : toFloat(attributes.getString(Resource::ATTR_ANGULAR_DAMPING).c_str());
+	float restitution = attributes.getString(Resource::ATTR_RESTITUTION) == Resource::VAL_NOT_SET ?
+		DEFAULT_RESTITUTION : toFloat(attributes.getString(Resource::ATTR_RESTITUTION).c_str());
+	body->setFriction(friction);
+	body->setDamping(linearDamping, angularDamping);
+	body->setRestitution(restitution);
 }

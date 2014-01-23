@@ -76,13 +76,13 @@ float tanPrec(float degrees);
  */
 float toFloat(const char* str);
 
-/**
- * Converts c style string into float.
- * @param str - c styel string containing float.
- * @param length - length of the string.
- * @return Float representation of string.
- */
-float toFloat(const char* str, SIZE length);
+///**
+// * Converts c style string into float.
+// * @param str - c styel string containing float.
+// * @param length - length of the string.
+// * @return Float representation of string.
+// */
+//float toFloat(const char* str, SIZE length);
 
 /**
  * Converts c style string into integer.

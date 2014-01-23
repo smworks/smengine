@@ -101,7 +101,6 @@ Tag* Xml::findTag(const string& xml, SIZE i) {
 	vector<Attribute>* attr = 0;
 	while (search) {
 		start = xml.find('<', i);
-		SIZE tempStart = start;
 		SIZE quote = xml.find('"', start);
 		end = xml.find('>', start);
 		if (quote < end && xml[start + 1] != '/') {

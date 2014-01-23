@@ -57,14 +57,16 @@ struct UniqueKeyHash {
 class PositionParser : public Task {
 public:
 	PositionParser(
-		const char* data, UINT8* vertices, UINT32 offset, UINT32 size, Vec3* vmin, Vec3* vmax, Vec3* radius) :
+		const char* data, UINT8* vertices, UINT32 offset, UINT32 size,
+		Vec3* vmin, Vec3* vmax, Vec3* radius, float& maxVertexPos) :
 		data_(data),
 		vertices_(vertices),
 		vmin_(vmin),
 		vmax_(vmax),
 		radius_(radius),
 		offset_(offset),
-		size_(size)
+		size_(size),
+		maxVertexPos_(maxVertexPos)
 	{}
 
 	void run() {
@@ -74,6 +76,7 @@ public:
 		char* line = NEW char[lineLength];
 		UINT32 index = 0;
 		float posVec[3];
+		float adjustRatio = 1.0f / maxVertexPos_;
 		while (true) {
 			const char* found = strchr(data_ + pos, GHOST_NEWLINE);
 			if (!found) {
@@ -93,14 +96,17 @@ public:
 					for (SIZE i = 2; i < lineEnd; i++) {
 						if (line[i] == ' ') {
 							if (one) {
-								posVec[0] = toFloat(line + 2, i - 2);
+								//posVec[0] = toFloat(line + 2, i - 2) * adjustRatio;
+								posVec[0] = toFloat(line + 2) * adjustRatio;
 								one = false;
 								offset = i;
 							}
 							else {
-								posVec[1] = toFloat(line + offset + 1, i - offset - 1);
+								//posVec[1] = toFloat(line + offset + 1, i - offset - 1) * adjustRatio;
+								posVec[1] = toFloat(line + offset + 1) * adjustRatio;
 								offset = i;
-								posVec[2] = toFloat(line + offset + 1, lineEnd - pos - offset - 1);
+								//posVec[2] = toFloat(line + offset + 1, lineEnd - pos - offset - 1) * adjustRatio;
+								posVec[2] = toFloat(line + offset + 1) * adjustRatio;
 								break;
 							}
 						}
@@ -142,6 +148,7 @@ private:
 	Vec3* vmax_;
 	Vec3* radius_;
 	UINT32 offset_, size_;
+	float maxVertexPos_;
 };
 
 class NormalParser : public Task {
@@ -179,14 +186,14 @@ public:
 					for (SIZE i = 3; i < lineEnd; i++) {
 						if (line[i] == ' ') {
 							if (one) {
-								normVec[0] = toFloat(line + 2, i - 2);
+								normVec[0] = toFloat(line + 2); //, i - 2);
 								one = false;
 								offset = i;
 							}
 							else {
-								normVec[1] = toFloat(line + offset + 1, i - offset - 1);
+								normVec[1] = toFloat(line + offset + 1);//, i - offset - 1);
 								offset = i;
-								normVec[2] = toFloat(line + offset + 1, lineEnd - pos - offset - 1);
+								normVec[2] = toFloat(line + offset + 1);//, lineEnd - pos - offset - 1);
 								break;
 							}
 						}
@@ -236,8 +243,8 @@ public:
 					memcpy(line, data_ + pos, lineEnd - pos);
 					for (SIZE i = 3; i < lineEnd; i++) {
 						if (line[i] == ' ') {
-							uvVec[0] = toFloat(line + 2, i - 2);
-							uvVec[1] = toFloat(line + i + 1, lineEnd - pos - i - 1);
+							uvVec[0] = toFloat(line + 2);//, i - 2);
+							uvVec[1] = toFloat(line + i + 1);//, lineEnd - pos - i - 1);
 							break;
 						}
 					}
@@ -303,6 +310,7 @@ bool ObjParser::parse(ModelData& model, const string& file, ServiceLocator* serv
 		return false;
 	}
 	PROFILE("Loaded raw file byte array.");
+	float maxVertexPos;
 	UINT32 nVertices = 0,
 		nNormals = 0,
 		nUvCoordinates = 0,
@@ -312,7 +320,9 @@ bool ObjParser::parse(ModelData& model, const string& file, ServiceLocator* serv
 		nVertices,
 		nNormals,
 		nUvCoordinates,
-		nFaces);
+		nFaces,
+		maxVertexPos);
+	LOGD("Size adjust ratio: %f.", 1.0f / maxVertexPos);
 	bool hasUV = nUvCoordinates > 0;
 	bool hasNormals = nNormals > 0;
 	if (nFaces * 3 > UINT_MAX) {
@@ -367,7 +377,7 @@ bool ObjParser::parse(ModelData& model, const string& file, ServiceLocator* serv
 	const char* data = obj.c_str();
 	UINT64 posThread, normalThread, uvThread, faceThread;
 	posThread = tm->execute(NEW PositionParser(
-		data, vertices, posOffset, vertexSize, &vmin, &vmax, &radius));
+		data, vertices, posOffset, vertexSize, &vmin, &vmax, &radius, maxVertexPos));
 	if (hasNormals) {
 		normalThread = tm->execute(NEW NormalParser(data, vertices, normOffset, vertexSize));
 	}
@@ -632,6 +642,7 @@ bool ObjParser::parse(ModelData& model, const string& file, ServiceLocator* serv
 	float r = radius.length();
 	float volumeBox = width * height * depth;
 	float volumeSphere = 4.0f / 3.0f * (float) SMART_PI * r * r * r;
+	LOGD("Sphere radius: %f. Box width: %f, height: %f, depth: %f.", r, width, height, depth);
 	LOGD("Calculating optimal bounding volume for mesh. "
 		"Box volume: %f, Sphere volume: %f. Optimal is %s.",
 		volumeBox, volumeSphere, volumeSphere < volumeBox ? "sphere" : "box");
@@ -713,14 +724,52 @@ void ObjParser::countComponents(
 		UINT32& vertices,
 		UINT32& normals,
 		UINT32& uvCoordinates,
-		UINT32& faces) {
+		UINT32& faces,
+		float& maxVertexPos)
+{
 	size_t pos = 0;
+	const char* data = obj.c_str();
+	maxVertexPos = 0.0f;
+	float vertexPos;
 	while (true) {
 		switch (obj[pos]) {
 		case 'v':
 			switch (obj[pos + 1]) {
 			case ' ':
 				vertices += 3;
+				{
+				const char* found = strchr(data + pos + 1, GHOST_NEWLINE);
+				if (found) {
+					SIZE lineEnd = found - data;
+					bool one = true;
+					SIZE offset = 0;
+					const char* start = data + pos + 2;
+					for (SIZE i = 2; i < lineEnd; i++) {
+						if (start[i] == ' ') {
+							if (one) {
+								vertexPos = fabs(toFloat(start));
+								if (vertexPos > maxVertexPos) {
+									maxVertexPos = vertexPos;
+								}
+								one = false;
+								offset = i;
+							}
+							else {
+								vertexPos = fabs(toFloat(start + offset + 1));
+								if (vertexPos > maxVertexPos) {
+									maxVertexPos = vertexPos;
+								}
+								offset = i;
+								vertexPos = fabs(toFloat(start + offset + 1));
+								if (vertexPos > maxVertexPos) {
+									maxVertexPos = vertexPos;
+								}
+								break;
+							}
+						}
+					}
+				}
+				}
 				break;
 			case 'n':
 				normals += 3;

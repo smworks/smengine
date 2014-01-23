@@ -251,10 +251,7 @@ void ResourceManager::validateNode(
 				Sprite* spr = dynamic_cast<Sprite*>(res);
 				TextureRGBA* tex = (TextureRGBA*) spr->getPointerToTexture();
 				if (spr != 0) {
-					node->getScale().setXYZ(
-						(float) tex->getWidth(),
-						(float) tex->getHeight(),
-						1.0f);
+					node->getScale().setXYZ((float) tex->getWidth(), (float) tex->getHeight(), 1.0f);
 				}
 			}
 		}
@@ -262,7 +259,7 @@ void ResourceManager::validateNode(
 	// If node contains physics resource, add node to physics manager.
 	// Also make sure the bounding box is available.
 	Resource* model = node->getResource(Resource::STATIC_OBJECT);
-	if (model != 0 && model->getAttribute(Resource::ATTR_PHYSICS) != Resource::VAL_FALSE) {
+	if (model != 0 && model->getAttribute(Resource::ATTR_PHYSICS) == Resource::VAL_TRUE) {
 		services_->getPM()->add(node);
 	}
 	// If node contains script resource, add node to script manager.

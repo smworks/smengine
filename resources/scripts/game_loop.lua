@@ -27,10 +27,16 @@ function start()
     -- Play sound.
     playSound("memories.mp3", true)
 	-- Create ground plane.
-	groundModel = Model.new("groundPlane", "plane")
-	groundModel:setScaleXZ(256.0, 256.0)
-	groundModel:setPosXZ(0.0, 0.0)
-	groundModel:setMass(0.0)
+	--groundModel = Model.new("groundPlane", "plane")
+	--groundModel:setScaleXZ(50.0, 50.0)
+	--groundModel:setPosXZ(0.0, 0.0)
+	--groundModel:setMass(0.0)
+	-- Create ball.
+	--sphere = Model.new("ball", "sphere", 32, 32)
+	--sphere:setShader(Shader.new("red"))
+	--sphere:setPosXYZ(0.0, 10.0, 0.0)
+	--sphere:setScaleXYZ(1.0, 1.0, 1.0)
+	--sphere:setMass(10.0)
 	-- Send network requests.
 	request = Request.new(
 		"http://www.userlogos.org/files/logos/nooz/mrburns.png",
@@ -69,12 +75,12 @@ end
 -- Called every frame.
 function update()
 	second = second + getTimeDelta()
-	if second == 100 then
+	if second > 1000 then
 		counter = counter + 1
 		second = 0
-		local snowFlake = Model.new("snowFlake_" .. counter, "sphere", 10, 10)
+		local snowFlake = Model.new("snowFlake_" .. counter, "sphere", 30, 30)
 		snowFlake:setPosXYZ((math.random() - 0.5) * 100.0, 100.0, (math.random() - 0.5) * 100.0)
-		snowFlake:setScaleXYZ(0.1, 0.1, 0.1)
+		snowFlake:setScaleXYZ(1.0, 1.0, 1.0)
 		snowFlake:setMass(1.0)
 		snowFlake:setShader(redShader)
 		print("Snowflake " .. counter .. " created")

@@ -62,18 +62,19 @@ float toFloat(const char* str) {
     return value;
 }
 
-float toFloat(const char* str, SIZE length) {
-	float value;
-	char* temp = NEW char[length + 1];
-	memcpy(temp, str, length);
-	temp[length] = '\0';
-    if(EOF == sscanf(str, "%f", &value)) {
-		delete [] temp;
-        return 0.0f;
-    }
-	delete [] temp;
-    return value;
-}
+//float toFloat(const char* str, SIZE length) {
+//	float value;
+//	char* temp = NEW char[length + 1];
+//	memcpy(temp, str, length);
+//	temp[length] = '\0';
+//	LOGD("FLOAT: %s", temp);
+//    if(EOF == sscanf(str, "%f", &value)) {
+//		delete [] temp;
+//        return 0.0f;
+//    }
+//	delete [] temp;
+//    return value;
+//}
 
 int toInt(const char* str) {
 	int value;

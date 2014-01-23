@@ -41,6 +41,7 @@ public:
 		GUI_BUTTON,
         GUI_INPUT
 	};
+	static const string VAL_NOT_SET;
 	static const string VAL_TRUE;
 	static const string VAL_FALSE;
 	static const string ATTR_FILE;
@@ -69,6 +70,9 @@ public:
 	static const string ATTR_PHYSICS;
 	static const string ATTR_MASS;
 	static const string ATTR_FRICTION;
+	static const string ATTR_LINEAR_DAMPING;
+	static const string ATTR_ANGULAR_DAMPING;
+	static const string ATTR_RESTITUTION;
 	static const string ATTR_LAYOUT_TYPE;
 	static const string VAL_RELATIVE;
 	static const string VAL_LINEAR;

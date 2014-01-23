@@ -10,6 +10,7 @@
 #include "Renderable.h"
 #include "GUISurface.h"
 
+const string Resource::VAL_NOT_SET = "";
 const string Resource::VAL_TRUE = "true";
 const string Resource::VAL_FALSE = "false";
 const string Resource::ATTR_FILE = "file";
@@ -38,6 +39,9 @@ const string Resource::VAL_WATER = "water";
 const string Resource::ATTR_PHYSICS = "physics";
 const string Resource::ATTR_MASS = "mass";
 const string Resource::ATTR_FRICTION = "friction";
+const string Resource::ATTR_LINEAR_DAMPING = "linear_damping";
+const string Resource::ATTR_ANGULAR_DAMPING = "angular_damping";
+const string Resource::ATTR_RESTITUTION = "restitution";
 const string Resource::ATTR_LAYOUT_TYPE = "layout_type";
 const string Resource::VAL_RELATIVE = "relative";
 const string Resource::VAL_LINEAR = "linear";

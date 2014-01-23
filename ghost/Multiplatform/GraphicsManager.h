@@ -296,13 +296,13 @@ public:
 	/**
 	 * @param id - shader id.
 	 */
-	void useProgram(UINT32 id);
+	void useProgram(SIZE id);
 
 	/**
 	 * @param id - buffer id.
 	 * @return True if new buffer was bound.
 	 */
-	bool bindBuffer(UINT32 id);
+	bool bindBuffer(SIZE id);
 protected:
 	ServiceLocator* services_;
 	Settings* settings_;
@@ -332,8 +332,8 @@ protected:
 	int windingType_;
 	vector<SIZE> boundTextures_;
 	SIZE activeTexture_;
-	UINT32 shaderId_;
-	UINT32 bufferId_;
+	SIZE shaderId_;
+	SIZE bufferId_;
 	Mat4 matPos, matScale, matProjPos, matProjPosScale;
 };
 

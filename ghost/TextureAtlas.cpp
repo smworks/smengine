@@ -150,7 +150,7 @@ bool TextureAtlas::findSpace(TextureHeader& th) {
 		if (th.width > sl.width || th.height + sl.row > height) {
 			continue;
 		}
-		fitIndex = i;
+		fitIndex = (INT32) i;
 		break;
 	}
 	if (fitIndex == -1) {

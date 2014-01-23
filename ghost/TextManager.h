@@ -29,7 +29,7 @@ public:
 	 * Specify font size in pixels.
 	 * @param size - size in pixels.
 	 */
-	void setFontSize(int size);
+	void setFontSize(SIZE size);
 
 	/**
 	 * @param text - text that will be rendered on texture.
@@ -57,7 +57,7 @@ private:
 	FT_Face face_;
 	INT8* fontBuffer_;
 	ServiceLocator* services_;
-	int fontSize_;
+	SIZE fontSize_;
 	Symbol*** symbolCache_;
 };
 

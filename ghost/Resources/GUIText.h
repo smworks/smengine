@@ -64,7 +64,7 @@ public:
 	/**
 	 * @return Size of the text.
 	 */
-	UINT32 getTextSize();
+	SIZE getTextSize();
 
 	/**
 	 * @return Text offset on X axis used to align text.

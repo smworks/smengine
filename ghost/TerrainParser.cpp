@@ -35,8 +35,8 @@ TerrainParser::TerrainParser(
 	heightRatio_ = heightRatio;
 	heightOffset_ = heightOffset;
 	segmentSize_ = 128;
-	dx_ = 0.75f;
-	dz_ = 0.75f;
+	dx_ = 0.5f;
+	dz_ = 0.5f;
 }
 
 TerrainParser::~TerrainParser() {

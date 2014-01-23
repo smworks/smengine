@@ -97,10 +97,10 @@ SIZE Symbol::getAdvance() {
 	return advance_;
 }
 
-void Symbol::setFontSize(UINT32 size) {
+void Symbol::setFontSize(SIZE size) {
 	fontSize_ = size;
 }
 
-UINT32 Symbol::getFontSize() {
+SIZE Symbol::getFontSize() {
 	return fontSize_;
 }

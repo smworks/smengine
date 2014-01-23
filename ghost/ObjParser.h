@@ -48,7 +48,7 @@ public:
 	static bool parseFace(Face& face, const char* line, SIZE length);
 private:
 	static void countComponents(const string& obj, UINT32& vertices,
-		UINT32& normals, UINT32& uvCoordinates, UINT32& faces);
+		UINT32& normals, UINT32& uvCoordinates, UINT32& faces, float& maxVertexPos);
 	static bool parseMaterial(
 		ModelData& model, const string& file, ServiceLocator* services);
 

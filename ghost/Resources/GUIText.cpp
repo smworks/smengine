@@ -109,7 +109,6 @@ void GUIText::update() {
 		sd.index = (SIZE) text_[i];
 		symbols_.push_back(sd);
 	}
-	SIZE size = symbols_.size();
 	sort(symbols_.begin(), symbols_.end());
 	setWidth(maxWidth);
 	setHeight(maxHeight);
@@ -127,7 +126,7 @@ string& GUIText::getText() {
 	return text_;
 }
 
-UINT32 GUIText::getTextSize() {
+SIZE GUIText::getTextSize() {
 	return size_;
 }
 

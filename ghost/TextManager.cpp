@@ -85,7 +85,7 @@ TextManager::~TextManager() {
 	LOGD("Deleted text manager.");
 }
 
-void TextManager::setFontSize(int size) {
+void TextManager::setFontSize(SIZE size) {
 	if (size != fontSize_) {
 		fontSize_ = size;
 		err_ = FT_Set_Pixel_Sizes(face_, 0, (FT_UInt) fontSize_);
@@ -106,7 +106,6 @@ Texture* TextManager::getText(const string& text, int size) {
 			return texture;
 		}
 	}
-	PROFILE("Started generating texture with text: %s.", text.c_str());
 	AtlasTexture* texture = NEW AtlasTexture(services_, Texture::MONO);
 	vector<GlyphObject> glyphs;
 	FT_UInt previous = 0;
@@ -174,10 +173,10 @@ Texture* TextManager::getText(const string& text, int size) {
 		FT_Done_Glyph(glyph);
 	}
 	yOffset = yOffset * -1;
-	int height = heightOffset + fontSize_;
-	texture->create(width, height);
+	SIZE height = heightOffset + fontSize_;
+	texture->create(width, (UINT32) height);
 	UINT8 color[] = {0};
-	texture->rectangle(0, 0, width, height, color);
+	texture->rectangle(0, 0, width, (UINT32) height, color);
 	for (SIZE i = 0; i < glyphs.size(); i++) {
 		GlyphObject g = glyphs[i];
 		//LOGI("Symbol: %c, top offset: %d, left offset: %d."
@@ -212,7 +211,6 @@ Texture* TextManager::getText(const string& text, int size) {
 	//}
 	//LOGI("%s", ss.str().c_str());
 	services_->getRM()->add(name, texture);
-	PROFILE("Finished generating texture. Width=%d, height=%d.", width, height);
 	return texture;
 }
 
@@ -231,7 +229,6 @@ Symbol* TextManager::getSymbol(char symbol) {
 	if (cachedSymbol != 0) {
 		return cachedSymbol;
 	}
-	PROFILE("Generating symbol: %c.", symbol);
 	Symbol* symbolObject = NEW Symbol(services_);
 	symbolObject->create();
 	FT_GlyphSlot glyphSlot = face_->glyph;
@@ -280,8 +277,6 @@ Symbol* TextManager::getSymbol(char symbol) {
 	if (fontSize_ < SYMBOL_CACHE_SIZE && index < SYMBOL_CACHE_SIZE ) {
 		symbolCache_[fontSize_][index] = symbolObject;
 	}
-	PROFILE("Finished generating symbol. Width=%d, height=%d.",
-		symbolObject->getWidth(), symbolObject->getHeight());
 	return symbolObject;
 }
 

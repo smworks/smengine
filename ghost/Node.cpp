@@ -78,7 +78,6 @@ Vec3& Node::getScale() {
 
 void Node::setMatrix(Mat4 mat) {
 	memcpy(matCombined_, mat, sizeof(Mat4));
-	setState(Node::TRANSFORMABLE, false);
 }
 
 float* Node::getMatrix() {

@@ -27,13 +27,16 @@
     <resource type="texture" file="rock.png" />
     <resource type="texture" file="terrain_blend.png" />
     <resource type="static_object" file="terrain_height.png">
+      <attribute type="physics" value="true" />
       <attribute type="type" value="terrain" />
     </resource>
     <position x="0.0f" y="15.0f" z="0.0f" />
+    <scaling x="0.5f" y="0.5f" z="0.5f" />
   </node>
   <node name="car">
     <resource type="static_object" file="car_body.obj">
       <attribute type="type" value="mesh" />
+      <attribute type="physics" value="true" />
       <attribute type="physics_object" value="vehicle" />
       <attribute type="mass" value="1000.0f" />
       <attribute type="max_engine_force" value="2500.0f" />
@@ -50,31 +53,36 @@
       <attribute type="suspension_compression" value="4.4f" />
       <attribute type="roll_influence" value="0.1f" />
     </resource>
-    <position x="0.0f" y="3.0f" z="10.0f" />
+    <position x="0.0f" y="10.0f" z="10.0f" />
     <rotation x="0.0f" y="180.0f" z="0.0f" />
+    <scaling x="1.974" y="1.974" z="1.974" />
     <node name="wheel1">
       <resource type="static_object" file="car_wheel.obj">
         <attribute type="physics" value="false" />
       </resource>
       <position x="-0.6f" y="0.2f" z="1.15f" />
+      <scaling x="0.29760194" y="0.29760194" z="0.29760194" />
     </node>
     <node name="wheel2">
       <resource type="static_object" file="car_wheel.obj">
         <attribute type="physics" value="false" />
       </resource>
       <position x="0.6f" y="0.2f" z="1.15f" />
+      <scaling x="0.29760194f" y="0.29760194f" z="0.29760194f" />
     </node>
     <node name="wheel3">
       <resource type="static_object" file="car_wheel.obj">
         <attribute type="physics" value="false" />
       </resource>
       <position x="-0.6f" y="0.2f" z="-1.05f" />
+      <scaling x="0.29760194" y="0.29760194" z="0.29760194" />
     </node>
     <node name="wheel4">
       <resource type="static_object" file="car_wheel.obj">
         <attribute type="physics" value="false" />
       </resource>
       <position x="0.6f" y="0.2f" z="-1.05f" />
+      <scaling x="0.29760194" y="0.29760194" z="0.29760194" />
     </node>
   </node>
   <node name="LotsOfText" renderable="false">

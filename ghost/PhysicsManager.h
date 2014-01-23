@@ -19,6 +19,16 @@ class Vec3;
 class Vehicle;
 class ServiceLocator;
 class GraphicsManager;
+class Attributes;
+
+#define STEP_DELTA 0.01666666f
+#define GRAVITY -9.8f
+#define DEFAULT_FRICTION 0.1f
+#define DEFAULT_LINEAR_DAMPING 0.1f
+#define DEFAULT_ANGULAR_DAMPING 0.1f
+#define DEFAULT_RESTITUTION 0.1f
+#define MAX_SIZE 10.0f
+#define MIN_SIZE 0.05f
 
 class DebugDraw : public btIDebugDraw {
 public:
@@ -137,6 +147,13 @@ public:
 	 * @return Vehicle object.
 	 */
 	Vehicle* getVehicle(Node* node);
+
+	/**
+	 * Adds parameters like friction, damping and restitution to body.
+	 * @param body - body that will have attributes applied.
+	 * @param attributes - attribute object.
+	 */
+	void setupAttributes(btRigidBody* body, Attributes& attributes);
 private:
 	void addBox(Node* node);
 	void addSphere(Node* node);

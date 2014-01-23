@@ -247,13 +247,12 @@ void GraphicsManager::renderLoading() {
 	glDrawArrays(GL_TRIANGLES, 0, (GLint) screenPlane_->getVertexCount());
 	glDisableVertexAttribArray(loadingShader_->getHandle(Shader::UV));
 	glDisableVertexAttribArray(loadingShader_->getHandle(Shader::POS));
-	CHECK_GL_ERROR("Error while rendering loading screen.");
+	CHECK_GL_ERROR("Error while rendering loading screen");
 }
 
 void GraphicsManager::render() {
 	refreshRenderList();
-	Matrix::multiply(
-		camera_->getProjection3D(), camera_->getMatrix(), viewMatrix_);
+	Matrix::multiply(camera_->getProjection3D(), camera_->getMatrix(), viewMatrix_);
 	camera_->extractPlanes(viewMatrix_);
 	// Render passes.
 	static vector<RenderPass*>::const_iterator passIt;
@@ -346,7 +345,7 @@ void GraphicsManager::renderGUI(Node* node) {
 	}
 	glDisableVertexAttribArray(textShader_->getHandle(Shader::POS));
 	glDisableVertexAttribArray(textShader_->getHandle(Shader::UV));
-	CHECK_GL_ERROR("Problem with text renderer.");
+	CHECK_GL_ERROR("Problem with text renderer");
 }
 
 void GraphicsManager::refreshRenderList() {
@@ -452,18 +451,19 @@ void GraphicsManager::renderVertices(Mat4 mat) {
 	}
 	useProgram(immediateShader_->getId());
 	immediateShader_->setMatrix4(Shader::WVP, mat);
+    bindBuffer(0);
 	glEnableVertexAttribArray(immediateShader_->getHandle(Shader::POS));
 	glVertexAttribPointer(immediateShader_->getHandle(Shader::POS),
 		3, GL_FLOAT, GL_FALSE, 0, &vertices_[0]);
 	glEnableVertexAttribArray(immediateShader_->getHandle(Shader::COL));
 	glVertexAttribPointer(immediateShader_->getHandle(Shader::COL),
 		4, GL_FLOAT, GL_FALSE, 0, &colors_[0]);
-	glDrawArrays(GL_LINES, 0, static_cast<GLint>(vertices_.size() / 3));
-	CHECK_GL_ERROR("Rendering lines.");
-	glDisableVertexAttribArray(immediateShader_->getHandle(Shader::COL));
+    glDrawArrays(GL_LINES, 0, static_cast<GLint>(vertices_.size() / 3));
+    glDisableVertexAttribArray(immediateShader_->getHandle(Shader::COL));
 	glDisableVertexAttribArray(immediateShader_->getHandle(Shader::POS));
 	vertices_.clear();
 	colors_.clear();
+    CHECK_GL_ERROR("Rendering vertices");
 }
 
 void GraphicsManager::renderNode(
@@ -894,7 +894,7 @@ void GraphicsManager::bindTexture(SIZE id, SIZE index, TextureType type) {
 	}
 }
 
-void GraphicsManager::useProgram(UINT32 id) {
+void GraphicsManager::useProgram(SIZE id) {
 	if (id == shaderId_) {
 		return;
 	}
@@ -902,7 +902,7 @@ void GraphicsManager::useProgram(UINT32 id) {
 	glUseProgram(id);
 }
 
-bool GraphicsManager::bindBuffer(UINT32 id) {
+bool GraphicsManager::bindBuffer(SIZE id) {
 	if (bufferId_ == id) {
 		return false;
 	}

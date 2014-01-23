@@ -113,17 +113,17 @@ public:
 	/**
 	 * @param size - symbol font size.
 	 */
-	void setFontSize(UINT32 size);
+	void setFontSize(SIZE size);
 
 	/**
 	 * @return Symbol font size.
 	 */
-	UINT32 getFontSize();
+	SIZE getFontSize();
 private:
 	Texture* texture_;
 	UINT32 width_, height_;
 	SIZE advance_;
-	UINT32 fontSize_;
+	SIZE fontSize_;
 	INT32 offsetX_, offsetY_;
 };
 
