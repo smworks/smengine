@@ -345,78 +345,36 @@ void PhysicsManager::addMesh(Node* node) {
 		return;
 	}
 	btCollisionShape* colShape = 0;
-	btVector3 localInertia(0.0f, 0.0f, 0.0f);
 	ModelData* modelData = model->getModel();
 	SIZE vertexCount = modelData->getVertexCount();
-	SIZE floatStride = model->getVertexStride() / sizeof(float);
 	float* data = reinterpret_cast<float*>(modelData->getVertices());
-	vector<float> vert;
-	for (SIZE i = 0; i < vertexCount; i++) {
-		vert.push_back(data[i * floatStride + 0] * node->getScale().getX());
-		vert.push_back(data[i * floatStride + 1] * node->getScale().getY());
-		vert.push_back(data[i * floatStride + 2] * node->getScale().getZ());
-	}
-	vector<UINT32> indices;
-	if (model->getModel()->getIndexCount() > 0) {
-		if (model->getModel()->getIndexType() == Renderable::INDEX_TYPE_USHORT) {
-			UINT16* ind = modelData->getIndicesShort();
-			for (UINT32 i = 0; i < model->getIndexCount(); i++) {
-				indices.push_back(ind[i]);
-			}
-		}
-		else if (model->getModel()->getIndexType() == Renderable::INDEX_TYPE_UINT) {
-			UINT32* ind = modelData->getIndicesInt();
-			for (UINT32 i = 0; i < model->getIndexCount(); i++) {
-				UINT32 index = ind[i];
-				indices.push_back(index);
-			}
-		}
-	}
 	float mass = toFloat(model->getAttribute(Resource::ATTR_MASS).c_str());
 	if (toBool(model->getAttribute(Resource::ATTR_APPROXIMATION))) {
-		btConvexHullShape* originalConvexShape = new btConvexHullShape;
-		SIZE size = vert.size();
-		if (model->getModel()->getIndexCount() > 0) {
-			for (SIZE i = 0; i < size; i += 3) {
-				originalConvexShape->addPoint(
-					btVector3(
-						vert[i + 0],
-						vert[i + 1],
-						vert[i + 2]));
-			}
-		}
-		else {
-			SIZE size = indices.size();
-			for (SIZE i = 0; i < size; i++) {
-				int ind = indices[i] * 3;
-				originalConvexShape->addPoint(
-					btVector3(
-						vert[ind + 0],
-						vert[ind + 1],
-						vert[ind + 2]));
-			}
-		}
-		btShapeHull* hull = new btShapeHull(originalConvexShape);
-		btScalar margin = originalConvexShape->getMargin();
+		LOGD("Loading approximated convex hull shape.");
+		btConvexHullShape* hullShape = new btConvexHullShape(
+			data, vertexCount, modelData->getVertexStride());
+		btShapeHull* hull = new btShapeHull(hullShape);
+		btScalar margin = hullShape->getMargin();
 		hull->buildHull(margin);
-		colShape = new btConvexHullShape(
-			(btScalar*) hull->getVertexPointer(), hull->numVertices());
+		colShape = new btConvexHullShape((btScalar*) hull->getVertexPointer(), hull->numVertices());
 		delete hull;
-		delete originalConvexShape;
-		if (mass > GHOST_DELTA) {
-			colShape->calculateLocalInertia(mass, localInertia);
-		}
+		delete hullShape;
 	}
 	else {
 		if (model->getModel()->getIndexCount() == 0) {
+			LOGD("Loading triangle mesh with no indices.");
 			btTriangleMesh* mesh = new btTriangleMesh;
 			meshInterfaces_.push_back(mesh);
-			SIZE size = vert.size() / 3;
-			for (SIZE i = 0; i < size; i += 9) {
+			SIZE offset1, offset2, offset3;
+			SIZE floatStride = model->getVertexStride() / sizeof(float);
+			for (SIZE i = 0; i < vertexCount; i += 3) {
+				offset1 = i * floatStride;
+				offset2 = (i + 1) * floatStride;
+				offset3 = (i + 2) * floatStride;
 				mesh->addTriangle(
-					btVector3(vert[i + 0], vert[i + 1], vert[i + 2]),
-					btVector3(vert[i + 3], vert[i + 4], vert[i + 5]),
-					btVector3(vert[i + 6], vert[i + 7], vert[i + 8]),
+					btVector3(data[offset1 + 0], data[offset1 + 1], data[offset1 + 2]),
+					btVector3(data[offset2 + 0], data[offset2 + 1], data[offset2 + 2]),
+					btVector3(data[offset3 + 0], data[offset3 + 1], data[offset3 + 2]),
 					true);
 			}
 			colShape = new btBvhTriangleMeshShape(mesh, true);
@@ -437,7 +395,7 @@ void PhysicsManager::addMesh(Node* node) {
 			meshInterfaces_.push_back(meshInterface);
 			btIndexedMesh part;
 			// Vertices
-			part.m_numVertices = (int) modelData->getVertexCount();
+			part.m_numVertices = (int) vertexCount;
 			part.m_vertexBase = vertexArray;
 			part.m_vertexStride = modelData->getVertexStride();
 			part.m_vertexType = PHY_FLOAT;
@@ -449,16 +407,23 @@ void PhysicsManager::addMesh(Node* node) {
 			// Add mesh to mesh interface.
 			meshInterface->addIndexedMesh(part, type);
 			if (mass > GHOST_DELTA) {
+				LOGD("Loading gimpact mesh shape.");
 				btGImpactMeshShape* impactMeshShape = new btGImpactMeshShape(meshInterface);
-				impactMeshShape->setLocalScaling(btVector3(1.0f, 1.0f, 1.0f));
 				impactMeshShape->setMargin(0);	
 				impactMeshShape->updateBound();
 				colShape = impactMeshShape;
 			}
 			else {
+				LOGD("Loading triangle mesh shape.");
 				colShape = new btBvhTriangleMeshShape(meshInterface, true);
 			}
 		}
+	}
+	Vec3& scale = node->getScale();
+	colShape->setLocalScaling(btVector3(scale.getX(), scale.getY(), scale.getZ()));
+	btVector3 localInertia(0.0f, 0.0f, 0.0f);
+	if (mass > GHOST_DELTA) {
+		colShape->calculateLocalInertia(mass, localInertia);
 	}
 	btTransform startTransform;
 	startTransform.setIdentity();

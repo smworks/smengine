@@ -39,10 +39,10 @@ const string Vehicle::ROLL_INFLUENCE = "roll_influence";
 btVector3 wheelDirectionCS0(0, -1, 0);
 btVector3 wheelAxleCS(-1, 0, 0);
 
-Vehicle::Vehicle(Node* container, btDynamicsWorld* dynamicsWorld, vector<btRigidBody*>* rigidBodies) :
+Vehicle::Vehicle(Node* node, btDynamicsWorld* dynamicsWorld, vector<btRigidBody*>* rigidBodies) :
 	motionState_(0),
 	rigidBody_(0),
-	container_(container),
+	container_(node),
 	vehicle_(0),
 	vehicleCompoundShape_(0),
 	vehicleRayCaster_(0),
@@ -57,11 +57,11 @@ Vehicle::Vehicle(Node* container, btDynamicsWorld* dynamicsWorld, vector<btRigid
 	rollInfluence_(0.0f)
 {
 	// Read vehicle attributes.
-	if (!container->hasResource(Resource::STATIC_OBJECT)) {
+	if (!node->hasResource(Resource::STATIC_OBJECT)) {
 		LOGW("Vehicle does not contain model.");
 		return;
 	}
-	StaticObject* model = static_cast<StaticObject*>(container->getResource(Resource::STATIC_OBJECT));
+	StaticObject* model = static_cast<StaticObject*>(node->getResource(Resource::STATIC_OBJECT));
 	mass_ = toFloat(model->getAttribute(MASS).c_str());
 	suspensionRestLength_ = toFloat(model->getAttribute(SUSPENSION_REST_LENGTH).c_str());
 	suspensionStiffness_ = toFloat(model->getAttribute(SUSPENSION_STIFFNESS).c_str());
@@ -75,57 +75,17 @@ Vehicle::Vehicle(Node* container, btDynamicsWorld* dynamicsWorld, vector<btRigid
 	vehicleCompoundShape_ = new btCompoundShape();
 	ModelData* modelData = model->getModel();
 	SIZE vertexCount = modelData->getVertexCount();
-	UINT32 floatStride = modelData->getVertexStride() / sizeof(float);
 	float* data = reinterpret_cast<float*>(modelData->getVertices());
-	vector<float> vert;
-	for (UINT32 i = 0; i < vertexCount; i++) {
-		vert.push_back(data[i * floatStride + 0] * container->getScale().getX());
-		vert.push_back(data[i * floatStride + 1] * container->getScale().getY());
-		vert.push_back(data[i * floatStride + 2] * container->getScale().getZ());
-	}
-	vector<UINT32> indices;
-	if (modelData->getIndexCount() > 0 && modelData->getIndexType() == Renderable::INDEX_TYPE_USHORT) {
-		UINT16* ind = modelData->getIndicesShort();
-		for (UINT32 i = 0; i < modelData->getIndexCount(); i++) {
-			indices.push_back(ind[i]);
-		}
-	}
-	else if (model->getIndexCount() > 0) {
-		UINT32* ind = modelData->getIndicesInt();
-		for (UINT32 i = 0; i < modelData->getIndexCount(); i++) {
-			indices.push_back(ind[i]);
-		}
-	}
-	btConvexHullShape* originalConvexShape = new btConvexHullShape;
-	SIZE size = vert.size();
-	if (model->getIndexCount() == 0) {
-		for (SIZE i = 0; i < size; i += 3) {
-			originalConvexShape->addPoint(
-				btVector3(
-					vert[i + 0],
-					vert[i + 1],
-					vert[i + 2]));
-		}
-	}
-	else {
-		SIZE size = indices.size();
-		for (SIZE i = 0; i < size; i++) {
-			int ind = indices[i] * 3;
-			originalConvexShape->addPoint(
-				btVector3(
-					vert[ind + 0],
-					vert[ind + 1],
-					vert[ind + 2]));
-		}
-	}
+	btConvexHullShape* hullShape = new btConvexHullShape(data, vertexCount, modelData->getVertexStride());
+	Vec3& scale = node->getScale();
+	hullShape->setLocalScaling(btVector3(scale.getX(), scale.getY(), scale.getZ()));
 	// Create a hull approximation.
-	btShapeHull* hull = new btShapeHull(originalConvexShape);
-	btScalar margin = originalConvexShape->getMargin();
+	btShapeHull* hull = new btShapeHull(hullShape);
+	btScalar margin = hullShape->getMargin();
 	hull->buildHull(margin);
-	vehicleBodyShape_ = new btConvexHullShape(
-		(btScalar*) hull->getVertexPointer(), hull->numVertices());
+	vehicleBodyShape_ = new btConvexHullShape((btScalar*) hull->getVertexPointer(), hull->numVertices());
 	delete hull;
-	delete originalConvexShape;
+	delete hullShape;
 	// LocalTrans effectively shifts the center
 	// of mass with respect to the chassis.
 	btTransform localTrans;
@@ -134,11 +94,8 @@ Vehicle::Vehicle(Node* container, btDynamicsWorld* dynamicsWorld, vector<btRigid
 	vehicleCompoundShape_->addChildShape(localTrans, vehicleBodyShape_);
 	btTransform tr;
 	tr.setIdentity();
-	tr.setOrigin(btVector3(
-		container->getPos().getX(),
-		container->getPos().getY(),
-		container->getPos().getZ()));
-	Quaternion qt = container->getRot();
+	tr.setOrigin(btVector3(node->getPos().getX(), node->getPos().getY(), node->getPos().getZ()));
+	Quaternion qt = node->getRot();
 	tr.setRotation(
 		btQuaternion(qt.getX(), qt.getY(), qt.getZ(), qt.getLength()));
 	bool isDynamic = (mass_ != 0.f);
@@ -151,7 +108,7 @@ Vehicle::Vehicle(Node* container, btDynamicsWorld* dynamicsWorld, vector<btRigid
 	btRigidBody::btRigidBodyConstructionInfo cInfo(
 		mass_, myMotionState, vehicleCompoundShape_, localInertia);
 	rigidBody_ = new btRigidBody(cInfo);
-	rigidBody_->setUserPointer(static_cast<void*>(container));
+	rigidBody_->setUserPointer(static_cast<void*>(node));
 	btRaycastVehicle::btVehicleTuning tunning;
 	vehicleRayCaster_ = new btDefaultVehicleRaycaster(dynamicsWorld);
 	vehicle_ = new btRaycastVehicle(tunning, rigidBody_, vehicleRayCaster_);
@@ -159,7 +116,7 @@ Vehicle::Vehicle(Node* container, btDynamicsWorld* dynamicsWorld, vector<btRigid
 	bool isFrontWheel = true;
 	//choose coordinate system
 	vehicle_->setCoordinateSystem(0, 1, 2);
-	Node* wheel = container->getChild("wheel1");
+	Node* wheel = node->getChild("wheel1");
 	wheels_.push_back(wheel);
 	btVector3 connectionPointCS0(
 		wheel->getPos().getX(),
@@ -168,7 +125,7 @@ Vehicle::Vehicle(Node* container, btDynamicsWorld* dynamicsWorld, vector<btRigid
 	vehicle_->addWheel(
 		connectionPointCS0, wheelDirectionCS0, wheelAxleCS,
 		suspensionRestLength_, wheelRadius_, tunning, isFrontWheel);
-	wheel = container->getChild("wheel2");
+	wheel = node->getChild("wheel2");
 	wheels_.push_back(wheel);
 	connectionPointCS0 = btVector3(
 		wheel->getPos().getX(),
@@ -178,7 +135,7 @@ Vehicle::Vehicle(Node* container, btDynamicsWorld* dynamicsWorld, vector<btRigid
 		connectionPointCS0, wheelDirectionCS0, wheelAxleCS,
 		suspensionRestLength_, wheelRadius_, tunning, isFrontWheel);
 	isFrontWheel = false;
-	wheel = container->getChild("wheel3");
+	wheel = node->getChild("wheel3");
 	wheels_.push_back(wheel);
 	connectionPointCS0 = btVector3(
 		wheel->getPos().getX(),
@@ -187,7 +144,7 @@ Vehicle::Vehicle(Node* container, btDynamicsWorld* dynamicsWorld, vector<btRigid
 	vehicle_->addWheel(
 		connectionPointCS0, wheelDirectionCS0, wheelAxleCS,
 		suspensionRestLength_, wheelRadius_, tunning, isFrontWheel);
-	wheel = container->getChild("wheel4");
+	wheel = node->getChild("wheel4");
 	wheels_.push_back(wheel);
 	connectionPointCS0 = btVector3(
 		wheel->getPos().getX(),
