@@ -71,6 +71,11 @@ public:
 	virtual SIZE getIBO() = 0;
 
 	/**
+	 * @return Offset in IBO.
+	 */
+	virtual SIZE getIndexOffset() { return 0; }
+
+	/**
 	 * @return Bounding box for current model part.
 	 */
 	virtual BoundingVolume* getBV() = 0;

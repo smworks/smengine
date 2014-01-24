@@ -10,9 +10,6 @@
 
 #include "Multiplatform/Ghost.h"
 #include "../dependencies/includes/bullet/btBulletDynamicsCommon.h"
-#include "../dependencies/includes/bullet/BulletCollision/NarrowPhaseCollision/btRaycastCallback.h"
-#include "../dependencies/includes/bullet/BulletCollision/CollisionShapes/btShapeHull.h"
-#include "../dependencies/includes/bullet/BulletCollision/CollisionShapes/btHeightfieldTerrainShape.h"
 
 class Node;
 class Vec3;
@@ -168,7 +165,7 @@ private:
 	btBroadphaseInterface* pairCache_;
 	btSequentialImpulseConstraintSolver* solver_;
 	btDiscreteDynamicsWorld* dynamicsWorld_;
-	vector<btTriangleMesh*> triangleMeshes_;
+	vector<btStridingMeshInterface*> meshInterfaces_;
 	vector<Vehicle*> vehicles_;
 	vector<btRigidBody*> rigidBodies_;
 	vector<vector<float> > heightMaps_;

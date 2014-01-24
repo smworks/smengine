@@ -33,11 +33,10 @@ public:
 		float transparency_;
 	};
 	struct Part {
-		Part() : material_(0), offset_(0), indexCount_(0), ibo_(0), bv_(0) {}
+		Part() : material_(0), offset_(0), indexCount_(0), bv_(0) {}
 		SIZE material_;
 		SIZE offset_;
 		SIZE indexCount_;
-		UINT32 ibo_;
 		BoundingVolume* bv_;
 	};
 public:

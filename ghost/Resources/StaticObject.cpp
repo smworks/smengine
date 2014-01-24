@@ -27,6 +27,7 @@ StaticObject::StaticObject(ServiceLocator* services) :
 	Resource(services),
 	modelData_(NEW ModelData()),
 	cbo_(0),
+	ibo_(0),
 	currentPart_(0)
 {}
 
@@ -74,35 +75,26 @@ bool StaticObject::create() {
 	getServiceLocator()->getGraphicsManager()->bindBuffer(cbo_);
 	glBufferData(GL_ARRAY_BUFFER,
 		modelData_->getVertexCount() * modelData_->getVertexStride(),
-		modelData_->getVertices(),
-		GL_STATIC_DRAW);
-	SIZE size = modelData_->getParts().size();
-	if (modelData_->getIndexType() == Renderable::INDEX_TYPE_USHORT) {
-		setIndexType(INDEX_TYPE_USHORT);
-		for (UINT32 i = 0; i < size; i++) {
-			glGenBuffers(1, &modelData_->getParts()[i].ibo_);
-			glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, modelData_->getParts()[i].ibo_);
-			glBufferData(GL_ELEMENT_ARRAY_BUFFER,
-				modelData_->getParts()[i].indexCount_ * sizeof(UINT16),
-				modelData_->getIndicesShort() + modelData_->getParts()[i].offset_,
-				GL_STATIC_DRAW);
+		modelData_->getVertices(), GL_STATIC_DRAW);
+	// Create index buffer object.
+	if (modelData_->getIndexCount() > 0) {
+		glGenBuffers(1, &ibo_);
+		glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, ibo_);
+		if (modelData_->getIndexType() == Renderable::INDEX_TYPE_USHORT) {
+			setIndexType(INDEX_TYPE_USHORT);
+			glBufferData(GL_ELEMENT_ARRAY_BUFFER, modelData_->getIndexCount() * sizeof(UINT16),
+				modelData_->getIndicesShort(), GL_STATIC_DRAW);
 		}
-	}
-	else if (modelData_->getIndexType() == Renderable::INDEX_TYPE_UINT) {
-		setIndexType(INDEX_TYPE_UINT);
-		for (UINT32 i = 0; i < size; i++) {
-			glGenBuffers(1, &modelData_->getParts()[i].ibo_);
-			glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, modelData_->getParts()[i].ibo_);
-			glBufferData(GL_ELEMENT_ARRAY_BUFFER,
-				modelData_->getParts()[i].indexCount_ * sizeof(UINT32),
-				modelData_->getIndicesInt() + modelData_->getParts()[i].offset_,
-				GL_STATIC_DRAW);
+		else if (modelData_->getIndexType() == Renderable::INDEX_TYPE_UINT) {
+			setIndexType(INDEX_TYPE_UINT);
+			glBufferData(GL_ELEMENT_ARRAY_BUFFER, modelData_->getIndexCount() * sizeof(UINT32),
+				modelData_->getIndicesInt(), GL_STATIC_DRAW);
 		}
+		glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
 	}
 	else {
 		LOGD("Model \"%s\" does not contain indices.", getAttribute(ATTR_FILE).c_str());
 	}
-	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
 	if (getAttribute(ATTR_AMBIENT).length() > 0) {
 		setAmbient(Color(getAttribute(ATTR_AMBIENT)));
 		if (modelData_->getMaterials().size() > 0) {
@@ -146,8 +138,11 @@ void StaticObject::release() {
 		glDeleteBuffers(1, &cbo_);
 		cbo_ = 0;
 	}
+	if (ibo_ != 0) {
+		glDeleteBuffers(1, &ibo_);
+		ibo_ = 0;
+	}
 	for (UINT32 i = 0; i < modelData_->getParts().size(); i++) {
-		glDeleteBuffers(1, &modelData_->getParts()[i].ibo_);
 		delete modelData_->getParts()[i].bv_;
 	}
 	delete modelData_;
@@ -182,8 +177,12 @@ SIZE StaticObject::getTexture() {
 }
 
 SIZE StaticObject::getIBO() {
+	return ibo_;
+}
+
+SIZE StaticObject::getIndexOffset() {
 	return modelData_->getParts().size() > currentPart_ ?
-		modelData_->getParts()[currentPart_].ibo_ : 0;
+		modelData_->getParts()[currentPart_].offset_ : 0;
 }
 
 BoundingVolume* StaticObject::getBV() {
@@ -314,32 +313,56 @@ bool StaticObject::createTerrain() {
 		v.uv[1] = tg.uv_->at(i * 2 + 1);
 		vertices[i] = v;
 	}
-	modelData_->setVertices(ModelData::PNT, reinterpret_cast<UINT8*>(vertices), vertexCount);
-	// Create vertex buffer object.
-	glGenBuffers(1, &cbo_);
-	getServiceLocator()->getGraphicsManager()->bindBuffer(cbo_);
-	glBufferData(GL_ARRAY_BUFFER,
-		vertexCount * sizeof(VertexPNT),
-		vertices,
-		GL_STATIC_DRAW);
-	// Create index buffer objects.
+	modelData_->setVertices(ModelData::PNT,
+		reinterpret_cast<UINT8*>(vertices), vertexCount);
 	UINT32 indCount = (UINT32) tg.indices_->size();
 	modelData_->getParts().resize(indCount);
-	for (UINT32 i = 0; i < indCount; i++)	{
-		glGenBuffers(1, &modelData_->getParts()[i].ibo_);
-		glBindBuffer(GL_ELEMENT_ARRAY_BUFFER,
-			modelData_->getParts()[i].ibo_);
-		vector<UINT16>* ind = tg.indices_->at(i);
-		modelData_->getParts()[i].indexCount_ = (UINT32) ind->size();
-		if (tg.bounds_ != 0 && tg.bounds_->size() > i) {
-			modelData_->getParts()[i].bv_ = tg.bounds_->at(i)->copy();
+	if (tg.vertices_->size() / 3 - 1 > USHRT_MAX) {
+		LOGD("Terrain uses integer indices.");
+		vector<UINT32> indices;
+		SIZE offset = 0;
+		for (UINT32 i = 0; i < indCount; i++)	{
+			ModelData::Part& part = modelData_->getParts()[i];
+			vector<UINT16>* ind = tg.indices_->at(i);
+			SIZE size = ind->size();
+			part.indexCount_ = (UINT32) size;
+			part.offset_ = offset;
+			offset += size;
+			for (SIZE j = 0; j < size; j++) {
+				indices.push_back(tg.indices_->at(i)->at(j));
+			}
+			if (tg.bounds_ != 0 && tg.bounds_->size() > i) {
+				part.bv_ = tg.bounds_->at(i)->copy();
+			}
 		}
-		glBufferData(GL_ELEMENT_ARRAY_BUFFER,
-			ind->size() * sizeof(UINT16),
-			&(*ind)[0],
-			GL_STATIC_DRAW);
+		UINT32* indArray = new UINT32[indices.size()];
+		memcpy(indArray, &indices[0], indices.size() * sizeof(UINT32));
+		modelData_->setIndices(Renderable::INDEX_TYPE_UINT,
+			reinterpret_cast<UINT8*>(indArray), indices.size());
 	}
-	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
+	else {
+		LOGD("Terrain uses short indices.");
+		vector<UINT16> indices;
+		SIZE offset = 0;
+		for (UINT32 i = 0; i < indCount; i++)	{
+			ModelData::Part& part = modelData_->getParts()[i];
+			vector<UINT16>* ind = tg.indices_->at(i);
+			SIZE size = ind->size();
+			part.indexCount_ = (UINT32) size;
+			part.offset_ = offset;
+			offset += size;
+			for (SIZE j = 0; j < size; j++) {
+				indices.push_back(tg.indices_->at(i)->at(j));
+			}
+			if (tg.bounds_ != 0 && tg.bounds_->size() > i) {
+				part.bv_ = tg.bounds_->at(i)->copy();
+			}
+		}
+		UINT16* indArray = new UINT16[indices.size()];
+		memcpy(indArray, &indices[0], indices.size() * sizeof(UINT16));
+		modelData_->setIndices(Renderable::INDEX_TYPE_USHORT,
+			reinterpret_cast<UINT8*>(indArray), indices.size());
+	}
 	return true;
 }
 
@@ -409,6 +432,7 @@ bool StaticObject::createSphere() {
 	modelData_->setIndices(Renderable::INDEX_TYPE_USHORT, ind, indices.size());
 	modelData_->getParts().resize(1);
 	modelData_->getParts()[0].indexCount_ = indices.size();
+	modelData_->getParts()[0].offset_ = 0;
 	modelData_->setBoundingVolume(NEW BoundingSphere(0.5f));
 	setAttribute(Resource::ATTR_RADIUS, "0.5f");
 	return true;

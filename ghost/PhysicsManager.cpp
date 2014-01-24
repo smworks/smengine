@@ -21,6 +21,12 @@
 #include "Extensions/Vehicle.h"
 #include "Resources/Attributes.h"
 
+#include "../dependencies/includes/bullet/BulletCollision/NarrowPhaseCollision/btRaycastCallback.h"
+#include "../dependencies/includes/bullet/BulletCollision/CollisionShapes/btShapeHull.h"
+#include "../dependencies/includes/bullet/BulletCollision/Gimpact/btGImpactShape.h"
+#include "../dependencies/includes/bullet/BulletCollision/Gimpact/btGImpactCollisionAlgorithm.h"
+#include "../dependencies/includes/bullet/BulletCollision/CollisionShapes/btHeightfieldTerrainShape.h"
+
 DebugDraw::DebugDraw(GraphicsManager* gm) : gm_(gm), debugMode_(0) {}
 
 void DebugDraw::drawLine(
@@ -41,6 +47,7 @@ PhysicsManager::PhysicsManager(ServiceLocator* services) :
 {
 	conf_ = new btDefaultCollisionConfiguration();
 	dispatcher_ = new btCollisionDispatcher(conf_);
+	btGImpactCollisionAlgorithm::registerAlgorithm(dispatcher_);
 	pairCache_ = new btDbvtBroadphase();
 	solver_ = new btSequentialImpulseConstraintSolver();
 	dynamicsWorld_ = new btDiscreteDynamicsWorld(dispatcher_, pairCache_, solver_, conf_);
@@ -67,12 +74,12 @@ PhysicsManager::~PhysicsManager() {
 }
 
 void PhysicsManager::reset() {
-	vector<btTriangleMesh*>::const_iterator itMesh = triangleMeshes_.begin();
-	while (itMesh != triangleMeshes_.end()) {
+	vector<btStridingMeshInterface*>::const_iterator itMesh = meshInterfaces_.begin();
+	while (itMesh != meshInterfaces_.end()) {
 		delete *itMesh;
 		itMesh++;
 	}
-	triangleMeshes_.clear();
+	meshInterfaces_.clear();
 	for (SIZE i = 0; i < rigidBodies_.size(); i++) {
 		dynamicsWorld_->removeCollisionObject(rigidBodies_[i]);
 		btMotionState* motionState = rigidBodies_[i]->getMotionState();
@@ -350,23 +357,26 @@ void PhysicsManager::addMesh(Node* node) {
 		vert.push_back(data[i * floatStride + 2] * node->getScale().getZ());
 	}
 	vector<UINT32> indices;
-	if (model->getIndexCount() > 0 && model->getModel()->getIndexType() == Renderable::INDEX_TYPE_USHORT) {
-		UINT16* ind = modelData->getIndicesShort();
-		for (UINT32 i = 0; i < model->getIndexCount(); i++) {
-			indices.push_back(ind[i]);
+	if (model->getModel()->getIndexCount() > 0) {
+		if (model->getModel()->getIndexType() == Renderable::INDEX_TYPE_USHORT) {
+			UINT16* ind = modelData->getIndicesShort();
+			for (UINT32 i = 0; i < model->getIndexCount(); i++) {
+				indices.push_back(ind[i]);
+			}
 		}
-	}
-	else if (model->getIndexCount() > 0) {
-		UINT32* ind = modelData->getIndicesInt();
-		for (UINT32 i = 0; i < model->getIndexCount(); i++) {
-			indices.push_back(ind[i]);
+		else if (model->getModel()->getIndexType() == Renderable::INDEX_TYPE_UINT) {
+			UINT32* ind = modelData->getIndicesInt();
+			for (UINT32 i = 0; i < model->getIndexCount(); i++) {
+				UINT32 index = ind[i];
+				indices.push_back(index);
+			}
 		}
 	}
 	float mass = toFloat(model->getAttribute(Resource::ATTR_MASS).c_str());
 	if (toBool(model->getAttribute(Resource::ATTR_APPROXIMATION))) {
 		btConvexHullShape* originalConvexShape = new btConvexHullShape;
 		SIZE size = vert.size();
-		if (model->getIndexCount() == 0) {
+		if (model->getModel()->getIndexCount() > 0) {
 			for (SIZE i = 0; i < size; i += 3) {
 				originalConvexShape->addPoint(
 					btVector3(
@@ -398,11 +408,10 @@ void PhysicsManager::addMesh(Node* node) {
 		}
 	}
 	else {
-		// For indices use: btTriangleIndexVertexArray* mesh = new btTriangleIndexVertexArray(...)
-		btTriangleMesh* mesh = new btTriangleMesh;
-		triangleMeshes_.push_back(mesh);
-		SIZE size = vert.size();
-		if (model->getIndexCount() == 0) {
+		if (model->getModel()->getIndexCount() == 0) {
+			btTriangleMesh* mesh = new btTriangleMesh;
+			meshInterfaces_.push_back(mesh);
+			SIZE size = vert.size() / 3;
 			for (SIZE i = 0; i < size; i += 9) {
 				mesh->addTriangle(
 					btVector3(vert[i + 0], vert[i + 1], vert[i + 2]),
@@ -410,21 +419,46 @@ void PhysicsManager::addMesh(Node* node) {
 					btVector3(vert[i + 6], vert[i + 7], vert[i + 8]),
 					true);
 			}
+			colShape = new btBvhTriangleMeshShape(mesh, true);
 		}
 		else {
-			SIZE faceCount = indices.size() / 3;
-			for (SIZE i = 0; i < faceCount; i++) {
-				int in = indices[i * 3 + 0];
-				int in2 = indices[i * 3 + 1];
-				int in3 = indices[i * 3 + 2];
-				mesh->addTriangle(
-					btVector3(vert[in * 3], vert[in * 3 + 1], vert[in * 3 + 2]),
-					btVector3(vert[in2 * 3], vert[in2 * 3 + 1], vert[in2 * 3 + 2]),
-					btVector3(vert[in3 * 3], vert[in3 * 3 + 1], vert[in3 * 3 + 2]),
-					true);
+			UINT8* vertexArray = reinterpret_cast<UINT8*>(modelData->getVertices());
+			PHY_ScalarType type;
+			UINT8* indexArray;
+			if (modelData->getIndexType() == Renderable::INDEX_TYPE_USHORT) {
+				type = PHY_SHORT;
+				indexArray = reinterpret_cast<UINT8*>(modelData->getIndicesShort());
+			}
+			else {
+				type = PHY_INTEGER;
+				indexArray = reinterpret_cast<UINT8*>(modelData->getIndicesInt());
+			}
+			btTriangleIndexVertexArray* meshInterface = new btTriangleIndexVertexArray();
+			meshInterfaces_.push_back(meshInterface);
+			btIndexedMesh part;
+			// Vertices
+			part.m_numVertices = (int) modelData->getVertexCount();
+			part.m_vertexBase = vertexArray;
+			part.m_vertexStride = modelData->getVertexStride();
+			part.m_vertexType = PHY_FLOAT;
+			// Indices.
+			part.m_numTriangles = (int) modelData->getIndexCount() / 3;
+			part.m_triangleIndexBase = indexArray;
+			part.m_triangleIndexStride = modelData->getIndexStride() * 3;
+			part.m_indexType = type;
+			// Add mesh to mesh interface.
+			meshInterface->addIndexedMesh(part, type);
+			if (mass > GHOST_DELTA) {
+				btGImpactMeshShape* impactMeshShape = new btGImpactMeshShape(meshInterface);
+				impactMeshShape->setLocalScaling(btVector3(1.0f, 1.0f, 1.0f));
+				impactMeshShape->setMargin(0);	
+				impactMeshShape->updateBound();
+				colShape = impactMeshShape;
+			}
+			else {
+				colShape = new btBvhTriangleMeshShape(meshInterface, true);
 			}
 		}
-		colShape = new btBvhTriangleMeshShape(mesh, true);
 	}
 	btTransform startTransform;
 	startTransform.setIdentity();

@@ -31,7 +31,16 @@
       <attribute type="type" value="terrain" />
     </resource>
     <position x="0.0f" y="15.0f" z="0.0f" />
-    <scaling x="0.5f" y="0.5f" z="0.5f" />
+    <scaling x="2.5f" y="2.5f" z="2.5f" />
+  </node>
+  <node name="box">
+    <resource type="static_object" file="box.obj">
+      <attribute type="type" value="mesh" />
+      <attribute type="physics" value="true" />
+      <attribute type="linear_damping" value="0.5f" />
+      <attribute type="mass" value="1.0f" />
+    </resource>
+    <position x="0.0f" y="15.0f" z="0.0f" />
   </node>
   <node name="car">
     <resource type="static_object" file="car_body.obj">
@@ -53,7 +62,7 @@
       <attribute type="suspension_compression" value="4.4f" />
       <attribute type="roll_influence" value="0.1f" />
     </resource>
-    <position x="0.0f" y="10.0f" z="10.0f" />
+    <position x="0.0f" y="10.0f" z="20.0f" />
     <rotation x="0.0f" y="180.0f" z="0.0f" />
     <scaling x="1.974" y="1.974" z="1.974" />
     <node name="wheel1">

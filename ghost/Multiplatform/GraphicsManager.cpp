@@ -756,15 +756,13 @@ void GraphicsManager::renderNode(
 			if (renderable->getIndexType() == Renderable::INDEX_TYPE_USHORT) {
 				glDrawElements(renderType,
 					(GLint) renderable->getIndexCount(),
-					GL_UNSIGNED_SHORT,
-					0);
+					GL_UNSIGNED_SHORT, ((char*) 0) + renderable->getIndexOffset() * sizeof(short));
 				CHECK_GL_ERROR("glDrawElements with short indices");
 			}
 			else {
 				glDrawElements(renderType,
 					(GLint) renderable->getIndexCount(),
-					GL_UNSIGNED_INT,
-					0);
+					GL_UNSIGNED_INT, ((char*) 0) + renderable->getIndexOffset() * sizeof(int));
 				CHECK_GL_ERROR("glDrawElements with int indices");
 			}
 			glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);

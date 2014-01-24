@@ -139,36 +139,32 @@ UINT8* TextureRGBA::getRawData() {
 }
 
 void TextureRGBA::resize(UINT32 width, UINT32 height) {
-    int pixels = 1;
-    int horizontalOffset = 0;
-    int verticalOffset = 0;
-
-//    if (rand() % 2 == 0) { // Use something better than nearest neighbour interpolation.
-        pixels = 9;
-        horizontalOffset = 1;
-        verticalOffset = 1;
-//    }
-
+    INT32 horizontalOffset = 0;
+    INT32 verticalOffset = 0;
+	// Use something better than nearest neighbour interpolation.
+    horizontalOffset = 1;
+    verticalOffset = 1;
     float widthRatio = (float) width_ / width;
     float heightRatio = (float) height_ / height;
     UINT8* buffer = NEW UINT8[width * height * 4];
-
     for (UINT32 i = 0; i < height; i++) {
         for (UINT32 j = 0; j < width; j++) {
-            int r = 0, g = 0, b = 0, a = 0;
-            for (int k = -verticalOffset; k < 1 + verticalOffset; k++) {
-                for (int l = -horizontalOffset; l < 1 + horizontalOffset;
-					l++)
-				{
-                    UINT8* px = getPixel(
-						int(i * heightRatio) + k, int(j * widthRatio) + l);
+            INT32 r = 0, g = 0, b = 0, a = 0, pixels = 0;
+            for (INT32 k = -verticalOffset; k < 1 + verticalOffset; k++) {
+                for (INT32 l = -horizontalOffset; l < 1 + horizontalOffset; l++) {
+					INT32 row = INT32(i * heightRatio) + k, col = INT32(j * widthRatio) + l;
+					if (row < 0 || col < 0 || col >= width_ || row >= height_) {
+						continue;
+					}
+					pixels++;
+                    UINT8* px = getPixel(row, col);
                     r += px[0];
                     g += px[1];
                     b += px[2];
                     a += px[3];
                 }
             }
-            int pos = i * width * 4 + j * 4;
+            INT32 pos = i * width * 4 + j * 4;
             buffer[pos + 0] = r / pixels;
             buffer[pos + 1] = g / pixels;
             buffer[pos + 2] = b / pixels;
@@ -182,9 +178,8 @@ void TextureRGBA::resize(UINT32 width, UINT32 height) {
 }
 
 void TextureRGBA::setPixel(UINT8* color, SIZE row, SIZE column) {
-	if (buffer_ == 0 || row >= height_
-		|| column >= width_) {
-		LOGW("Unable to set pixel.");
+	if (buffer_ == 0 || row >= height_ || column >= width_) {
+		LOGW("Unable to set pixel on row %d, column %d.", row, column);
 		return;
 	}
 	if (column < left_) {
@@ -207,9 +202,8 @@ void TextureRGBA::setPixel(UINT8* color, SIZE row, SIZE column) {
 }
 
 UINT8* TextureRGBA::getPixel(SIZE row, SIZE column) {
-	if (buffer_ == 0 || row >= height_
-		|| column >= width_) {
-		LOGW("Unable to get pixel.");
+	if (buffer_ == 0 || row >= height_ || column >= width_) {
+		LOGW("Unable to get pixel on row %d, column %d.", row, column);
 		static UINT8 empty[] = {0, 0, 0, 0};
 		return empty;
 	}
@@ -265,11 +259,12 @@ bool TextureRGBA::commit() {
 	}
 	GraphicsManager* gm = getServiceLocator()->getGraphicsManager();
 	if (!isPowerOfTwo(width_) && !gm->isNPOTSupported()) {
-		LOGW("TextureRGBA width (%d) is not a power of two.", width_);
-		LOGW("Hardware doesn't support NPOT textures.");
-		LOGW("Texture will be scaled to next power of two.");
 		UINT32 newWidth = toPowerOfTwo(width_);
 		float ratio = (float) newWidth / (float) width_;
+		LOGW("TextureRGBA width (%d) is not a power of two.", width_);
+		LOGW("Hardware doesn't support NPOT textures.");
+		LOGW("Texture will be scaled to next power of two resolution: %ux%u.",
+			newWidth, (UINT32) (height_ * ratio));
 		resize(newWidth, (UINT32) (height_ * ratio));
 		return false;
 	}

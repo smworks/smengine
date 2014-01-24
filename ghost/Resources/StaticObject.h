@@ -65,6 +65,11 @@ public:
 	SIZE getIBO();
 
 	/**
+	 * @see Renderable
+	 */
+	SIZE getIndexOffset();
+
+	/**
 	 * @see Renderable.
 	 */
 	BoundingVolume* getBV();
@@ -134,6 +139,7 @@ private:
 private:
 	ModelData* modelData_;
 	UINT32 cbo_; // Combined buffer object.
+	UINT32 ibo_; // Index buffer object.
 	SIZE currentPart_;
 };
 

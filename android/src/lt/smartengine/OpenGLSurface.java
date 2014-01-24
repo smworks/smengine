@@ -159,8 +159,7 @@ class OpenGLSurface extends GLSurfaceView {
 			 * Allocate then read the array of minimally matching EGL configs
 			 */
 			EGLConfig[] configs = new EGLConfig[numConfigs];
-			egl.eglChooseConfig(display, s_configAttribs2, configs, numConfigs,
-					num_config);
+			egl.eglChooseConfig(display, s_configAttribs2, configs, numConfigs, num_config);
 			/*
 			 * Now return the "best" one
 			 */
