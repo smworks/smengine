@@ -18,16 +18,6 @@ class AndroidGraphicsManager : public GraphicsManager {
 public:
 	AndroidGraphicsManager(ServiceLocator* services);
 	~AndroidGraphicsManager();
-
-	/**
-	 * @see GraphicsManager.
-	 */
-	bool isNPOTSupported();
-	
-	/**
-	 * @see GraphicsManager.
-	 */
-	bool isUintIndexSupported();
 	
 	/**
 	 * @see GraphicsManager.
@@ -112,6 +102,11 @@ public:
 	 * @see GraphicsManager.
 	 */
 	void useVertexBuffer(UINT32 id);
+
+	/**
+	 * @see GraphicsManager.
+	 */
+	bool checkSupport(Support key);
 };
 
 #endif

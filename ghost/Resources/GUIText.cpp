@@ -110,7 +110,7 @@ void GUIText::update() {
 		symbols_.push_back(sd);
 	}
 	sort(symbols_.begin(), symbols_.end());
-	setWidth(maxWidth);
+	setWidth(maxWidth > width ? maxWidth : width);
 	setHeight(maxHeight);
 }
 
@@ -124,6 +124,11 @@ void GUIText::setText(const string& text) {
 
 string& GUIText::getText() {
 	return text_;
+}
+
+void GUIText::setTextSize(SIZE size) {
+    size_ = size;
+    setText(text_);
 }
 
 SIZE GUIText::getTextSize() {

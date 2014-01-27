@@ -113,16 +113,16 @@ public class SMartEngine extends Activity implements OnTouchListener, SensorEven
 
 	@SuppressLint("NewApi")
 	@Override public void onSensorChanged(SensorEvent event) {
-		if (event.sensor.getType() == Sensor.TYPE_ROTATION_VECTOR) {
-			SensorManager.getRotationMatrixFromVector(rotationMatrix, event.values);
-//			double x = Math.toDegrees(event.values[0]);
-//			double y = Math.toDegrees(event.values[1]);
-//			double z = Math.toDegrees(event.values[2]);
-			double x = Math.toDegrees(Math.atan2(rotationMatrix[7], rotationMatrix[8]));
-			double y = Math.toDegrees(Math.atan2(-rotationMatrix[6], Math.sqrt(
-				rotationMatrix[7] * rotationMatrix[7] + rotationMatrix[8] * rotationMatrix[8])));
-			double z = Math.toDegrees(Math.atan2(rotationMatrix[3], rotationMatrix[0]));
-			//Log.d(TAG, "Rotation vector: " + x + ", " + y + ", " + z);
-		}
+//		if (event.sensor.getType() == Sensor.TYPE_ROTATION_VECTOR) {
+//			SensorManager.getRotationMatrixFromVector(rotationMatrix, event.values);
+////			double x = Math.toDegrees(event.values[0]);
+////			double y = Math.toDegrees(event.values[1]);
+////			double z = Math.toDegrees(event.values[2]);
+//			double x = Math.toDegrees(Math.atan2(rotationMatrix[7], rotationMatrix[8]));
+//			double y = Math.toDegrees(Math.atan2(-rotationMatrix[6], Math.sqrt(
+//				rotationMatrix[7] * rotationMatrix[7] + rotationMatrix[8] * rotationMatrix[8])));
+//			double z = Math.toDegrees(Math.atan2(rotationMatrix[3], rotationMatrix[0]));
+//			//Log.d(TAG, "Rotation vector: " + x + ", " + y + ", " + z);
+//		}
 	}
 }

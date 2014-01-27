@@ -102,7 +102,7 @@ typedef SIZE* POINTER;
 #include <GL/glew.h>
 
 #ifdef SMART_DEBUG
-	#define CHECK_GL_ERROR(msg) checkGLError(msg)
+	#define CHECK_GL_ERROR(msg) //checkGLError(msg)
 #else
 	#define CHECK_GL_ERROR(msg)
 #endif

@@ -30,21 +30,11 @@ WindowsGraphicsManager::WindowsGraphicsManager(ServiceLocator* services) : Graph
 	LOGD("Vendor: %s.", getGLString(GL_VENDOR));
 	LOGD("Renderer: %s.", getGLString(GL_RENDERER));
 	LOGD("Extensions: %s.", getGLString(GL_EXTENSIONS));
-	LOGD("NPOT support: %s.", isNPOTSupported()  ? "true" : "false");
-	LOGD("UINT index support: %s.", isUintIndexSupported()  ? "true" : "false");
 	LOGD("Created Windows graphics manager.");
 }
 
 WindowsGraphicsManager::~WindowsGraphicsManager() {
 	LOGD("Deleted Windows graphics manager.");
-}
-
-bool WindowsGraphicsManager::isNPOTSupported() {
-	return isExtensionSupported("ARB_texture_non_power_of_two");
-}
-
-bool WindowsGraphicsManager::isUintIndexSupported() {
-	return true;
 }
 
 bool WindowsGraphicsManager::isGraphicsContextAvailable() {
@@ -433,4 +423,17 @@ void WindowsGraphicsManager::unsetVertexBuffer(UINT32& id) {
 
 void WindowsGraphicsManager::useVertexBuffer(UINT32 id) {
 	bindBuffer(id);
+}
+
+bool WindowsGraphicsManager::checkSupport(Support key) {
+	switch (key) {
+	case SUPPORT_NPOT_TEXTURES:
+		return isExtensionSupported("ARB_texture_non_power_of_two");
+		break;
+	case SUPPORT_UINT_INDEX:
+		return true;
+		break;
+	default:
+		return false;
+	}
 }

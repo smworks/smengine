@@ -66,6 +66,7 @@ ResourceManager::~ResourceManager() {
 void ResourceManager::reset() {
 	it_ = resources_.begin();
 	while (it_ != resources_.end()) {
+		//LOGD("  Deleting: %s", it_->first.c_str());
 		delete (*it_).second;
 		it_++;
 	}
@@ -74,11 +75,11 @@ void ResourceManager::reset() {
 
 void ResourceManager::add(const string& name, Resource* resource) {
 	string key = CREATE_KEY(name, resource->getType());
-	if (resources_.end() !=
-		resources_.find(key)) {
-		LOGW("Resource with name \"%s\" is already in memory.",
-			name.c_str());
-		return;
+    unordered_map<string, Resource*>::iterator it = resources_.find(key);
+	if (resources_.end() != it) {
+		LOGW("Resource with name \"%s\" is already in memory.", name.c_str());
+        LOGW("Removing old resource.");
+        remove(resource->getType(), name);
 	}
 	resource->setName(name);
 	resources_.insert(pair<string, Resource*>(key, resource));
@@ -227,10 +228,18 @@ void ResourceManager::loadResources(XmlNode* xmlNode, Node* node) {
 			}
 			attr.setString(*rn, *rv);
 		}
+        string name = node->getName() + "_" + attr.getString(FILE);
+        if (has(resType, name)) {
+            delete tmp;
+            tmp = get(resType, name);
+        }
+        else {
+            add(node->getName() + "_" + attr.getString(FILE), tmp);
+            tmp->create();
+        }
 		tmp->setNode(node);
-		add(node->getName() + "_" + attr.getString(FILE), tmp);
-		tmp->create();
-		node->addResource(tmp);
+        node->addResource(tmp);
+		
 	}
 }
 

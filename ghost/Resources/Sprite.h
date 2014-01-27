@@ -125,47 +125,38 @@ public:
 
 	Texture* getPointerToTexture();
 
-	///**
-	// * Sets index of sprite to render.
-	// * If sprite contains no different animations,
-	// * whole sprite image is used.
-	// * @param index - index of animation.
-	// */
-	//void setAnimationIndex(UINT32 index);
+	/**
+	 * Sets index of sprite to render.
+	 * If sprite contains no different animations,
+	 * whole sprite image is used.
+	 * @param index - index of animation.
+	 */
+	void setSpriteIndex(SIZE index);
 
-	///**
-	// * Sets number of separte images that compose one sprite.
-	// * @param count - number of images.
-	// * @note This method also generates new UV Buffer objects.
-	// */
-	//void setAnimationCount(UINT32 count);
-	//void setTexture(TextureRGBA* image) { image_ = image; }
-	//TextureRGBA* getTexture() { return image_; }
+	/**
+	 * Sets number of separte images that compose one sprite.
+	 * @param count - number of images.
+	 * @note This method also generates new UV Buffer objects.
+	 */
+	void setSpriteCount(SIZE count);
+        
+    /**
+     * @return Number of different sprites in texture.
+     */
+    SIZE getSpriteCount();
 
-	///**
-	// * Gets number of separe images that compose one sprite.
-	// * @return Number of images.
-	// */
-	//UINT32 getAnimationCount();
-	///**
-	// * Returns sprite UV coordinate buffer index
-	// * for specified sprite animation.
-	// * @return UV coordinate buffer index.
-	// */
-	//GLuint getTCBO();
-	//int getRedColor(float x, float y);
-	//int getBlueColor(float x, float y);
-	//int getGreenColor(float x, float y);
+	/**
+	 * Gets number of separe images that compose one sprite.
+	 * @return Number of images.
+	 */
+	UINT32 getAnimationCount();
 private:
-	///** Current animation index. */
-	//UINT32 animationIndex_;
-	///** Animation count. */
-	//UINT32 animationCount_;
-	///** Animation texture coordinate index buffers. */
-	//GLuint* uvBO_;
+	/** Animation texture coordinate index buffers. */
+	UINT32* uvBO_;
 	/** Pointer to image. */
 	Texture* image_;
-	UINT32 cbo_;
+    SIZE spriteCount_;
+    SIZE spriteIndex_;
 };
 
 #endif /* SPRITE_H_ */

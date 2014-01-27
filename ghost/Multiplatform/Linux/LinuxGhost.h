@@ -13,7 +13,7 @@
 #endif
 
 // BASIC CONSTANTS.
-#define GHOST_= NEWLINE '\n'
+#define GHOST_NEWLINE '\n'
 #define GHOST_DEBUG true
 #define GHOST_FRUSTUM_CULLING true
 #define GHOST_DELTA 0.0000000001f
@@ -31,8 +31,11 @@
 #define GHOST_SCENES GHOST_RESOURCES("scenes")
 #define GHOST_FONTS GHOST_RESOURCES("fonts")
 
+#define NEW new
+
 #include <stdio.h>
 #include <unordered_map>
+#include <queue>
 #include <vector>
 #include <string>
 #include <string.h>
@@ -40,6 +43,7 @@
 #include <iostream>
 #include <fstream>
 #include <sstream>
+#include <iomanip>
 #include <stdio.h>
 #include <unistd.h>
 #include <algorithm>

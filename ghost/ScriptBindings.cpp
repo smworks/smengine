@@ -440,6 +440,27 @@ int nodeAddTexture(lua_State* L) {
 	return 0;
 }
 
+int nodeSetSprite(lua_State* L) {
+	Node* node = SM_GET_OBJECT(L, 0, Node);
+	INT32 index = SM_GET_INT(L, 1);
+	Sprite* obj = static_cast<Sprite*>(node->getResource(Resource::SPRITE));
+	if (obj != 0) {
+		obj->setSpriteIndex(index);
+	}
+	return 0;
+}
+
+int nodeGetSpriteCount(lua_State* L) {
+	Node* node = SM_GET_OBJECT(L, 0, Node);
+	Sprite* obj = static_cast<Sprite*>(node->getResource(Resource::SPRITE));
+    SIZE indexCount = 0;
+	if (obj != 0) {
+		indexCount = obj->getIndexCount();
+	}
+	SM_POP_ARGS(L, SM_GET_ARGUMENT_COUNT(L));
+	return 1;
+}
+
 int setText(lua_State* L) {
 	Node* node = SM_GET_OBJECT(L, 0, Node);
 	GUIText* text = SM_GET_OBJECT(L, 1, GUIText);
@@ -668,6 +689,8 @@ void registerNode() {
     ADD_METHOD(methods, "setShader", nodeSetShader);
     ADD_METHOD(methods, "getShader", nodeGetShader);
 	ADD_METHOD(methods, "addTexture", nodeAddTexture);
+    ADD_METHOD(methods, "setIndex", nodeSetSprite);
+    ADD_METHOD(methods, "getCount", nodeGetSpriteCount);
     ADD_METHOD(methods, "setText", setText);
     ADD_METHOD(methods, "getText", getText);
     ADD_METHOD(methods, "setButton", setButton);
@@ -1127,6 +1150,9 @@ int newGUIText(lua_State* L) {
 	if (text == 0) {
 		text = NEW GUIText(SM_GET_SL());
 		text->getAttributes().setString(GUIText::ATTR_TEXT, val);
+        text->getAttributes().setString(GUIText::ATTR_SCREEN_LEFT, "true");
+        text->getAttributes().setString(GUIText::ATTR_SCREEN_RIGHT, "true");
+        text->getAttributes().setString(GUIText::ATTR_SCREEN_TOP, "true");
 		text->create();
 		SM_GET_RM()->add(val, text);
 	}
@@ -1145,6 +1171,13 @@ int deleteGUIText(lua_State* L) {
 //    string name = text->getName();
 //    LOGI("Name: %s", name.c_str());
 //	ScriptManager::getServiceLocator()->getRM()->remove(Resource::TEXT, text->getName());
+    return 0;
+}
+
+int guiTextSetSize(lua_State* L) {
+    GUIText* text = SM_GET_OBJECT(L, 0, GUIText);
+	INT32 size = SM_GET_INT(L, 1);
+	text->setTextSize(size);
     return 0;
 }
 
@@ -1173,6 +1206,7 @@ void registerGUIText() {
     unordered_map<string, int (*)(lua_State*)> methods;
 	ADD_METHOD(methods, "new", newGUIText);
 	ADD_METHOD(methods, "__gc", deleteGUIText);
+    ADD_METHOD(methods, "setSize", guiTextSetSize);
 	ADD_METHOD(methods, "setText", guiTextSetText);
 	ADD_METHOD(methods, "setColor", guiTextSetColor);
 	ADD_METHOD(methods, "setBackground", guiTextSetBackground);

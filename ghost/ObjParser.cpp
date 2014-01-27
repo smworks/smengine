@@ -329,7 +329,7 @@ bool ObjParser::parse(ModelData& model, const string& file, ServiceLocator* serv
 		LOGW("3D model cannot have more indices than: %d.", UINT_MAX);
 		return false;
 	}
-	if (nFaces * 3 >= USHRT_MAX && !gm->isUintIndexSupported()) {
+	if (nFaces * 3 >= USHRT_MAX && !gm->isSupported(GraphicsManager::SUPPORT_UINT_INDEX)) {
 		LOGW("3D model has more indices, than device supports. Supported index count: %d.", USHRT_MAX);
 		return false;
 	}

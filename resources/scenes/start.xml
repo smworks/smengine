@@ -1,111 +1,38 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <level>
-  <node name="script">
-    <resource type="script">
-      <attribute type="file" value="game_loop.lua" />
-    </resource>
-  </node>
-  <node name="skybox">
-    <resource type="shader" file="skybox" />
-    <resource type="static_object" file="box.obj">
-      <attribute type="physics" value="false" />
-    </resource>
-    <resource type="cube_map" file="posx.png,negx.png,posy.png,negy.png,posz.png,negz.png" />
-    <position x="0.0f" y="0.0f" z="0.0f" />
-    <scaling x="150.0f" y="150.0f" z="150.0f" />
-  </node>
-  <node name="light1">
-    <resource type="light">
-      <attribute type="color" value="#FFFFFFFF" />
-    </resource>
-    <position x="0.0f" y="15.0f" z="10.0f" />
-  </node>
-  <node name="terrain">
-    <resource type="shader" file="terrain" />
-    <resource type="texture" file="grass.png" />
-    <resource type="texture" file="dirt.png" />
-    <resource type="texture" file="rock.png" />
-    <resource type="texture" file="terrain_blend.png" />
-    <resource type="static_object" file="terrain_height.png">
-      <attribute type="physics" value="true" />
-      <attribute type="type" value="terrain" />
-    </resource>
-    <position x="0.0f" y="15.0f" z="0.0f" />
-    <scaling x="2.5f" y="2.5f" z="2.5f" />
-  </node>
-  <node name="box">
-    <resource type="static_object" file="box.obj">
-      <attribute type="type" value="mesh" />
-      <attribute type="physics" value="true" />
-      <attribute type="linear_damping" value="0.5f" />
-      <attribute type="mass" value="1.0f" />
-    </resource>
-    <position x="0.0f" y="15.0f" z="0.0f" />
-  </node>
-  <node name="car">
-    <resource type="static_object" file="car_body.obj">
-      <attribute type="type" value="mesh" />
-      <attribute type="physics" value="true" />
-      <attribute type="physics_object" value="vehicle" />
-      <attribute type="mass" value="1000.0f" />
-      <attribute type="max_engine_force" value="2500.0f" />
-      <attribute type="max_break_force" value="100.0f" />
-      <attribute type="steering_increment" value="0.05f" />
-      <attribute type="steering_clamp" value="0.3f" />
-      <attribute type="wheel_radius" value="0.3f" />
-      <attribute type="wheel_width" value="0.4f" />
-      <attribute type="wheel_friction" value="1000.0f" />
-      <attribute type="max_wheel_rotation" value="30.0f" />
-      <attribute type="suspension_rest_length" value="0.4f" />
-      <attribute type="suspension_stiffness" value="100.0f" />
-      <attribute type="suspension_damping" value="2.3f" />
-      <attribute type="suspension_compression" value="4.4f" />
-      <attribute type="roll_influence" value="0.1f" />
-    </resource>
-    <position x="0.0f" y="10.0f" z="20.0f" />
-    <rotation x="0.0f" y="180.0f" z="0.0f" />
-    <scaling x="1.974" y="1.974" z="1.974" />
-    <node name="wheel1">
-      <resource type="static_object" file="car_wheel.obj">
-        <attribute type="physics" value="false" />
-      </resource>
-      <position x="-0.6f" y="0.2f" z="1.15f" />
-      <scaling x="0.29760194" y="0.29760194" z="0.29760194" />
+    <node name="script">
+        <resource type="script">
+            <attribute type="file" value="game_loop.lua" />
+        </resource>
     </node>
-    <node name="wheel2">
-      <resource type="static_object" file="car_wheel.obj">
-        <attribute type="physics" value="false" />
-      </resource>
-      <position x="0.6f" y="0.2f" z="1.15f" />
-      <scaling x="0.29760194f" y="0.29760194f" z="0.29760194f" />
+    <node name="parallax">
+        <resource type="sprite">
+            <attribute type="file" value="background_parallax.png" />
+        </resource>
+        <position x="0.0f" y="0.0f" z="0.0f" />
     </node>
-    <node name="wheel3">
-      <resource type="static_object" file="car_wheel.obj">
-        <attribute type="physics" value="false" />
-      </resource>
-      <position x="-0.6f" y="0.2f" z="-1.05f" />
-      <scaling x="0.29760194" y="0.29760194" z="0.29760194" />
+    <node name="background">
+        <resource type="sprite">
+            <attribute type="file" value="background.png" />
+        </resource>
+        <position x="0.0f" y="0.0f" z="0.0f" />
     </node>
-    <node name="wheel4">
-      <resource type="static_object" file="car_wheel.obj">
-        <attribute type="physics" value="false" />
-      </resource>
-      <position x="0.6f" y="0.2f" z="-1.05f" />
-      <scaling x="0.29760194" y="0.29760194" z="0.29760194" />
+	<node name="cave" renderable="false">
+        <resource type="sprite">
+            <attribute type="file" value="cave.png" />
+        </resource>
+        <position x="0.0f" y="0.0f" z="0.0f" />
     </node>
-  </node>
-  <node name="LotsOfText" renderable="false">
-    <resource type="gui_text">
-      <attribute type="text" value="Thread-safety and POSIX.1\nThread-safe Versions of POSIX.1 and C-language Functions\nPOSIX.1 and C-language functions were written to work in an environment of single-threaded processes. Reentrancy was not an issue in their design: the possibility of a process attempting to 're-enter' a function through concurrent invocations was not considered, because threads - the enabler of concurrency within a process - were not anticipated.\nSo, as it turns out, some POSIX.1 and C-language functions are inherently non-reentrant with respect to threads; that is, their interface specifications preclude reentrancy.1 For example, some functions (such as asctime()) return a pointer to a result stored in memory space allocated by the function on a per-process basis. Such a function is non-reentrant, because its result can be overwritten by successive invocations. Other POSIX.1 and C-language functions, while not inherently non-reentrant, may be implemented in ways that lead to non-reentrancy. For example, some functions (such as rand()) store state information (such as a seed value, which survives multiple function invocations) in memory space allocated by the function on a per-process basis. The implementation of such a function is non-reentrant if the implementation fails to synchronize invocations of the function and thus fails to protect the state information. The problem is that when the state information is not protected, concurrent invocations can interfere with one another (for example, see the same seed value).\nFunctions must be reentrant in an environment of multithreaded processes, in order to ensure that they can be safely invoked by concurrently executing threads. POSIX.1c takes three actions in the pursuit of reentrancy. First, POSIX.1c imposes reentrancy as a general rule: all functions, unless explicitly singled out as exceptions to the rule, must be implemented in a way that preserves reentrancy. Second, POSIX.1c redefines errno, as described below in . Third, for those functions whose interface specifications preclude reentrancy, POSIX.1c defines alternative 'reentrant' versions as follows:\n    As previously noted, some functions are non-reentrant because they return results in per-process library-allocated structures that may be static and thus subject to overwriting by successive calls. These include:\n        The POSIX.1 process environment functions getlogin(), ttyname() (see ISO/IEC 9945:1-1996, §4.2.4 and 4.7.2)\n        The C-language functions asctime(), ctime(), gmtime() and localtime() (see ISO/IEC 9945:1-1996, §8.3.4-8.3.7)\n        The POSIX.1 system database functions getgrgid(), getgrnam(), getpwuid() and getpwnam() (see ISO/IEC 9945:1-1996, §9.2.1 and 9.2.2).\n    POSIX.1c defines reentrant versions of these functions; the new functions have '_r' appended to the function names (that is, 'asctime_r()', and so on). To achieve reentrancy, the new '_r' functions replace library-allocated structures with application-allocated structures that are passed as arguments to the functions at invocation.\n    Some functions can be reentrant or non-reentrant, depending on their arguments. These include the C-language function tmpnam() and the POSIX.1 process environment function ctermid(). These functions have pointers to character strings as arguments. If the pointers are not NULL, the functions store their results in the character string; however, if the pointers are NULL, the functions store their results in an area that may be static and thus subject to overwriting by successive calls.\n    To ensure reentrancy of these functions, POSIX.1c simply restricts their arguments to non-NULL (ISO/IEC 9945:1-1996, §4.7.1 and 8.2.5).\n    As previously noted, some functions are non-reentrant because they communicate across multiple function invocations by maintaining state information in static library-allocated storage, which is shared by all the threads of a process, possibly without the benefit of synchronization. These include the C-language function rand(), which is used to generate a process-wide pseudorandom number sequence. The function rand(), which is called with no arguments, returns the next pseudorandom number in a sequence determined by an initial seed value (set via the function srand()). As a side effect, the function rand() updates the seed value, enabling the sequence to progress. The seed value is held in a library-allocated static memory location. In a multithreaded process, two or more threads might concurrently invoke rand(), read the same seed value, and thus acquire the same pseudorandom number.\n    POSIX.1c defines a reentrant version, rand_r(), of this function (ISO/IEC 9945:1-1996, §8.3.3). To ensure reentrancy, the rand_r() function is required to synchronize (that is, serialize) calls to itself, so that a thread is forced to 'finish' acquiring one pseudorandom number in a sequence before another thread can begin to acquire the next number in the sequence.\n    In addition to reentrancy, the rand_r() function offers applications flexibility in generating pseudorandom number sequences. It does so through the introduction of an argument: a pointer to an application-supplied memory location that is used to hold the seed value. As indicated above, an application can use rand_r() to generate a 'reliable' process-wide pseudorandom number sequence (that is, a sequence without replicates). Alternatively, an application can use rand_r() to generate per-thread pseudorandom number sequences, by having each thread use a distinct seed as its rand_r() argument. In fact, an application can use rand_r() to generate an arbitrary number of uncorrelated sequences of pseudorandom numbers (each sequence governed by a distinct seed), which could prove to be useful in Monte Carlo simulations and other similar applications.\n    Other functions in this class include:\n        The C-language function strtok() (see ISO/IEC 9945:1-1996, §8.3.3), which is used to find the next token in a string.\n        The POSIX.1 file and directory function readdir(), which is used to read the next entry in a directory stream. Note that this function also suffers from the problem of returning its result in a library-allocated structure. Both deficiencies are resolved in the reentrant version readdir_r() (ISO/IEC 9945:1-1996, §5.1.2).\n    The POSIX.1 and C-language functions that operate on character streams (represented by pointers to objects of type FILE) are required by POSIX.1c to be implemented in such a way that reentrancy is achieved (see ISO/IEC 9945:1-1996, §8.2). This requirement has a drawback; it imposes substantial performance penalties because of the synchronization that must be built into the implementations of the functions for the sake of reentrancy. POSIX.1c addresses this tradeoff between reentrancy (safety) and performance by introducing high-performance, but non-reentrant (potentially unsafe), versions of the following C-language standard I/O functions: getc(), getchar(), putc() and putchar(). The non-reentrant versions are named getc_unlocked(), and so on, to stress their unsafeness.\n    To make it possible for multithreaded applications to use the non-reentrant versions of the standard I/O functions safely, POSIX.1c introduces the following character stream locking functions: flockfile(), ftrylockfile() and funlockfile(). An application thread can use these functions to ensure that a sequence of I/O operations on a given character stream is executed as a unit (without interference from other threads).2\n    As stated in the description of the character stream locking functions, all standard I/O functions that reference character streams shall behave as if they use flockfile() and funlockfile() internally to obtain ownership of the character streams. Thus, when an application thread locks a character stream, the standard I/O functions cannot be used by other threads to operate on the character stream until the thread holding the lock releases it.\nThe specifications introduced by POSIX.1c for the purpose of ensuring reentrancy of POSIX.1 and C-language functions are mandatory for operating system implementations that support threads. They are optional for implementations that do not support threads. This is accomplished in the standard by associating the reentrancy specifications with a separate option, {_POSIX_THREAD_SAFE_FUNCTIONS}, which is declared to be mandatory for implementations supporting the threads option. Accordingly, this option is mandatory for conformance to the ISO/IEC 9945:1-1996.\nRedefinition of errno\nIn POSIX.1, errno is defined as an external global variable. But this definition is unacceptable in a multithreaded environment, because its use can result in nondeterministic results. The problem is that two or more threads can encounter errors, all causing the same errno to be set. Under these circumstances, a thread might end up checking errno after it has already been updated by another thread.\nTo circumvent the resulting nondeterminism, POSIX.1c redefines errno as a service that can access the per-thread error number as follows (ISO/IEC 9945:1-1996, §2.4):\n    Some functions may provide the error number in a variable accessed through the symbol errno. The symbol errno is defined by including the header errno.h, as specified by the C Standard ... For each thread of a process, the value of errno shall not be affected by function calls or assignments to errno by other threads. \nIn addition, all POSIX.1c functions avoid using errno and, instead, return the error number directly as the function return value, with a return value of zero indicating that no error was detected. This strategy is, in fact, being followed on a POSIX-wide basis for all new functions.\nUsing small objects in Bullet is generally frowned upon and many have reported problems with their simulations when doing so. However, since I sold my car I don't think I own any objects that can be decomposed into convex parts which are wider than 20cm on every axis. Certainly nothing in my home, as chairs, tables, etc do not fit these requirements. Scaling the world isn't much fun, so ideally we would want to be able to just use these values in our simulations and for everything to just work.\nAs I have become more knowledgeable about Bullet, I have learnt about various things that can be tweaked to affect the simulation. So I wanted to see if they could be used to allow stable small-scale simulations without having to scale the world.\nFor the sake of experiment, I had a go at creating a basic pool/snooker game. The balls were 0.02 radius spheres, the cushions were boxes 0.04 wide, and I also had some dynamic boxes on the table with the balls, these were the same size as the balls, i..e had halfwidths of 0.02,0.02,0.02.\nGravity was 9.8.\nThe first thing I did was change the internal time step to something more appropriate for this scale. A sphere resting on a plane will fall ( 0.5 )( 9.8 )( t^2 ) units every internal tick. For the default 60hz this is 0.001 units. For a 1 radius sphere, this is only 0.1% of its radius. For the 0.02 radius sphere however, it is 5% of the sphere's radius.\nTo make this fair I could either change gravity to a tiny 0.196 or increase the internal step frequency to about 500hz. I chose the latter. A pool simulation is tiny and a 500hz simulation is perfectly within the realms of even my modest PC which is an early Pentium 4 running at 1800mhz.\nThe balls had a linear and angular sleep threshold of 0, i.e. they never deactivated. I gave them a mass of 0.75 for no particular reason. Their restitution was 0.9 and the friction was 0.1.\nThe 'slate' of the table was a static plane shape, with restitution 0.2 and a friction of 0.3.\nThe 'cushions' were boxes with restitution 0.7 and friction 0.5\nChucking balls onto the table works quite well and they behave very realistically. One can see the effect of spinning the ball, especially after collisions with cushions.\nThere are still some issues however.\nIf there is no restitution, the balls and boxes tend to 'twitch' occasionally when you zoom in on them. This is a very pronounced effect at 60hz but 500hz almost defeats it. A stack of 3 boxes seemed no worse than a single box. In the sphere case, the sphere bounces on the spot. The boxes tend to wobble as the problem seems to only affect a single contact at a time. It didn't matter whether i put the rigid bodies on the slate or on the cushion, so the problem occurs with a static plane and static box.\nSetting angular damping to 1 (i'm using my damping patch otherwise this wouldn't actually work) gets rid of the twitching.\nIt was at this point I tried tweaking gContactBreakingThreshold from its default value of 0.02 to 0.002 and other sensible values. It seemed to make no difference. Setting it to 0 caused objects to sink through each other but not the floor or the cushions. Setting it to extreme values causes various weirdness but nothing made it behave obviously better than the default of 0.02\nI also tried increasing and decreasing the number of solver iterations but this had no effect either. Even on performance. I think the number of bodies being simulated is just too low.\nWith restitution the twitch turns into a continual jitter/bounce. Presumably this is the same problem but exasperated as the artifacts take longer to decay.\nChanging the 'erp' value produces some changes. With erp==0 there is no twitch but objects sink into the floor as if it was a quicksand. With erp > 0.2 (the default) the twitch turned into a rapid jitter.\nWith linearSlop set above the default of 0, the twitch goes away while the objects are stationary, but setting it too high makes the objects sink into the ground. 0.000001 seemed to work. What does linearSlop do?\nSetting the contact solver info's damping attribute to various values seemed to make no difference.\nTurning on solverSplitImpulse made no difference.\nSo in conclusion I think objects of this scale are feasible if one is prepare to use a small fixed time step. There are still artifacts that can be eliminated. I tried tweaking all the internal parameters I know about but I couldn't make the 'twitching' go away except with this linearSlop thing which I don't understand." />
-      <attribute type="width" value="128px" />
-      <attribute type="height" value="128px" />
-      <attribute type="size" value="12px" />
-      <attribute type="screen_left" value="true" />
-      <attribute type="screen_top" value="true" />
-      <attribute type="background" value="#FF000088" />
-      <attribute type="color" value="#FFFFFFFF" />
-    </resource>
-    <position x="100.0f" y="100.0f" z="100.0f" />
-    <scaling x="100.0f" y="100.0f" z="1.0" />
-  </node>
+    <node name="npc" renderable="false">
+        <resource type="sprite">
+            <attribute type="file" value="dwarf.png" />
+        </resource>
+    </node>
+    <node name="player">
+        <resource type="sprite">
+            <attribute type="file" value="player.png" />
+			<attribute type="sprite_count" value="1" />
+        </resource>
+        <position x="0.0f" y="128.0f" z="0.0f" />
+    </node>
 </level>

@@ -339,92 +339,173 @@
 		<Unit filename="dependencies/includes/bullet/LinearMath/btTransformUtil.h" />
 		<Unit filename="dependencies/includes/bullet/LinearMath/btVector3.cpp" />
 		<Unit filename="dependencies/includes/bullet/LinearMath/btVector3.h" />
-		<Unit filename="dependencies/includes/fmod/linux/fmod.h" />
-		<Unit filename="dependencies/includes/fmod/linux/fmod.hpp" />
-		<Unit filename="dependencies/includes/fmod/linux/fmod_codec.h" />
-		<Unit filename="dependencies/includes/fmod/linux/fmod_dsp.h" />
-		<Unit filename="dependencies/includes/fmod/linux/fmod_errors.h" />
-		<Unit filename="dependencies/includes/fmod/linux/fmod_memoryinfo.h" />
-		<Unit filename="dependencies/includes/fmod/linux/fmod_output.h" />
-		<Unit filename="dependencies/includes/fmod/linux/fmodlinux.h" />
+		<Unit filename="dependencies/includes/bullet/btBulletCollisionCommon.h" />
+		<Unit filename="dependencies/includes/bullet/btBulletDynamicsCommon.h" />
+		<Unit filename="dependencies/includes/bullet/vectormath/neon/boolInVec.h" />
+		<Unit filename="dependencies/includes/bullet/vectormath/neon/floatInVec.h" />
+		<Unit filename="dependencies/includes/bullet/vectormath/neon/mat_aos.h" />
+		<Unit filename="dependencies/includes/bullet/vectormath/neon/quat_aos.h" />
+		<Unit filename="dependencies/includes/bullet/vectormath/neon/vec_aos.h" />
+		<Unit filename="dependencies/includes/bullet/vectormath/neon/vectormath_aos.h" />
+		<Unit filename="dependencies/includes/bullet/vectormath/scalar/boolInVec.h" />
+		<Unit filename="dependencies/includes/bullet/vectormath/scalar/floatInVec.h" />
+		<Unit filename="dependencies/includes/bullet/vectormath/scalar/mat_aos.h" />
+		<Unit filename="dependencies/includes/bullet/vectormath/scalar/quat_aos.h" />
+		<Unit filename="dependencies/includes/bullet/vectormath/scalar/vec_aos.h" />
+		<Unit filename="dependencies/includes/bullet/vectormath/scalar/vectormath_aos.h" />
+		<Unit filename="dependencies/includes/bullet/vectormath/sse/boolInVec.h" />
+		<Unit filename="dependencies/includes/bullet/vectormath/sse/floatInVec.h" />
+		<Unit filename="dependencies/includes/bullet/vectormath/sse/mat_aos.h" />
+		<Unit filename="dependencies/includes/bullet/vectormath/sse/quat_aos.h" />
+		<Unit filename="dependencies/includes/bullet/vectormath/sse/vec_aos.h" />
+		<Unit filename="dependencies/includes/bullet/vectormath/sse/vecidx_aos.h" />
+		<Unit filename="dependencies/includes/bullet/vectormath/sse/vectormath_aos.h" />
+		<Unit filename="dependencies/includes/bullet/vectormath/vmInclude.h" />
+		<Unit filename="dependencies/includes/fmod/fmod.h" />
+		<Unit filename="dependencies/includes/fmod/fmod.hpp" />
+		<Unit filename="dependencies/includes/fmod/fmod_codec.h" />
+		<Unit filename="dependencies/includes/fmod/fmod_dsp.h" />
+		<Unit filename="dependencies/includes/fmod/fmod_errors.h" />
+		<Unit filename="dependencies/includes/fmod/fmod_memoryinfo.h" />
+		<Unit filename="dependencies/includes/fmod/fmod_output.h" />
 		<Unit filename="dependencies/includes/freetype/autofit.c">
 			<Option compilerVar="CC" />
 		</Unit>
+		<Unit filename="dependencies/includes/freetype/autohint.h" />
 		<Unit filename="dependencies/includes/freetype/bdf.c">
 			<Option compilerVar="CC" />
 		</Unit>
 		<Unit filename="dependencies/includes/freetype/cff.c">
 			<Option compilerVar="CC" />
 		</Unit>
+		<Unit filename="dependencies/includes/freetype/freetype.h" />
+		<Unit filename="dependencies/includes/freetype/ft2build.h" />
+		<Unit filename="dependencies/includes/freetype/ftadvanc.h" />
+		<Unit filename="dependencies/includes/freetype/ftautoh.h" />
 		<Unit filename="dependencies/includes/freetype/ftbase.c">
 			<Option compilerVar="CC" />
 		</Unit>
 		<Unit filename="dependencies/includes/freetype/ftbbox.c">
 			<Option compilerVar="CC" />
 		</Unit>
+		<Unit filename="dependencies/includes/freetype/ftbbox.h" />
+		<Unit filename="dependencies/includes/freetype/ftbdf.h" />
 		<Unit filename="dependencies/includes/freetype/ftbitmap.c">
 			<Option compilerVar="CC" />
 		</Unit>
+		<Unit filename="dependencies/includes/freetype/ftbitmap.h" />
+		<Unit filename="dependencies/includes/freetype/ftbzip2.h" />
 		<Unit filename="dependencies/includes/freetype/ftcache.c">
 			<Option compilerVar="CC" />
 		</Unit>
+		<Unit filename="dependencies/includes/freetype/ftcache.h" />
+		<Unit filename="dependencies/includes/freetype/ftcalc.h" />
+		<Unit filename="dependencies/includes/freetype/ftcffdrv.h" />
+		<Unit filename="dependencies/includes/freetype/ftchapters.h" />
+		<Unit filename="dependencies/includes/freetype/ftcid.h" />
+		<Unit filename="dependencies/includes/freetype/ftconfig.h" />
 		<Unit filename="dependencies/includes/freetype/ftdebug.c">
 			<Option compilerVar="CC" />
 		</Unit>
+		<Unit filename="dependencies/includes/freetype/ftdebug.h" />
+		<Unit filename="dependencies/includes/freetype/ftdriver.h" />
+		<Unit filename="dependencies/includes/freetype/fterrdef.h" />
+		<Unit filename="dependencies/includes/freetype/fterrors.h" />
 		<Unit filename="dependencies/includes/freetype/ftfstype.c">
 			<Option compilerVar="CC" />
 		</Unit>
 		<Unit filename="dependencies/includes/freetype/ftgasp.c">
 			<Option compilerVar="CC" />
 		</Unit>
+		<Unit filename="dependencies/includes/freetype/ftgasp.h" />
+		<Unit filename="dependencies/includes/freetype/ftgloadr.h" />
 		<Unit filename="dependencies/includes/freetype/ftglyph.c">
 			<Option compilerVar="CC" />
 		</Unit>
+		<Unit filename="dependencies/includes/freetype/ftglyph.h" />
 		<Unit filename="dependencies/includes/freetype/ftgxval.c">
 			<Option compilerVar="CC" />
 		</Unit>
+		<Unit filename="dependencies/includes/freetype/ftgxval.h" />
 		<Unit filename="dependencies/includes/freetype/ftgzip.c">
 			<Option compilerVar="CC" />
 		</Unit>
+		<Unit filename="dependencies/includes/freetype/ftgzip.h" />
+		<Unit filename="dependencies/includes/freetype/ftheader.h" />
+		<Unit filename="dependencies/includes/freetype/ftimage.h" />
+		<Unit filename="dependencies/includes/freetype/ftincrem.h" />
 		<Unit filename="dependencies/includes/freetype/ftinit.c">
 			<Option compilerVar="CC" />
 		</Unit>
 		<Unit filename="dependencies/includes/freetype/ftlcdfil.c">
 			<Option compilerVar="CC" />
 		</Unit>
+		<Unit filename="dependencies/includes/freetype/ftlcdfil.h" />
+		<Unit filename="dependencies/includes/freetype/ftlist.h" />
 		<Unit filename="dependencies/includes/freetype/ftlzw.c">
 			<Option compilerVar="CC" />
 		</Unit>
+		<Unit filename="dependencies/includes/freetype/ftlzw.h" />
+		<Unit filename="dependencies/includes/freetype/ftmac.h" />
+		<Unit filename="dependencies/includes/freetype/ftmemory.h" />
 		<Unit filename="dependencies/includes/freetype/ftmm.c">
 			<Option compilerVar="CC" />
 		</Unit>
+		<Unit filename="dependencies/includes/freetype/ftmm.h" />
+		<Unit filename="dependencies/includes/freetype/ftmodapi.h" />
+		<Unit filename="dependencies/includes/freetype/ftmoderr.h" />
+		<Unit filename="dependencies/includes/freetype/ftmodule.h" />
+		<Unit filename="dependencies/includes/freetype/ftobjs.h" />
+		<Unit filename="dependencies/includes/freetype/ftoption.h" />
 		<Unit filename="dependencies/includes/freetype/ftotval.c">
 			<Option compilerVar="CC" />
 		</Unit>
+		<Unit filename="dependencies/includes/freetype/ftotval.h" />
+		<Unit filename="dependencies/includes/freetype/ftoutln.h" />
 		<Unit filename="dependencies/includes/freetype/ftpatent.c">
 			<Option compilerVar="CC" />
 		</Unit>
 		<Unit filename="dependencies/includes/freetype/ftpfr.c">
 			<Option compilerVar="CC" />
 		</Unit>
+		<Unit filename="dependencies/includes/freetype/ftpfr.h" />
+		<Unit filename="dependencies/includes/freetype/ftpic.h" />
+		<Unit filename="dependencies/includes/freetype/ftrender.h" />
+		<Unit filename="dependencies/includes/freetype/ftrfork.h" />
+		<Unit filename="dependencies/includes/freetype/ftserv.h" />
+		<Unit filename="dependencies/includes/freetype/ftsizes.h" />
+		<Unit filename="dependencies/includes/freetype/ftsnames.h" />
+		<Unit filename="dependencies/includes/freetype/ftstdlib.h" />
+		<Unit filename="dependencies/includes/freetype/ftstream.h" />
 		<Unit filename="dependencies/includes/freetype/ftstroke.c">
 			<Option compilerVar="CC" />
 		</Unit>
+		<Unit filename="dependencies/includes/freetype/ftstroke.h" />
 		<Unit filename="dependencies/includes/freetype/ftsynth.c">
 			<Option compilerVar="CC" />
 		</Unit>
+		<Unit filename="dependencies/includes/freetype/ftsynth.h" />
 		<Unit filename="dependencies/includes/freetype/ftsystem.c">
 			<Option compilerVar="CC" />
 		</Unit>
+		<Unit filename="dependencies/includes/freetype/ftsystem.h" />
+		<Unit filename="dependencies/includes/freetype/fttrace.h" />
+		<Unit filename="dependencies/includes/freetype/fttrigon.h" />
+		<Unit filename="dependencies/includes/freetype/ftttdrv.h" />
 		<Unit filename="dependencies/includes/freetype/fttype1.c">
 			<Option compilerVar="CC" />
 		</Unit>
+		<Unit filename="dependencies/includes/freetype/fttypes.h" />
+		<Unit filename="dependencies/includes/freetype/ftvalid.h" />
 		<Unit filename="dependencies/includes/freetype/ftwinfnt.c">
 			<Option compilerVar="CC" />
 		</Unit>
+		<Unit filename="dependencies/includes/freetype/ftwinfnt.h" />
 		<Unit filename="dependencies/includes/freetype/ftxf86.c">
 			<Option compilerVar="CC" />
 		</Unit>
+		<Unit filename="dependencies/includes/freetype/ftxf86.h" />
+		<Unit filename="dependencies/includes/freetype/internal.h" />
 		<Unit filename="dependencies/includes/freetype/pcf.c">
 			<Option compilerVar="CC" />
 		</Unit>
@@ -434,9 +515,11 @@
 		<Unit filename="dependencies/includes/freetype/psaux.c">
 			<Option compilerVar="CC" />
 		</Unit>
+		<Unit filename="dependencies/includes/freetype/psaux.h" />
 		<Unit filename="dependencies/includes/freetype/pshinter.c">
 			<Option compilerVar="CC" />
 		</Unit>
+		<Unit filename="dependencies/includes/freetype/pshints.h" />
 		<Unit filename="dependencies/includes/freetype/psmodule.c">
 			<Option compilerVar="CC" />
 		</Unit>
@@ -446,12 +529,38 @@
 		<Unit filename="dependencies/includes/freetype/sfnt.c">
 			<Option compilerVar="CC" />
 		</Unit>
+		<Unit filename="dependencies/includes/freetype/sfnt.h" />
 		<Unit filename="dependencies/includes/freetype/smooth.c">
 			<Option compilerVar="CC" />
 		</Unit>
+		<Unit filename="dependencies/includes/freetype/svbdf.h" />
+		<Unit filename="dependencies/includes/freetype/svcid.h" />
+		<Unit filename="dependencies/includes/freetype/svgldict.h" />
+		<Unit filename="dependencies/includes/freetype/svgxval.h" />
+		<Unit filename="dependencies/includes/freetype/svkern.h" />
+		<Unit filename="dependencies/includes/freetype/svmm.h" />
+		<Unit filename="dependencies/includes/freetype/svotval.h" />
+		<Unit filename="dependencies/includes/freetype/svpfr.h" />
+		<Unit filename="dependencies/includes/freetype/svpostnm.h" />
+		<Unit filename="dependencies/includes/freetype/svprop.h" />
+		<Unit filename="dependencies/includes/freetype/svpscmap.h" />
+		<Unit filename="dependencies/includes/freetype/svpsinfo.h" />
+		<Unit filename="dependencies/includes/freetype/svsfnt.h" />
+		<Unit filename="dependencies/includes/freetype/svttcmap.h" />
+		<Unit filename="dependencies/includes/freetype/svtteng.h" />
+		<Unit filename="dependencies/includes/freetype/svttglyf.h" />
+		<Unit filename="dependencies/includes/freetype/svwinfnt.h" />
+		<Unit filename="dependencies/includes/freetype/svxf86nm.h" />
+		<Unit filename="dependencies/includes/freetype/t1tables.h" />
+		<Unit filename="dependencies/includes/freetype/t1types.h" />
 		<Unit filename="dependencies/includes/freetype/truetype.c">
 			<Option compilerVar="CC" />
 		</Unit>
+		<Unit filename="dependencies/includes/freetype/ttnameid.h" />
+		<Unit filename="dependencies/includes/freetype/tttables.h" />
+		<Unit filename="dependencies/includes/freetype/tttags.h" />
+		<Unit filename="dependencies/includes/freetype/tttypes.h" />
+		<Unit filename="dependencies/includes/freetype/ttunpat.h" />
 		<Unit filename="dependencies/includes/freetype/type1.c">
 			<Option compilerVar="CC" />
 		</Unit>
@@ -464,8 +573,17 @@
 		<Unit filename="dependencies/includes/freetype/winfnt.c">
 			<Option compilerVar="CC" />
 		</Unit>
+		<Unit filename="dependencies/includes/glew/glew.c">
+			<Option compilerVar="CC" />
+		</Unit>
 		<Unit filename="dependencies/includes/glew/glew.h" />
+		<Unit filename="dependencies/includes/glew/glewinfo.c">
+			<Option compilerVar="CC" />
+		</Unit>
 		<Unit filename="dependencies/includes/glew/glxew.h" />
+		<Unit filename="dependencies/includes/glew/visualinfo.c">
+			<Option compilerVar="CC" />
+		</Unit>
 		<Unit filename="dependencies/includes/glew/wglew.h" />
 		<Unit filename="dependencies/includes/libpng/config.h" />
 		<Unit filename="dependencies/includes/libpng/png.c">
@@ -637,16 +755,66 @@
 			<Option compilerVar="CC" />
 		</Unit>
 		<Unit filename="dependencies/includes/lua/lzio.h" />
+		<Unit filename="dependencies/includes/zlib/adler32.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="dependencies/includes/zlib/compress.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="dependencies/includes/zlib/crc32.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="dependencies/includes/zlib/crc32.h" />
+		<Unit filename="dependencies/includes/zlib/deflate.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="dependencies/includes/zlib/deflate.h" />
+		<Unit filename="dependencies/includes/zlib/gzclose.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="dependencies/includes/zlib/gzguts.h" />
+		<Unit filename="dependencies/includes/zlib/gzlib.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="dependencies/includes/zlib/gzread.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="dependencies/includes/zlib/gzwrite.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="dependencies/includes/zlib/infback.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="dependencies/includes/zlib/inffast.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="dependencies/includes/zlib/inffast.h" />
+		<Unit filename="dependencies/includes/zlib/inffixed.h" />
+		<Unit filename="dependencies/includes/zlib/inflate.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="dependencies/includes/zlib/inflate.h" />
+		<Unit filename="dependencies/includes/zlib/inftrees.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="dependencies/includes/zlib/inftrees.h" />
+		<Unit filename="dependencies/includes/zlib/trees.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="dependencies/includes/zlib/trees.h" />
+		<Unit filename="dependencies/includes/zlib/uncompr.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="dependencies/includes/zlib/zconf.h" />
+		<Unit filename="dependencies/includes/zlib/zlib.h" />
+		<Unit filename="dependencies/includes/zlib/zutil.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="dependencies/includes/zlib/zutil.h" />
 		<Unit filename="ghost/BoundingBox.cpp" />
 		<Unit filename="ghost/BoundingBox.h" />
-		<Unit filename="ghost/BoundingCapsule.cpp" />
-		<Unit filename="ghost/BoundingCapsule.h" />
-		<Unit filename="ghost/BoundingMesh.cpp" />
-		<Unit filename="ghost/BoundingMesh.h" />
 		<Unit filename="ghost/BoundingSphere.cpp" />
 		<Unit filename="ghost/BoundingSphere.h" />
-		<Unit filename="ghost/BoundingTerrain.cpp" />
-		<Unit filename="ghost/BoundingTerrain.h" />
 		<Unit filename="ghost/BoundingVolume.h" />
 		<Unit filename="ghost/Camera.cpp" />
 		<Unit filename="ghost/Camera.h" />
@@ -658,18 +826,28 @@
 		<Unit filename="ghost/Engine.h" />
 		<Unit filename="ghost/Environment.cpp" />
 		<Unit filename="ghost/Environment.h" />
+		<Unit filename="ghost/Extensions/Vehicle.cpp" />
+		<Unit filename="ghost/Extensions/Vehicle.h" />
 		<Unit filename="ghost/FrameBuffer.cpp" />
 		<Unit filename="ghost/FrameBuffer.h" />
 		<Unit filename="ghost/GUIManager.cpp" />
 		<Unit filename="ghost/GUIManager.h" />
+		<Unit filename="ghost/HashMap.h" />
+		<Unit filename="ghost/HttpRequest.cpp" />
+		<Unit filename="ghost/HttpRequest.h" />
+		<Unit filename="ghost/HttpResponse.cpp" />
+		<Unit filename="ghost/HttpResponse.h" />
 		<Unit filename="ghost/Input.cpp" />
 		<Unit filename="ghost/Input.h" />
 		<Unit filename="ghost/MD2Parser.cpp" />
 		<Unit filename="ghost/MD2Parser.h" />
 		<Unit filename="ghost/Matrix.cpp" />
 		<Unit filename="ghost/Matrix.h" />
+		<Unit filename="ghost/ModelData.cpp" />
+		<Unit filename="ghost/ModelData.h" />
 		<Unit filename="ghost/Multiplatform/FileManager.h" />
 		<Unit filename="ghost/Multiplatform/Ghost.h" />
+		<Unit filename="ghost/Multiplatform/GraphicsManager.cpp" />
 		<Unit filename="ghost/Multiplatform/GraphicsManager.h" />
 		<Unit filename="ghost/Multiplatform/Linux/LinuxFileManager.cpp" />
 		<Unit filename="ghost/Multiplatform/Linux/LinuxFileManager.h" />
@@ -677,27 +855,30 @@
 		<Unit filename="ghost/Multiplatform/Linux/LinuxGhost.h" />
 		<Unit filename="ghost/Multiplatform/Linux/LinuxGraphicsManager.cpp" />
 		<Unit filename="ghost/Multiplatform/Linux/LinuxGraphicsManager.h" />
+		<Unit filename="ghost/Multiplatform/Linux/LinuxSocket.cpp" />
+		<Unit filename="ghost/Multiplatform/Linux/LinuxSocket.h" />
 		<Unit filename="ghost/Multiplatform/Linux/LinuxSoundManager.cpp" />
 		<Unit filename="ghost/Multiplatform/Linux/LinuxSoundManager.h" />
 		<Unit filename="ghost/Multiplatform/Linux/LinuxSystem.cpp" />
 		<Unit filename="ghost/Multiplatform/Linux/LinuxSystem.h" />
 		<Unit filename="ghost/Multiplatform/Linux/LinuxThread.cpp" />
 		<Unit filename="ghost/Multiplatform/Linux/LinuxThread.h" />
+		<Unit filename="ghost/Multiplatform/ServiceLocator.cpp" />
+		<Unit filename="ghost/Multiplatform/ServiceLocator.h" />
+		<Unit filename="ghost/Multiplatform/Socket.h" />
 		<Unit filename="ghost/Multiplatform/SoundManager.h" />
 		<Unit filename="ghost/Multiplatform/System.h" />
 		<Unit filename="ghost/Multiplatform/Thread.h" />
+		<Unit filename="ghost/NetworkManager.cpp" />
+		<Unit filename="ghost/NetworkManager.h" />
 		<Unit filename="ghost/Node.cpp" />
 		<Unit filename="ghost/Node.h" />
 		<Unit filename="ghost/ObjParser.cpp" />
 		<Unit filename="ghost/ObjParser.h" />
-		<Unit filename="ghost/Physics/Vehicle.cpp" />
-		<Unit filename="ghost/Physics/Vehicle.h" />
 		<Unit filename="ghost/PhysicsManager.cpp" />
 		<Unit filename="ghost/PhysicsManager.h" />
 		<Unit filename="ghost/Quaternion.cpp" />
 		<Unit filename="ghost/Quaternion.h" />
-		<Unit filename="ghost/RenderManager.cpp" />
-		<Unit filename="ghost/RenderManager.h" />
 		<Unit filename="ghost/RenderPass.cpp" />
 		<Unit filename="ghost/RenderPass.h" />
 		<Unit filename="ghost/ResourceManager.cpp" />
@@ -713,8 +894,6 @@
 		<Unit filename="ghost/Resources/DynamicObject.h" />
 		<Unit filename="ghost/Resources/GUIButton.cpp" />
 		<Unit filename="ghost/Resources/GUIButton.h" />
-		<Unit filename="ghost/Resources/GUIContainer.cpp" />
-		<Unit filename="ghost/Resources/GUIContainer.h" />
 		<Unit filename="ghost/Resources/GUIImage.cpp" />
 		<Unit filename="ghost/Resources/GUIImage.h" />
 		<Unit filename="ghost/Resources/GUIInput.cpp" />
@@ -727,8 +906,6 @@
 		<Unit filename="ghost/Resources/Geometry.h" />
 		<Unit filename="ghost/Resources/Light.cpp" />
 		<Unit filename="ghost/Resources/Light.h" />
-		<Unit filename="ghost/Resources/Physics.cpp" />
-		<Unit filename="ghost/Resources/Physics.h" />
 		<Unit filename="ghost/Resources/Renderable.h" />
 		<Unit filename="ghost/Resources/Resource.cpp" />
 		<Unit filename="ghost/Resources/Resource.h" />
@@ -742,6 +919,8 @@
 		<Unit filename="ghost/Resources/Sprite.h" />
 		<Unit filename="ghost/Resources/StaticObject.cpp" />
 		<Unit filename="ghost/Resources/StaticObject.h" />
+		<Unit filename="ghost/Resources/Symbol.cpp" />
+		<Unit filename="ghost/Resources/Symbol.h" />
 		<Unit filename="ghost/Resources/Texture.cpp" />
 		<Unit filename="ghost/Resources/Texture.h" />
 		<Unit filename="ghost/Resources/TextureMono.cpp" />
@@ -753,14 +932,14 @@
 		<Unit filename="ghost/ScriptBindings.h" />
 		<Unit filename="ghost/ScriptManager.cpp" />
 		<Unit filename="ghost/ScriptManager.h" />
-		<Unit filename="ghost/ServiceLocator.cpp" />
-		<Unit filename="ghost/ServiceLocator.h" />
 		<Unit filename="ghost/Settings.cpp" />
 		<Unit filename="ghost/Settings.h" />
 		<Unit filename="ghost/ShapeParser.cpp" />
 		<Unit filename="ghost/ShapeParser.h" />
 		<Unit filename="ghost/Shapes.cpp" />
 		<Unit filename="ghost/Shapes.h" />
+		<Unit filename="ghost/SoundManager.cpp" />
+		<Unit filename="ghost/SoundManager.h" />
 		<Unit filename="ghost/TerrainParser.cpp" />
 		<Unit filename="ghost/TerrainParser.h" />
 		<Unit filename="ghost/TextManager.cpp" />

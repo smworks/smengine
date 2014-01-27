@@ -24,30 +24,20 @@ const char* getGLString(GLenum id) {
 	return info;
 }
 
-LinuxGraphicsManager::LinuxGraphicsManager(ServiceLocator* services) : services_(services) {
+LinuxGraphicsManager::LinuxGraphicsManager(ServiceLocator* services) : GraphicsManager(services) {
 	LOGD("OpenGL information:");
 	LOGD("Version: %s.", getGLString(GL_VERSION));
 	LOGD("Vendor: %s.", getGLString(GL_VENDOR));
 	LOGD("Renderer: %s.", getGLString(GL_RENDERER));
 	LOGD("Extensions: %s.", getGLString(GL_EXTENSIONS));
-	LOGD("NPOT support: %s.", isNPOTSupported()  ? "true" : "false");
-	LOGD("UINT index support: %s.", isUintIndexSupported()  ? "true" : "false");
 	LOGD("Created Windows graphics manager.");
 }
 
 LinuxGraphicsManager::~LinuxGraphicsManager() {
 }
 
-bool LinuxGraphicsManager::isNPOTSupported() {
-	return isExtensionSupported("ARB_texture_non_power_of_two");
-}
-
-bool LinuxGraphicsManager::isUintIndexSupported() {
-	return true;
-}
-
 bool LinuxGraphicsManager::isGraphicsContextAvailable() {
-	return glxGetCurrentContext() != 0;
+	return true; //glxGetCurrentContext() != 0;
 }
 
 bool LinuxGraphicsManager::setTexture(
@@ -417,4 +407,17 @@ void LinuxGraphicsManager::unsetVertexBuffer(UINT32& id) {
 
 void LinuxGraphicsManager::useVertexBuffer(UINT32 id) {
 	bindBuffer(id);
+}
+
+bool LinuxGraphicsManager::checkSupport(Support key) {
+	switch (key) {
+	case SUPPORT_NPOT_TEXTURES:
+		return isExtensionSupported("ARB_texture_non_power_of_two");
+		break;
+	case SUPPORT_UINT_INDEX:
+		return true;
+		break;
+	default:
+		return false;
+	}
 }

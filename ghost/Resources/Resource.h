@@ -103,6 +103,7 @@ public:
 	static const string ATTR_TEXT;
 	static const string ATTR_SIZE;
 	static const string ATTR_COLOR;
+    static const string ATTR_SPRITE_COUNT;
 public:
 	/**
 	 * @param services - pointer to

@@ -419,11 +419,6 @@ bool StaticObject::createSphere() {
 	VertexPNT v;
 	for (SIZE i = 0; i < vertexCount; i++) {
 		vert.at(i).getXYZ(v.pos);
-		//v.normals[0] = normals[i * 3 + 0];
-		//v.normals[1] = normals[i * 3 + 1];
-		//v.normals[2] = normals[i * 3 + 2];
-		//v.uv[0] = g_planeUV[i * 2 + 0];
-		//v.uv[1] = g_planeUV[i * 2 + 1];
 		vertices[i] = v;
 	}
 	modelData_->setVertices(ModelData::PNT, reinterpret_cast<UINT8*>(vertices), vertexCount);
@@ -454,29 +449,33 @@ bool StaticObject::createShape() {
 	}
 	vector<Vec3>* vert = NEW vector<Vec3>();
 	vector<float>* uv = NEW vector<float>();
-	vector<UINT16>* indices = NEW vector<UINT16>();
+	vector<UINT16>* ind = NEW vector<UINT16>();
 	float height = getAttributes().getFloat(ATTR_HEIGHT, 1.0f);
-	if (!ShapeParser::parse(vert, uv, indices, map, height)) {
+	if (!ShapeParser::parse(vert, uv, ind, map, height)) {
+		LOGE("Unable to parse texture.");
 		return false;
 	}
 	delete uv;
-	modelData_->setBoundingVolume(NEW BoundingBox(Vec3(
-		(float) map->getWidth(), height, (float) map->getHeight())));
+	
 	SIZE vertexCount = vert->size();
-	VertexPT* vertices = NEW VertexPT[vertexCount];
-	VertexPT v;
+	VertexPNT* vertices = NEW VertexPNT[vertexCount];
+	VertexPNT v;
 	for (SIZE i = 0; i < vertexCount; i++) {
 		vert->at(i).getXYZ(v.pos);
-		//v.uv[0] = geometry.uv[i * 2 + 0];
-		//v.uv[1] = geometry.uv[i * 2 + 1];
 		vertices[i] = v;
 	}
-	modelData_->setVertices(ModelData::PT, reinterpret_cast<UINT8*>(vertices), vertexCount);
+	modelData_->setVertices(ModelData::PNT, reinterpret_cast<UINT8*>(vertices), vertexCount);
+	UINT16* indices = NEW UINT16[ind->size()];
+	memcpy(indices, &(*ind)[0], ind->size() * sizeof(UINT16));
+	modelData_->setIndices(Renderable::INDEX_TYPE_USHORT, indices, ind->size());
 	modelData_->getParts().resize(1);
-	modelData_->getParts()[0].indexCount_ = indices->size();
+	modelData_->getParts()[0].indexCount_ = ind->size();
+	modelData_->getParts()[0].offset_ = 0;
+	modelData_->setBoundingVolume(NEW BoundingBox(Vec3(
+		(float) map->getWidth(), height, (float) map->getHeight())));
 	setCullFace(false);
-	delete indices;
-	delete vertices;
+	delete ind;
+	delete vert;
 	return true;
 }
 

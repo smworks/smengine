@@ -22,16 +22,6 @@ public:
 	/**
 	 * @see GraphicsManager.
 	 */
-	bool isNPOTSupported();
-
-	/**
-	 * @see GraphicsManager.
-	 */
-	bool isUintIndexSupported();
-
-	/**
-	 * @see GraphicsManager.
-	 */
 	bool isGraphicsContextAvailable();
 
 	/**
@@ -113,6 +103,11 @@ public:
 	 * @see GraphicsManager.
 	 */
 	void useVertexBuffer(UINT32 id);
+
+	/**
+	 * @see GraphicsManager.
+	 */
+	bool checkSupport(Support key);
 };
 
 #endif

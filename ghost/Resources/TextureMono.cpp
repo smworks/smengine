@@ -246,6 +246,23 @@ bool TextureMono::commit() {
 		return false;
 	}
 	GraphicsManager* gm = getServiceLocator()->getGraphicsManager();
+	SIZE maxSize = gm->getMax(GraphicsManager::MAX_TEXTURE_SIZE);
+	if (width_ > maxSize || height_ > maxSize) {
+		LOGW("Trying to load texture whose width or height is too large.");
+		LOGW("Current size: %ux%upx. Maximum supported size: %u.",
+			width_, height_, gm->getMax(GraphicsManager::MAX_TEXTURE_SIZE));
+		SIZE width, height;
+		if (width_ > maxSize) {
+			width = maxSize;
+			height = (UINT32) (height_ * ((float) maxSize / width_));
+		}
+		if (height_ > maxSize) {
+			height = maxSize;
+			width = (UINT32) (width_ * ((float) maxSize / height_));
+		}
+		LOGW("Texture will be resized to: %ux%upx.", width, height);
+		resize(width, height);
+	}
 	if (left_ == width_) {
 		LOGD("Commiting with zero changes.");
 		return false;

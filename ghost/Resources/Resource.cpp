@@ -72,6 +72,7 @@ const string Resource::ATTR_BACKGROUND_SELECTED = "background_selected";
 const string Resource::ATTR_TEXT = "text";
 const string Resource::ATTR_SIZE = "size";
 const string Resource::ATTR_COLOR = "color";
+const string Resource::ATTR_SPRITE_COUNT = "sprite_count";
 
 Resource::Resource(ServiceLocator* services) :
 	name_(""),

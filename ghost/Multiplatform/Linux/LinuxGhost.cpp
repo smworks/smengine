@@ -11,7 +11,7 @@
     void profile(string& msg) {
         static SIZE lastCheck = getMicroseconds();
         SIZE now = getMicroseconds();
-        LOGD("%s Time: %ld (ms).", msg.c_str(), (now - lastCheck) / 1000);
+        LOGD("%s Time: %u (ms).", msg.c_str(), (now - lastCheck) / 1000);
         lastCheck = now;
     }
 #endif

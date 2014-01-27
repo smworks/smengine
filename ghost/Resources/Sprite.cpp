@@ -22,11 +22,14 @@
 Sprite::Sprite(ServiceLocator* services) :
 	Resource(services),
 	image_(0),
-	cbo_(0)
+	uvBO_(0),
+    spriteCount_(0),
+	spriteIndex_(0)
 	//animationCount_(0),
 	//uvBO_(0),
 	//animationIndex_(0)
 {
+    setCullFace(false);
 }
 
 Sprite::~Sprite() {
@@ -34,12 +37,25 @@ Sprite::~Sprite() {
 }
 
 bool Sprite::create() {
-	vector<VertexPT>* cbo = static_cast<vector<VertexPT>*>(
-        Shapes::getShape(
-			Shapes::SHAPE_SCREEN_PLANE, Shapes::VERTEX_POS_TEX));
-	getServiceLocator()->getGraphicsManager()->setVertexBuffer(
-        cbo_, &(*cbo)[0], (UINT32) cbo->size() * sizeof(VertexPT));
-    delete cbo;
+    string spriteCount = getAttribute(Resource::ATTR_SPRITE_COUNT);
+    if (spriteCount.length() > 0) {
+        spriteCount_ = toUint(spriteCount.c_str());
+    }
+    string file = getAttribute(Resource::ATTR_FILE);
+    if (file.length() > 0) {
+        Texture* texture = static_cast<Texture*>(getServiceLocator()->getRM()->get(Resource::TEXTURE_2D, file));
+        if (texture == 0) {
+            texture = new TextureRGBA(getServiceLocator());
+            texture->setAttribute(Resource::ATTR_FILE, file);
+            texture->create();
+            getServiceLocator()->getRM()->add(file, texture);
+        }
+        image_ = texture;
+        if (spriteCount_ == 0) {
+            spriteCount_ = 1;
+        }
+    }
+    setSpriteCount(spriteCount_);
 	if (checkGLError("Compiling sprite data.")) {
 		release();
 		return false;
@@ -49,9 +65,10 @@ bool Sprite::create() {
 
 void Sprite::release() {
 	image_ = 0;
-	if (cbo_ != 0) {
-		glDeleteBuffers(1, &cbo_);
-		cbo_ = 0;
+	if (uvBO_ != 0) {
+		glDeleteBuffers(spriteCount_, uvBO_);
+		delete [] uvBO_;
+		uvBO_ = 0;
 	}
 }
 
@@ -68,7 +85,7 @@ void Sprite::resize() {
 }
 
 bool Sprite::isValid() {
-	return cbo_ != 0;
+	return uvBO_ != 0;
 }
 
 
@@ -94,7 +111,7 @@ BoundingVolume* Sprite::getBV() {
 }
 
 SIZE Sprite::getCBO() {
-	return cbo_;
+	return spriteCount_ == 0 ? 0 : uvBO_[spriteIndex_];
 }
 
 SIZE Sprite::getIndexCount() {
@@ -141,81 +158,64 @@ Shader* Sprite::getDefaultShader() {
 
 void Sprite::addTexture(Texture* texture) {
 	image_ = texture;
+	setSpriteCount(1);
 }
 
 Texture* Sprite::getPointerToTexture() {
 	return image_;
 }
 
-//void Sprite::setAnimationIndex(UINT32 index) {
-//	if (index < animationCount_) {
-//		animationIndex_ = index;
-//	}
-//}
-//
-//void Sprite::setAnimationCount(UINT32 count) {
-//	if (uvBO_ != 0 && animationCount_ > 0) {
-//		glDeleteBuffers(animationCount_, uvBO_);
-//		delete [] uvBO_;
-//		uvBO_ = 0;
-//	}
-//	animationCount_ = count;
-//	uvBO_ = NEW GLuint[animationCount_];
-//	glGenBuffers(animationCount_, uvBO_);
-//	for (UINT32 i = 0; i < animationCount_; i++) {
-//		glBindBuffer(GL_ARRAY_BUFFER, uvBO_[i]);
-//		// Genereate separate uv coordinates.
-//		float fr = (float) i / animationCount_;
-//		float to = (float) (i + 1) / animationCount_;
-//		float uv[] = {
-//			fr, 0.0f,
-//			to, 0.0f,
-//			to, 1.0f,
-//			to, 1.0f,
-//			fr, 1.0f,
-//			fr, 0.0f
-//		};
-//		// Bind buffer data.
-//		glBufferData(GL_ARRAY_BUFFER, sizeof(uv), uv, GL_STATIC_DRAW);
-//		glBindBuffer(GL_ARRAY_BUFFER, 0);
-//	}
-//	CHECK_GL_ERROR("Adding sprite animation.");
-//}
-//
-//UINT32 Sprite::getAnimationCount() {
-//	return animationCount_;
-//}
-//
-//GLuint Sprite::getTCBO() {
-//	if (uvBO_ != 0 && animationIndex_ < animationCount_) {
-//		return uvBO_[animationIndex_];
-//	}
-//	return tbo_;
-//}
-//
-//int Sprite::getRedColor(float x, float y) {
-//	UINT32 col = (int) x;
-//	UINT32 row = (int) y;
-//	if (row < 0 || col < 0 || row >= image_->getHeight() || col >= image_->getWidth()) {
-//		return 0;
-//	}
-//	return (int) image_->getPixel(row, col).r_;
-//}
-//
-//int Sprite::getGreenColor(float x, float y) {
-//	UINT32 col = (int) x;
-//	UINT32 row = (int) y;
-//	if (row < 0 || col < 0 || row >= image_->getHeight() || col >= image_->getWidth()) {
-//		return 0;
-//	}
-//	return (int) image_->getPixel(row, col).g_;
-//}
-//
-//int Sprite::getBlueColor(float x, float y) {
-//	UINT32 col = (int) x;
-//	UINT32 row = (int) y;
-//	if (row < 0 || col < 0 || row >= image_->getHeight() || col >= image_->getWidth()) {
-//		return 0;
-//	}
-//	return (int) image_->getPixel(row, col).b_;
-//}
+void Sprite::setSpriteIndex(SIZE index) {
+	if (index < spriteCount_) {
+		spriteIndex_ = index;
+	}
+}
+
+void Sprite::setSpriteCount(SIZE count) {
+	if (uvBO_ != 0) {
+		glDeleteBuffers(spriteCount_, uvBO_);
+		delete [] uvBO_;
+		uvBO_ = 0;
+	}
+	spriteCount_ = count;
+	uvBO_ = NEW UINT32[spriteCount_];
+	for (SIZE i = 0; i < spriteCount_; i++) {
+		// Genereate separate uv coordinates.
+		float fr = (float) i /  spriteCount_;
+		float to = (float) (i + 1) / spriteCount_;
+        float uv[] = {
+			fr, 0.0f,
+			to, 0.0f,
+			to, 1.0f,
+			to, 1.0f,
+			fr, 1.0f,
+			fr, 0.0f
+		};
+        static float positions[] = {
+            0.0f, 0.0f, 0.0f,
+            1.0f, 0.0f, 0.0f,
+            1.0f, 1.0f, 0.0f,
+            1.0f, 1.0f, 0.0f,
+            0.0f, 1.0f, 0.0f,
+            0.0f, 0.0f, 0.0f
+        };
+        vector<VertexPT> vert;
+        VertexPT tmp;
+        SIZE vertexCount = g_planeVerticeCount / 3;
+        for (SIZE j = 0; j < vertexCount; j++) {
+            tmp.uv[0] = uv[j * 2 + 0];
+            tmp.uv[1] = uv[j * 2 + 1];
+            tmp.pos[0] = positions[j * 3 + 0];
+            tmp.pos[1] = positions[j * 3 + 1];
+            tmp.pos[2] = positions[j * 3 + 2];
+            vert.push_back(tmp);
+        }
+        getServiceLocator()->getGraphicsManager()->setVertexBuffer(
+			uvBO_[i], &vert[0], (UINT32) vert.size() * sizeof(VertexPT));
+	}
+	CHECK_GL_ERROR("Adding sprite animation.");
+}
+
+SIZE Sprite::getSpriteCount() {
+	return spriteCount_;
+}

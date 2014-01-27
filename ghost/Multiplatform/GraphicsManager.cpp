@@ -44,15 +44,24 @@ GraphicsManager::GraphicsManager(ServiceLocator* services) :
 	shaderId_(0),
 	bufferId_(0)
 {
+	fill(maxValues_, maxValues_ + MAX_COUNT, 0);
+	fill(supportValues_, supportValues_ + SUPPORT_COUNT, 2);
 	LOGD("Created graphics manager.");
 }
-
 
 GraphicsManager::~GraphicsManager() {
 	LOGD("Deleted graphics manager.");
 }
 
 void GraphicsManager::create() {
+	LOGD("Max texture units: %u (%u combined).",
+		getMax(MAX_TEXTURE_UNITS), getMax(MAX_COMBINED_TEXTURE_UNITS));
+	LOGD("Max texture width and height: %upx (%upx for cube map).",
+		getMax(MAX_TEXTURE_SIZE), getMax(MAX_CUBE_MAP_SIZE));
+	LOGD("Max render buffer width and height: %upx.", getMax(MAX_RENDER_BUFFER_SIZE));
+	LOGD("Max viewport dimensions: %ux%upx.", getMax(MAX_VIEWPORT_WIDTH), getMax(MAX_VIEWPORT_HEIGHT));
+	LOGD("NPOT support: %s.", isSupported(SUPPORT_NPOT_TEXTURES)  ? "true" : "false");
+	LOGD("UINT index support: %s.", isSupported(SUPPORT_UINT_INDEX)  ? "true" : "false");
 	// Create plane vertex buffer object with positions that will be used to render all 2D content.
 	vector<VertexP>* vbo = static_cast<vector<VertexP>*>(
         Shapes::getShape(Shapes::SHAPE_SCREEN_PLANE, Shapes::VERTEX_POS));
@@ -69,6 +78,7 @@ void GraphicsManager::create() {
 	textManager_ = services_->getTextManager();
 	#ifdef SMART_DEBUG
         glClearColor(1.0f, 0.5f, 1.0f, 1.0f);
+        //glClearColor(1.0f, 1.0f, 1.0f, 1.0f);
 	#else
         glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
 	#endif
@@ -172,6 +182,45 @@ void GraphicsManager::release() {
 	if (backBuffer_ != 0) {
 		delete backBuffer_;
 	}
+}
+
+SIZE GraphicsManager::getMax(Max key) {
+	if (maxValues_[key] != 0) {
+		return maxValues_[key];
+	}
+	int val[2];
+	switch (key) {
+	case MAX_TEXTURE_UNITS:
+		glGetIntegerv(GL_MAX_TEXTURE_IMAGE_UNITS, val);
+		break;
+	case MAX_COMBINED_TEXTURE_UNITS:
+		glGetIntegerv(GL_MAX_COMBINED_TEXTURE_IMAGE_UNITS, val);
+		break;
+	case MAX_TEXTURE_SIZE:
+		glGetIntegerv(GL_MAX_TEXTURE_SIZE, val);
+		break;
+	case MAX_CUBE_MAP_SIZE:
+		glGetIntegerv(GL_MAX_CUBE_MAP_TEXTURE_SIZE, val);
+		break;
+	case MAX_RENDER_BUFFER_SIZE:
+		glGetIntegerv(GL_MAX_RENDERBUFFER_SIZE, val);
+		break;
+	case MAX_VIEWPORT_WIDTH:
+		glGetIntegerv(GL_MAX_VIEWPORT_DIMS, val);
+		break;
+	case MAX_VIEWPORT_HEIGHT:
+		glGetIntegerv(GL_MAX_VIEWPORT_DIMS, val);
+		val[0] = val[1];
+		break;
+	}
+	return (maxValues_[key] = val[0]);
+}
+
+bool GraphicsManager::isSupported(Support key) {
+	if (supportValues_[key] != 2) {
+		return supportValues_[key] == 1;
+	}
+	return (supportValues_[key] = checkSupport(key) ? 1 : 0) == 1;
 }
 
 void GraphicsManager::resize(UINT32 width, UINT32 height) {

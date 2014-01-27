@@ -64,21 +64,11 @@ AndroidGraphicsManager::AndroidGraphicsManager(ServiceLocator* services) : Graph
 	LOGD("Renderer: %s.", getGLString(GL_RENDERER));
 	LOGD("Extensions: %s.", getGLString(GL_EXTENSIONS));
 	LOGD("Shader data type precisions (values in log2 format):\n%s", shaderSupport().c_str());
-	LOGD("NPOT support: %s.", isNPOTSupported()  ? "true" : "false");
-	LOGD("UINT index type support: %s.", isUintIndexSupported()  ? "true" : "false");
 	LOGD("Created Android graphics manager.");
 }
 
 AndroidGraphicsManager::~AndroidGraphicsManager() {
 	LOGD("Deleted Android graphics manager.");
-}
-
-bool AndroidGraphicsManager::isNPOTSupported() {
-	return isExtensionSupported("ARB_texture_non_power_of_two") || isExtensionSupported("GL_OES_texture_npot");
-}
-
-bool AndroidGraphicsManager::isUintIndexSupported() {
-	return isExtensionSupported("GL_OES_element_index_uint");
 }
 
 bool AndroidGraphicsManager::isGraphicsContextAvailable() {
@@ -490,4 +480,17 @@ void AndroidGraphicsManager::unsetVertexBuffer(UINT32& id) {
 
 void AndroidGraphicsManager::useVertexBuffer(UINT32 id) {
 	bindBuffer(id);
+}
+
+bool AndroidGraphicsManager::checkSupport(Support key) {
+	switch (key) {
+	case SUPPORT_NPOT_TEXTURES:
+		return isExtensionSupported("ARB_texture_non_power_of_two") || isExtensionSupported("GL_OES_texture_npot");
+		break;
+	case SUPPORT_UINT_INDEX:
+		return isExtensionSupported("GL_OES_element_index_uint");
+		break;
+	default:
+		return false;
+	}
 }

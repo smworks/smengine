@@ -92,6 +92,9 @@ void PhysicsManager::reset() {
 }
 
 void PhysicsManager::update(double time) {
+    if (rigidBodies_.size() == 0 && vehicles_.size() == 0) {
+        return;
+    }
 	float delta = (float) time * 0.001f;
 	int maxSteps = delta < STEP_DELTA ? 1 : (int) (delta / STEP_DELTA) + 1;
 	dynamicsWorld_->stepSimulation(delta, maxSteps, STEP_DELTA);
@@ -352,7 +355,7 @@ void PhysicsManager::addMesh(Node* node) {
 	if (toBool(model->getAttribute(Resource::ATTR_APPROXIMATION))) {
 		LOGD("Loading approximated convex hull shape.");
 		btConvexHullShape* hullShape = new btConvexHullShape(
-			data, vertexCount, modelData->getVertexStride());
+			data, (int) vertexCount, modelData->getVertexStride());
 		btShapeHull* hull = new btShapeHull(hullShape);
 		btScalar margin = hullShape->getMargin();
 		hull->buildHull(margin);
@@ -367,7 +370,9 @@ void PhysicsManager::addMesh(Node* node) {
 			meshInterfaces_.push_back(mesh);
 			SIZE offset1, offset2, offset3;
 			SIZE floatStride = model->getVertexStride() / sizeof(float);
+			LOGD("VertexCount: %d", vertexCount);
 			for (SIZE i = 0; i < vertexCount; i += 3) {
+
 				offset1 = i * floatStride;
 				offset2 = (i + 1) * floatStride;
 				offset3 = (i + 2) * floatStride;

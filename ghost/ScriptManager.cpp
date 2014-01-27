@@ -197,10 +197,10 @@ void ScriptManager::invokeFunction(const string& functionName) {
  * (Lua pops out scripts after using them).
  */
 void ScriptManager::add(Node* node) {
-	if (script_ != 0) {
-		LOGE("Unable to add script. Script already specified.");
-		return;
-	}
+//	if (script_ != 0) {
+//		LOGE("Unable to add script. Script already specified.");
+//		return;
+//	}
 	if (node->hasResource(Resource::SCRIPT)) {
 		script_ = dynamic_cast<Script*>(
 			node->getResource(Resource::SCRIPT));
@@ -213,7 +213,7 @@ void ScriptManager::add(Node* node) {
 				int status = luaL_loadstring(
 					ScriptManager::state_, script_->getScript().c_str());
 				if (status != LUA_OK) {
-					LOGE("Unable to compile Lua script.\nError: %s",
+					LOGE("Unable to load Lua script.\nError: %s",
 						lua_tostring(ScriptManager::state_,
                         lua_gettop(ScriptManager::state_)));
 					script_ = 0;

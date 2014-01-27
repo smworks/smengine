@@ -55,10 +55,10 @@ UINT64 g_cameraTime = 0;
 UINT64 g_nodeUpdateTime = 0;
 UINT64 g_guiManagerTime = 0;
 double g_time = 0.0f;
-Sprite* g_monoAtlas;
-Node* g_monoNode;
-Sprite* g_rgbaAtlas;
-Node* g_rgbaNode;
+Sprite* g_monoAtlas = 0;
+Node* g_monoNode = 0;
+Sprite* g_rgbaAtlas = 0;
+Node* g_rgbaNode = 0;
 #endif
 
 Engine::Engine(ServiceLocator* services) :
@@ -95,9 +95,6 @@ Engine::Engine(ServiceLocator* services) :
 	services_->provide(NEW Settings(services_->getFileManager()));
 	services_->getGraphicsManager()->create();
 	services_->provide(NEW TextureAtlas(services_));
-	services_->getGraphicsManager()->resize(
-		services_->getScreenWidth(),
-		services_->getScreenHeight());
 	services_->getPM()->setGraphicsManager(services_->getGraphicsManager());
 	services_->getSettings()->setScene("start.xml");
 	services_->getScriptManager()->initialize(services_);
@@ -131,50 +128,55 @@ void Engine::loadScene() {
 	}
 #ifdef SMART_DEBUG
 	// FPS message creation.
-    g_debugNode = NEW Node;
-	g_debugNode->setName("fps");
-	g_debugText = NEW GUIText(services_);
-	g_debugText->setNode(g_debugNode);
-	g_debugText->getAttributes().setString(GUIText::ATTR_WIDTH, "512px");
-	g_debugText->getAttributes().setString(GUIText::ATTR_HEIGHT, "32px");
-	g_debugText->getAttributes().setString(GUIText::ATTR_TEXT, "fps");
-	g_debugText->getAttributes().setString(GUIText::ATTR_COLOR, "#FFFF00FF");
-	g_debugText->getAttributes().setString(GUIText::ATTR_BACKGROUND, "#00000088");
-	g_debugText->getAttributes().setString(GUIText::ATTR_SIZE, "12px");
-	g_debugText->getAttributes().setString(GUIText::ATTR_SCREEN_LEFT, "true");
-	g_debugText->getAttributes().setString(GUIText::ATTR_SCREEN_TOP, "true");
-	g_debugText->create();
-	services_->getRM()->add("debug text", g_debugText);
-	g_debugNode->addResource(g_debugText);
-    g_debugNode->setState(Node::RENDERABLE, true);
-	services_->getRootNode()->addChild(g_debugNode);
+    if (g_debugNode == 0) {
+        g_debugNode = NEW Node;
+        g_debugNode->setName("fps");
+        g_debugText = NEW GUIText(services_);
+        g_debugText->setNode(g_debugNode);
+        g_debugText->getAttributes().setString(GUIText::ATTR_WIDTH, "512px");
+        g_debugText->getAttributes().setString(GUIText::ATTR_HEIGHT, "32px");
+        g_debugText->getAttributes().setString(GUIText::ATTR_TEXT, "fps");
+        g_debugText->getAttributes().setString(GUIText::ATTR_COLOR, "#FFFF00FF");
+        g_debugText->getAttributes().setString(GUIText::ATTR_BACKGROUND, "#00000088");
+        g_debugText->getAttributes().setString(GUIText::ATTR_SIZE, "12px");
+        g_debugText->getAttributes().setString(GUIText::ATTR_SCREEN_LEFT, "true");
+        g_debugText->getAttributes().setString(GUIText::ATTR_SCREEN_TOP, "true");
+        g_debugText->create();
+        services_->getRM()->add("debug text", g_debugText);
+        g_debugNode->addResource(g_debugText);
+        g_debugNode->setState(Node::RENDERABLE, true);
+        services_->getRootNode()->addChild(g_debugNode);
+    }
 	// Texture atlas node creation.
-	g_monoNode = NEW Node;
-	g_monoNode->setName("monoAtlasNode");
-	g_monoAtlas = NEW Sprite(services_);
-	g_monoAtlas->setNode(g_monoNode);
-	g_monoAtlas->create();
-	Texture* monoText = services_->getTextureAtlas()->getTexture(Texture::MONO);
-	g_monoAtlas->addTexture(monoText);
-	services_->getRM()->add("monoAtlasSprite", g_monoAtlas);
-	g_monoNode->addResource(g_monoAtlas);
-	g_monoNode->setState(Node::RENDERABLE, false);
-	services_->getRootNode()->addChild(g_monoNode);
-	g_monoNode->getScale().setXYZ(
-		(float) monoText->getWidth(), (float) monoText->getHeight(), 1.0f);
-	g_rgbaNode = NEW Node;
-	g_rgbaNode->setName("rgbaAtlasNode");
-	g_rgbaAtlas = NEW Sprite(services_);
-	g_rgbaAtlas->setNode(g_rgbaNode);
-	g_rgbaAtlas->create();
-	Texture* rgbaText = services_->getTextureAtlas()->getTexture(Texture::RGBA);
-	g_rgbaAtlas->addTexture(rgbaText);
-	services_->getRM()->add("rgbaAtlasSprite", g_rgbaAtlas);
-	g_rgbaNode->addResource(g_rgbaAtlas);
-	g_rgbaNode->setState(Node::RENDERABLE, false);
-	services_->getRootNode()->addChild(g_rgbaNode);
-	g_rgbaNode->getScale().setXYZ(
-		(float) rgbaText->getWidth(), (float) rgbaText->getHeight(), 1.0f);
+    if (g_monoNode == 0) {
+        g_monoNode = NEW Node;
+        g_monoNode->setName("monoAtlasNode");
+        g_monoAtlas = NEW Sprite(services_);
+        g_monoAtlas->setNode(g_monoNode);
+        g_monoAtlas->create();
+        Texture* monoText = services_->getTextureAtlas()->getTexture(Texture::MONO);
+        g_monoAtlas->addTexture(monoText);
+        services_->getRM()->add("monoAtlasSprite", g_monoAtlas);
+        g_monoNode->addResource(g_monoAtlas);
+        g_monoNode->setState(Node::RENDERABLE, false);
+        services_->getRootNode()->addChild(g_monoNode);
+        g_monoNode->getScale().setXYZ((float) monoText->getWidth(), (float) monoText->getHeight(), 1.0f);
+    }
+    if (g_rgbaNode == 0) {
+        g_rgbaNode = NEW Node;
+        g_rgbaNode->setName("rgbaAtlasNode");
+        g_rgbaAtlas = NEW Sprite(services_);
+        g_rgbaAtlas->setNode(g_rgbaNode);
+        g_rgbaAtlas->create();
+        Texture* rgbaText = services_->getTextureAtlas()->getTexture(Texture::RGBA);
+        g_rgbaAtlas->addTexture(rgbaText);
+        services_->getRM()->add("rgbaAtlasSprite", g_rgbaAtlas);
+        g_rgbaNode->addResource(g_rgbaAtlas);
+        g_rgbaNode->setState(Node::RENDERABLE, false);
+        services_->getRootNode()->addChild(g_rgbaNode);
+        g_rgbaNode->getScale().setXYZ(
+            (float) rgbaText->getWidth(), (float) rgbaText->getHeight(), 1.0f);
+    }
 #endif
 	// Other data creation.
 	services_->getGUIManager()->setRootNode(services_->getRootNode());

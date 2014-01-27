@@ -60,6 +60,11 @@ public:
 	 * @return String containing text.
 	 */
 	string& getText();
+    
+    /**
+     * @param size - text size in pixels.
+     */
+    void setTextSize(SIZE size);
 
 	/**
 	 * @return Size of the text.

@@ -153,7 +153,7 @@ void TextureRGBA::resize(UINT32 width, UINT32 height) {
             for (INT32 k = -verticalOffset; k < 1 + verticalOffset; k++) {
                 for (INT32 l = -horizontalOffset; l < 1 + horizontalOffset; l++) {
 					INT32 row = INT32(i * heightRatio) + k, col = INT32(j * widthRatio) + l;
-					if (row < 0 || col < 0 || col >= width_ || row >= height_) {
+					if (row < 0 || col < 0 || col >= (INT32) width_ || row >= (INT32) height_) {
 						continue;
 					}
 					pixels++;
@@ -258,7 +258,7 @@ bool TextureRGBA::commit() {
 		return false;
 	}
 	GraphicsManager* gm = getServiceLocator()->getGraphicsManager();
-	if (!isPowerOfTwo(width_) && !gm->isNPOTSupported()) {
+	if (!isPowerOfTwo(width_) && !gm->isSupported(GraphicsManager::SUPPORT_NPOT_TEXTURES)) {
 		UINT32 newWidth = toPowerOfTwo(width_);
 		float ratio = (float) newWidth / (float) width_;
 		LOGW("TextureRGBA width (%d) is not a power of two.", width_);
@@ -266,7 +266,23 @@ bool TextureRGBA::commit() {
 		LOGW("Texture will be scaled to next power of two resolution: %ux%u.",
 			newWidth, (UINT32) (height_ * ratio));
 		resize(newWidth, (UINT32) (height_ * ratio));
-		return false;
+	}
+	SIZE maxSize = gm->getMax(GraphicsManager::MAX_TEXTURE_SIZE);
+	if (width_ > maxSize || height_ > maxSize) {
+		LOGW("Trying to load texture whose width or height is too large.");
+		LOGW("Current size: %ux%upx. Maximum supported size: %u.",
+			width_, height_, gm->getMax(GraphicsManager::MAX_TEXTURE_SIZE));
+		SIZE width, height;
+		if (width_ > maxSize) {
+			width = maxSize;
+			height = (UINT32) (height_ * ((float) maxSize / width_));
+		}
+		if (height_ > maxSize) {
+			height = maxSize;
+			width = (UINT32) (width_ * ((float) maxSize / height_));
+		}
+		LOGW("Texture will be resized to: %ux%upx.", width, height);
+		resize(width, height);
 	}
 	if (left_ == width_) {
 		LOGD("Commiting with zero changes.");

@@ -1,9 +1,8 @@
 #include <GL/glew.h>
 #include <GL/freeglut.h>
 #include "ghost/Input.h"
-#include "ghost/ServiceLocator.h"
 #include "ghost/Engine.h"
-#include "ghost/Multiplatform/Linux/LinuxSystem.h"
+#include "ghost/Multiplatform/Linux/LinuxServiceLocator.h"
 
 Engine* GHOST = 0;
 bool fullscreen = false;
@@ -23,7 +22,7 @@ void close();
 
 void load() {
 	LOGI("Initializing engine.");
-	System* sys = new LinuxSystem();
+	ServiceLocator* sys = new LinuxServiceLocator();
 	LOGI("Creating engine object.");
 	GHOST = new Engine(sys);
 	LOGI("Engine created.");
@@ -32,6 +31,8 @@ void load() {
 		GHOST = 0;
 		LOGI("Engine terminated due to error.");
 	}
+	GHOST->resizeScreen(glutGet(GLUT_SCREEN_WIDTH), glutGet(GLUT_SCREEN_HEIGHT));
+	GHOST->resume();
 }
 
 void resize(int width, int height) {
@@ -40,7 +41,7 @@ void resize(int width, int height) {
 
 int g_lastX = 0, g_lastY = 0;
 void handleMouseMove(int x, int y) {
-    GHOST->getServiceLocator()->getInput()->provideMousePosition(x, GHOST->getServiceLocator()->getSystem()->getScreenHeight() - y);
+    GHOST->getServiceLocator()->getInput()->provideMousePosition(x, GHOST->getServiceLocator()->getScreenHeight() - y);
     GHOST->getServiceLocator()->getInput()->provideMouseDelta(x - g_lastX, y - g_lastY);
 	g_lastX = x;
 	g_lastY = y;
@@ -217,16 +218,17 @@ void handleMouseButtons(int button, int state, int x, int y) {
 
 void computeFrame() {
 	GHOST->computeFrame();
-	if (GHOST->getServiceLocator()->getSystem()->isFinished()) {
+	if (GHOST->getServiceLocator()->isFinished()) {
 		glutLeaveMainLoop();
 	}
-//	glFinish();
-//	glutPostRedisplay();
+	//glFinish();
+	//glutPostRedisplay();
     glutSwapBuffers();
 }
 
 void close() {
 	LOGI("Deleting engine.");
+	GHOST->pause();
 	delete GHOST;
 	LOGI("Engine was successfully closed.");
 }
@@ -237,9 +239,9 @@ int main(int argc, char** argv) {
 	glutInitWindowSize(800, 600);
 	glutInitWindowPosition(100, 100);
 	glutCreateWindow("Game engine");
+	glutReshapeFunc(resize);
 	glutDisplayFunc(computeFrame);
 	glutIdleFunc(computeFrame);
-	glutReshapeFunc(resize);
 	glutMouseFunc(handleMouseButtons);
 	glutMotionFunc(handleMouseMove);
 	glutPassiveMotionFunc(handleMouseMove);

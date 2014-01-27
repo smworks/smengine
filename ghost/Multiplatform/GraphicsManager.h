@@ -30,20 +30,17 @@ class ServiceLocator;
 
 class GraphicsManager {
 public:
-	/**
-	 * Checks if hardware supports non power of two textures.
-	 * @return True if hardware supports NPOT textures.
-	 */
-	virtual bool isNPOTSupported() = 0;
-
-	/**
-	 * Checks if hardware supports indices of type unsigned int.
-	 * This is true by default for desktop systems, but may
-	 * not be available on mobile devices.
-	 * @return True if unsigned int is valid index type.
-	 */
-	virtual bool isUintIndexSupported() = 0;
-
+	enum Max {
+		MAX_TEXTURE_UNITS, MAX_COMBINED_TEXTURE_UNITS,
+		MAX_TEXTURE_SIZE, MAX_CUBE_MAP_SIZE,
+		MAX_RENDER_BUFFER_SIZE,
+		MAX_VIEWPORT_WIDTH, MAX_VIEWPORT_HEIGHT,
+		MAX_COUNT
+	};
+	enum Support {
+		SUPPORT_NPOT_TEXTURES, SUPPORT_UINT_INDEX, SUPPORT_COUNT
+	};
+public:
 	/**
 	 * Checks if graphics context is available.
 	 * There might be situations where context is no longer
@@ -179,6 +176,12 @@ public:
 	 * @param id - id of the vertex buffer.
 	 */
 	virtual void useVertexBuffer(UINT32 id) = 0;
+
+protected:
+	/**
+	 * Checks support for specified extension or attribute.
+	 */
+	virtual bool checkSupport(Support key) = 0;
 public:
 	enum NodeType {NONE, MODEL, SPRITE, TEXT, SPRITE_TEXT, ALL};
 	enum TextureType {T2D, CUBE_MAP};
@@ -195,6 +198,16 @@ public:
 	 * Called to release object resources.
 	 */
 	void release();
+
+	/**
+	 * @return Maximum value for specified key.
+	 */
+	SIZE getMax(Max key);
+
+	/**
+	 * Return true if specified key is supported.
+	 */
+	bool isSupported(Support key);
 
 	/**
 	 * Resizes window.
@@ -335,6 +348,8 @@ protected:
 	SIZE shaderId_;
 	SIZE bufferId_;
 	Mat4 matPos, matScale, matProjPos, matProjPosScale;
+	SIZE maxValues_[MAX_COUNT];
+	INT8 supportValues_[SUPPORT_COUNT];
 };
 
 #endif
