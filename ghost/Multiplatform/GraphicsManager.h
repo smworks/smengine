@@ -159,6 +159,9 @@ public:
 
 	/**
 	 * Move vertex buffer into graphics memory.
+	 * If vertex buffer was already created with specified id,
+	 * its content is updated to avoid deleting old buffer
+	 * and generating new.
 	 * @param id - id of the vertex buffer.
 	 * @param buffer - array of vertex data.
 	 * @param size - array size in bytes.
@@ -170,13 +173,6 @@ public:
 	 * @param id - id of the vertex buffer.
 	 */
 	virtual void unsetVertexBuffer(UINT32& id) = 0;
-
-	/**
-	 * Use specified vertex buffer for later operations.
-	 * @param id - id of the vertex buffer.
-	 */
-	virtual void useVertexBuffer(UINT32 id) = 0;
-
 protected:
 	/**
 	 * Checks support for specified extension or attribute.
@@ -347,7 +343,7 @@ protected:
 	SIZE activeTexture_;
 	SIZE shaderId_;
 	SIZE bufferId_;
-	Mat4 matPos, matScale, matProjPos, matProjPosScale;
+	Mat4 matPos, matScale, matPosScale, matProjPos, matProjPosScale;
 	SIZE maxValues_[MAX_COUNT];
 	INT8 supportValues_[SUPPORT_COUNT];
 };

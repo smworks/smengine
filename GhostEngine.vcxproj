@@ -69,7 +69,7 @@
     <Link>
       <SubSystem>Windows</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalDependencies>%(AdditionalDependencies);fmodexL_vc.lib</AdditionalDependencies>
+      <AdditionalDependencies>%(AdditionalDependencies);fmodex_vc.lib</AdditionalDependencies>
       <AdditionalLibraryDirectories>%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <ShowProgress>LinkVerbose</ShowProgress>
       <LinkStatus>
@@ -335,7 +335,11 @@
     <ClCompile Include="ghost\Multiplatform\ServiceLocator.cpp" />
     <ClCompile Include="ghost\Multiplatform\Win32\WindowsSocket.cpp" />
     <ClCompile Include="ghost\NetworkManager.cpp" />
+    <ClCompile Include="ghost\NodeManager.cpp" />
+    <ClCompile Include="ghost\Resources\Scenario.cpp" />
     <ClCompile Include="ghost\Resources\Symbol.cpp" />
+    <ClCompile Include="ghost\ScenarioManager.cpp" />
+    <ClCompile Include="ghost\SceneManager.cpp" />
     <ClCompile Include="ghost\ScriptBindings.cpp" />
     <ClCompile Include="ghost\ShapeParser.cpp" />
     <ClCompile Include="ghost\Camera.cpp" />
@@ -623,7 +627,11 @@
     <ClInclude Include="ghost\Multiplatform\Socket.h" />
     <ClInclude Include="ghost\Multiplatform\Win32\WindowsSocket.h" />
     <ClInclude Include="ghost\NetworkManager.h" />
+    <ClInclude Include="ghost\NodeManager.h" />
+    <ClInclude Include="ghost\Resources\Scenario.h" />
     <ClInclude Include="ghost\Resources\Symbol.h" />
+    <ClInclude Include="ghost\ScenarioManager.h" />
+    <ClInclude Include="ghost\SceneManager.h" />
     <ClInclude Include="ghost\ScriptBindings.h" />
     <ClInclude Include="ghost\ShapeParser.h" />
     <ClInclude Include="ghost\Camera.h" />

@@ -56,7 +56,7 @@ void GUISurface::resize() {
 }
 
 SIZE GUISurface::getVertexCount() {
-	return g_planeVerticeCount / 3;
+	return sizeof(g_planeVertices) / 3;
 }
 
 

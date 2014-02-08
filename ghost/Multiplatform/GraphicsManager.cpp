@@ -42,7 +42,9 @@ GraphicsManager::GraphicsManager(ServiceLocator* services) :
 	boundTextures_(MAX_ACTIVE_TEXTURES),
 	activeTexture_(0),
 	shaderId_(0),
-	bufferId_(0)
+	bufferId_(0),
+	planeVBO_(0),
+	planeUVBO_(0)
 {
 	fill(maxValues_, maxValues_ + MAX_COUNT, 0);
 	fill(supportValues_, supportValues_ + SUPPORT_COUNT, 2);
@@ -212,6 +214,9 @@ SIZE GraphicsManager::getMax(Max key) {
 		glGetIntegerv(GL_MAX_VIEWPORT_DIMS, val);
 		val[0] = val[1];
 		break;
+    case MAX_COUNT:
+    default:
+        return 0;
 	}
 	return (maxValues_[key] = val[0]);
 }
@@ -243,7 +248,8 @@ void GraphicsManager::resize(UINT32 width, UINT32 height) {
 	Mat4 proj;
 	Matrix::projection2D(proj,
 		(float) services_->getScreenWidth(),
-		(float) services_->getScreenHeight());
+		(float) services_->getScreenHeight(),
+		settings_->getFloat(Settings::FAR_PLANE_DISTANCE));
 	Matrix::multiply(
 		proj,
 		posScale,
@@ -366,36 +372,34 @@ void GraphicsManager::renderGUI(Node* node) {
 	if (text == 0) {
 		return;
 	}
-	GUIText::SymbolData* symbols = text->getSymbolArray();
-	SIZE symbolCount = text->getSymbolCount();
 	renderSprite(text, 0.0f, (float) services_->getScreenHeight() - text->getHeight(),
 		(float) text->getWidth(), (float) text->getHeight());
 	useProgram(textShader_->getId());
 	int texture = glGetUniformLocation(textShader_->getId(), "texture_0");
+	textShader_->setVector4(Shader::FOREGROUND, text->getDiffuse().toArray());
 	bindTexture(services_->getTextureAtlas()->getId(Texture::MONO));
 	glUniform1i(texture, 0);
 	glEnableVertexAttribArray(textShader_->getHandle(Shader::POS));
 	glEnableVertexAttribArray(textShader_->getHandle(Shader::UV));
-	bindBuffer(planeVBO_);
+	Matrix::identity(matPosScale);
+	Matrix::multiply(camera_->getProjection2D(), matPosScale, matProjPosScale);
+	textShader_->setMatrix4(Shader::WVP, matProjPosScale);
+	bindBuffer(text->getTextVBO());
 	glVertexAttribPointer(textShader_->getHandle(Shader::POS), 3, GL_FLOAT, GL_FALSE,
-		sizeof(VertexP), ((char*) 0));
-	textShader_->setVector4(Shader::FOREGROUND, text->getDiffuse().toArray());
-	for (SIZE i = 0; i < symbolCount; i++) {
-		GUIText::SymbolData& sd = symbols[i];
-		if (sd.posX + sd.symbol->getWidth() < 0 || sd.posX > services_->getScreenWidth()) {
-			continue;
-		}
-		textShader_->setMatrix4(Shader::WVP, sd.matProjPosScale);
-		if (bindBuffer(sd.symbol->getTexture()->getCBO())) {
-			glVertexAttribPointer(textShader_->getHandle(Shader::UV), 2, GL_FLOAT, GL_FALSE,
-				sizeof(VertexPT), ((char*) 0) + offsetof(VertexPT, uv));
-		}
-		glDrawArrays(GL_TRIANGLES, 0, 18 / 3);
-	}
+		sizeof(VertexPT), ((char*) 0));
+	glVertexAttribPointer(textShader_->getHandle(Shader::UV), 2, GL_FLOAT, GL_FALSE,
+		sizeof(VertexPT), ((char*) 0) + offsetof(VertexPT, uv));
+	glDrawArrays(GL_TRIANGLES, 0, (GLint) text->getTextVertexCount());
 	glDisableVertexAttribArray(textShader_->getHandle(Shader::POS));
 	glDisableVertexAttribArray(textShader_->getHandle(Shader::UV));
 	CHECK_GL_ERROR("Problem with text renderer");
 }
+
+struct zComparator { 
+   bool operator()(Node* left, Node* right) {
+	   return left->getPos().getZ() < right->getPos().getZ();
+   }
+};
 
 void GraphicsManager::refreshRenderList() {
 	vector<Node*> renderArray;
@@ -415,7 +419,6 @@ void GraphicsManager::refreshRenderList() {
 			modelArray_.push_back((*it));
 		}
 		if ((*it)->hasResource(Resource::GUI_TEXT)
-			|| (*it)->hasResource(Resource::GUI_CONTAINER)
 			|| (*it)->hasResource(Resource::GUI_IMAGE)
 			|| (*it)->hasResource(Resource::GUI_BUTTON)
             || (*it)->hasResource(Resource::GUI_INPUT))
@@ -427,6 +430,8 @@ void GraphicsManager::refreshRenderList() {
 		}
 		it++;
 	}
+	zComparator cmp;
+	sort(spriteArray_.begin(), spriteArray_.end(), cmp);
 }
 
 void GraphicsManager::vertex(float x, float y, float z) {
@@ -464,6 +469,7 @@ void GraphicsManager::renderScene(NodeType type) {
 #ifdef SMART_DEBUG
 	UINT64 start = getMicroseconds();
 #endif
+		glEnable(GL_DEPTH_TEST);
 		glEnable(GL_BLEND);
 		it = spriteArray_.begin();
 		while (it != spriteArray_.end()) {
@@ -471,8 +477,9 @@ void GraphicsManager::renderScene(NodeType type) {
 			it++;
 		}
 		glDisable(GL_BLEND);
+		glDisable(GL_DEPTH_TEST);
 #ifdef SMART_DEBUG
-	g_renderModelTime += (getMicroseconds() - start);
+		g_renderSpriteTime += (getMicroseconds() - start);
 #endif
 	}
 	if (type == ALL || type == TEXT || type == SPRITE_TEXT) {
@@ -526,10 +533,6 @@ void GraphicsManager::renderNode(
 	Resource* resource = 0;
 	if (node->hasResource(Resource::SPRITE)) {
 		resource = node->getResource(Resource::SPRITE);
-		renderable = dynamic_cast<Renderable*>(resource);
-	}
-	else if (node->hasResource(Resource::GUI_CONTAINER)) {
-		resource = node->getResource(Resource::GUI_CONTAINER);
 		renderable = dynamic_cast<Renderable*>(resource);
 	}
 	else if (node->hasResource(Resource::GUI_IMAGE)) {
@@ -608,7 +611,8 @@ void GraphicsManager::renderNode(
 		float height = s.getY();
 		float x = p.getX();
 		float y = p.getY();
-		Matrix::translate(pos, x, y, p.getZ());
+		Vec3& camPos = services_->getCamera()->getPos();
+		Matrix::translate(pos, x - camPos.getX(), y - camPos.getY(), p.getZ());
 		Matrix::rotateXYZ(rot, r.getX(), r.getY(), r.getZ());
 		Matrix::scale(scale, width, height, 1.0f);
 		Matrix::multiply(mat, pos, res);
@@ -866,7 +870,8 @@ void GraphicsManager::renderQuad(
 	Mat4 proj;
 	Matrix::projection2D(proj,
 		(float) services_->getScreenWidth(),
-		(float) services_->getScreenHeight());
+		(float) services_->getScreenHeight(),
+		settings_->getFloat(Settings::FAR_PLANE_DISTANCE));
 	Matrix::multiply(
 		proj,
 		posScale,

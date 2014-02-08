@@ -21,6 +21,7 @@
 					<Add option="-lfmodex" />
 					<Add option="-lz" />
 					<Add option="-lGLEW" />
+					<Add directory="/home/martynas/Dropbox/Workspace/GameEngine/dependencies/libs/linux" />
 				</Linker>
 			</Target>
 			<Target title="Release">
@@ -38,12 +39,16 @@
 					<Add option="-lfmodex" />
 					<Add option="-lz" />
 					<Add option="-lGLEW" />
+					<Add directory="/home/martynas/Dropbox/Workspace/GameEngine/dependencies/libs/linux" />
 				</Linker>
 			</Target>
 		</Build>
 		<Compiler>
 			<Add option="-Wall" />
 		</Compiler>
+		<Linker>
+			<Add directory="/home/martynas/Dropbox/Workspace/GameEngine/dependencies/libs/linux" />
+		</Linker>
 		<Unit filename="dependencies/includes/bullet/BulletCollision/BroadphaseCollision/btAxisSweep3.cpp" />
 		<Unit filename="dependencies/includes/bullet/BulletCollision/BroadphaseCollision/btAxisSweep3.h" />
 		<Unit filename="dependencies/includes/bullet/BulletCollision/BroadphaseCollision/btBroadphaseInterface.h" />
@@ -573,17 +578,8 @@
 		<Unit filename="dependencies/includes/freetype/winfnt.c">
 			<Option compilerVar="CC" />
 		</Unit>
-		<Unit filename="dependencies/includes/glew/glew.c">
-			<Option compilerVar="CC" />
-		</Unit>
 		<Unit filename="dependencies/includes/glew/glew.h" />
-		<Unit filename="dependencies/includes/glew/glewinfo.c">
-			<Option compilerVar="CC" />
-		</Unit>
 		<Unit filename="dependencies/includes/glew/glxew.h" />
-		<Unit filename="dependencies/includes/glew/visualinfo.c">
-			<Option compilerVar="CC" />
-		</Unit>
 		<Unit filename="dependencies/includes/glew/wglew.h" />
 		<Unit filename="dependencies/includes/libpng/config.h" />
 		<Unit filename="dependencies/includes/libpng/png.c">
@@ -855,11 +851,10 @@
 		<Unit filename="ghost/Multiplatform/Linux/LinuxGhost.h" />
 		<Unit filename="ghost/Multiplatform/Linux/LinuxGraphicsManager.cpp" />
 		<Unit filename="ghost/Multiplatform/Linux/LinuxGraphicsManager.h" />
+		<Unit filename="ghost/Multiplatform/Linux/LinuxServiceLocator.cpp" />
+		<Unit filename="ghost/Multiplatform/Linux/LinuxServiceLocator.h" />
 		<Unit filename="ghost/Multiplatform/Linux/LinuxSocket.cpp" />
 		<Unit filename="ghost/Multiplatform/Linux/LinuxSocket.h" />
-		<Unit filename="ghost/Multiplatform/Linux/LinuxSoundManager.cpp" />
-		<Unit filename="ghost/Multiplatform/Linux/LinuxSoundManager.h" />
-		<Unit filename="ghost/Multiplatform/Linux/LinuxSystem.cpp" />
 		<Unit filename="ghost/Multiplatform/Linux/LinuxSystem.h" />
 		<Unit filename="ghost/Multiplatform/Linux/LinuxThread.cpp" />
 		<Unit filename="ghost/Multiplatform/Linux/LinuxThread.h" />
@@ -873,6 +868,8 @@
 		<Unit filename="ghost/NetworkManager.h" />
 		<Unit filename="ghost/Node.cpp" />
 		<Unit filename="ghost/Node.h" />
+		<Unit filename="ghost/NodeManager.cpp" />
+		<Unit filename="ghost/NodeManager.h" />
 		<Unit filename="ghost/ObjParser.cpp" />
 		<Unit filename="ghost/ObjParser.h" />
 		<Unit filename="ghost/PhysicsManager.cpp" />
@@ -909,6 +906,8 @@
 		<Unit filename="ghost/Resources/Renderable.h" />
 		<Unit filename="ghost/Resources/Resource.cpp" />
 		<Unit filename="ghost/Resources/Resource.h" />
+		<Unit filename="ghost/Resources/Scenario.cpp" />
+		<Unit filename="ghost/Resources/Scenario.h" />
 		<Unit filename="ghost/Resources/Script.cpp" />
 		<Unit filename="ghost/Resources/Script.h" />
 		<Unit filename="ghost/Resources/Shader.cpp" />
@@ -928,6 +927,8 @@
 		<Unit filename="ghost/Resources/TextureRGBA.cpp" />
 		<Unit filename="ghost/Resources/TextureRGBA.h" />
 		<Unit filename="ghost/Resources/Vertex.h" />
+		<Unit filename="ghost/ScenarioManager.cpp" />
+		<Unit filename="ghost/ScenarioManager.h" />
 		<Unit filename="ghost/ScriptBindings.cpp" />
 		<Unit filename="ghost/ScriptBindings.h" />
 		<Unit filename="ghost/ScriptManager.cpp" />

@@ -5,7 +5,7 @@
 #include "ghost/Multiplatform/Linux/LinuxServiceLocator.h"
 
 Engine* GHOST = 0;
-bool fullscreen = false;
+bool fullscreen = true;
 
 void load();
 void resize(int width, int height);
@@ -49,18 +49,24 @@ void handleMouseMove(int x, int y) {
 
 void handleKey(UINT32 key, bool keyUp) {
 	switch (key) {
-    case 0:
-        key = Input::RETURN;
+    case 8: key = Input::BACK; break;
+    case 9: key = Input::TAB; break;
+    case 13: key = Input::RETURN; break;
+    case 27: key = Input::ESC; break;
+    case 32: key = Input::SPACE; break;
+    case 127: key = Input::DELETE; break;
+    case 48:
+    case 49:
+    case 50:
+    case 51:
+    case 52:
+    case 53:
+    case 54:
+    case 55:
+    case 56:
+    case 57:
+        key -= 48; // Handle numbers.
         break;
-	case 8:
-		key = Input::BACK;
-		break;
-	case 32:
-		key = Input::SPACE;
-		break;
-	case 27:
-		key = Input::ESC;
-		break;
 	case 97:
 	case 98:
 	case 99:
@@ -87,7 +93,7 @@ void handleKey(UINT32 key, bool keyUp) {
 	case 120:
 	case 121:
 	case 122:
-		key -= 96; // Handle English letters.
+		key -= 86; // Handle English letters.
 		break;
 	default:
 		key = Input::NONE;
@@ -99,7 +105,7 @@ void handleKey(UINT32 key, bool keyUp) {
 	int modifierKeys = glutGetModifiers();
 	if (modifierKeys == GLUT_ACTIVE_ALT) {
 		GHOST->getServiceLocator()->getInput()->provideButton(Input::ALT, Input::PRESSED);
-        if (key == 0 && keyUp) {
+        if (key == Input::RETURN && keyUp) {
             if (!fullscreen) {
                 glutFullScreen();
                 fullscreen = true;
@@ -236,9 +242,10 @@ void close() {
 int main(int argc, char** argv) {
 	glutInit(&argc, argv);
 	glutInitDisplayMode(GLUT_DEPTH | GLUT_DOUBLE | GLUT_RGBA);
-	glutInitWindowSize(800, 600);
-	glutInitWindowPosition(100, 100);
+	glutInitWindowSize(glutGet(GLUT_SCREEN_WIDTH), glutGet(GLUT_SCREEN_HEIGHT));
+	glutInitWindowPosition(0, 0);
 	glutCreateWindow("Game engine");
+	glutFullScreen();
 	glutReshapeFunc(resize);
 	glutDisplayFunc(computeFrame);
 	glutIdleFunc(computeFrame);

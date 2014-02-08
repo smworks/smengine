@@ -24,74 +24,22 @@ void registerFunctions();
  */
 void registerClasses();
 
-/**
- * Node.
- */
 void registerNode();
-
-/**
- * Input.
- */
 void registerInput();
-
-/**
- * Model.
- */
 void registerModel();
-
-/**
- * Sprite.
- */
 void registerSprite();
-
-/**
- * Texture.
- */
 void registerTexture();
-
-/**
- * GUISurface.
- */
 void registerGUISurface();
-
-/**
- * GUIText.
- */
 void registerGUIText();
-
-/**
- * GUIButton.
- */
 void registerGUIButton();
-
-/**
- * Camera.
- */
 void registerCamera();
-
-/**
- * Shader.
- */
 void registerShader();
-
-/**
- * Network manager.
- */
 void registerNetworkManager();
-
-/**
- * HttpRequest.
- */
 void registerHttpRequest();
-
-/**
- * HttpResponse.
- */
 void registerHttpResponse();
-
-/**
- * Vehicle.
- */
 void registerVehicle();
+void registerScenario();
+void registerScenarioManager();
+void registerSceneManager();
 
 #endif

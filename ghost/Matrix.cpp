@@ -291,7 +291,7 @@ void Matrix::cameraLookAt(Mat4 mat, Vec3 pos, Vec3 target) {
 	multiply(temp, trans, mat);
 }
 
-void Matrix::projection2D(Mat4 mat, float width, float height) {
+void Matrix::projection2D(Mat4 mat, float width, float height, float f) {
 	//// Calculate essential matrix elements.
 	//float x1y1 = 2.0f / (width);
 	//float x2y2 = 2.0f / (height);
@@ -304,11 +304,13 @@ void Matrix::projection2D(Mat4 mat, float width, float height) {
 	//mat[4] = 0.0f;	mat[5] = x2y2;	mat[6] = 0.0f;	mat[7] = 0.0f;
 	//mat[8] = 0.0f;	mat[9] = 0.0f;	mat[10] = x3y3;	mat[11] = 0.0f;
 	//mat[12] = x1y4;	mat[13] = x2y4;	mat[14] = x3y4;	mat[15] = 1.0f;
-
-	mat[0] = 2.0f / width;	mat[1] = 0.0f;	mat[2] = 0.0f;	mat[3] = 0.0f;
-	mat[4] = 0.0f;	mat[5] = 2.0f / height;	mat[6] = 0.0f;	mat[7] = 0.0f;
-	mat[8] = 0.0f;	mat[9] = 0.0f;	mat[10] = -1.0f;	mat[11] = 0.0f;
-	mat[12] = -1.0f;	mat[13] = -1.0f;	mat[14] = 0.0f;	mat[15] = 1.0f;
+	float n = -f;
+	float x3x3 = -2.0f / (f - n);
+	float x3y4 = - (f + n) / (f - n);
+	mat[0] = 2.0f / width;	mat[1] = 0.0f;			mat[2] = 0.0f;	mat[3] = 0.0f;
+	mat[4] = 0.0f;			mat[5] = 2.0f / height;	mat[6] = 0.0f;	mat[7] = 0.0f;
+	mat[8] = 0.0f;			mat[9] = 0.0f;			mat[10] = x3x3;	mat[11] = 0.0f;
+	mat[12] = -1.0f;		mat[13] = -1.0f;		mat[14] = x3y4;	mat[15] = 1.0f;
 }
 
 void Matrix::projection3D(

@@ -12,8 +12,6 @@
 #include "Resources/Vertex.h"
 class Vec3;
 
-
-const UINT32 g_planeVerticeCount = 18;
 const float g_planeVertices[] = {
 		-0.5f, -0.5f, 0.0f,
 		0.5f, -0.5f, 0.0f,
@@ -23,15 +21,6 @@ const float g_planeVertices[] = {
 		-0.5f, -0.5f, 0.0f
 };
 
-const UINT32 g_planeUVCount = 12;
-//const float g_planeUV[] = {
-//		0.0f, 1.0f,
-//		1.0f, 1.0f,
-//		1.0f, 0.0f,
-//		1.0f, 0.0f,
-//		0.0f, 0.0f,
-//		0.0f, 1.0f
-//};
 const float g_planeUV[] = {
 		0.0f, 0.0f,
 		1.0f, 0.0f,

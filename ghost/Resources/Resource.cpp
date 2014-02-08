@@ -172,8 +172,8 @@ Resource::Type Resource::stringToType(
 	if ("light" == type) {
 		return Resource::LIGHT;
 	}
-	if ("gui_container" == type) {
-		return Resource::GUI_CONTAINER;
+	if ("scenario" == type) {
+		return Resource::SCENARIO;
 	}
 	if ("gui_image" == type) {
 		return Resource::GUI_IMAGE;
@@ -225,8 +225,8 @@ string Resource::typeToString(Type type) {
     case LIGHT:
         return "light";
         break;
-	case GUI_CONTAINER:
-		return "gui_container";
+	case SCENARIO:
+		return "scenario";
 		break;
     case GUI_IMAGE:
         return "gui_image";

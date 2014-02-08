@@ -18,6 +18,8 @@
 #include "NetworkManager.h"
 #include "HttpRequest.h"
 #include "HttpResponse.h"
+#include "ScenarioManager.h"
+#include "SceneManager.h"
 #include "Resources/StaticObject.h"
 #include "Resources/Shader.h"
 #include "Resources/Sprite.h"
@@ -27,6 +29,7 @@
 #include "Resources/TextureRGBA.h"
 #include "Resources/AtlasTexture.h"
 #include "Resources/GUIButton.h"
+#include "Resources/Scenario.h"
 #include "Extensions/Vehicle.h"
 
 #define SM_INDEX(index) index + 1
@@ -60,13 +63,14 @@
 #define SM_POP_ARGS(state, argc) lua_pop(state, argc)
 #define SM_GET_SL() ScriptManager::getServiceLocator()
 #define SM_GET_RM() SM_GET_SL()->getRM()
-#define SM_GET_PM() SM_GET_SL()->getPM()
+#define SM_GET_PM() SM_GET_SL()->getPhysicsManager()
 
 #define ADD_METHOD(map, method_name, method) \
     map.insert(pair<string, int (*)(lua_State*)>(method_name, method))
 
 #define METHOD_ADD_SET_STATE(class_name, method_name, method_call, state) \
 	int method_name(lua_State* L) { \
+		ASSERT(SM_GET_ARGUMENT_COUNT(L) == 2, "Bad argument count while adding/setting state."); \
 		class_name* obj = SM_GET_OBJECT(L, 0, class_name); \
 		float value = SM_GET_FLOAT(L, 1); \
 		if (obj != 0) { \
@@ -78,6 +82,7 @@
 
 #define METHOD_ADD_SET(class_name, method_name, method_call) \
 	int method_name(lua_State* L) { \
+		ASSERT(SM_GET_ARGUMENT_COUNT(L) == 2, "Bad argument count while adding/setting state."); \
 		class_name* obj = SM_GET_OBJECT(L, 0, class_name); \
 		float value = SM_GET_FLOAT(L, 1); \
 		if (obj != 0) { \
@@ -99,6 +104,7 @@
 
 #define METHOD_ADD_SET_TWO_STATE(class_name, method_name, method1, method2, state) \
 	int method_name(lua_State* L) { \
+		ASSERT(SM_GET_ARGUMENT_COUNT(L) == 3, "Bad argument count while adding/setting state."); \
 		class_name* obj = SM_GET_OBJECT(L, 0, class_name); \
 		float param1 = SM_GET_FLOAT(L, 1); \
 		float param2 = SM_GET_FLOAT(L, 2); \
@@ -112,6 +118,7 @@
 
 #define METHOD_ADD_SET_TWO(class_name, method_name, method1, method2) \
 	int method_name(lua_State* L) { \
+		ASSERT(SM_GET_ARGUMENT_COUNT(L) == 3, "Bad argument count while adding/setting state."); \
 		class_name* obj = SM_GET_OBJECT(L, 0, class_name); \
 		float param1 = SM_GET_FLOAT(L, 1); \
 		float param2 = SM_GET_FLOAT(L, 2); \
@@ -137,6 +144,7 @@
 
 #define METHOD_ADD_SET_THREE_STATE(class_name, method_name, method, state) \
 	int method_name(lua_State* L) { \
+		ASSERT(SM_GET_ARGUMENT_COUNT(L) == 4, "Bad argument count while adding/setting state."); \
 		class_name* obj = SM_GET_OBJECT(L, 0, class_name); \
 		float param1 = SM_GET_FLOAT(L, 1); \
 		float param2 = SM_GET_FLOAT(L, 2); \
@@ -150,6 +158,7 @@
 
 #define METHOD_ADD_SET_THREE(class_name, method_name, method) \
 	int method_name(lua_State* L) { \
+		ASSERT(SM_GET_ARGUMENT_COUNT(L) == 4, "Bad argument count while adding/setting state."); \
 		class_name* obj = SM_GET_OBJECT(L, 0, class_name); \
 		float param1 = SM_GET_FLOAT(L, 1); \
 		float param2 = SM_GET_FLOAT(L, 2); \
@@ -263,7 +272,7 @@ int playSound(lua_State* L) {
 		SM_GET_RM()->add(file, sound);
 	}
 	sound->setRepeat(cond);
-	SM_GET_SL()->getSM()->play(sound);
+	SM_GET_SL()->getSoundManager()->play(sound);
 	return 0;
 }
 
@@ -319,6 +328,9 @@ void registerClasses() {
 	registerHttpRequest();
 	registerHttpResponse();
 	registerVehicle();
+	registerScenario();
+	registerScenarioManager();
+	registerSceneManager();
 }
 
 int getNode(lua_State* L) {
@@ -461,21 +473,6 @@ int nodeGetSpriteCount(lua_State* L) {
 	return 1;
 }
 
-int setText(lua_State* L) {
-	Node* node = SM_GET_OBJECT(L, 0, Node);
-	GUIText* text = SM_GET_OBJECT(L, 1, GUIText);
-	node->addResource(text);
-	return 0;
-}
-
-int getText(lua_State* L) {
-	Node* node = SM_GET_OBJECT(L, 0, Node);
-	GUIText* text = static_cast<GUIText*>(
-		node->getResource(Resource::GUI_TEXT));
-	SM_RETURN_OBJECT(L, "Text", GUIText, text);
-	return 1;
-}
-
 int setButton(lua_State* L) {
 	Node* node = SM_GET_OBJECT(L, 0, Node);
 	GUIButton* button = SM_GET_OBJECT(L, 1, GUIButton);
@@ -488,20 +485,6 @@ int getButton(lua_State* L) {
 	GUIButton* button = dynamic_cast<GUIButton*>(
 		node->getResource(Resource::GUI_BUTTON));
 	SM_RETURN_OBJECT(L, "Button", GUIButton, button);
-	return 1;
-}
-
-int nodeSetSurface(lua_State* L) {
-	Node* node = SM_GET_OBJECT(L, 0, Node);
-	GUISurface* surface = SM_GET_OBJECT(L, 1, GUISurface);
-	node->addResource(surface);
-	return 0;
-}
-
-int nodeGetSurface(lua_State* L) {
-	Node* node = SM_GET_OBJECT(L, 0, Node);
-	GUISurface* surface = dynamic_cast<GUISurface*>(node->getResource(Resource::GUI_CONTAINER));
-	SM_RETURN_OBJECT(L, "Surface", GUISurface, surface);
 	return 1;
 }
 
@@ -598,6 +581,54 @@ int moveZ(lua_State* L) {
 	return 0;
 }
 
+int nodeGuiTextSetSize(lua_State* L) {
+	Node* node = SM_GET_OBJECT(L, 0, Node);
+	GUIText* text = static_cast<GUIText*>(node->getResource(Resource::GUI_TEXT));
+	if (text == 0) {
+		LOGE("Node does not contain GUIText resource.");
+		return 0;
+	}
+	INT32 size = SM_GET_INT(L, 1);
+	text->setTextSize(size);
+    return 0;
+}
+
+int nodeGuiTextSetText(lua_State* L) {
+    Node* node = SM_GET_OBJECT(L, 0, Node);
+	GUIText* text = static_cast<GUIText*>(node->getResource(Resource::GUI_TEXT));
+	if (text == 0) {
+		LOGE("Node does not contain GUIText resource.");
+		return 0;
+	}
+	string val = SM_GET_STRING(L, 1);
+	text->setText(val);
+    return 0;
+}
+
+int nodeGuiTextSetColor(lua_State* L) {
+    Node* node = SM_GET_OBJECT(L, 0, Node);
+	GUIText* text = static_cast<GUIText*>(node->getResource(Resource::GUI_TEXT));
+	if (text == 0) {
+		LOGE("Node does not contain GUIText resource.");
+		return 0;
+	}
+	string val = SM_GET_STRING(L, 1);
+	text->getDiffuse().setRGBA(val);
+	return 0;
+}
+
+int nodeGuiTextSetBackground(lua_State* L) {
+    Node* node = SM_GET_OBJECT(L, 0, Node);
+	GUIText* text = static_cast<GUIText*>(node->getResource(Resource::GUI_TEXT));
+	if (text == 0) {
+		LOGE("Node does not contain GUIText resource.");
+		return 0;
+	}
+	string val = SM_GET_STRING(L, 1);
+	text->setBackground(val);
+	return 0;
+}
+
 #define NODE_ADD_SET(method_name, method_call, state) \
 	METHOD_ADD_SET_STATE(Node, method_name, method_call, state)
 #define NODE_GET(method_name, method_call) \
@@ -691,17 +722,17 @@ void registerNode() {
 	ADD_METHOD(methods, "addTexture", nodeAddTexture);
     ADD_METHOD(methods, "setIndex", nodeSetSprite);
     ADD_METHOD(methods, "getCount", nodeGetSpriteCount);
-    ADD_METHOD(methods, "setText", setText);
-    ADD_METHOD(methods, "getText", getText);
     ADD_METHOD(methods, "setButton", setButton);
     ADD_METHOD(methods, "getButton", getButton);
-    ADD_METHOD(methods, "setSurface", nodeSetSurface);
-    ADD_METHOD(methods, "getSurface", nodeGetSurface);
     ADD_METHOD(methods, "setName", setName);
     ADD_METHOD(methods, "getName", getName);
     ADD_METHOD(methods, "setVisibility", setVisibility);
     ADD_METHOD(methods, "getVisibility", getVisibility);
 	ADD_METHOD(methods, "getVehicle", getVehicle);
+	ADD_METHOD(methods, "setFontSize", nodeGuiTextSetSize);
+	ADD_METHOD(methods, "setText", nodeGuiTextSetText);
+	ADD_METHOD(methods, "setColor", nodeGuiTextSetColor);
+	ADD_METHOD(methods, "setBackground", nodeGuiTextSetBackground);
     ADD_METHOD(methods, "moveX", setName);
     ADD_METHOD(methods, "moveY", setName);
     ADD_METHOD(methods, "moveZ", setName);
@@ -1145,71 +1176,29 @@ void registerGUISurface() {
 }
 
 int newGUIText(lua_State* L) {
-	string val = SM_GET_STRING(L, 0);
-	GUIText* text = static_cast<GUIText*>(SM_GET_RM()->get(Resource::GUI_TEXT, val));
+	string name = SM_GET_STRING(L, 0);
+	GUIText* text = static_cast<GUIText*>(SM_GET_RM()->get(Resource::GUI_TEXT, name));
 	if (text == 0) {
 		text = NEW GUIText(SM_GET_SL());
-		text->getAttributes().setString(GUIText::ATTR_TEXT, val);
+		text->getAttributes().setString(GUIText::ATTR_TEXT, "");
         text->getAttributes().setString(GUIText::ATTR_SCREEN_LEFT, "true");
         text->getAttributes().setString(GUIText::ATTR_SCREEN_RIGHT, "true");
         text->getAttributes().setString(GUIText::ATTR_SCREEN_TOP, "true");
 		text->create();
-		SM_GET_RM()->add(val, text);
+		SM_GET_RM()->add(name, text);
 	}
-	SM_RETURN_OBJECT(L, "GUIText", GUIText, text);
+	Node* node = NEW Node();
+	node->setName(name + "_TextResource");
+	ScriptManager::getServiceLocator()->getRootNode()->addChild(node);
+	node->setParent(ScriptManager::getServiceLocator()->getRootNode());
+	node->addResource(text);
+	SM_RETURN_OBJECT(L, "Node", Node, node);
     return 1;
-}
-
-int deleteGUIText(lua_State* L) {
-//    LOGI("DELETING TEXT!");
-//    Text* text = 0;
-//    ScriptManager::getObject("Text", text);
-//    if (text == 0) {
-//        return 0;
-//    }
-//    LOGI("Text: %s", text->getContent().c_str());
-//    string name = text->getName();
-//    LOGI("Name: %s", name.c_str());
-//	ScriptManager::getServiceLocator()->getRM()->remove(Resource::TEXT, text->getName());
-    return 0;
-}
-
-int guiTextSetSize(lua_State* L) {
-    GUIText* text = SM_GET_OBJECT(L, 0, GUIText);
-	INT32 size = SM_GET_INT(L, 1);
-	text->setTextSize(size);
-    return 0;
-}
-
-int guiTextSetText(lua_State* L) {
-    GUIText* text = SM_GET_OBJECT(L, 0, GUIText);
-	string val = SM_GET_STRING(L, 1);
-	text->setText(val);
-    return 0;
-}
-
-int guiTextSetColor(lua_State* L) {
-    GUIText* text = SM_GET_OBJECT(L, 0, GUIText);
-	string val = SM_GET_STRING(L, 1);
-	text->getDiffuse().setRGBA(val);
-	return 0;
-}
-
-int guiTextSetBackground(lua_State* L) {
-    GUIText* text = SM_GET_OBJECT(L, 0, GUIText);
-	string val = SM_GET_STRING(L, 1);
-	text->setBackground(val);
-	return 0;
 }
 
 void registerGUIText() {
     unordered_map<string, int (*)(lua_State*)> methods;
 	ADD_METHOD(methods, "new", newGUIText);
-	ADD_METHOD(methods, "__gc", deleteGUIText);
-    ADD_METHOD(methods, "setSize", guiTextSetSize);
-	ADD_METHOD(methods, "setText", guiTextSetText);
-	ADD_METHOD(methods, "setColor", guiTextSetColor);
-	ADD_METHOD(methods, "setBackground", guiTextSetBackground);
     ScriptManager::addClass("GUIText", methods);
 }
 
@@ -1493,7 +1482,7 @@ void registerShader() {
 
 
 int getNetworkManager(lua_State* L) {
-	NetworkManager* networkManager = SM_GET_SL()->getNM();
+	NetworkManager* networkManager = SM_GET_SL()->getNetworkManager();
 	SM_RETURN_OBJECT(L, "NetworkManager", NetworkManager, networkManager);
     return 1;
 }
@@ -1507,7 +1496,7 @@ public:
 
 int networkManagerExecute(lua_State* L) {
 	HttpRequest* request = SM_GET_OBJECT(L, 1, HttpRequest);
-	SM_GET_SL()->getNM()->execute(request, new LuaHttpTask());
+	SM_GET_SL()->getNetworkManager()->execute(request, new LuaHttpTask());
 	return 0;
 }
 
@@ -1598,12 +1587,12 @@ void registerHttpResponse() {
     ScriptManager::addClass("Response", methods);
 }
 
-int newVehicle(lua_State* state) {
+int newVehicle(lua_State* L) {
 	LOGW("Unimplemented vehicle creation in script side.");
 	return 0;
 }
 
-int deleteVehicle(lua_State* state) {
+int deleteVehicle(lua_State* L) {
 	return 0;
 }
 
@@ -1641,4 +1630,132 @@ void registerVehicle() {
 	ADD_METHOD(methods, "accelerate", vehicleAccelerate);
 	ADD_METHOD(methods, "turn", vehicleTurn);
     ScriptManager::addClass("Vehicle", methods);
+}
+
+int newScenario(lua_State* L) {
+	Scenario* scenario = new Scenario(SM_GET_SL());
+	scenario->create();
+	SM_RETURN_OBJECT(L, "Scenario", Scenario, scenario);
+	return 1;
+}
+
+int deleteScenario(lua_State* L) {
+	delete SM_GET_OBJECT(L, 0, Scenario);
+	return 0;
+}
+
+int scenarioMove(lua_State* L) {
+	Scenario* scenario = SM_GET_OBJECT(L, 0, Scenario);
+	Node* node = SM_GET_OBJECT(L, 1, Node);
+	int argc = SM_GET_ARGUMENT_COUNT(L);
+	Vec3 start = node->getPos();
+	Vec3 end = start;
+	float duration = 0.0f;
+	if (argc == 5) {
+		end.setXYZ(SM_GET_FLOAT(L, 2), SM_GET_FLOAT(L, 3), start.getZ());
+		duration = SM_GET_FLOAT(L, 4);
+	}
+	else if (argc == 6) {
+		end.setXYZ(SM_GET_FLOAT(L, 2), SM_GET_FLOAT(L, 3), SM_GET_FLOAT(L, 4));
+		duration = SM_GET_FLOAT(L, 5);
+	}
+	else if (argc == 7) {
+		start.setXYZ(SM_GET_FLOAT(L, 2), SM_GET_FLOAT(L, 3), start.getZ());
+		end = start;
+		end.setXYZ(SM_GET_FLOAT(L, 4), SM_GET_FLOAT(L, 5), start.getZ());
+		duration = SM_GET_FLOAT(L, 6);
+	}
+	else if (argc == 9) {
+		start.setXYZ(SM_GET_FLOAT(L, 2), SM_GET_FLOAT(L, 3), SM_GET_FLOAT(L, 4));
+		end = start;
+		end.setXYZ(SM_GET_FLOAT(L, 5), SM_GET_FLOAT(L, 6), SM_GET_FLOAT(L, 7));
+		duration = SM_GET_FLOAT(L, 8);
+	}
+	scenario->move(node, start, end, duration);
+	return 0;
+}
+
+int scenarioWait(lua_State* L) {
+	Scenario* scenario = SM_GET_OBJECT(L, 0, Scenario);
+	scenario->wait(SM_GET_FLOAT(L, 1));
+	return 0;
+}
+
+void registerScenario() {
+    unordered_map<string, int (*)(lua_State*)> methods;
+	ADD_METHOD(methods, "new", newScenario);
+	ADD_METHOD(methods, "__gc", deleteScenario);
+	ADD_METHOD(methods, "move", scenarioMove);
+	ADD_METHOD(methods, "wait", scenarioWait);
+    ScriptManager::addClass("Scenario", methods);
+}
+
+int getScenarioManager(lua_State* L) {
+	SM_RETURN_OBJECT(L, "ScenarioManager", ScenarioManager, SM_GET_SL()->getScenarioManager());
+    return 1;
+}
+
+int scenarioManagerExecute(lua_State* L) {
+	ScenarioManager* sm = SM_GET_OBJECT(L, 0, ScenarioManager);
+	Scenario* scenario = SM_GET_OBJECT(L, 1, Scenario);
+	sm->execute(new Scenario(*scenario));
+	return 0;
+}
+
+void registerScenarioManager() {
+    unordered_map<string, int (*)(lua_State*)> methods;
+	ADD_METHOD(methods, "execute", scenarioManagerExecute);
+	ScriptManager::addFunction("getScenarioManager", getScenarioManager);
+    ScriptManager::addClass("ScenarioManager", methods);
+}
+
+int getSceneManager(lua_State* L) {
+	SM_RETURN_OBJECT(L, "SceneManager", SceneManager, SM_GET_SL()->getSceneManager());
+    return 1;
+}
+
+int sceneManagerSetSceneHeight(lua_State* L) {
+	ASSERT(lua_gettop(L) == 2, "Wrong argument count for method setSceneHeight.");
+	SceneManager* sm = SM_GET_OBJECT(L, 0, SceneManager);
+	int size = SM_GET_INT(L, 1);
+	sm->setSceneHeight(size);
+	return 0;
+}
+
+int sceneManagerSetTarget(lua_State* L) {
+	SceneManager* sm = SM_GET_OBJECT(L, 0, SceneManager);
+	Node* sprite = SM_GET_OBJECT(L, 1, Node);
+	sm->setTarget(sprite);
+	return 0;
+}
+
+int sceneManagerSetBackground(lua_State* L) {
+	SceneManager* sm = SM_GET_OBJECT(L, 0, SceneManager);
+	Node* sprite = SM_IS_NULL(L, 1) ? 0 : SM_GET_OBJECT(L, 1, Node);
+	int argc = SM_GET_ARGUMENT_COUNT(L);
+	sm->setBackground(sprite, argc > 2 ? SM_GET_INT(L, 2) - 1 : 0, argc > 3 ? SM_GET_FLOAT(L, 3) : 1.0f);
+	return 0;
+}
+
+int sceneManagerGetBackgroundWidth(lua_State* L) {
+	SceneManager* sm = SM_GET_OBJECT(L, 0, SceneManager);
+	SM_RETURN_FLOAT(L, sm->getBackgroundWidth());
+	return 1;
+}
+
+int sceneManagerGetBackgroundHeight(lua_State* L) {
+	SceneManager* sm = SM_GET_OBJECT(L, 0, SceneManager);
+	SM_RETURN_FLOAT(L, sm->getBackgroundHeight());
+	return 1;
+}
+
+void registerSceneManager() {
+    unordered_map<string, int (*)(lua_State*)> methods;
+	ADD_METHOD(methods, "setSceneHeight", sceneManagerSetSceneHeight);
+	ADD_METHOD(methods, "setTarget", sceneManagerSetTarget);
+	ADD_METHOD(methods, "setBackground", sceneManagerSetBackground);
+	ADD_METHOD(methods, "getBackgroundWidth", sceneManagerGetBackgroundWidth);
+	ADD_METHOD(methods, "getBackgroundHeight", sceneManagerGetBackgroundHeight);
+	ScriptManager::addFunction("getSceneManager", getSceneManager);
+    ScriptManager::addClass("SceneManager", methods);
 }

@@ -35,7 +35,8 @@ public:
 		SOUND,
 		PHYSICS,
 		LIGHT,
-		GUI_CONTAINER,
+		SCENARIO,
+		GUI_SURFACE,
 		GUI_IMAGE,
 		GUI_TEXT,
 		GUI_BUTTON,
@@ -105,10 +106,6 @@ public:
 	static const string ATTR_COLOR;
     static const string ATTR_SPRITE_COUNT;
 public:
-	/**
-	 * @param services - pointer to
-	 * service locator object.
-	 */
 	Resource(ServiceLocator* services);
 	virtual ~Resource();
 

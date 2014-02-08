@@ -27,6 +27,7 @@ public:
 		UINT32 offsetRow, offsetCol;
 		UINT32 width, height;
 		UINT32 cbo;
+		float uv[12];
 		int type;
 	};
 	struct Skyline {

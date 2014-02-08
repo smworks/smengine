@@ -107,11 +107,6 @@ public:
 	 * @see GraphicsManager.
 	 */
 	void unsetVertexBuffer(UINT32& id);
-
-	/**
-	 * @see GraphicsManager.
-	 */
-	void useVertexBuffer(UINT32 id);
 };
 
 #endif

@@ -58,6 +58,7 @@
 #include <iomanip>
 #include <limits>
 #include <chrono>
+#include <assert.h>
 // GRAPHICS.
 #define GLEW_STATIC
 #include <glew.h>
@@ -101,7 +102,7 @@ typedef SIZE* POINTER;
 	OutputDebugStringA(buffLine); }
 #define LOGE(...) { char buff[8192]; \
 	sprintf_s(buff, __VA_ARGS__); \
-	MessageBoxA(0, buff, "Error", MB_ICONERROR); \
+	MessageBoxA(0, buff, "Error", MB_ICONERROR | MB_SYSTEMMODAL); \
 	OutputDebugStringA("ERROR: "); \
 	OutputDebugStringA(buff); \
 	char buffLine[256]; \
@@ -134,11 +135,13 @@ typedef SIZE* POINTER;
     #define PROFILE(msg)
 #endif
 
-// GRAPHICS.
 #ifdef SMART_DEBUG
 	#define CHECK_GL_ERROR(msg) checkGLError(msg)
+#define ASSERT(expression, ...) \
+	if (!(expression)) { LOGE(__VA_ARGS__); } assert(expression)
 #else
 	#define CHECK_GL_ERROR(msg)
+	#define ASSERT(expression, ...) if (!(expression)) { LOGE(__VA_ARGS__); }
 #endif
 
 

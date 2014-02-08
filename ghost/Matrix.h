@@ -96,9 +96,9 @@ public:
 	 * @param mat - source matrix.
 	 * @param width - width of the screen in pixels.
 	 * @param height - height of the screen in pixels.
-	 * @param distance - distance to far clipping plane.
+	 * @param f - far clipping plane distance.
 	 */
-	static void projection2D(Mat4 mat, float width, float height);
+	static void projection2D(Mat4 mat, float width, float height, float f);
 
 	/**
 	 * Generates and assigns perspective projection matrix

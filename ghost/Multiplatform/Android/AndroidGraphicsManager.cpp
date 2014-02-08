@@ -465,7 +465,9 @@ void AndroidGraphicsManager::useFrameBuffer(UINT32 id) {
 bool AndroidGraphicsManager::setVertexBuffer(
 	UINT32& id, void* buffer, int size)
 {
-	glGenBuffers(1, &id);
+	if (id == 0) {
+		glGenBuffers(1, &id);
+	}
 	bindBuffer(id);
 	glBufferData(GL_ARRAY_BUFFER, size,	buffer, GL_STATIC_DRAW);
 	return !checkGLError("Setting vertex buffer");
@@ -473,13 +475,10 @@ bool AndroidGraphicsManager::setVertexBuffer(
 
 void AndroidGraphicsManager::unsetVertexBuffer(UINT32& id) {
 	if (id != 0) {
+		bindBuffer(0);
 		glDeleteBuffers(1, &id);
 		id = 0;
 	}
-}
-
-void AndroidGraphicsManager::useVertexBuffer(UINT32 id) {
-	bindBuffer(id);
 }
 
 bool AndroidGraphicsManager::checkSupport(Support key) {

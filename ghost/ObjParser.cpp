@@ -272,7 +272,6 @@ public:
 		SIZE lineEnd = 0;
 		SIZE pos = 0;
 		SIZE faceCount = 0;
-		SIZE lineLength = 255;
 		while (true) {
 			const char* found = strchr(data_ + pos, GHOST_NEWLINE);
 			if (!found) {
@@ -280,7 +279,6 @@ public:
 			}
 			lineEnd = found - data_;
 			if (data_[pos] == 'f') {
-				lineLength = lineEnd - pos;
 				if (!ObjParser::parseFace(faces_->at(faceCount++), data_ + pos + 2, lineEnd - pos - 2)) {
 					LOGW("Error on line: %s", string(data_ + pos, lineEnd - pos - 2).c_str());
 				}
@@ -295,7 +293,7 @@ private:
 
 bool ObjParser::parse(ModelData& model, const string& file, ServiceLocator* services) {
 	PROFILE("Started loading object: %s.", file.c_str());
-	ThreadManager* tm = services->getTM();
+	ThreadManager* tm = services->getThreadManager();
 	GraphicsManager* gm = services->getGraphicsManager();
 	Vec3 vmin(FLT_MAX), vmax(FLT_MIN), radius(0.0f);
     //vector<Material> materials;
@@ -375,7 +373,7 @@ bool ObjParser::parse(ModelData& model, const string& file, ServiceLocator* serv
 	SIZE matSize = 0;
 	vector<string> arr;
 	const char* data = obj.c_str();
-	UINT64 posThread, normalThread, uvThread, faceThread;
+	UINT64 posThread = 0, normalThread = 0, uvThread = 0, faceThread = 0;
 	posThread = tm->execute(NEW PositionParser(
 		data, vertices, posOffset, vertexSize, &vmin, &vmax, &radius, maxVertexPos));
 	if (hasNormals) {
@@ -883,7 +881,7 @@ bool ObjParser::parseMaterial(ModelData& model, const string& file, ServiceLocat
 			}
 			else {
 				mat.name_ = arr[1];
-			}	
+			}
 			break;
 		}
 		pos = lineEnd + 1;

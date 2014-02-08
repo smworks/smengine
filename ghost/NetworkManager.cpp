@@ -65,7 +65,7 @@ void NetworkManager::execute(HttpRequest* request, HttpTask* task) {
 	requestTask->setTask(task);
 	queue_.push(requestTask);
 	if (queue_.size() == 1) {
-		services_->getTM()->execute(requestTask);
+		services_->getThreadManager()->execute(requestTask);
 	}
 }
 
@@ -73,6 +73,6 @@ void NetworkManager::update() {
 	queue_.pop();
 	if (queue_.size() > 0) {
 		Task* task = queue_.front();
-		services_->getTM()->execute(task);
+		services_->getThreadManager()->execute(task);
 	}
 }

@@ -13,6 +13,7 @@
 #include "../Node.h"
 #include "../PhysicsManager.h"
 #include "../ResourceManager.h"
+#include "../ScenarioManager.h"
 #include "../ScriptManager.h"
 #include "../Settings.h"
 #include "../SoundManager.h"
@@ -20,6 +21,7 @@
 #include "../TextureAtlas.h"
 #include "../ThreadManager.h"
 #include "../NetworkManager.h"
+#include "../NodeManager.h"
 
 ServiceLocator::ServiceLocator() :
 	camera_(0),
@@ -29,13 +31,16 @@ ServiceLocator::ServiceLocator() :
 	rootNode_(0),
 	physicsManager_(0),
 	resourceManager_(0),
+	scenarioManager_(0),
+	sceneManager_(0),
 	scriptManager_(0),
 	settings_(0),
 	soundManager_(0),
 	textManager_(0),
 	textureAtlas_(0),
 	threadManager_(0),
-	networkManager_(0)
+	networkManager_(0),
+	nodeManager_(0)
 {
 	LOGD("Service locator created.");
 }
@@ -61,6 +66,10 @@ void ServiceLocator::release() {
 	if (scriptManager_ != 0) {
 		delete scriptManager_;
 		scriptManager_ = 0;
+	}
+	if (sceneManager_ != 0) {
+		delete sceneManager_;
+		sceneManager_ = 0;
 	}
 	if (camera_ != 0) {
 		delete camera_;
@@ -105,6 +114,14 @@ void ServiceLocator::release() {
 	if (networkManager_ != 0) {
 		delete networkManager_;
 		networkManager_ = 0;
+	}
+	if (scenarioManager_ != 0) {
+		delete scenarioManager_;
+		scenarioManager_ = 0;
+	}
+	if (nodeManager_ != 0) {
+		delete nodeManager_;
+		nodeManager_ = 0;
 	}
 	if (rootNode_ != 0) {
 		delete rootNode_;
@@ -157,7 +174,7 @@ void ServiceLocator::provide(PhysicsManager* physicsManager) {
 	physicsManager_ = physicsManager;
 }
 
-PhysicsManager* ServiceLocator::getPM() {
+PhysicsManager* ServiceLocator::getPhysicsManager() {
 	return physicsManager_;
 }
 
@@ -167,6 +184,22 @@ void ServiceLocator::provide(ResourceManager* resourceManager) {
 
 ResourceManager* ServiceLocator::getRM() {
 	return resourceManager_;
+}
+
+void ServiceLocator::provide(ScenarioManager* scenarioManager) {
+	scenarioManager_ = scenarioManager;
+}
+
+ScenarioManager* ServiceLocator::getScenarioManager() {
+	return scenarioManager_;
+}
+
+void ServiceLocator::provide(SceneManager* sceneManager) {
+	sceneManager_ = sceneManager;
+}
+
+SceneManager* ServiceLocator::getSceneManager() {
+	return sceneManager_;
 }
 
 void ServiceLocator::provide(ScriptManager* sm) {
@@ -189,7 +222,7 @@ void ServiceLocator::provide(SoundManager* soundManager) {
 	soundManager_ = soundManager;
 }
 
-SoundManager* ServiceLocator::getSM() {
+SoundManager* ServiceLocator::getSoundManager() {
 	return soundManager_;
 }
 
@@ -213,7 +246,7 @@ void ServiceLocator::provide(ThreadManager* threadManager) {
 	threadManager_ = threadManager;
 }
 
-ThreadManager* ServiceLocator::getTM() {
+ThreadManager* ServiceLocator::getThreadManager() {
 	return threadManager_;
 }
 
@@ -221,7 +254,14 @@ void ServiceLocator::provide(NetworkManager* networkManager) {
 	networkManager_ = networkManager;
 }
 
-NetworkManager* ServiceLocator::getNM() {
+NetworkManager* ServiceLocator::getNetworkManager() {
 	return networkManager_;
 }
 
+void ServiceLocator::provide(NodeManager* nodeManager) {
+	nodeManager_ = nodeManager;
+}
+
+NodeManager* ServiceLocator::getNodeManager() {
+	return nodeManager_;
+}

@@ -23,7 +23,7 @@ HGLRC   hRC;
 Engine* GHOST = 0;
 bool g_input = true;
 bool g_fullscreen = false;
-bool stopped = false;
+bool stopped = true;
 
 void enableFullScreen() {
 	int maxWidth = GetSystemMetrics(SM_CXSCREEN);
@@ -34,23 +34,19 @@ void enableFullScreen() {
 	dmScreenSettings.dmPelsWidth = maxWidth;
 	dmScreenSettings.dmPelsHeight = maxHeight;
 	dmScreenSettings.dmBitsPerPel = 32;
-	dmScreenSettings.dmFields = DM_BITSPERPEL|DM_PELSWIDTH|DM_PELSHEIGHT;
+	dmScreenSettings.dmFields = DM_BITSPERPEL | DM_PELSWIDTH | DM_PELSHEIGHT;
 	ChangeDisplaySettings(&dmScreenSettings, CDS_FULLSCREEN);
 	LONG dwExStyle = GetWindowLong(g_hwnd, GWL_EXSTYLE);
 	LONG dwStyle = GetWindowLong(g_hwnd, GWL_STYLE);
-	dwExStyle &= ~(WS_EX_DLGMODALFRAME
-		| WS_EX_CLIENTEDGE | WS_EX_STATICEDGE);
-	dwStyle &= ~(WS_CAPTION 
-		| WS_THICKFRAME | WS_MINIMIZE | WS_MAXIMIZE | WS_SYSMENU);
+	dwExStyle &= ~(WS_EX_DLGMODALFRAME | WS_EX_CLIENTEDGE | WS_EX_STATICEDGE);
+	dwStyle &= ~(WS_CAPTION | WS_THICKFRAME | WS_MINIMIZE | WS_MAXIMIZE | WS_SYSMENU);
 	SetWindowLong(g_hwnd, GWL_EXSTYLE, dwExStyle);
 	SetWindowLong(g_hwnd, GWL_STYLE, dwStyle);
-	SetWindowPos(
-		g_hwnd, 0, 0, 0, maxWidth, maxHeight,
-		SWP_NOZORDER | SWP_FRAMECHANGED);
+	SetWindowPos(g_hwnd, 0, 0, 0, maxWidth, maxHeight, SWP_NOZORDER | SWP_FRAMECHANGED);
 }
 
 void disableFullScreen() {
-	ChangeDisplaySettings(NULL, 0);
+	ChangeDisplaySettings(0, 0);
 	ShowCursor(TRUE);
 	LONG dwExStyle = GetWindowLong(g_hwnd, GWL_EXSTYLE);
 	LONG dwStyle = GetWindowLong(g_hwnd, GWL_STYLE);
@@ -58,8 +54,7 @@ void disableFullScreen() {
 	dwStyle |= WS_OVERLAPPEDWINDOW;
 	SetWindowLong(g_hwnd, GWL_EXSTYLE, dwExStyle);
 	SetWindowLong(g_hwnd, GWL_STYLE, dwStyle);
-	SetWindowPos(
-		g_hwnd, HWND_TOP, 100, 100, WIDTH, HEIGHT,	SWP_FRAMECHANGED);
+	SetWindowPos(g_hwnd, HWND_TOP, 100, 100, WIDTH, HEIGHT,	SWP_FRAMECHANGED);
 }
 
 // Set up pixel format for graphics initialization
@@ -84,14 +79,12 @@ void SetupPixelFormat() {
 }
 
 // Initialize OpenGL graphics
-bool InitGraphics()
+bool InitGraphics(UINT32 width, UINT32 height)
 {
     hDC = GetDC(g_hwnd);
-
     SetupPixelFormat();
     hRC = wglCreateContext(hDC);
     wglMakeCurrent(hDC, hRC);
-
 	GLenum err = glewInit();
 	if (err != GLEW_OK) {
 		LOGE("GLEW not initialized.");
@@ -103,9 +96,10 @@ bool InitGraphics()
 	}
 	GHOST = new Engine(new WindowsServiceLocator());
 	if (!*GHOST) {
-		delete GHOST;
-		GHOST = 0;
+		return false;
 	}
+	stopped = false;
+	GHOST->resizeScreen(width, height);
 	return true;
 }
 
@@ -117,7 +111,6 @@ void ResizeGraphics()
     GetClientRect(g_hwnd, &rect);
     int width = rect.right;
     int height = rect.bottom;
-
 	if (GHOST) {
 		GHOST->resizeScreen(width, height);
 	}
@@ -239,7 +232,7 @@ void onInput(LPARAM lParam) {
 			break;
 		default:
 			TCHAR ch = (TCHAR) key;
-			key = ch - 64;
+			key = ch - 54;
 		}
 		GHOST->getServiceLocator()->getInput()->provideButton(
 			key, keyUp == true ? Input::RELEASED : Input::PRESSED);
@@ -426,28 +419,18 @@ int WINAPI WinMain (HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLin
 	}
 	// Window style.
 	DWORD exStyle = 0;
-	DWORD style = WS_OVERLAPPEDWINDOW;
-    // Create the window.
-    g_hwnd = CreateWindowEx(
-			exStyle,
-            appname,
-            appname,
-			style,
-            CW_USEDEFAULT,
-            CW_USEDEFAULT,
-            WIDTH,
-            HEIGHT,
-            NULL,
-            NULL,
-            hInstance,
-            NULL);
- 
+	DWORD style = WS_OVERLAPPEDWINDOW; //WS_POPUP | WS_VISIBLE;
+    // Create fullscreen window.
+	int width = WIDTH; //GetSystemMetrics(SM_CXSCREEN);
+	int height = HEIGHT; //GetSystemMetrics(SM_CYSCREEN);
+    g_hwnd = CreateWindowEx(exStyle, appname, appname, style,
+		CW_USEDEFAULT, CW_USEDEFAULT, width, height, 0, 0, hInstance, 0);
     if (!g_hwnd) {
 		LOGE("Failed to initialize window.");
 		return false;
 	}
     // Initialize OpenGL
-    if (!InitGraphics()) {
+    if (!InitGraphics(width, height)) {
 		LOGD("Deleting engine.");
 		delete GHOST;
 		wglDeleteContext(hRC);

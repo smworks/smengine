@@ -408,21 +408,20 @@ void WindowsGraphicsManager::useFrameBuffer(UINT32 id) {
 }
 
 bool WindowsGraphicsManager::setVertexBuffer(UINT32& id, void* buffer, int size) {
-	glGenBuffers(1, &id);
+	if (id == 0) {
+		glGenBuffers(1, &id);
+	}
 	bindBuffer(id);
 	glBufferData(GL_ARRAY_BUFFER, size,	buffer, GL_STATIC_DRAW);
-	return !checkGLError("Setting vertex buffer.");
+	return !checkGLError("Setting vertex buffer");
 }
 
 void WindowsGraphicsManager::unsetVertexBuffer(UINT32& id) {
 	if (id != 0) {
+		bindBuffer(0);
 		glDeleteBuffers(1, &id);
 		id = 0;
 	}
-}
-
-void WindowsGraphicsManager::useVertexBuffer(UINT32 id) {
-	bindBuffer(id);
 }
 
 bool WindowsGraphicsManager::checkSupport(Support key) {

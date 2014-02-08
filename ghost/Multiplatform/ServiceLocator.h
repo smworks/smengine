@@ -11,6 +11,7 @@
 #include "../Multiplatform/Ghost.h"
 
 class Thread;
+class ScenarioManager;
 class Socket;
 class SoundManager;
 class GraphicsManager;
@@ -23,6 +24,7 @@ class Node;
 class PhysicsManager;
 class RenderManager;
 class ResourceManager;
+class SceneManager;
 class ScriptManager;
 class Settings;
 class SoundManager;
@@ -30,6 +32,7 @@ class TextManager;
 class TextureAtlas;
 class ThreadManager;
 class NetworkManager;
+class NodeManager;
 
 class ServiceLocator {
 public:
@@ -130,160 +133,40 @@ public:
 	 */
 	void release();
 
-	/**
-	 * Sets pointer to camera.
-	 * @param camera - pointer to camera object.
-	 */
 	void provide(Camera* camera);
-
-	/**
-	 * @return Pointer to camera object, or 0 if no pointer was set.
-	 */
 	Camera* getCamera();
-
-	/**
-	 * Sets pointer to environment object.
-	 * @param environment - pointer to environment object.
-	 */
 	void provide(Environment* environment);
-
-	/**
-	 * @return Pointer to environment object.
-	 */
 	Environment* getEnv();
-
-	/**
-	 * Sets pointer to GUI manager object.
-	 * @param guiManager - pointer to GUI manager object.
-	 */
 	void provide(GUIManager* guiManager);
-
-	/**
-	 * @return Pointer to GUI manager object.
-	 */
 	GUIManager* getGUIManager();
-
-	/**
-	 * Sets up input manager.
-	 * @param input - object of type Input.
-	 */
 	void provide(Input* input);
-
-	/**
-	 * @return Pointer to input object.
-	 */
 	Input* getInput();
-
-	/**
-	 * Sets up root node.
-	 * @param rootNode - pointer to root node.
-	 */
 	void provide(Node* rootNode);
-
-	/**
-	 * @return Pointer to root node.
-	 */
 	Node* getRootNode();
-
-	/**
-	 * Sets up physics manager.
-	 * @param physicsManager - object of type PhysicsManger.
-	 */
 	void provide(PhysicsManager* physicsManager);
-
-	/**
-	 * @return Pointer to physics manager object.
-	 */
-	PhysicsManager* getPM();
-
-	/**
-	 * Sets pointer to resource manager.
-	 * @param resourceManager - pointer to resource manager.
-	 */
+	PhysicsManager* getPhysicsManager();
 	void provide(ResourceManager* resourceManager);
-
-	/**
-	 * @return Pointer to resource manager object.
-	 */
 	ResourceManager* getRM();
-
-	/**
-	 * Sets pointer to script manager.
-	 * @param sm - pointer to new script manager.
-	 */
-	void provide(ScriptManager* sm);
-
-	/**
-	 * @return Pointer to script manager object.
-	 */
+	void provide(ScenarioManager* scenarioManager);
+	ScenarioManager* getScenarioManager();
+	void provide(SceneManager* sceneManager);
+	SceneManager* getSceneManager();
+	void provide(ScriptManager* scriptManager);
 	ScriptManager* getScriptManager();
-
-	/**
-	 * Sets pointer to settings object.
-	 * @param settings - pointer to settings object.
-	 */
 	void provide(Settings* settings);
-
-	/**
-	 * @return Pointer to settings object.
-	 */
 	Settings* getSettings();
-
-	/**
-	 * Sets pointer to sound manager object.
-	 * @param soundManager - pointer to sound manager object.
-	 */
 	void provide(SoundManager* soundManager);
-
-	/**
-	 * @return Pointer to sound manager object.
-	 */
-	SoundManager* getSM();
-
-	/**
-	 * Sets pointer to text manager object.
-	 * @param textManager - pointer to text manager object.
-	 */
+	SoundManager* getSoundManager();
 	void provide(TextManager* textManager);
-
-	/**
-	 * @return Pointer to text manager object or, 0 if no pointer was set.
-	 */
 	TextManager* getTextManager();
-
-	/**
-	 * Sets pointer to texture atlas object.
-	 * @param textureAtlas - pointer to texture atlas object.
-	 */
 	void provide(TextureAtlas* textureAtlas);
-
-	/**
-	 * @return Pointer to texture atlas object or, 0 if no pointer was set.
-	 */
 	TextureAtlas* getTextureAtlas();
-
-	/**
-	 * Sets pointer to thread manager object.
-	 * @param threadManager - pointer to thread manager object.
-	 */
 	void provide(ThreadManager* threadManager);
-
-	/**
-	 * @return Pointer to thread manager object or, 0 if no pointer was set.
-	 */
-	ThreadManager* getTM();
-
-	/**
-	 * Sets pointer to network manager object.
-	 * @param networkManager - pointer to network manager object.
-	 */
+	ThreadManager* getThreadManager();
 	void provide(NetworkManager* networkManager);
-
-	/**
-	 * @return Pointer to network manager object or, 0 if no pointer was set.
-	 */
-	NetworkManager* getNM();
-
+	NetworkManager* getNetworkManager();
+	void provide(NodeManager* nodeManager);
+	NodeManager* getNodeManager();
 private:
 	Camera* camera_;
 	Environment* environment_;
@@ -292,6 +175,8 @@ private:
 	Node* rootNode_;
 	PhysicsManager* physicsManager_;
 	ResourceManager* resourceManager_;
+	ScenarioManager* scenarioManager_;
+	SceneManager* sceneManager_;
 	ScriptManager* scriptManager_;
 	Settings* settings_;
 	SoundManager* soundManager_;
@@ -299,6 +184,7 @@ private:
 	TextureAtlas* textureAtlas_;
 	ThreadManager* threadManager_;
 	NetworkManager* networkManager_;
+	NodeManager* nodeManager_;
 };
 
 #endif

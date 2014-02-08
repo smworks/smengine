@@ -267,7 +267,10 @@ class OpenGLSurface extends GLSurfaceView {
 					Log.d(SMartEngine.TAG, String.format("  %s: %d\n", name, value[0]));
 				} else {
 					Log.e(SMartEngine.TAG, String.format("  %s: failed\n", name));
-					while (egl.eglGetError() != EGL10.EGL_SUCCESS);
+					int error = egl.eglGetError();
+					if (error != EGL10.EGL_SUCCESS) {
+						Log.e(SMartEngine.TAG, String.format("    error: %d\n", error));
+					}
 				}
 			}
 		}

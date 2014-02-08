@@ -45,7 +45,7 @@ TextureAtlas::~TextureAtlas() {
 bool TextureAtlas::create(UINT32& id, UINT32 width, UINT32 height, int type) {
 	Texture* texture = type == Texture::MONO ?
 		dynamic_cast<Texture*>(textureMono_) : dynamic_cast<Texture*>(textureRGBA_);
-    TextureHeader th;
+	TextureHeader th = {};
     th.width = width;
     th.height = height;
 	th.type = type;
@@ -65,14 +65,12 @@ bool TextureAtlas::create(UINT32& id, UINT32 width, UINT32 height, int type) {
 		float h = (float) th.height / texture->getHeight();
 		float x = (float) th.offsetCol / texture->getWidth();
 		float w = (float) th.width / texture->getHeight();
-		float uv[] = {
-            x, y,
-            x + w, y,
-            x + w, y + h,
-            x + w, y + h,
-            x, y + h,
-            x, y
-		};
+		th.uv[0] = x; th.uv[1] = y;
+		th.uv[2] = x + w; th.uv[3] = y;
+		th.uv[4] = x + w; th.uv[5] = y + h;
+		th.uv[6] = x + w; th.uv[7] = y + h;
+		th.uv[8] = x; th.uv[9] = y + h;
+		th.uv[10] = x; th.uv[11] = y;
 		int vertexCount = sizeof(positions) / 3;
         vector<VertexPT>* cboArr = NEW vector<VertexPT>();
         cboArr->reserve(vertexCount);
@@ -81,8 +79,8 @@ bool TextureAtlas::create(UINT32& id, UINT32 width, UINT32 height, int type) {
             v.pos[0] = positions[i * 3 + 0];
             v.pos[1] = positions[i * 3 + 1];
             v.pos[2] = positions[i * 3 + 2];
-            v.uv[0] = uv[i * 2 + 0];
-            v.uv[1] = uv[i * 2 + 1];
+            v.uv[0] = th.uv[i * 2 + 0];
+            v.uv[1] = th.uv[i * 2 + 1];
             cboArr->push_back(v);
         }
 		services_->getGraphicsManager()->setVertexBuffer(

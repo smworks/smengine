@@ -12,6 +12,7 @@
 #include "../Shapes.h"
 #include "../ResourceManager.h"
 #include "../Multiplatform/ServiceLocator.h"
+#include "../Multiplatform/GraphicsManager.h"
 #include "../Node.h"
 #include "../Input.h"
 #include "../TextManager.h"
@@ -19,19 +20,18 @@
 #include "../Settings.h"
 #include "../Camera.h"
 
-bool operator<(const GUIText::SymbolData& left, const GUIText::SymbolData& right) {
-	return left.index < right.index;
-}
-
 GUIText::GUIText(ServiceLocator* services) :
 	GUISurface(services),
 	text_(""),
 	size_(10),
 	textOffsetX_(0),
-	textOffsetY_(0)
+	textOffsetY_(0),
+	vbo_(0),
+	vertexCount_(0)
 {}
 
 GUIText::~GUIText() {
+	getServiceLocator()->getGraphicsManager()->unsetVertexBuffer(vbo_);
 }
 
 bool GUIText::create() {
@@ -50,8 +50,6 @@ Resource::Type GUIText::getType() {
 }
 
 void GUIText::update() {
-	symbols_.clear();
-	SymbolData sd;
 	UINT32 screenWidth = getServiceLocator()->getScreenWidth();
 	UINT32 screenHeight = getServiceLocator()->getScreenHeight();
 	float posX = 0.0f, posY = 0.0f, width = 0.0f, height = 0.0f;
@@ -84,7 +82,11 @@ void GUIText::update() {
 	SIZE symbolOffset = 0;
 	float textOffsetY = size_ * 0.25f;
 	getServiceLocator()->getTextManager()->setFontSize(size_);
-	Mat4 matPos, matScale, matProjPos;
+	VertexPT tmp;
+	Symbol* symbol = 0;
+	float startX = 0.0f;
+	float startY = 0.0f;
+	vertices_.resize(0);
 	for (SIZE i = 0; i < text_.length(); i++) {
 		if (text_[i] == '\n' || text_[i] == '\r') {
 			maxHeight += size_;
@@ -92,25 +94,42 @@ void GUIText::update() {
 			symbolOffset = 0;
 			continue;
 		}
-		sd.symbol = getServiceLocator()->getTextManager()->getSymbol(text_[i]);
-		sd.posX = posX + getTextOffsetX() + (float) symbolOffset + sd.symbol->getOffsetX();
-		Matrix::translate(matPos,
-			sd.posX,
-			posY + getTextOffsetY() + sd.symbol->getOffsetY() + textOffsetY - size_, 1.0f);
-		Matrix::scale(matScale,
-			(float) sd.symbol->getWidth(),
-			(float) sd.symbol->getHeight(), 1.0f);
-		Matrix::multiply(getServiceLocator()->getCamera()->getProjection2D(), matPos, matProjPos);
-		Matrix::multiply(matProjPos, matScale, sd.matProjPosScale);
-		symbolOffset += sd.symbol->getAdvance();
+		symbol = getServiceLocator()->getTextManager()->getSymbol(text_[i]);
+		startX = posX + getTextOffsetX() + (float) symbolOffset + symbol->getOffsetX();
+		startY = posY + getTextOffsetY() + symbol->getOffsetY() + textOffsetY - size_;
+		float sWidth = (float) symbol->getWidth();
+		float sHeight = (float) symbol->getHeight();
+		symbolOffset += symbol->getAdvance();
 		if (symbolOffset > maxWidth) {
 			maxWidth = symbolOffset;
 		}
-		sd.index = (SIZE) text_[i];
-		symbols_.push_back(sd);
+		// Generate vbo.
+		const float* uv = symbol->getUV();
+		tmp.pos[0] = startX; tmp.pos[1] = startY; tmp.pos[2] = 0;
+		tmp.uv[0] = uv[0]; tmp.uv[1] = uv[1];
+		vertices_.push_back(tmp);
+		tmp.pos[0] = startX + sWidth; tmp.pos[1] = startY; tmp.pos[2] = 0;
+		tmp.uv[0] = uv[2]; tmp.uv[1] = uv[3];
+		vertices_.push_back(tmp);
+		tmp.pos[0] = startX + sWidth; tmp.pos[1] = startY + sHeight; tmp.pos[2] = 0;
+		tmp.uv[0] = uv[4]; tmp.uv[1] = uv[5];
+		vertices_.push_back(tmp);
+		tmp.pos[0] = startX + sWidth; tmp.pos[1] = startY + sHeight; tmp.pos[2] = 0;
+		tmp.uv[0] = uv[6]; tmp.uv[1] = uv[7];
+		vertices_.push_back(tmp);
+		tmp.pos[0] = startX; tmp.pos[1] = startY + sHeight; tmp.pos[2] = 0;
+		tmp.uv[0] = uv[8]; tmp.uv[1] = uv[9];
+		vertices_.push_back(tmp);
+		tmp.pos[0] = startX; tmp.pos[1] = startY; tmp.pos[2] = 0;
+		tmp.uv[0] = uv[10]; tmp.uv[1] = uv[11];
+		vertices_.push_back(tmp);
 	}
-	sort(symbols_.begin(), symbols_.end());
-	setWidth(maxWidth > width ? maxWidth : width);
+	vertexCount_ = vertices_.size();
+	if (vertexCount_ > 0) {
+		getServiceLocator()->getGraphicsManager()->setVertexBuffer(
+			vbo_, &vertices_[0], vertexCount_ * sizeof(VertexPT));
+	}
+	setWidth(maxWidth > (SIZE) width ? maxWidth : (SIZE) width);
 	setHeight(maxHeight);
 }
 
@@ -143,13 +162,10 @@ float GUIText::getTextOffsetY() {
 	return (float) textOffsetY_;
 }
 
-GUIText::SymbolData* GUIText::getSymbolArray() {
-	if (symbols_.size() == 0) {
-		return 0;
-	}
-	return &symbols_[0];
+SIZE GUIText::getTextVBO() {
+	return vbo_;
 }
 
-SIZE GUIText::getSymbolCount() {
-	return symbols_.size();
+SIZE GUIText::getTextVertexCount() {
+	return vertexCount_;
 }

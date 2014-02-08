@@ -119,6 +119,12 @@ public:
 	 * @return Symbol font size.
 	 */
 	SIZE getFontSize();
+
+	/**
+	 * @return Array of uv coordinates of size 12 used to access
+	 * texture on texture map.
+	 */
+	float* getUV();
 private:
 	Texture* texture_;
 	UINT32 width_, height_;

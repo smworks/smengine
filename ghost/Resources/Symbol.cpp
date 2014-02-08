@@ -6,7 +6,7 @@
  */
 
 #include "Symbol.h"
-#include "Texture.h"
+#include "AtlasTexture.h"
 #include "../ResourceManager.h"
 
 Symbol::Symbol(ServiceLocator* services) :
@@ -103,4 +103,8 @@ void Symbol::setFontSize(SIZE size) {
 
 SIZE Symbol::getFontSize() {
 	return fontSize_;
+}
+
+float* Symbol::getUV() {
+	return (static_cast<AtlasTexture*>(texture_))->getUV();
 }

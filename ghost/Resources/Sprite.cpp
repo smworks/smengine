@@ -90,7 +90,7 @@ bool Sprite::isValid() {
 
 
 SIZE Sprite::getVertexCount() {
-	return g_planeVerticeCount / 3;
+	return sizeof(g_planeVertices) / 3;
 }
 
 
@@ -179,6 +179,7 @@ void Sprite::setSpriteCount(SIZE count) {
 	}
 	spriteCount_ = count;
 	uvBO_ = NEW UINT32[spriteCount_];
+	fill(uvBO_, uvBO_ + spriteCount_, 0);
 	for (SIZE i = 0; i < spriteCount_; i++) {
 		// Genereate separate uv coordinates.
 		float fr = (float) i /  spriteCount_;
@@ -191,23 +192,15 @@ void Sprite::setSpriteCount(SIZE count) {
 			fr, 1.0f,
 			fr, 0.0f
 		};
-        static float positions[] = {
-            0.0f, 0.0f, 0.0f,
-            1.0f, 0.0f, 0.0f,
-            1.0f, 1.0f, 0.0f,
-            1.0f, 1.0f, 0.0f,
-            0.0f, 1.0f, 0.0f,
-            0.0f, 0.0f, 0.0f
-        };
         vector<VertexPT> vert;
         VertexPT tmp;
-        SIZE vertexCount = g_planeVerticeCount / 3;
+        SIZE vertexCount = sizeof(g_planeVertices) / 3;
         for (SIZE j = 0; j < vertexCount; j++) {
             tmp.uv[0] = uv[j * 2 + 0];
             tmp.uv[1] = uv[j * 2 + 1];
-            tmp.pos[0] = positions[j * 3 + 0];
-            tmp.pos[1] = positions[j * 3 + 1];
-            tmp.pos[2] = positions[j * 3 + 2];
+			tmp.pos[0] = g_planeVertices[j * 3 + 0];
+            tmp.pos[1] = g_planeVertices[j * 3 + 1];
+            tmp.pos[2] = g_planeVertices[j * 3 + 2];
             vert.push_back(tmp);
         }
         getServiceLocator()->getGraphicsManager()->setVertexBuffer(

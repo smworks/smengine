@@ -7,12 +7,14 @@
 
 #include "Camera.h"
 #include "Node.h"
+#include "Settings.h"
 
-Camera::Camera() :
+Camera::Camera(Settings* settings) :
 	width_(0.0f),
 	height_(0.0f),
 	follow_(0),
-	lookAt_(0)
+	lookAt_(0),
+	settings_(settings)
 {
 	Matrix::identity(projection2D_);
 	Matrix::identity(projection3D_);
@@ -67,9 +69,8 @@ void Camera::updateProjections(
 	width_ = (float) width;
 	height_ = (float) height;
 	Matrix::projection3D(projection3D_,
-		fov, width_ / height_,
-			nearDist, farDist);
-	Matrix::projection2D(projection2D_,	width_, height_);
+		fov, width_ / height_, nearDist, farDist);
+	Matrix::projection2D(projection2D_,	width_, height_, farDist);
 }
 
 void Camera::follow(Node* node) {

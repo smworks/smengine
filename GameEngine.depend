@@ -12,7 +12,7 @@
 	"Linux/LinuxGhost.h"
 	"MacOSX/SMart.h"
 
-1390396775 /home/martynas/Dropbox/Workspace/GameEngine/ghost/Multiplatform/Win32/WindowsGhost.h
+1391092536 /home/martynas/Dropbox/Workspace/GameEngine/ghost/Multiplatform/Win32/WindowsGhost.h
 	<stdlib.h>
 	<crtdbg.h>
 	<stdio.h>
@@ -97,11 +97,11 @@
 1390055960 /home/martynas/Dropbox/Workspace/GameEngine/ghost/Vec3.h
 	"Multiplatform/Ghost.h"
 
-1384071245 /home/martynas/Dropbox/Workspace/GameEngine/ghost/Camera.h
+1390999353 /home/martynas/Dropbox/Workspace/GameEngine/ghost/Camera.h
 	"Multiplatform/Ghost.h"
 	"Matrix.h"
 
-1384084639 /home/martynas/Dropbox/Workspace/GameEngine/ghost/Matrix.h
+1391004596 /home/martynas/Dropbox/Workspace/GameEngine/ghost/Matrix.h
 	"Multiplatform/Ghost.h"
 	"Vec3.h"
 
@@ -165,7 +165,7 @@
 1367491190 /home/martynas/Dropbox/Workspace/GameEngine/ghost/Multiplatform/SoundManager.h
 	"Ghost.h"
 
-1390836533 /home/martynas/Dropbox/Workspace/GameEngine/ghost/Multiplatform/GraphicsManager.h
+1390992679 /home/martynas/Dropbox/Workspace/GameEngine/ghost/Multiplatform/GraphicsManager.h
 	"Ghost.h"
 	"../Matrix.h"
 	"../Color.h"
@@ -176,13 +176,14 @@
 1367553122 /home/martynas/Dropbox/Workspace/GameEngine/ghost/Color.h
 	"Multiplatform/Ghost.h"
 
-1390649598 /home/martynas/Dropbox/Workspace/GameEngine/ghost/Resources/Resource.h
+1390929265 /home/martynas/Dropbox/Workspace/GameEngine/ghost/Resources/Resource.h
 	"../Multiplatform/Ghost.h"
 	"Attributes.h"
 
-1389872001 source:/home/martynas/Dropbox/Workspace/GameEngine/ghost/Camera.cpp
+1391007247 source:/home/martynas/Dropbox/Workspace/GameEngine/ghost/Camera.cpp
 	"Camera.h"
 	"Node.h"
+	"Settings.h"
 
 1389619531 source:/home/martynas/Dropbox/Workspace/GameEngine/ghost/Color.cpp
 	"Color.h"
@@ -193,7 +194,7 @@
 1367553122 /home/martynas/Dropbox/Workspace/GameEngine/ghost/Console.h
 	"Multiplatform/Ghost.h"
 
-1390849993 source:/home/martynas/Dropbox/Workspace/GameEngine/ghost/Engine.cpp
+1390999528 source:/home/martynas/Dropbox/Workspace/GameEngine/ghost/Engine.cpp
 	"Engine.h"
 	"Multiplatform/Ghost.h"
 	"Multiplatform/ServiceLocator.h"
@@ -221,6 +222,8 @@
 	"GUIManager.h"
 	"Resources/GUIText.h"
 	"TextureAtlas.h"
+	"ScenarioManager.h"
+	"NodeManager.h"
 
 1389870721 /home/martynas/Dropbox/Workspace/GameEngine/ghost/Engine.h
 	"Multiplatform/Ghost.h"
@@ -856,7 +859,7 @@
 
 1369075889 /home/martynas/Dropbox/Workspace/GameEngine/ghost/ServiceLocator.h
 
-1389416511 /home/martynas/Dropbox/Workspace/GameEngine/ghost/Input.h
+1391095368 /home/martynas/Dropbox/Workspace/GameEngine/ghost/Input.h
 	"Multiplatform/Ghost.h"
 
 1367553122 /home/martynas/Dropbox/Workspace/GameEngine/ghost/Environment.h
@@ -935,7 +938,7 @@
 1390292722 source:/home/martynas/Dropbox/Workspace/GameEngine/ghost/MD2Parser.cpp
 	"MD2Parser.h"
 
-1389415586 source:/home/martynas/Dropbox/Workspace/GameEngine/ghost/Matrix.cpp
+1391004695 source:/home/martynas/Dropbox/Workspace/GameEngine/ghost/Matrix.cpp
 	"Matrix.h"
 	"Utils.h"
 
@@ -969,14 +972,14 @@
 1390840483 source:/home/martynas/Dropbox/Workspace/GameEngine/ghost/Multiplatform/Linux/LinuxGhost.cpp
 	"LinuxGhost.h"
 
-1390840832 source:/home/martynas/Dropbox/Workspace/GameEngine/ghost/Multiplatform/Linux/LinuxGraphicsManager.cpp
+1390989483 source:/home/martynas/Dropbox/Workspace/GameEngine/ghost/Multiplatform/Linux/LinuxGraphicsManager.cpp
 	"LinuxGraphicsManager.h"
 	"../ServiceLocator.h"
 	"../FileManager.h"
 	"../../Resources/Shader.h"
 	"../../Resources/TextureRGBA.h"
 
-1390840772 /home/martynas/Dropbox/Workspace/GameEngine/ghost/Multiplatform/Linux/LinuxGraphicsManager.h
+1390989304 /home/martynas/Dropbox/Workspace/GameEngine/ghost/Multiplatform/Linux/LinuxGraphicsManager.h
 	"../Ghost.h"
 	"../GraphicsManager.h"
 
@@ -1036,7 +1039,7 @@
 	"ScriptManager.h"
 	"Resources/Resource.h"
 
-1390836714 source:/home/martynas/Dropbox/Workspace/GameEngine/ghost/ObjParser.cpp
+1390887283 source:/home/martynas/Dropbox/Workspace/GameEngine/ghost/ObjParser.cpp
 	"ObjParser.h"
 	"Multiplatform/Ghost.h"
 	"Multiplatform/ServiceLocator.h"
@@ -1118,7 +1121,7 @@
 	"Multiplatform/GraphicsManager.h"
 	"Multiplatform/ServiceLocator.h"
 
-1390826908 source:/home/martynas/Dropbox/Workspace/GameEngine/ghost/ResourceManager.cpp
+1390903924 source:/home/martynas/Dropbox/Workspace/GameEngine/ghost/ResourceManager.cpp
 	"ResourceManager.h"
 	"Multiplatform/ServiceLocator.h"
 	"Multiplatform/FileManager.h"
@@ -1139,6 +1142,7 @@
 	"Resources/Script.h"
 	"Resources/Sound.h"
 	"Resources/Light.h"
+	"Resources/Scenario.h"
 	"Resources/GUIImage.h"
 	"Resources/GUIButton.h"
 	"Resources/GUIInput.h"
@@ -1168,7 +1172,7 @@
 1362996782 source:/home/martynas/Dropbox/Workspace/GameEngine/ghost/Resources/Physics.cpp
 	"Physics.h"
 
-1390649598 source:/home/martynas/Dropbox/Workspace/GameEngine/ghost/Resources/Resource.cpp
+1390903834 source:/home/martynas/Dropbox/Workspace/GameEngine/ghost/Resources/Resource.cpp
 	"Resource.h"
 	"../Multiplatform/ServiceLocator.h"
 	"Renderable.h"
@@ -1192,7 +1196,7 @@
 	"../Multiplatform/ServiceLocator.h"
 	"../Multiplatform/FileManager.h"
 
-1390828803 source:/home/martynas/Dropbox/Workspace/GameEngine/ghost/Resources/Sprite.cpp
+1390990442 source:/home/martynas/Dropbox/Workspace/GameEngine/ghost/Resources/Sprite.cpp
 	"Sprite.h"
 	"Vertex.h"
 	"Shader.h"
@@ -1241,7 +1245,7 @@
 	"Texture2D.h"
 	"../Multiplatform/Ghost.h"
 
-1390666176 source:/home/martynas/Dropbox/Workspace/GameEngine/ghost/ScriptManager.cpp
+1391095442 source:/home/martynas/Dropbox/Workspace/GameEngine/ghost/ScriptManager.cpp
 	"ScriptManager.h"
 	"Multiplatform/ServiceLocator.h"
 	"Input.h"
@@ -1312,7 +1316,7 @@
 1390452223 source:/home/martynas/Dropbox/Workspace/GameEngine/ghost/Xml.cpp
 	"Xml.h"
 
-1390850208 source:/home/martynas/Dropbox/Workspace/GameEngine/main_linux.cpp
+1391095714 source:/home/martynas/Dropbox/Workspace/GameEngine/main_linux.cpp
 	<GL/glew.h>
 	<GL/freeglut.h>
 	"ghost/Input.h"
@@ -13451,7 +13455,7 @@
 	<queue>
 	<GL/glew.h>
 
-1389874500 /home/martynas/Dropbox/Workspace/GameEngine/ghost/Multiplatform/ServiceLocator.h
+1390894883 /home/martynas/Dropbox/Workspace/GameEngine/ghost/Multiplatform/ServiceLocator.h
 	"../Multiplatform/Ghost.h"
 
 1389511125 /home/martynas/Dropbox/Workspace/GameEngine/ghost/SoundManager.h
@@ -13485,7 +13489,7 @@
 	"../Color.h"
 	"Resource.h"
 
-1390300461 /home/martynas/Dropbox/Workspace/GameEngine/ghost/Resources/AtlasTexture.h
+1390984809 /home/martynas/Dropbox/Workspace/GameEngine/ghost/Resources/AtlasTexture.h
 	"../Multiplatform/Ghost.h"
 	"../Color.h"
 	"Texture.h"
@@ -13499,16 +13503,17 @@
 1390162193 /home/martynas/Dropbox/Workspace/GameEngine/ghost/GUIManager.h
 	"Multiplatform/Ghost.h"
 
-1390738636 /home/martynas/Dropbox/Workspace/GameEngine/ghost/Resources/GUIText.h
+1390993531 /home/martynas/Dropbox/Workspace/GameEngine/ghost/Resources/GUIText.h
 	"GUISurface.h"
 	"../Matrix.h"
+	"Vertex.h"
 
 1390408367 /home/martynas/Dropbox/Workspace/GameEngine/ghost/Resources/GUISurface.h
 	"../Multiplatform/Ghost.h"
 	"Resource.h"
 	"Renderable.h"
 
-1387744649 /home/martynas/Dropbox/Workspace/GameEngine/ghost/TextureAtlas.h
+1390984705 /home/martynas/Dropbox/Workspace/GameEngine/ghost/TextureAtlas.h
 	"Multiplatform/Ghost.h"
 
 1390162192 source:/home/martynas/Dropbox/Workspace/GameEngine/ghost/GUIManager.cpp
@@ -13663,7 +13668,7 @@
 	"BoundingVolume.h"
 	"Resources/Renderable.h"
 
-1390850100 source:/home/martynas/Dropbox/Workspace/GameEngine/ghost/Multiplatform/GraphicsManager.cpp
+1391017736 source:/home/martynas/Dropbox/Workspace/GameEngine/ghost/Multiplatform/GraphicsManager.cpp
 	"GraphicsManager.h"
 	"ServiceLocator.h"
 	"../Settings.h"
@@ -13685,7 +13690,7 @@
 	"../FrameBuffer.h"
 	"../Shapes.h"
 
-1390468227 /home/martynas/Dropbox/Workspace/GameEngine/ghost/Resources/Symbol.h
+1390984856 /home/martynas/Dropbox/Workspace/GameEngine/ghost/Resources/Symbol.h
 	"../Multiplatform/Ghost.h"
 	"Resource.h"
 	"Renderable.h"
@@ -13702,7 +13707,7 @@
 1387996699 /home/martynas/Dropbox/Workspace/GameEngine/ghost/Multiplatform/Socket.h
 	"Ghost.h"
 
-1389874551 source:/home/martynas/Dropbox/Workspace/GameEngine/ghost/Multiplatform/ServiceLocator.cpp
+1390894746 source:/home/martynas/Dropbox/Workspace/GameEngine/ghost/Multiplatform/ServiceLocator.cpp
 	"ServiceLocator.h"
 	"../Camera.h"
 	"../Environment.h"
@@ -13711,6 +13716,7 @@
 	"../Node.h"
 	"../PhysicsManager.h"
 	"../ResourceManager.h"
+	"../ScenarioManager.h"
 	"../ScriptManager.h"
 	"../Settings.h"
 	"../SoundManager.h"
@@ -13718,8 +13724,9 @@
 	"../TextureAtlas.h"
 	"../ThreadManager.h"
 	"../NetworkManager.h"
+	"../NodeManager.h"
 
-1390292723 source:/home/martynas/Dropbox/Workspace/GameEngine/ghost/NetworkManager.cpp
+1390894971 source:/home/martynas/Dropbox/Workspace/GameEngine/ghost/NetworkManager.cpp
 	"NetworkManager.h"
 	"Multiplatform/ServiceLocator.h"
 	"Multiplatform/Thread.h"
@@ -13740,7 +13747,7 @@
 1382790045 /home/martynas/Dropbox/Workspace/GameEngine/ghost/Resources/GUIInput.h
 	"GUIText.h"
 
-1390300509 source:/home/martynas/Dropbox/Workspace/GameEngine/ghost/Resources/AtlasTexture.cpp
+1390984831 source:/home/martynas/Dropbox/Workspace/GameEngine/ghost/Resources/AtlasTexture.cpp
 	"AtlasTexture.h"
 	"../Multiplatform/ServiceLocator.h"
 	"../Utils.h"
@@ -13790,7 +13797,7 @@
 	"../ResourceManager.h"
 	"../Node.h"
 
-1390739722 source:/home/martynas/Dropbox/Workspace/GameEngine/ghost/Resources/GUIText.cpp
+1390993680 source:/home/martynas/Dropbox/Workspace/GameEngine/ghost/Resources/GUIText.cpp
 	"GUIText.h"
 	"Vertex.h"
 	"TextureRGBA.h"
@@ -13798,6 +13805,7 @@
 	"../Shapes.h"
 	"../ResourceManager.h"
 	"../Multiplatform/ServiceLocator.h"
+	"../Multiplatform/GraphicsManager.h"
 	"../Node.h"
 	"../Input.h"
 	"../TextManager.h"
@@ -13816,9 +13824,9 @@
 1383837985 /home/martynas/Dropbox/Workspace/GameEngine/ghost/ShapeParser.h
 	"Multiplatform/Ghost.h"
 
-1390468219 source:/home/martynas/Dropbox/Workspace/GameEngine/ghost/Resources/Symbol.cpp
+1390984923 source:/home/martynas/Dropbox/Workspace/GameEngine/ghost/Resources/Symbol.cpp
 	"Symbol.h"
-	"Texture.h"
+	"AtlasTexture.h"
 	"../ResourceManager.h"
 
 1389871796 source:/home/martynas/Dropbox/Workspace/GameEngine/ghost/Resources/Texture.cpp
@@ -13851,7 +13859,7 @@
 	"../Shapes.h"
 	"Vertex.h"
 
-1390739605 source:/home/martynas/Dropbox/Workspace/GameEngine/ghost/ScriptBindings.cpp
+1390932005 source:/home/martynas/Dropbox/Workspace/GameEngine/ghost/ScriptBindings.cpp
 	"ScriptBindings.h"
 	"ScriptManager.h"
 	"Multiplatform/ServiceLocator.h"
@@ -13865,6 +13873,7 @@
 	"NetworkManager.h"
 	"HttpRequest.h"
 	"HttpResponse.h"
+	"ScenarioManager.h"
 	"Resources/StaticObject.h"
 	"Resources/Shader.h"
 	"Resources/Sprite.h"
@@ -13874,9 +13883,10 @@
 	"Resources/TextureRGBA.h"
 	"Resources/AtlasTexture.h"
 	"Resources/GUIButton.h"
+	"Resources/Scenario.h"
 	"Extensions/Vehicle.h"
 
-1390163650 /home/martynas/Dropbox/Workspace/GameEngine/ghost/ScriptBindings.h
+1390907833 /home/martynas/Dropbox/Workspace/GameEngine/ghost/ScriptBindings.h
 	"Multiplatform/Ghost.h"
 
 1390299961 source:/home/martynas/Dropbox/Workspace/GameEngine/ghost/ShapeParser.cpp
@@ -13894,7 +13904,7 @@
 1389314928 /home/martynas/Dropbox/Workspace/GameEngine/dependencies/includes/fmod/fmod_errors.h
 	"fmod.h"
 
-1390468016 source:/home/martynas/Dropbox/Workspace/GameEngine/ghost/TextureAtlas.cpp
+1390991036 source:/home/martynas/Dropbox/Workspace/GameEngine/ghost/TextureAtlas.cpp
 	"TextureAtlas.h"
 	"Multiplatform/ServiceLocator.h"
 	"Multiplatform/GraphicsManager.h"
@@ -13914,4 +13924,29 @@
 1390842047 /home/martynas/Dropbox/Workspace/GameEngine/ghost/Multiplatform/Linux/LinuxServiceLocator.h
 	"../Ghost.h"
 	"../ServiceLocator.h"
+
+1390894097 source:/home/martynas/Dropbox/Workspace/GameEngine/ghost/NodeManager.cpp
+	"NodeManager.h"
+	"Multiplatform/ServiceLocator.h"
+
+1390894066 /home/martynas/Dropbox/Workspace/GameEngine/ghost/NodeManager.h
+	"Multiplatform/Ghost.h"
+
+1390913637 /home/martynas/Dropbox/Workspace/GameEngine/ghost/ScenarioManager.h
+	"Multiplatform/Ghost.h"
+
+1390929622 /home/martynas/Dropbox/Workspace/GameEngine/ghost/Resources/Scenario.h
+	"Resource.h"
+	"../Vec3.h"
+
+1390929844 source:/home/martynas/Dropbox/Workspace/GameEngine/ghost/Resources/Scenario.cpp
+	"Scenario.h"
+	"../Multiplatform/ServiceLocator.h"
+	"../Node.h"
+
+1390928593 source:/home/martynas/Dropbox/Workspace/GameEngine/ghost/ScenarioManager.cpp
+	"ScenarioManager.h"
+	"Multiplatform/ServiceLocator.h"
+	"Resources/Scenario.h"
+	"ResourceManager.h"
 

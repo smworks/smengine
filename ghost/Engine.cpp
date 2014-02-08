@@ -32,28 +32,52 @@
 #include "GUIManager.h"
 #include "Resources/GUIText.h"
 #include "TextureAtlas.h"
+#include "ScenarioManager.h"
+#include "SceneManager.h"
+#include "NodeManager.h"
 
 Engine::operator void*() {
 	return error_ ? 0 : this;
 }
 
 #ifdef SMART_DEBUG
+#define INIT_TIMER(name) \
+	UINT64 g_##name = 0;\
+	UINT64 g_##name##Tmp = 0;\
+	UINT64 g_##name##Min = UINT_MAX;\
+	UINT64 g_##name##Max = 0;
+#define MEASURE_BEFORE_TIMER(name) \
+	g_##name##Tmp = getMicroseconds();
+#define MEASURE_AFTER_TIMER(name) \
+	g_##name##Tmp = (getMicroseconds() - g_##name##Tmp);\
+	if (g_##name##Tmp > g_##name##Max) { g_##name##Max = g_##name##Tmp; }\
+	if (g_##name##Tmp < g_##name##Min) { g_##name##Min = g_##name##Tmp; }\
+	g_##name += g_##name##Tmp;\
+	
+#define DISPLAY_TIMER(name) \
+	#name": " << (double) g_##name / (double) g_fpsCount * 0.001 <<\
+	" (min: " << (double) g_##name##Min * 0.001 <<\
+	", max: " << (double) g_##name##Max * 0.001 << ")\n"
+#define RESET_TIMER(name) g_##name = 0; g_##name##Min = UINT_MAX; g_##name##Max = 0;
+//UINT64 startInput = getMicroseconds();
+//	services_->getInput()->update();
+//	g_inputTime += (getMicroseconds() - startInput);
 GUIText* g_debugText;
 Node* g_debugNode;
 UINT32 g_fpsCount = 0;
-UINT64 g_frameTime = 0;
-UINT64 g_physicsTime = 0;
-UINT64 g_renderTime = 0;
+INIT_TIMER(Frame)
+INIT_TIMER(Physics)
+INIT_TIMER(Render)
 UINT64 g_renderModelTime = 0;
 UINT64 g_renderSpriteTime = 0;
 UINT64 g_renderTextTime = 0;
-UINT64 g_inputTime = 0;
-UINT64 g_smTime = 0;
+INIT_TIMER(Input)
+INIT_TIMER(Scripts)
+INIT_TIMER(Nodes)
+INIT_TIMER(Camera)
+INIT_TIMER(GUI)
+INIT_TIMER(Sounds)
 UINT64 g_tmTime = 0;
-UINT64 g_scriptManagerTime = 0;
-UINT64 g_cameraTime = 0;
-UINT64 g_nodeUpdateTime = 0;
-UINT64 g_guiManagerTime = 0;
 double g_time = 0.0f;
 Sprite* g_monoAtlas = 0;
 Node* g_monoNode = 0;
@@ -83,7 +107,11 @@ Engine::Engine(ServiceLocator* services) :
 	services_->provide(NEW ScriptManager());
 	services_->provide(NEW Input());
 	services_->provide(NEW Environment());
-	services_->provide(NEW Camera());
+	services_->provide(NEW Settings(services_->getFileManager()));
+	services_->provide(NEW Camera(services_->getSettings()));
+	services_->provide(NEW NodeManager(services_));
+	services_->provide(NEW SceneManager(services_));
+	services_->provide(NEW ScenarioManager(services_));
 	services_->provide(NEW SoundManager(services_));
 	services_->provide(NEW PhysicsManager(services_));
 	services_->provide(NEW ResourceManager(services_));
@@ -92,10 +120,9 @@ Engine::Engine(ServiceLocator* services) :
 	services_->provide(NEW ThreadManager(services_));
 	services_->provide(NEW NetworkManager(services_));
 	// Provide or initialize other resourses.
-	services_->provide(NEW Settings(services_->getFileManager()));
 	services_->getGraphicsManager()->create();
 	services_->provide(NEW TextureAtlas(services_));
-	services_->getPM()->setGraphicsManager(services_->getGraphicsManager());
+	services_->getPhysicsManager()->setGraphicsManager(services_->getGraphicsManager());
 	services_->getSettings()->setScene("start.xml");
 	services_->getScriptManager()->initialize(services_);
     PROFILE("Finished creating engine object.");
@@ -109,13 +136,13 @@ Engine::~Engine() {
 
 void Engine::loadScene() {
     PROFILE("Started loading scene.");
-	services_->getSM()->reset();
-	services_->getPM()->reset();
+	services_->getSoundManager()->reset();
+	services_->getPhysicsManager()->reset();
 	//services_->getRM()->reset();
 	if (services_->getRootNode() != 0) {
 		delete services_->getRootNode();
 	}
-	services_->getTM()->joinAll();
+	services_->getThreadManager()->joinAll();
 	services_->getSettings()->setSceneLoaded(true);
 	// Load scene hierarchy.
 	services_->provide(services_->getRM()->loadScene(
@@ -183,7 +210,6 @@ void Engine::loadScene() {
 	services_->getScriptManager()->start();
 	services_->getScriptManager()->resume();
 	resizeResources(services_->getRootNode());
-	glFinish();
     PROFILE("Finished loading scene.")
 }
 
@@ -193,7 +219,7 @@ void Engine::computeFrame() {
 	if (!running_) {
 		return;
 	}
-	UINT64 startTime = getMicroseconds();
+	MEASURE_BEFORE_TIMER(Frame)
     services_->updateTimer(
 		services_->getSettings()->getFloat(Settings::FRAME_DURATION));
     time_ = services_->getFrameTime();
@@ -228,11 +254,11 @@ void Engine::computeFrame() {
 	static bool useDebugDraw = true;
 	if (services_->getInput()->keyReleased(Input::P)) {
 		if (useDebugDraw) {
-			services_->getPM()->setDebug(true);
+			services_->getPhysicsManager()->setDebug(true);
 			LOGD("Enabling physics debug draw.");
 		}
 		else {
-			services_->getPM()->setDebug(false);
+			services_->getPhysicsManager()->setDebug(false);
 			LOGD("Disabling physics debug draw.");
 		}
 		useDebugDraw = !useDebugDraw;
@@ -266,65 +292,56 @@ void Engine::computeFrame() {
 	// Test socket.
 	if (services_->getInput()->keyReleased(Input::F4)) {
 		PROFILE("Sending data.");
-		services_->getNM()->execute(NEW HttpRequest("http://i2.kym-cdn.com/photos/images/original/000/370/259/7a9.png", HttpRequest::GET));
+		services_->getNetworkManager()->execute(NEW HttpRequest("http://i2.kym-cdn.com/photos/images/original/000/370/259/7a9.png", HttpRequest::GET));
 		PROFILE("Function returned.");
 	}
-	UINT64 startInput = getMicroseconds();
+	MEASURE_BEFORE_TIMER(Input)
 	services_->getInput()->update();
-	g_inputTime += (getMicroseconds() - startInput);
-	UINT64 startSM = getMicroseconds();
-	services_->getSM()->update();
-	g_smTime += (getMicroseconds() - startSM);
-	UINT64 startPhysics = getMicroseconds();
-	services_->getPM()->update(time_);
-	g_physicsTime += (getMicroseconds() - startPhysics);
-	UINT64 startTM = getMicroseconds();
-	services_->getTM()->update();
-	g_tmTime += (getMicroseconds() - startTM);
-	UINT64 startScriptManager = getMicroseconds();
+	MEASURE_AFTER_TIMER(Input)
+	MEASURE_BEFORE_TIMER(Sounds)
+	services_->getSoundManager()->update();
+	MEASURE_AFTER_TIMER(Sounds)
+	MEASURE_BEFORE_TIMER(Physics)
+	services_->getPhysicsManager()->update(time_);
+	MEASURE_AFTER_TIMER(Physics)
+	services_->getThreadManager()->update();
+	MEASURE_BEFORE_TIMER(Scripts)
+	services_->getScenarioManager()->update(time_);
+	services_->getSceneManager()->update(time_);
 	services_->getScriptManager()->update();
-	g_scriptManagerTime += (getMicroseconds() - startScriptManager);
-	UINT64 startCamera = getMicroseconds();
+	MEASURE_AFTER_TIMER(Scripts)
+	MEASURE_BEFORE_TIMER(Camera)
 	services_->getCamera()->update(time_);
-	g_cameraTime += (getMicroseconds() - startCamera);
-	UINT64 startNodeUpdate = getMicroseconds();
+	MEASURE_AFTER_TIMER(Camera)
+	MEASURE_BEFORE_TIMER(Nodes)
 	updateNodes(services_->getRootNode());
-	g_nodeUpdateTime += (getMicroseconds() - startNodeUpdate);
-	UINT64 startGUIManager = getMicroseconds();
+	MEASURE_AFTER_TIMER(Nodes)
+	MEASURE_BEFORE_TIMER(GUI)
     services_->getGUIManager()->update();
-	g_guiManagerTime += (getMicroseconds() - startGUIManager);
-	UINT64 startRender = getMicroseconds();
+	MEASURE_AFTER_TIMER(GUI)
+	MEASURE_BEFORE_TIMER(Render)
 	services_->getGraphicsManager()->render();
-	g_renderTime += (getMicroseconds() - startRender);
+	MEASURE_AFTER_TIMER(Render)
 	// Output debug message.
+	MEASURE_AFTER_TIMER(Frame)
 	g_fpsCount++;
 	g_time += time_;
-	g_frameTime += (getMicroseconds() - startTime);
 	if (g_time >= 1000.0f) {
 		stringstream ss;
-		double frameTime = (double) g_frameTime / (double) g_fpsCount * 0.001;
-		double physicsTime = (double) g_physicsTime / (double) g_fpsCount * 0.001;
-		double renderTime = (double) g_renderTime / (double) g_fpsCount * 0.001;
 		double renderModelTime = (double) g_renderModelTime / (double) g_fpsCount * 0.001;
 		double renderSpriteTime = (double) g_renderSpriteTime / (double) g_fpsCount * 0.001;
 		double renderTextTime = (double) g_renderTextTime / (double) g_fpsCount * 0.001;
-		double inputTime = (double) g_inputTime / (double) g_fpsCount * 0.001;
-		double smTime = (double) g_smTime / (double) g_fpsCount * 0.001;
-		double scriptManagerTime = (double) g_scriptManagerTime / (double) g_fpsCount * 0.001;
-		double cameraTime = (double) g_cameraTime / (double) g_fpsCount * 0.001;
-		double nodeUpdateTime = (double) g_nodeUpdateTime / (double) g_fpsCount * 0.001;
-		double guiManagerTime = (double) g_guiManagerTime / (double) g_fpsCount * 0.001;
-		ss << "FPS: " << g_fpsCount << fixed << setprecision(3)
-			<< "\nFrame time: " << frameTime
-			<< "ms\nInput: " << inputTime
-			<< "ms\nSounds: " << smTime
-			<< "ms\nScripts: " << scriptManagerTime
-			<< "ms\nCamera: " << cameraTime
-			<< "ms\nNodes: " << nodeUpdateTime
-			<< "ms\nGUI: " << guiManagerTime
-			<< "ms\nPhysics: " << physicsTime
-			<< "ms\nRender: " << renderTime
-			<< "ms\n  Models: " << renderModelTime
+		ss << "FPS: " << g_fpsCount << fixed << setprecision(3) << "\n"
+			<< DISPLAY_TIMER(Frame)
+			<< DISPLAY_TIMER(Input)
+			<< DISPLAY_TIMER(Sounds)
+			<< DISPLAY_TIMER(Scripts)
+			<< DISPLAY_TIMER(Camera)
+			<< DISPLAY_TIMER(Nodes)
+			<< DISPLAY_TIMER(GUI)
+			<< DISPLAY_TIMER(Physics)
+			<< DISPLAY_TIMER(Render)
+			<< "  Models: " << renderModelTime
 			<< "ms\n  Sprites: " << renderSpriteTime
 			<< "ms\n  Text: " << renderTextTime
 			<< "ms\nResolution: " << services_->getScreenWidth()
@@ -332,19 +349,19 @@ void Engine::computeFrame() {
 		g_debugText->setText(ss.str());
 		g_fpsCount = 0;
 		g_time = 0.0f;
-		g_frameTime = 0;
-		g_physicsTime = 0;
-		g_renderTime = 0;
+		RESET_TIMER(Frame)
+		RESET_TIMER(Physics)
+		RESET_TIMER(Render)
 		g_renderModelTime = 0;
 		g_renderSpriteTime = 0;
 		g_renderTextTime = 0;
-		g_inputTime = 0;
-		g_smTime = 0;
+		RESET_TIMER(Input)
+		RESET_TIMER(Sounds)
 		g_tmTime = 0;
-		g_scriptManagerTime = 0;
-		g_cameraTime = 0;
-		g_nodeUpdateTime = 0;
-		g_guiManagerTime = 0;
+		RESET_TIMER(Scripts)
+		RESET_TIMER(Camera)
+		RESET_TIMER(Nodes)
+		RESET_TIMER(GUI)
 	}
 #else
 	services_->getInput()->update();

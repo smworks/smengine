@@ -101,11 +101,6 @@ public:
 	/**
 	 * @see GraphicsManager.
 	 */
-	void useVertexBuffer(UINT32 id);
-
-	/**
-	 * @see GraphicsManager.
-	 */
 	bool checkSupport(Support key);
 };
 

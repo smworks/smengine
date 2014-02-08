@@ -70,6 +70,16 @@ void ScriptManager::initialize(ServiceLocator* locator) {
 	int count = 0;
 	lua_createtable(state_, Input::KEY_COUNT + GUIManager::ACTION_COUNT, 0);
 	addKeyValue("NONE", Input::NONE);
+	addKeyValue("0", Input::N0);
+	addKeyValue("1", Input::N1);
+	addKeyValue("2", Input::N2);
+	addKeyValue("3", Input::N3);
+	addKeyValue("4", Input::N4);
+	addKeyValue("5", Input::N5);
+	addKeyValue("6", Input::N6);
+	addKeyValue("7", Input::N7);
+	addKeyValue("8", Input::N8);
+	addKeyValue("9", Input::N9);
 	addKeyValue("A", Input::A);
 	addKeyValue("B", Input::B);
 	addKeyValue("C", Input::C);
@@ -151,6 +161,7 @@ void ScriptManager::initialize(ServiceLocator* locator) {
 	addKeyValue("CTRL", Input::CTRL);
 	addKeyValue("ESC", Input::ESC);
 	addKeyValue("SHIFT", Input::SHIFT);
+	addKeyValue("TAB", Input::TAB);
 	addKeyValue("MOUSE_L", Input::MOUSE_L);
 	addKeyValue("MOUSE_M", Input::MOUSE_M);
 	addKeyValue("MOUSE_R", Input::MOUSE_R);

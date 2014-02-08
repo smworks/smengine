@@ -119,3 +119,8 @@ bool AtlasTexture::commit() {
 	getServiceLocator()->getTextureAtlas()->getTexture(type_)->commit();
 	return true;
 }
+
+float* AtlasTexture::getUV() {
+	return getServiceLocator()->getTextureAtlas()->
+		getTextureHeader(atlasId_).uv;
+}

@@ -25,6 +25,7 @@
 #include "Resources/Script.h"
 #include "Resources/Sound.h"
 #include "Resources/Light.h"
+#include "Resources/Scenario.h"
 #include "Resources/GUIImage.h"
 #include "Resources/GUIButton.h"
 #include "Resources/GUIInput.h"
@@ -111,6 +112,7 @@ Resource* ResourceManager::create(Resource::Type type) {
 	case Resource::CUBE_MAP: return NEW CubeMap(services_);
 	case Resource::SOUND: return NEW Sound(services_);
 	case Resource::LIGHT: return NEW Light(services_);
+	case Resource::SCENARIO: return NEW Scenario(services_);
 	case Resource::GUI_IMAGE: return NEW GUIImage(services_);
 	case Resource::GUI_TEXT: return NEW GUIText(services_);
 	case Resource::GUI_BUTTON: return NEW GUIButton(services_);
@@ -269,7 +271,7 @@ void ResourceManager::validateNode(
 	// Also make sure the bounding box is available.
 	Resource* model = node->getResource(Resource::STATIC_OBJECT);
 	if (model != 0 && model->getAttribute(Resource::ATTR_PHYSICS) == Resource::VAL_TRUE) {
-		services_->getPM()->add(node);
+		services_->getPhysicsManager()->add(node);
 	}
 	// If node contains script resource, add node to script manager.
 	if (node->hasResource(Resource::SCRIPT)) {

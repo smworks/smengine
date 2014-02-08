@@ -32,6 +32,7 @@ public:
 	enum InputType {UNSPECIFIED, MOUSE, MOUSE_DELTA,
 		TOUCH_SENSOR, BUTTON};
 	enum InputKey {NONE,
+		N0, N1, N2, N3, N4, N5, N6, N7, N8, N9,
 		A, B, C, D, E, F, G, H, I, J, K, L, M,
 		N, O, P, Q, R, S, T, U, V, W, X, Y, Z,
 		a, b, c, d, e, f, g, h, i, j, k, l, m,
@@ -39,7 +40,7 @@ public:
 		F1, F2, F3, F4, F5, F6, F7, F8, F9, F10, F11, F12,
 		UP, DOWN, LEFT, RIGHT, RETURN,
 		PAGE_UP, PAGE_DOWN, HOME, END, INSERT, DELETE,
-		BACK, SPACE, ALT, CTRL, ESC, SHIFT,
+		BACK, SPACE, ALT, CTRL, ESC, SHIFT, TAB,
 		MOUSE_L, MOUSE_M, MOUSE_R, MOUSE_4, MOUSE_5, // Mouse buttons.
 		TOUCH, // Touch screen press.
 		KEY_COUNT};

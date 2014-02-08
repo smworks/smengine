@@ -10,22 +10,13 @@
 
 #include "GUISurface.h"
 #include "../Matrix.h"
+#include "Vertex.h"
 
 #define DEFAULT_TEXT_SIZE 12
 
 class Symbol;
 
 class GUIText : public GUISurface {
-public:
-	struct SymbolData {
-		bool operator<(const SymbolData& right) {
-			return index < right.index;
-		}
-		float posX;
-		Mat4 matProjPosScale;
-		Symbol* symbol;
-		SIZE index;
-	};
 public:
 	GUIText(ServiceLocator* services);
 	~GUIText();
@@ -82,18 +73,19 @@ public:
 	float getTextOffsetY();
 
 	/**
-	 * @return Array of SymbolData objects.
+	 * @return Text vbo.
 	 */
-	SymbolData* getSymbolArray();
+	SIZE getTextVBO();
 
 	/**
-	 * @return Symbol count in text.
+	 * @return Vertex count in text VBO.
 	 */
-	SIZE getSymbolCount();
+	SIZE getTextVertexCount();
 private:
 	string text_;
 	SIZE size_, textOffsetX_, textOffsetY_;
-	vector<SymbolData> symbols_;
+	SIZE vbo_, vertexCount_;
+	vector<VertexPT> vertices_;
 };
 
 #endif

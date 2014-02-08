@@ -96,6 +96,12 @@ public:
 	 * @see Texture
 	 */
 	bool commit();
+
+	/**
+	 * @return Array of uv coordinates of size 12 used to access
+	 * texture on texture map.
+	 */
+	float* getUV();
 protected:
 	/**
 	 * @see Resource
