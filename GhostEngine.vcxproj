@@ -728,11 +728,7 @@
     <None Include="resources\scenes\level.cfg">
       <SubType>Designer</SubType>
     </None>
-    <None Include="resources\scripts\game_loop_old.lua" />
-    <None Include="resources\scripts\helper_methods.lua" />
     <None Include="resources\scripts\game_loop.lua" />
-    <None Include="resources\scripts\maze.lua" />
-    <None Include="resources\scripts\winter.lua" />
     <None Include="resources\shaders\default_model.frag" />
     <None Include="resources\shaders\default_model.vert" />
     <None Include="resources\shaders\default_sprite.frag" />
@@ -767,9 +763,6 @@
   <ItemGroup>
     <Xml Include="dependencies\includes\zlib\treebuild.xml" />
     <Xml Include="resources\scenes\start.xml">
-      <SubType>Designer</SubType>
-    </Xml>
-    <Xml Include="resources\scenes\start_old.xml">
       <SubType>Designer</SubType>
     </Xml>
   </ItemGroup>

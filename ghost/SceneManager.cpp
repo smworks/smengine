@@ -26,7 +26,9 @@ SceneManager::~SceneManager() {
 }
 
 void SceneManager::update(double delta) {
-	ASSERT(target_ != 0 && backgrounds_[0].sprite != 0, "Target or background is not set");
+	if (target_ == 0 || backgrounds_[0].sprite == 0) {
+		return;
+	}
 	Vec3& camPos = services_->getCamera()->getPos();
 	Vec3& targetPos = target_->getPos();
 	float halfScreenWidth = services_->getScreenWidth() * 0.5f;

@@ -420,7 +420,7 @@ int nodeTurn(lua_State* L) {
 int nodeSetShader(lua_State* L) {
 	Node* node = SM_GET_OBJECT(L, 0, Node);
 	if (SM_IS_NULL(L, 1)) {
-		LOGE("Specified shader is null.");
+		LOGW("Specified shader is null.");
 		return 0;
 	}
 	Shader* shader = SM_GET_OBJECT(L, 1, Shader);
@@ -585,7 +585,7 @@ int nodeGuiTextSetSize(lua_State* L) {
 	Node* node = SM_GET_OBJECT(L, 0, Node);
 	GUIText* text = static_cast<GUIText*>(node->getResource(Resource::GUI_TEXT));
 	if (text == 0) {
-		LOGE("Node does not contain GUIText resource.");
+		LOGW("Node does not contain GUIText resource.");
 		return 0;
 	}
 	INT32 size = SM_GET_INT(L, 1);
@@ -597,7 +597,7 @@ int nodeGuiTextSetText(lua_State* L) {
     Node* node = SM_GET_OBJECT(L, 0, Node);
 	GUIText* text = static_cast<GUIText*>(node->getResource(Resource::GUI_TEXT));
 	if (text == 0) {
-		LOGE("Node does not contain GUIText resource.");
+		LOGW("Node does not contain GUIText resource.");
 		return 0;
 	}
 	string val = SM_GET_STRING(L, 1);
@@ -609,7 +609,7 @@ int nodeGuiTextSetColor(lua_State* L) {
     Node* node = SM_GET_OBJECT(L, 0, Node);
 	GUIText* text = static_cast<GUIText*>(node->getResource(Resource::GUI_TEXT));
 	if (text == 0) {
-		LOGE("Node does not contain GUIText resource.");
+		LOGW("Node does not contain GUIText resource.");
 		return 0;
 	}
 	string val = SM_GET_STRING(L, 1);
@@ -621,11 +621,35 @@ int nodeGuiTextSetBackground(lua_State* L) {
     Node* node = SM_GET_OBJECT(L, 0, Node);
 	GUIText* text = static_cast<GUIText*>(node->getResource(Resource::GUI_TEXT));
 	if (text == 0) {
-		LOGE("Node does not contain GUIText resource.");
+		LOGW("Node does not contain GUIText resource.");
 		return 0;
 	}
 	string val = SM_GET_STRING(L, 1);
 	text->setBackground(val);
+	return 0;
+}
+
+int nodeSetWidth(lua_State* L) {
+    Node* node = SM_GET_OBJECT(L, 0, Node);
+	GUISurface* surface = static_cast<GUISurface*>(node->getResource(Resource::GUI_SURFACE));
+	if (surface == 0) {
+		LOGW("Node does not contain GUISurface resource.");
+		return 0;
+	}
+	float val = SM_GET_FLOAT(L, 1);
+	surface->setWidth(val);
+	return 0;
+}
+
+int nodeSetHeight(lua_State* L) {
+    Node* node = SM_GET_OBJECT(L, 0, Node);
+	GUISurface* surface = static_cast<GUIText*>(node->getResource(Resource::GUI_SURFACE));
+	if (surface == 0) {
+		LOGW("Node does not contain GUISurface resource.");
+		return 0;
+	}
+	float val = SM_GET_FLOAT(L, 1);
+	surface->setWidth(val);
 	return 0;
 }
 
@@ -733,6 +757,8 @@ void registerNode() {
 	ADD_METHOD(methods, "setText", nodeGuiTextSetText);
 	ADD_METHOD(methods, "setColor", nodeGuiTextSetColor);
 	ADD_METHOD(methods, "setBackground", nodeGuiTextSetBackground);
+	ADD_METHOD(methods, "setWidth", nodeSetWidth);
+	ADD_METHOD(methods, "setHeight", nodeSetHeight);
     ADD_METHOD(methods, "moveX", setName);
     ADD_METHOD(methods, "moveY", setName);
     ADD_METHOD(methods, "moveZ", setName);
@@ -1176,6 +1202,11 @@ void registerGUISurface() {
 }
 
 int newGUIText(lua_State* L) {
+	int argc = SM_GET_ARGUMENT_COUNT(L);
+	if (argc == 0) {
+		LOGW("Wrong argument count for GUIText constructor.");
+		return 0;
+	}
 	string name = SM_GET_STRING(L, 0);
 	GUIText* text = static_cast<GUIText*>(SM_GET_RM()->get(Resource::GUI_TEXT, name));
 	if (text == 0) {
@@ -1202,87 +1233,40 @@ void registerGUIText() {
     ScriptManager::addClass("GUIText", methods);
 }
 
-int newButton(lua_State* L) {
-	string val = SM_GET_STRING(L, 0);
-	GUIButton* button = static_cast<GUIButton*>(SM_GET_RM()->get(Resource::GUI_BUTTON, val));
+int newGUIButton(lua_State* L) {
+	int argc = SM_GET_ARGUMENT_COUNT(L);
+	if (argc != 1 && argc != 3) {
+		LOGW("Wrong argument count for GUIText constructor.");
+		return 0;
+	}
+	if (!SM_IS_STRING(L, 0)) {
+		LOGW("First argument for GUIButton must be string type.");
+		return 0;
+	}
+	string name = SM_GET_STRING(L, 0);
+	GUIButton* button = static_cast<GUIButton*>(SM_GET_RM()->get(Resource::GUI_SURFACE, name));
 	if (button == 0) {
 		button = NEW GUIButton(SM_GET_SL());
-		button->getAttributes().setString(GUIButton::ATTR_TEXT, val);
+		button->getAttributes().setString(GUIText::ATTR_TEXT, "");
+		if (argc == 3 && SM_IS_NUMBER(L, 1) && SM_IS_NUMBER(L, 2)) {
+			button->setWidth(SM_GET_FLOAT(L, 1));
+			button->setHeight(SM_GET_FLOAT(L, 2));
+		}
 		button->create();
-		SM_GET_RM()->add(val, button);
+		SM_GET_RM()->add(name, button);
 	}
-	SM_RETURN_OBJECT(L, "Button", GUIButton, button);
+	Node* node = NEW Node();
+	node->setName(name + "_ButtonResource");
+	ScriptManager::getServiceLocator()->getRootNode()->addChild(node);
+	node->setParent(ScriptManager::getServiceLocator()->getRootNode());
+	node->addResource(button);
+	SM_RETURN_OBJECT(L, "Node", Node, node);
     return 1;
-}
-
-int deleteButton(lua_State* L) {
-    return 0;
-}
-
-int buttonSetButtonText(lua_State* L) {
-    GUIButton* button = SM_GET_OBJECT(L, 0, GUIButton);
-	string val = SM_GET_STRING(L, 1);
-	button->setText(val);
-    return 0;
-}
-
-int buttonGetButtonText(lua_State* L) {
-	GUIButton* button = SM_GET_OBJECT(L, 0, GUIButton);
-	SM_RETURN_STRING(L, button->getText().c_str());
-	return 1;
-}
-
-int buttonSetButtonWidth(lua_State* L) {
-    GUIButton* button = SM_GET_OBJECT(L, 0, GUIButton);
-	int val = SM_GET_INT(L, 1);
-	button->setWidth(val);
-    return 0;
-}
-
-int buttonGetButtonWidth(lua_State* L) {
-	GUIButton* button = SM_GET_OBJECT(L, 0, GUIButton);
-	SM_RETURN_INT(L, (int) button->getWidth());
-	return 1;
-}
-
-int buttonSetButtonHeight(lua_State* L) {
-    GUIButton* button = SM_GET_OBJECT(L, 0, GUIButton);
-	int val = SM_GET_INT(L, 1);
-	button->setHeight(val);
-    return 0;
-}
-
-int buttonGetButtonHeight(lua_State* L) {
-	GUIButton* button = SM_GET_OBJECT(L, 0, GUIButton);
-	SM_RETURN_INT(L, (int) button->getHeight());
-	return 1;
-}
-
-int buttonSetButtonTransparency(lua_State* L) {
-    GUIButton* button = SM_GET_OBJECT(L, 0, GUIButton);
-	float val = SM_GET_FLOAT(L, 1);
-	button->setTransparency(val);
-    return 0;
-}
-
-int buttonGetButtonTransparency(lua_State* L) {
-	GUIButton* button = SM_GET_OBJECT(L, 0, GUIButton);
-	SM_RETURN_FLOAT(L, button->getTransparency());
-	return 1;
 }
 
 void registerGUIButton() {
     unordered_map<string, int (*)(lua_State*)> methods;
-	ADD_METHOD(methods, "new", newButton);
-	ADD_METHOD(methods, "__gc", deleteButton);
-	ADD_METHOD(methods, "setText", buttonSetButtonText);
-	ADD_METHOD(methods, "getText", buttonGetButtonText);
-	ADD_METHOD(methods, "setWidth", buttonSetButtonWidth);
-	ADD_METHOD(methods, "getwidth", buttonGetButtonText);
-	ADD_METHOD(methods, "setHeight", buttonSetButtonHeight);
-	ADD_METHOD(methods, "getHeight", buttonGetButtonHeight);
-	ADD_METHOD(methods, "setTransparency", buttonSetButtonTransparency);
-	ADD_METHOD(methods, "getTransparency", buttonGetButtonTransparency);
+	ADD_METHOD(methods, "new", newGUIButton);
     ScriptManager::addClass("Button", methods);
 }
 

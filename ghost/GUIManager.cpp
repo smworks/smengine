@@ -37,27 +37,55 @@ void GUIManager::update() {
     int y = services_->getInput()->getPointerY();
     for (SIZE i = 0; i < count; i++) {
         Node* node = nodes_[i];
-		if (node->getState(Node::RENDERABLE)
-			&& node->getPos().getX() < x
-			&& node->getPos().getX() + node->getScale().getX() > x
-            && node->getPos().getY() < y
-			&& node->getPos().getY() + node->getScale().getY() > y)
-        {
-            vector<Resource*> resources = node->getResources();
-            for (SIZE i = 0; i < resources.size(); i++) {
-                GUISurface* surface = dynamic_cast<GUISurface*>(resources[i]);
-                if (surface == 0) {
-                    continue;
-                }
-                surface->hasFocus();
-                if (services_->getInput()->keyReleased(Input::MOUSE_L)) {
+		if (!node->getState(Node::RENDERABLE)) {
+			continue;
+		}
+        vector<Resource*> resources = node->getResources();
+        for (SIZE i = 0; i < resources.size(); i++) {
+            GUISurface* surface = dynamic_cast<GUISurface*>(resources[i]);
+            if (surface == 0) {
+                continue;
+            }
+			LOGI("x: %d, y: %d, width: %d, height: %d", x, y, surface->getWidth(), surface->getHeight());
+			if (surface->getMarginLeft() < x
+				&& surface->getWidth() + surface->getMarginLeft() > x
+				&& surface->getMarginBottom() < y
+				&& surface->getHeight() + surface->getMarginBottom() < y)
+			{
+				LOGI("YAY");
+				surface->hasFocus();
+				if (services_->getInput()->keyReleased(Input::MOUSE_L)) {
 					selectedSurface_ = surface;
 					services_->getScriptManager()->provideEventGUI(
 						node, CLICK);
 				}
-            }
+			}
         }
     }
+  //  for (SIZE i = 0; i < count; i++) {
+  //      Node* node = nodes_[i];
+		//if (node->getState(Node::RENDERABLE)
+		//	&& node->getPos().getX() < x
+		//	&& node->getPos().getX() + node->getScale().getX() > x
+		//	&& node->getPos().getY() < y
+		//	&& node->getPos().getY() + node->getScale().getY() > y)
+  //      {
+		//	LOGI("YAY: %s", node->getName().c_str());
+  //          vector<Resource*> resources = node->getResources();
+  //          for (SIZE i = 0; i < resources.size(); i++) {
+  //              GUISurface* surface = dynamic_cast<GUISurface*>(resources[i]);
+  //              if (surface == 0) {
+  //                  continue;
+  //              }
+  //              surface->hasFocus();
+  //              if (services_->getInput()->keyReleased(Input::MOUSE_L)) {
+		//			selectedSurface_ = surface;
+		//			services_->getScriptManager()->provideEventGUI(
+		//				node, CLICK);
+		//		}
+  //          }
+  //      }
+  //  }
 }
 
 GUISurface* GUIManager::getSelectedSurface() {

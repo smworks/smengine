@@ -62,13 +62,14 @@ void Color::setRGB(float r, float g, float b) {
 }
 
 void Color::setRGBA(const string& color) {
-	if (color.length() == 0) {
+	if (color.length() != 7 && color.length() != 9) {
 		Color();
 		return;
 	}
 	static stringstream ss;
 	UINT32 val;
-	for (short i = 0; i < 4; i++) {
+	UINT32 componentCount = color.length() == 7 ? 3 : 4;
+	for (UINT32 i = 0; i < componentCount; i++) {
 		ss << std::hex << color.substr(i * 2 + 1, 2);
 		ss >> val;
 		color_[i] = val / 255.0f;

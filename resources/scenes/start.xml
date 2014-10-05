@@ -5,41 +5,4 @@
       <attribute type="file" value="game_loop.lua" />
     </resource>
   </node>
-  <node name="parallax">
-    <resource type="sprite">
-      <attribute type="file" value="background_parallax.png" />
-    </resource>
-    <position x="0.0f" y="0.0f" z="1.0f" />
-  </node>
-  <node name="background">
-    <resource type="sprite">
-      <attribute type="file" value="background.png" />
-    </resource>
-    <position x="0.0f" y="0.0f" z="2.0f" />
-  </node>
-  <node name="player">
-    <resource type="sprite">
-      <attribute type="file" value="player.png" />
-      <attribute type="sprite_count" value="1" />
-    </resource>
-    <position x="0.0f" y="128.0f" z="3.0f" />
-  </node>
-	<node name="cave" renderable="false">
-    <resource type="sprite">
-      <attribute type="file" value="cave.png" />
-    </resource>
-    <position x="0.0f" y="0.0f" z="2.0f" />
-  </node>
-  <node name="npc" renderable="false">
-    <resource type="sprite">
-      <attribute type="file" value="dwarf.png" />
-    </resource>
-    <position x="0.0f" y="0.0f" z="3.0f" />
-  </node>
-  <node name="car" renderable="true">
-    <resource type="static_object">
-      <attribute type="file" value="car_body.obj" />
-    </resource>
-    <position x="0.0f" y="0.0f" z="-5.0f" />
-  </node>
 </level>

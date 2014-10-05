@@ -1896,18 +1896,6 @@
     <None Include="resources\scripts\game_loop.lua">
       <Filter>Resource Files\scripts</Filter>
     </None>
-    <None Include="resources\scripts\helper_methods.lua">
-      <Filter>Resource Files\scripts</Filter>
-    </None>
-    <None Include="resources\scripts\maze.lua">
-      <Filter>Resource Files\scripts</Filter>
-    </None>
-    <None Include="resources\scripts\winter.lua">
-      <Filter>Resource Files\scripts</Filter>
-    </None>
-    <None Include="resources\scripts\game_loop_old.lua">
-      <Filter>Resource Files\scripts</Filter>
-    </None>
     <None Include="resources\shaders\default_model.frag">
       <Filter>Resource Files\shaders</Filter>
     </None>
@@ -2005,9 +1993,6 @@
     </Xml>
     <Xml Include="dependencies\includes\zlib\treebuild.xml">
       <Filter>Source Files\ZLib</Filter>
-    </Xml>
-    <Xml Include="resources\scenes\start_old.xml">
-      <Filter>Resource Files\scenes</Filter>
     </Xml>
   </ItemGroup>
   <ItemGroup>
