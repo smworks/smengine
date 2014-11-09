@@ -44,7 +44,8 @@ GraphicsManager::GraphicsManager(ServiceLocator* services) :
 	shaderId_(0),
 	bufferId_(0),
 	planeVBO_(0),
-	planeUVBO_(0)
+	planeUVBO_(0),
+	startTime_(0)
 {
 	fill(maxValues_, maxValues_ + MAX_COUNT, 0);
 	fill(supportValues_, supportValues_ + SUPPORT_COUNT, 2);
@@ -133,10 +134,8 @@ void GraphicsManager::create() {
 	resourceManager_->add(immediateShaderName, immediateShader_);
 	// Load text shader.
 	textShader_ = NEW Shader(services_);
-	string& textShaderName = settings_->getString(
-		Settings::DEFAULT_TEXT_SHADER);
-	textShader_->getAttributes().setString(
-		Resource::ATTR_FILE, textShaderName);
+	string& textShaderName = settings_->getString(Settings::DEFAULT_TEXT_SHADER);
+	textShader_->getAttributes().setString(Resource::ATTR_FILE, textShaderName);
 	textShader_->create();
 	resourceManager_->add(textShaderName, textShader_);
 
@@ -165,6 +164,7 @@ void GraphicsManager::create() {
 	//rp->setFrameScale(1.0f, 1.0f);
 	//rp->setShader(shader);
 	//passes_.push_back(rp);
+	startTime_ = getMicroseconds();
 }
 
 void GraphicsManager::release() {
@@ -328,52 +328,16 @@ void GraphicsManager::render() {
 	renderVertices(viewMatrix_);
 }
 
-void GraphicsManager::renderSprite(Renderable* sprite, float x, float y, float width, float height) {
-	Shader* shader = sprite->getShader();
-	useProgram(shader->getId());
-	shader->setVector4(Shader::AMBIENT, sprite->getAmbient().toArray());
-	glEnableVertexAttribArray(shader->getHandle(Shader::POS));
-	bindBuffer(planeVBO_);
-	glVertexAttribPointer(shader->getHandle(Shader::POS), 3, GL_FLOAT, GL_FALSE,
-		sizeof(VertexP), (char*) 0);
-	if (shader->hasHandle(Shader::UV)) {
-		glEnableVertexAttribArray(shader->getHandle(Shader::UV));
-		bindBuffer(planeUVBO_);
-		glVertexAttribPointer(shader->getHandle(Shader::UV), 2, GL_FLOAT, GL_FALSE,
-			sizeof(VertexT), (char*) 0);
-	}
-	Matrix::translate(matPos, x, y, 1.0f);
-	Matrix::scale(matScale, width, height, 1.0f);
-	Matrix::multiply(camera_->getProjection2D(), matPos, matProjPos);
-	Matrix::multiply(matProjPos, matScale, matProjPosScale);
-	shader->setMatrix4(Shader::WVP, matProjPosScale);
-	glDrawArrays(GL_TRIANGLES, 0, 18 / 3);
-	glDisableVertexAttribArray(shader->getHandle(Shader::POS));
-	if (shader->hasHandle(Shader::UV)) {
-		glDisableVertexAttribArray(shader->getHandle(Shader::UV));
-	}
-	CHECK_GL_ERROR("Rendering sprite");
-}
-
-void GraphicsManager::renderGUI(Node* node) {
+void GraphicsManager::renderGuiText(Node* node) {
 	GUIText* text = 0;
-	if (node->hasResource(Resource::GUI_TEXT)) {
+	if (node->hasResource(Resource::GUI_SURFACE)) {
 		text = dynamic_cast<GUIText*>(
-			node->getResource(Resource::GUI_TEXT));
-	}
-	else if (node->hasResource(Resource::GUI_BUTTON)) {
-		text = dynamic_cast<GUIText*>(
-			node->getResource(Resource::GUI_BUTTON));
-	}
-	else if (node->hasResource(Resource::GUI_INPUT)) {
-		text = dynamic_cast<GUIText*>(
-			node->getResource(Resource::GUI_INPUT));
+			node->getResource(Resource::GUI_SURFACE));
 	}
 	if (text == 0) {
 		return;
 	}
-	renderSprite(text, 0.0f, (float) services_->getScreenHeight() - text->getHeight(),
-		(float) text->getWidth(), (float) text->getHeight());
+	renderNode(node, camera_->getProjection2D(), true);
 	useProgram(textShader_->getId());
 	int texture = glGetUniformLocation(textShader_->getId(), "texture_0");
 	textShader_->setVector4(Shader::FOREGROUND, text->getDiffuse().toArray());
@@ -418,10 +382,8 @@ void GraphicsManager::refreshRenderList() {
 			|| (*it)->hasResource(Resource::DYNAMIC_OBJECT)) {
 			modelArray_.push_back((*it));
 		}
-		if ((*it)->hasResource(Resource::GUI_TEXT)
-			|| (*it)->hasResource(Resource::GUI_IMAGE)
-			|| (*it)->hasResource(Resource::GUI_BUTTON)
-            || (*it)->hasResource(Resource::GUI_INPUT))
+		if ((*it)->hasResource(Resource::GUI_SURFACE)
+			&& dynamic_cast<GUIText*>((*it)->getResource(Resource::GUI_SURFACE)) != 0)
 		{
 			textArray_.push_back((*it));
 		}
@@ -452,7 +414,7 @@ void GraphicsManager::renderScene(NodeType type) {
 	static vector<Node*>::const_iterator it;
 	if (type == ALL || type == MODEL) {
 #ifdef SMART_DEBUG
-	UINT64 start = getMicroseconds();
+		UINT64 start = getMicroseconds();
 #endif
 		glEnable(GL_DEPTH_TEST);
 		it = modelArray_.begin();
@@ -462,12 +424,12 @@ void GraphicsManager::renderScene(NodeType type) {
 		}
 		glDisable(GL_DEPTH_TEST);
 #ifdef SMART_DEBUG
-	g_renderModelTime += (getMicroseconds() - start);
+		g_renderModelTime += (getMicroseconds() - start);
 #endif
 	}
 	if (type == ALL || type == SPRITE || type == SPRITE_TEXT) {
 #ifdef SMART_DEBUG
-	UINT64 start = getMicroseconds();
+		UINT64 start = getMicroseconds();
 #endif
 		glEnable(GL_DEPTH_TEST);
 		glEnable(GL_BLEND);
@@ -484,17 +446,19 @@ void GraphicsManager::renderScene(NodeType type) {
 	}
 	if (type == ALL || type == TEXT || type == SPRITE_TEXT) {
 #ifdef SMART_DEBUG
-	UINT64 start = getMicroseconds();
+		UINT64 start = getMicroseconds();
 #endif
+		glEnable(GL_DEPTH_TEST);
 		glEnable(GL_BLEND);
 		it = textArray_.begin();
 		while (it != textArray_.end()) {
 			if ((*it)->getState(Node::RENDERABLE)) {
-				renderGUI(*it);
+				renderGuiText(*it);
 			}
 			it++;
 		}
 		glDisable(GL_BLEND);
+		glDisable(GL_DEPTH_TEST);
 #ifdef SMART_DEBUG
 	g_renderTextTime += (getMicroseconds() - start);
 #endif
@@ -530,31 +494,15 @@ void GraphicsManager::renderNode(
 	}
 	// Retrieve model data.
 	Renderable* renderable = 0;
-	Resource* resource = 0;
+	bool gui = false;
 	if (node->hasResource(Resource::SPRITE)) {
-		resource = node->getResource(Resource::SPRITE);
-		renderable = dynamic_cast<Renderable*>(resource);
-	}
-	else if (node->hasResource(Resource::GUI_IMAGE)) {
-		resource = node->getResource(Resource::GUI_IMAGE);
-		renderable = dynamic_cast<Renderable*>(resource);
-	}
-	else if (node->hasResource(Resource::GUI_TEXT)) {
-		resource = node->getResource(Resource::GUI_TEXT);
-		renderable = dynamic_cast<Renderable*>(resource);
-	}
-	else if (node->hasResource(Resource::GUI_BUTTON)) {
-		resource = node->getResource(Resource::GUI_BUTTON);
-		renderable = dynamic_cast<Renderable*>(resource);
-	}
-	else if (node->hasResource(Resource::GUI_INPUT)) {
-		resource = node->getResource(Resource::GUI_INPUT);
-		renderable = dynamic_cast<Renderable*>(resource);
-	}
-	else if (node->hasResource(Resource::STATIC_OBJECT)) {
-		resource = node->getResource(Resource::STATIC_OBJECT);
-		renderable = dynamic_cast<Renderable*>(resource);
-		StaticObject* so = static_cast<StaticObject*>(resource);
+		renderable = dynamic_cast<Renderable*>(node->getResource(Resource::SPRITE));
+	} else if (node->hasResource(Resource::GUI_SURFACE)) {
+		renderable = dynamic_cast<Renderable*>(node->getResource(Resource::GUI_SURFACE));
+		gui = true;
+	} else if (node->hasResource(Resource::STATIC_OBJECT)) {
+		StaticObject* so = dynamic_cast<StaticObject*>(node->getResource(Resource::STATIC_OBJECT));
+		renderable = dynamic_cast<Renderable*>(so);
 		// Check for frustum culling.
 		Vec3 posAbs;
 		node->getPosAbs(posAbs);
@@ -565,10 +513,8 @@ void GraphicsManager::renderNode(
 		{
 			return;
 		}
-	}
-	else if (node->hasResource(Resource::DYNAMIC_OBJECT)) {
-		resource = node->getResource(Resource::DYNAMIC_OBJECT);
-		renderable = dynamic_cast<Renderable*>(resource);
+	} else if (node->hasResource(Resource::DYNAMIC_OBJECT)) {
+		renderable = dynamic_cast<Renderable*>(node->getResource(Resource::DYNAMIC_OBJECT));
 	}
 
 	if (renderable == 0) {
@@ -576,13 +522,7 @@ void GraphicsManager::renderNode(
 			node->getName().c_str());
 		return;
 	}
-	Shader* shader = 0;
-	if (node->hasResource(Resource::SHADER)) { // TODO: leave only renderable->getShader()
-		shader = static_cast<Shader*>(node->getResource(Resource::SHADER));
-	}
-	else {
-		shader = renderable->getShader();
-	}
+	Shader* shader = renderable->getShader();
 	if (shader == 0) {
 		LOGW("Unable to retrieve shader for node: %s.",
 			node->getName().c_str());
@@ -596,21 +536,39 @@ void GraphicsManager::renderNode(
 	Mat4 res;
 	if (!ortho) {
 		Matrix::multiply(mat, node->getMatrix(), res);
-	}
-	else {
+	} else if (gui) {
+		Quaternion& q = node->getRot();
+		Vec3 r(q.getX(), q.getY(), q.getZ());
+		GUISurface* surface = dynamic_cast<GUISurface*>(renderable);
+		float width = surface->getWidth();
+		float height = surface->getHeight();
+		float x = surface->getPosX();
+		float y = surface->getPosY();
 		Mat4 tmp;
 		Mat4 pos;
 		Mat4 rot;
 		Mat4 scale;
+		Vec3& camPos = services_->getCamera()->getPos();
+		Matrix::translate(pos, x - camPos.getX(), y - camPos.getY(), 0.0f);
+		Matrix::rotateXYZ(rot, r.getX(), r.getY(), r.getZ());
+		Matrix::scale(scale, width, height, 1.0f);
+		Matrix::multiply(mat, pos, res);
+		Matrix::multiply(res, rot, tmp);
+		Matrix::multiply(tmp, scale, res);
+	} else {
 		Vec3 p;
+		Vec3 s = node->getScale();
 		node->getPosAbs(p);
 		Quaternion& q = node->getRot();
 		Vec3 r(q.getX(), q.getY(), q.getZ());
-		Vec3 s = node->getScale();
 		float width = s.getX();
 		float height = s.getY();
 		float x = p.getX();
 		float y = p.getY();
+		Mat4 tmp;
+		Mat4 pos;
+		Mat4 rot;
+		Mat4 scale;
 		Vec3& camPos = services_->getCamera()->getPos();
 		Matrix::translate(pos, x - camPos.getX(), y - camPos.getY(), p.getZ());
 		Matrix::rotateXYZ(rot, r.getX(), r.getY(), r.getZ());
@@ -657,7 +615,7 @@ void GraphicsManager::renderNode(
 	//shader->setFloat(Shader::FOG_DENSITY,
 	//	services_->getEnv()->getFogDensity());
 	// Timer.
-	shader->setFloat(Shader::TIMER, getMicroseconds() / 1000000.0f);
+	shader->setFloat(Shader::TIMER, (getMicroseconds() - startTime_) * 0.000001f);
 	// Bind combined buffer object.
 	if (renderable->getCBO() > 0) {
 		SIZE stride = renderable->getVertexStride();
@@ -681,8 +639,7 @@ void GraphicsManager::renderNode(
 				shader->getHandle(Shader::UV), 2, GL_FLOAT, GL_FALSE,
 				stride, ((char*) 0) + renderable->getUVOffset());
 		}
-	}
-	else {
+	} else {
 		return;
 	}
 	// Bind cube map.
@@ -694,8 +651,7 @@ void GraphicsManager::renderNode(
 		glUniform1i(shader->getHandle(Shader::CUBE_MAP), 0);
 	}
 	int hTextures[8];
-	hTextures[0] = glGetUniformLocation(shader->getId(),
-		SHADER_MAIN_TEXTURE);
+	hTextures[0] = glGetUniformLocation(shader->getId(), SHADER_MAIN_TEXTURE);
 	// Bind the texture.
 	vector<Resource*> textures = node->getResources(Resource::TEXTURE_2D);
 	UINT32 size = textures.size() < 8 ? static_cast<UINT32>(textures.size()) : 7;
@@ -706,8 +662,7 @@ void GraphicsManager::renderNode(
 		TextureRGBA* tex = static_cast<TextureRGBA*>(textures[i]);
 		SIZE offset = node->getName().length() + 1;
 		string textName = name.substr(offset, name.length() - 4 - offset);
-		hTextures[texture] = glGetUniformLocation(shader->getId(),
-			textName.c_str());
+		hTextures[texture] = glGetUniformLocation(shader->getId(), textName.c_str());
 		if (hTextures[texture] == -1) {
 			LOGW("Handle to texture \"%s\" not found in \"%s\" shader.",
 				textName.c_str(), shader->getName().c_str());
@@ -766,8 +721,8 @@ void GraphicsManager::renderNode(
 		//}
 		// Ambient material color.
 		if (shader->hasHandle(Shader::AMBIENT)) {
-			shader->setVector3(Shader::AMBIENT,
-				renderable->getAmbient().toArray());
+			float farr[] = {0.0f, 0.0f, 0.0f};
+			shader->setVector4(Shader::AMBIENT, renderable->getAmbient().toArray());
 		}
 		// Diffuse material color.
 		if (shader->hasHandle(Shader::DIFFUSE)) {
@@ -784,7 +739,6 @@ void GraphicsManager::renderNode(
 		// Model transparency.
 		shader->setFloat(Shader::TRANSPARENCY, renderable->getTransparency());
 		// Bind main texture.
-		renderable->getAmbient();
 		if (renderable->getTexture() != lastTexture
 			&& hTextures[0] != -1)
         {
@@ -792,15 +746,13 @@ void GraphicsManager::renderNode(
 			if (shader->hasHandle(Shader::MAIN_TEXTURE)) {
 				if (lastTexture == 0) {
 					shader->setFloat(Shader::MAIN_TEXTURE, 0.0f);
-				}
-				else {
+				} else {
 					shader->setFloat(Shader::MAIN_TEXTURE, 1.0f);
 				}
 			}
 			bindTexture(renderable->getTexture());
 			glUniform1i(hTextures[0], 0);
-		}
-		else if (lastTexture == 0) {
+		} else if (lastTexture == 0) {
 			shader->setFloat(Shader::MAIN_TEXTURE, 0.0f);
 		}
 		if (renderable->getIBO() > 0) {
@@ -811,18 +763,17 @@ void GraphicsManager::renderNode(
 					(GLint) renderable->getIndexCount(),
 					GL_UNSIGNED_SHORT, ((char*) 0) + renderable->getIndexOffset() * sizeof(short));
 				CHECK_GL_ERROR("glDrawElements with short indices");
-			}
-			else {
+			} else {
 				glDrawElements(renderType,
 					(GLint) renderable->getIndexCount(),
 					GL_UNSIGNED_INT, ((char*) 0) + renderable->getIndexOffset() * sizeof(int));
-				CHECK_GL_ERROR("glDrawElements with int indices");
+				CHECK_GL_ERROR("glDrawElements with int indices in renderNode()");
 			}
 			glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
 		}
 		else {
 			glDrawArrays(renderType, 0, (GLint) renderable->getVertexCount());
-			CHECK_GL_ERROR("glDrawArrays");
+			CHECK_GL_ERROR("glDrawArrays in renderNode()");
 		}
 	}
 	if (renderable->getBlending()) {

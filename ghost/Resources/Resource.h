@@ -36,11 +36,7 @@ public:
 		PHYSICS,
 		LIGHT,
 		SCENARIO,
-		GUI_SURFACE,
-		GUI_IMAGE,
-		GUI_TEXT,
-		GUI_BUTTON,
-        GUI_INPUT
+		GUI_SURFACE
 	};
 	static const string VAL_NOT_SET;
 	static const string VAL_TRUE;

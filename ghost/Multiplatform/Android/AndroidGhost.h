@@ -62,6 +62,7 @@
 #include <resolv.h>
 #include <errno.h>
 #include <queue>
+#include <assert.h>
 
 using namespace std;
 
@@ -97,6 +98,15 @@ typedef SIZE* POINTER;
     }
 #else
     #define PROFILE(...)
+#endif
+
+#ifdef SMART_DEBUG
+	#define CHECK_GL_ERROR(msg) checkGLError(msg)
+#define ASSERT(expression, ...) \
+	if (!(expression)) { LOGE(__VA_ARGS__); } assert(expression)
+#else
+	#define CHECK_GL_ERROR(msg)
+	#define ASSERT(expression, ...) if (!(expression)) { LOGE(__VA_ARGS__); }
 #endif
 
 // GRAPHICS.

@@ -1,8 +1,8 @@
-/*
+Ôªø/*
  * GUIButton.cpp
  *
  *  Created on: 2013.08.09
- *      Author: Martynas –ustaviËius
+ *      Author: Martynas ≈†ustaviƒçius
  */
 
 #include "GUIButton.h"
@@ -25,10 +25,6 @@ bool GUIButton::create() {
     bool ret = GUIText::create();
 	colorBckg_ = getAmbient();
 	return ret;
-}
-
-Resource::Type GUIButton::getType() {
-	return Resource::GUI_BUTTON;
 }
 
 void GUIButton::hasFocus() {

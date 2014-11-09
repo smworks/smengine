@@ -21,11 +21,6 @@ public:
     bool create();
 
 	/**
-	 * @see Resource
-	 */
-	Resource::Type getType();
-
-	/**
 	 * @see GUISurface
 	 */
 	void hasFocus();

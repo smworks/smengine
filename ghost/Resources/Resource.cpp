@@ -175,18 +175,9 @@ Resource::Type Resource::stringToType(
 	if ("scenario" == type) {
 		return Resource::SCENARIO;
 	}
-	if ("gui_image" == type) {
-		return Resource::GUI_IMAGE;
+	if ("gui_surface" == type) {
+		return Resource::GUI_SURFACE;
 	}
-	if ("gui_text" == type) {
-		return Resource::GUI_TEXT;
-	}
-	if ("gui_button" == type) {
-		return Resource::GUI_BUTTON;
-	}
-    if ("gui_input" == type) {
-        return Resource::GUI_INPUT;
-    }
 	return Resource::UNKNOWN;
 }
 
@@ -228,17 +219,8 @@ string Resource::typeToString(Type type) {
 	case SCENARIO:
 		return "scenario";
 		break;
-    case GUI_IMAGE:
-        return "gui_image";
-        break;
-	case GUI_TEXT:
-		return "gui_text";
-		break;
-	case GUI_BUTTON:
-		return "gui_button";
-		break;
-    case GUI_INPUT:
-        return "gui_input";
+    case GUI_SURFACE:
+        return "gui_surface";
         break;
     default:
         return "unknown";

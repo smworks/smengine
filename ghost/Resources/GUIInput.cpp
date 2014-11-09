@@ -18,10 +18,6 @@ GUIInput::GUIInput(ServiceLocator* services) : GUIText(services) {}
 
 GUIInput::~GUIInput() {}
 
-Resource::Type GUIInput::getType() {
-	return Resource::GUI_INPUT;
-}
-
 void GUIInput::hasFocus() {
 }
 

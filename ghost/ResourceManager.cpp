@@ -113,10 +113,6 @@ Resource* ResourceManager::create(Resource::Type type) {
 	case Resource::SOUND: return NEW Sound(services_);
 	case Resource::LIGHT: return NEW Light(services_);
 	case Resource::SCENARIO: return NEW Scenario(services_);
-	case Resource::GUI_IMAGE: return NEW GUIImage(services_);
-	case Resource::GUI_TEXT: return NEW GUIText(services_);
-	case Resource::GUI_BUTTON: return NEW GUIButton(services_);
-    case Resource::GUI_INPUT: return NEW GUIInput(services_);
 	default:
 		return 0;
 	}

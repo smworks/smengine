@@ -40,7 +40,7 @@ public:
 	/**
 	 * @see Resource
 	 */
-	virtual Resource::Type getType() = 0;
+	Resource::Type getType();
 
 	/**
 	 * @see Resource
@@ -139,34 +139,27 @@ public:
 	 * @param right - offset to the right.
 	 * @param top - offset to the top.
 	 */
-	void setMargins(int left, int bottom, int right = 0, int top = 0);
+	void setMargins(float left, float bottom, float right = 0.0f, float top = 0.0f);
 
 	/**
 	 * @return Left surface margin in pixels.
 	 */
-	int getMarginLeft();
+	float getMarginLeft();
 
 	/**
 	 * @return Bottom surface margin in pixels.
 	 */
-	int getMarginBottom();
+	float getMarginBottom();
 
 	/**
 	 * @return Right surface margin in pixels.
 	 */
-	int getMarginRight();
+	float getMarginRight();
 
 	/**
 	 * @return Top surface margin in pixels.
 	 */
-	int getMarginTop();
-
-	/**
-	 * Set relative view position.
-	 * @param x - x coordinate.
-	 * @param y - y coordinate.
-	 */
-	void setPos(int x, int y);
+	float getMarginTop();
 
 	/**
 	 * Specify what to use for background.
@@ -174,6 +167,11 @@ public:
 	 * value or texture name.
 	 */
 	void setBackground(string background);
+
+	/**
+	 * Return background image name or color.
+	 */
+	string getBackground();
 
 	/**
 	 * Method is called to handle all actions
@@ -184,22 +182,32 @@ public:
 	/**
 	 * @param width - width of surface in pixels.
 	 */
-	void setWidth(SIZE width);
+	void setWidth(float width);
 
 	/**
 	 * @return Width of surface in pixels.
 	 */
-	SIZE getWidth();
+	float getWidth();
 
 	/**
 	 * @param height - height of surface in pixels.
 	 */
-	void setHeight(SIZE height);
+	void setHeight(float height);
 
 	/**
 	 * @return Height of surface in pixels.
 	 */
-	SIZE getHeight();
+	float getHeight();
+	
+	/**
+	 * @return Absolute position on X axis on screen.
+	 */
+	float getPosX();
+
+	/**
+	 * @return Absolute position on Y axis on screen.
+	 */
+	float getPosY();
 protected:
 	/**
 	 * Converts units into appropriate pixel values.
@@ -217,7 +225,7 @@ protected:
 	 * original size is specified in percents.
 	 * @return Size converted to pixels.
 	 */
-	int getSize(string size, int maxSize = 0);
+	float getSize(string size, float maxSize = 0);
 
 	/**
 	 * @see Resource
@@ -225,13 +233,12 @@ protected:
 	virtual bool create();
 protected:
     UINT32 surfaceId_;
-	string textureName_;
 	UnitType widthSize_, heightSize_;
-	int marginLeft_, marginBottom_, marginRight_, marginTop_;
-	int posX_, posY_;
+	float marginLeft_, marginBottom_, marginRight_, marginTop_;
+	float posX_, posY_, width_, height_;
 	bool update_;
-	SIZE width_, height_;
 	Texture* textureBackground_;
+	UINT32 cbo_;
 };
 
 #endif

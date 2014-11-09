@@ -27,7 +27,9 @@ GUIText::GUIText(ServiceLocator* services) :
 	textOffsetX_(0),
 	textOffsetY_(0),
 	vbo_(0),
-	vertexCount_(0)
+	vertexCount_(0),
+	textWidth_(0.0f),
+	textHeight_(0.0f)
 {}
 
 GUIText::~GUIText() {
@@ -43,10 +45,6 @@ bool GUIText::create() {
 	getDiffuse().setRGBA(getAttribute(ATTR_COLOR));
     bool ret = GUISurface::create();
 	return ret;
-}
-
-Resource::Type GUIText::getType() {
-	return Resource::GUI_TEXT;
 }
 
 void GUIText::update() {
@@ -77,8 +75,8 @@ void GUIText::update() {
 	else if (screenBottom) {
 		posY = 0.0;
 	}
-	SIZE maxHeight = size_;
-	SIZE maxWidth = 0;
+	float maxHeight = (float) size_;
+	float maxWidth = 0.0f;
 	SIZE symbolOffset = 0;
 	float textOffsetY = size_ * 0.25f;
 	getServiceLocator()->getTextManager()->setFontSize(size_);
@@ -101,7 +99,7 @@ void GUIText::update() {
 		float sHeight = (float) symbol->getHeight();
 		symbolOffset += symbol->getAdvance();
 		if (symbolOffset > maxWidth) {
-			maxWidth = symbolOffset;
+			maxWidth = (float) symbolOffset;
 		}
 		// Generate vbo.
 		const float* uv = symbol->getUV();
@@ -129,8 +127,8 @@ void GUIText::update() {
 		getServiceLocator()->getGraphicsManager()->setVertexBuffer(
 			vbo_, &vertices_[0], vertexCount_ * sizeof(VertexPT));
 	}
-	setWidth(maxWidth > (SIZE) width ? maxWidth : (SIZE) width);
-	setHeight(maxHeight);
+	textWidth_ = maxWidth > width ? maxWidth : width;
+	textHeight_ = maxHeight;
 }
 
 void GUIText::hasFocus() {

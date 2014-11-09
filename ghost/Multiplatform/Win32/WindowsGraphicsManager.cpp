@@ -235,19 +235,15 @@ bool WindowsGraphicsManager::setShader(
 	handles[Shader::W] = glGetUniformLocation(id, SHADER_W);
 	handles[Shader::N] = glGetUniformLocation(id, SHADER_N);
 	handles[Shader::LIGHT_POS] = glGetUniformLocation(id, SHADER_LIGHT_POS);
-	handles[Shader::LIGHT_COUNT] = glGetUniformLocation(
-		id, SHADER_LIGHT_COUNT);
+	handles[Shader::LIGHT_COUNT] = glGetUniformLocation(id, SHADER_LIGHT_COUNT);
 	handles[Shader::EYE_POS] = glGetUniformLocation(id, SHADER_EYE_POS);
 	handles[Shader::AMBIENT] = glGetUniformLocation(id, SHADER_AMBIENT);
 	handles[Shader::DIFFUSE] = glGetUniformLocation(id, SHADER_DIFFUSE);
 	handles[Shader::SPECULAR] = glGetUniformLocation(id, SHADER_SPECULAR);
-	handles[Shader::SPECULARITY] = glGetUniformLocation(
-		id, SHADER_SPEC_INTENSITY);
-	handles[Shader::TRANSPARENCY] = glGetUniformLocation(
-		id, SHADER_TRANSPARENCY);
+	handles[Shader::SPECULARITY] = glGetUniformLocation(id, SHADER_SPEC_INTENSITY);
+	handles[Shader::TRANSPARENCY] = glGetUniformLocation(id, SHADER_TRANSPARENCY);
 	handles[Shader::FOG_COLOR] = glGetUniformLocation(id, SHADER_FOG_COLOR);
-	handles[Shader::FOG_DENSITY] = glGetUniformLocation
-		(id, SHADER_FOG_DENSITY);
+	handles[Shader::FOG_DENSITY] = glGetUniformLocation(id, SHADER_FOG_DENSITY);
 	handles[Shader::TIMER] = glGetUniformLocation(id, SHADER_TIMER);
 	handles[Shader::POS] = glGetAttribLocation(id, SHADER_POS);
 	handles[Shader::NORMAL] = glGetAttribLocation(id,	SHADER_NORMAL);
@@ -256,16 +252,11 @@ bool WindowsGraphicsManager::setShader(
 	handles[Shader::FOREGROUND] = glGetUniformLocation(id, SHADER_FOREGROUND);
 	handles[Shader::BACKGROUND] = glGetUniformLocation(id, SHADER_BACKGROUND);
 	handles[Shader::CUBE_MAP] = glGetUniformLocation(id, SHADER_CUBE_MAP);
-	handles[Shader::MAIN_TEXTURE] = glGetUniformLocation(
-		id, SHADER_HAS_MAIN_TEXTURE);
-	handles[Shader::SCREEN_WIDTH] = glGetUniformLocation(
-		id, SHADER_SCREEN_WIDTH);
-	handles[Shader::SCREEN_HEIGHT] = glGetUniformLocation(
-		id, SHADER_SCREEN_HEIGHT);
-	handles[Shader::COLOR_BUFFER] = glGetUniformLocation(
-		id, SHADER_COLOR_BUFFER);
-	handles[Shader::DEPTH_BUFFER] = glGetUniformLocation(
-		id, SHADER_DEPTH_BUFFER);
+	handles[Shader::MAIN_TEXTURE] = glGetUniformLocation(id, SHADER_HAS_MAIN_TEXTURE);
+	handles[Shader::SCREEN_WIDTH] = glGetUniformLocation(id, SHADER_SCREEN_WIDTH);
+	handles[Shader::SCREEN_HEIGHT] = glGetUniformLocation(id, SHADER_SCREEN_HEIGHT);
+	handles[Shader::COLOR_BUFFER] = glGetUniformLocation(id, SHADER_COLOR_BUFFER);
+	handles[Shader::DEPTH_BUFFER] = glGetUniformLocation(id, SHADER_DEPTH_BUFFER);
 	// Stop using this program.
 	glUseProgram(0);
 	return !checkGLError("Loading shader.");

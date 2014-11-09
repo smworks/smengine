@@ -22,10 +22,6 @@ GUIImage::GUIImage(ServiceLocator* services) :
 
 GUIImage::~GUIImage() {}
 
-Resource::Type GUIImage::getType() {
-	return Resource::GUI_IMAGE;
-}
-
 void GUIImage::hasFocus() {
 
 }

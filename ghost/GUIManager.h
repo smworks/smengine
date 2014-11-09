@@ -33,7 +33,7 @@ public:
      * @param node - pointer to root node
      * of the scene hierarchy.
      */
-    void setRootNode(Node* node);
+    void refreshNodes(Node* node);
 
     /**
      * Update GUI.
@@ -47,7 +47,6 @@ public:
 	GUISurface* getSelectedSurface();
 private:
     ServiceLocator* services_;
-    Node* rootNode_;
 	GUISurface* selectedSurface_;
     vector<Node*> nodes_;
 };

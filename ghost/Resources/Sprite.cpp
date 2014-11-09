@@ -173,11 +173,12 @@ void Sprite::setSpriteIndex(SIZE index) {
 
 void Sprite::setSpriteCount(SIZE count) {
 	if (uvBO_ != 0) {
+		getServiceLocator()->getGraphicsManager()->bindBuffer(0);
 		glDeleteBuffers(spriteCount_, uvBO_);
 		delete [] uvBO_;
 		uvBO_ = 0;
 	}
-	spriteCount_ = count;
+	spriteCount_ = count == 0 ? 1 : count;
 	uvBO_ = NEW UINT32[spriteCount_];
 	fill(uvBO_, uvBO_ + spriteCount_, 0);
 	for (SIZE i = 0; i < spriteCount_; i++) {

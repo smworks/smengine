@@ -16,11 +16,6 @@ public:
 	~GUIInput();
 
 	/**
-	 * @see Resource
-	 */
-	Resource::Type getType();
-
-	/**
 	 * @see GUISurface
 	 */
 	void hasFocus();

@@ -8,15 +8,69 @@ function eventResponse(response)
 --	end
 end
 
--- Called when GUI component listeners are activated.
-function eventGUI(guiElement, eventType)
-	print("AFKJDSLKFJLKSFJ")
-	print(guiElement:getName())
-	name = guiElement:getName()
-	if eventType == constants["ACTION_CLICK"] then
-		if name == "buttonnode" then
-			exit()
+-- Show result.
+function result(node)
+	print("YAY " .. node:getBackground())
+	resultBoard:setBackground(node:getBackground())
+	resultBoard:setVisibility(true)
+end
+
+-- Move function.
+function makeMove(node, sign)
+	if node:getBackground() == "X" or node:getBackground() == "O" then
+		return false
+	end
+	node:setBackground(sign)
+	for i = 1, 3 do
+		if fields[i][1]:getBackground() ~= "none"
+			and fields[i][1]:getBackground() == fields[i][2]:getBackground()
+			and fields[i][2]:getBackground() == fields[i][3]:getBackground()
+		then
+			result(fields[i][1])
+			return false
 		end
+		if fields[1][i]:getBackground() ~= "none"
+			and fields[1][i]:getBackground() == fields[2][i]:getBackground()
+			and fields[2][i]:getBackground() == fields[3][i]:getBackground()
+		then
+			result(fields[1][i])
+			return false
+		end
+	end
+	if fields[2][2] ~= "none" then
+		if fields[1][1]:getBackground() == fields[2][2]:getBackground()
+			and fields[2][2]:getBackground() == fields[3][3]:getBackground()
+		then
+			result(fields[2][2])
+			return false
+		end
+	end
+	return true
+end
+
+-- Called when GUI component listeners are activated.
+function eventGUI(guiNode, eventType)
+	name = guiNode:getName()
+	if eventType == constants["ACTION_CLICK"] then
+		print(guiNode:getName())
+		if guiNode:getName() == "result" then
+			for i = 1, 3 do
+				for j = 1, 3 do
+					fields[i][j]:setBackground(texture)
+				end
+			end
+			resultBoard:setVisibility(false)
+			turnX = true
+			return
+		end
+		if turnX and makeMove(guiNode, textureX) then
+			turnX = false
+			--signIndicator:setBackground(textureO)
+		elseif makeMove(guiNode, textureO) then
+			turnX = true
+			--signIndicator:setBackground(textureX)
+		end
+
 	end
 end
 
@@ -24,27 +78,69 @@ end
 function start()
 	print("Called start()")
 	input = getInput()
-
+	-- Dimensions
 	width = getScreenWidth()
 	height = getScreenHeight()
-
 	if width > height then
 		edge = height / 3.0
+		x = math.floor((width - height) / 2.0)
+		y = 0
 	else
 		edge = width / 3.0
+		x = 0
+		y = math.floor((height - width) / 2.0)
 	end
-
-	topLeft = Button.new("topleft", edge, edge)
-	topMiddle = Button.new("topmiddle", edge, edge)
-	topRight = Button.new("topright", edge, edge)
-	middleLeft = Button.new("middleleft", edge, edge)
-	middle = Button.new("middle", edge, edge)
-	middleRight = Button.new("middleright", edge, edge)
-	bottomLeft = Button.new("bottomleft", edge, edge)
-	bottomMiddle = Button.new("bottommiddle", edge, edge)
-	bottomRight = Button.new("bottomright", edge, edge)
-	
-	--topleft:setColor("#ff0000")
+	edge = math.floor(edge)
+	turnX = true
+	-- Textures
+	texture = Texture.new("none", "rgba", edge, edge)
+	texture:rectangle(0, 0, edge, edge, 255, 255, 255, 200)
+	applyBorder(texture)
+	textureX = Texture.new("X", "rgba", edge, edge)
+	textureX:rectangle(0, 0, edge, edge, 255, 255, 255, 200)
+	textureX:line(0, 0, edge - 1, edge - 1, 255, 0, 0, 255)
+	textureX:line(0, edge - 1, edge - 1, 0, 255, 0, 0, 255)
+	applyBorder(textureX)
+	textureO = Texture.new("O", "rgba", edge, edge)
+	textureO:rectangle(0, 0, edge, edge, 255, 255, 255, 200)
+	textureO:circle(edge / 2, edge / 2, edge / 2 - 1, 0, 0, 255, 255)
+	applyBorder(textureO)
+	-- Buttons
+	topLeft = Button.new("topleft", 0 + x, edge * 2 + y, edge, edge)
+	topLeft:setBackground(texture)
+	topMiddle = Button.new("topmiddle", edge + x, edge * 2 + y, edge, edge)
+	topMiddle:setBackground(texture)
+	topRight = Button.new("topright", edge * 2 + x, edge * 2 + y, edge, edge)
+	topRight:setBackground(texture)
+	middleLeft = Button.new("middleleft", 0 + x, edge + y, edge, edge)
+	middleLeft:setBackground(texture)
+	middle = Button.new("middle", edge + x, edge + y, edge, edge)
+	middle:setBackground(texture)
+	middleRight = Button.new("middleright", edge * 2 + x, edge + y, edge, edge)
+	middleRight:setBackground(texture)
+	bottomLeft = Button.new("bottomleft", 0 + x, 0 + y, edge, edge)
+	bottomLeft:setBackground(texture)
+	bottomMiddle = Button.new("bottommiddle", edge + x, 0 + y, edge, edge)
+	bottomMiddle:setBackground(texture)
+	bottomRight = Button.new("bottomright", edge * 2 + x, 0 + y, edge, edge)
+	bottomRight:setBackground(texture)
+	-- Button matrix
+	fields = {
+		{topLeft, topMiddle, topRight},
+		{middleLeft, middle, middleRight},
+		{bottomLeft, bottomMiddle, bottomRight}
+	}
+	-- Background
+	background = Sprite.new("background_color")
+	background:setScaleXYZ(width, height, 1.0)
+	background:setPosXY(width / 2.0, height / 2.0)
+	backgroundShader = Shader.new("sprite_background")
+	background:setShader(backgroundShader)
+	-- Result board
+	resultBoard = Button.new("result", 0, 0, width, height)
+	resultBoard:setVisibility(false)
+	--signIndicator = Button.new("sign", 0, 0, edge, edge)
+	--signIndicator:setBackground(textureX)
 end
 
 -- Called when program is brought to foreground.
@@ -55,11 +151,16 @@ end
 -- Called when program screen resolution is changed.
 function resize()
 	print("Called resize()")
+	width = getScreenWidth()
+	height = getScreenHeight()
+	background:setScaleXYZ(width, height, 1.0)
+	background:setPosXY(width / 2.0, height / 2.0)
 end
 
 -- Called every frame.
 function update()
-
+	--signIndicator:setMarginLeft(input:getPointerX())
+	--signIndicator:setMarginBottom(input:getPointerY())
 end
 
 -- Called when program is brought to background.
@@ -70,4 +171,13 @@ end
 -- Called when program is about to quit.
 function quit()
 	print("Called quit()")
+end
+
+function applyBorder(texture)
+	texture:line(0, 0, 0, edge - 1, 0, 0, 0, 255)
+	texture:line(edge - 1, 0, edge - 1, edge - 1, 0, 0, 0, 255)
+	texture:line(0, 0, edge - 1, 0, 0, 0, 0, 255)
+	texture:line(0, edge - 1, edge - 1, edge - 1, 0, 0, 0, 255)
+	--texture:setPixel(1, 1, 0, 0, 0, 255)
+	--texture:commit()
 end

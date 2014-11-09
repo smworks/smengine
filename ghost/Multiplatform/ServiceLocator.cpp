@@ -13,6 +13,7 @@
 #include "../Node.h"
 #include "../PhysicsManager.h"
 #include "../ResourceManager.h"
+#include "../SceneManager.h"
 #include "../ScenarioManager.h"
 #include "../ScriptManager.h"
 #include "../Settings.h"

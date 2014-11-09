@@ -28,9 +28,7 @@ bool Shader::create() {
 		LOGW("Shader name not specified for node: %s.", getName().c_str());
 		return false;
 	}
-	if (!graphicsManager_->setShader(
-		id_, getAttribute(ATTR_FILE), handles_))
-	{
+	if (!graphicsManager_->setShader(id_, getAttribute(ATTR_FILE), handles_)) {
 		LOGW("Unable to compile shader: %s.", getAttribute(ATTR_FILE).c_str());
 		return false;
 	}

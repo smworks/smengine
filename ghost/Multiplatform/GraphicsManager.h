@@ -225,14 +225,9 @@ public:
 	void render();
 
 	/**
-	 * Renders sprite.
+	 * Renders graphic user interface element with text.
 	 */
-	void renderSprite(Renderable* sprite, float x, float y, float width, float height);
-
-	/**
-	 * Renders graphic user interface element.
-	 */
-	void renderGUI(Node* node);
+	void renderGuiText(Node* node);
 
 	/**
 	 * Optimize render list for best performance.
@@ -346,6 +341,7 @@ protected:
 	Mat4 matPos, matScale, matPosScale, matProjPos, matProjPosScale;
 	SIZE maxValues_[MAX_COUNT];
 	INT8 supportValues_[SUPPORT_COUNT];
+	INT64 startTime_;
 };
 
 #endif

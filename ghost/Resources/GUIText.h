@@ -27,11 +27,6 @@ public:
     virtual bool create();
 
 	/**
-	 * @see Resource
-	 */
-	virtual Resource::Type getType();
-
-	/**
 	 * @see GUISurface
 	 */
 	void update();
@@ -63,6 +58,16 @@ public:
 	SIZE getTextSize();
 
 	/**
+	 * @return Text width.
+	 */
+	float getTextWidth();
+
+	/**
+	 * @return Text height.
+	 */
+	float getTextHeight();
+
+	/**
 	 * @return Text offset on X axis used to align text.
 	 */
 	float getTextOffsetX();
@@ -85,6 +90,7 @@ private:
 	string text_;
 	SIZE size_, textOffsetX_, textOffsetY_;
 	SIZE vbo_, vertexCount_;
+	float textWidth_, textHeight_;
 	vector<VertexPT> vertices_;
 };
 

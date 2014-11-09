@@ -206,7 +206,7 @@ void Engine::loadScene() {
     }
 #endif
 	// Other data creation.
-	services_->getGUIManager()->setRootNode(services_->getRootNode());
+	services_->getGUIManager()->refreshNodes(services_->getRootNode());
 	services_->getScriptManager()->start();
 	services_->getScriptManager()->resume();
 	resizeResources(services_->getRootNode());
