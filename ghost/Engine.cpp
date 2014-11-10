@@ -226,7 +226,9 @@ void Engine::computeFrame() {
 	if (!running_) {
 		return;
 	}
+#ifdef SMART_DEBUG
 	MEASURE_BEFORE_TIMER(Frame)
+#endif
     services_->updateTimer(
 		services_->getSettings()->getFloat(Settings::FRAME_DURATION));
     time_ = services_->getFrameTime();
@@ -372,9 +374,9 @@ void Engine::computeFrame() {
 	}
 #else
 	services_->getInput()->update();
-	services_->getSM()->update();
-	services_->getPM()->update(time_);
-	services_->getTM()->update();
+	services_->getSoundManager()->update();
+	services_->getPhysicsManager()->update(time_);
+	services_->getThreadManager()->update();
 	services_->getScriptManager()->update();
 	services_->getCamera()->update(time_);
 	updateNodes(services_->getRootNode());

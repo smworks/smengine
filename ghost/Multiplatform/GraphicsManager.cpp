@@ -719,6 +719,10 @@ void GraphicsManager::renderNode(
 		//		continue;
 		//	}
 		//}
+		//Screen width.
+		shader->setFloat(Shader::SCREEN_WIDTH, (float) services_->getScreenWidth());
+		// Screen height.
+		shader->setFloat(Shader::SCREEN_HEIGHT, (float) services_->getScreenHeight());
 		// Ambient material color.
 		if (shader->hasHandle(Shader::AMBIENT)) {
 			float farr[] = {0.0f, 0.0f, 0.0f};

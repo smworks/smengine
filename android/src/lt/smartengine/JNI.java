@@ -7,6 +7,7 @@ package lt.smartengine;
 import java.io.IOException;
 import java.io.InputStream;
 
+import android.content.Context;
 import android.util.Log;
 
 
@@ -20,14 +21,14 @@ public class JNI {
 		System.loadLibrary("ghost");
 	}
 	
-	/** Handle to main activity. */
-	private SMartEngine activity = null;
+	/** Handle to context. */
+	private Context context = null;
 	
 	/**
-	 * @param activity - handle to main activity.
+	 * @param context - handle to application context.
 	 */
-	public JNI(SMartEngine activity) {
-		this.activity = activity;
+	public JNI(Context context) {
+		this.context = context;
 	}
 
 	/**
@@ -87,11 +88,11 @@ public class JNI {
      */
 	public byte[] loadAsset(String file) {
 		try {
-			InputStream is = activity.getAssets().open(file);
+			InputStream is = context.getAssets().open(file);
 			int size = (int) is.skip(Long.MAX_VALUE);
 			byte[] buffer = new byte[size];
 			is.close();
-			is = activity.getAssets().open(file);
+			is = context.getAssets().open(file);
 			int offset = 0;
 			int nRead;
 			byte[] data = new byte[8192];
