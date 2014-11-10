@@ -448,7 +448,7 @@ void GraphicsManager::renderScene(NodeType type) {
 #ifdef SMART_DEBUG
 		UINT64 start = getMicroseconds();
 #endif
-		glEnable(GL_DEPTH_TEST);
+		//glEnable(GL_DEPTH_TEST);
 		glEnable(GL_BLEND);
 		it = textArray_.begin();
 		while (it != textArray_.end()) {
@@ -458,7 +458,7 @@ void GraphicsManager::renderScene(NodeType type) {
 			it++;
 		}
 		glDisable(GL_BLEND);
-		glDisable(GL_DEPTH_TEST);
+		//glDisable(GL_DEPTH_TEST);
 #ifdef SMART_DEBUG
 	g_renderTextTime += (getMicroseconds() - start);
 #endif
