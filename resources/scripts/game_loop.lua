@@ -77,6 +77,7 @@ end
 -- Handle initialization.
 function start()
 	print("Called start()")
+	playSound("sound.mid", true)
 	input = getInput()
 	-- Dimensions
 	width = getScreenWidth()

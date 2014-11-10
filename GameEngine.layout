@@ -2,12 +2,12 @@
 <CodeBlocks_layout_file>
 	<ActiveTarget name="Debug" />
 	<File name="dependencies/includes/bullet/BulletCollision/NarrowPhaseCollision/btPolyhedralContactClipping.cpp" open="0" top="0" tabpos="0">
-		<Cursor position="8723" topLine="285" />
+		<Cursor position="8884" topLine="285" />
 	</File>
 	<File name="ghost/Engine.cpp" open="0" top="0" tabpos="0">
 		<Cursor position="2559" topLine="60" />
 	</File>
-	<File name="ghost/Multiplatform/GraphicsManager.cpp" open="1" top="0" tabpos="2">
+	<File name="ghost/Multiplatform/GraphicsManager.cpp" open="0" top="0" tabpos="2">
 		<Cursor position="7203" topLine="187" />
 	</File>
 	<File name="ghost/Multiplatform/Linux/LinuxServiceLocator.cpp" open="0" top="0" tabpos="0">
@@ -19,16 +19,16 @@
 	<File name="ghost/Multiplatform/Linux/LinuxSystem.h" open="0" top="0" tabpos="0">
 		<Cursor position="1430" topLine="50" />
 	</File>
-	<File name="ghost/ObjParser.cpp" open="1" top="0" tabpos="3">
+	<File name="ghost/ObjParser.cpp" open="0" top="0" tabpos="3">
 		<Cursor position="9913" topLine="353" />
 	</File>
-	<File name="ghost/PhysicsManager.h" open="1" top="1" tabpos="4">
-		<Cursor position="4539" topLine="120" />
+	<File name="ghost/PhysicsManager.h" open="0" top="0" tabpos="4">
+		<Cursor position="3728" topLine="120" />
 	</File>
-	<File name="ghost/ResourceManager.cpp" open="1" top="0" tabpos="1">
+	<File name="ghost/ResourceManager.cpp" open="0" top="0" tabpos="1">
 		<Cursor position="4019" topLine="86" />
 	</File>
-	<File name="main_linux.cpp" open="0" top="0" tabpos="0">
-		<Cursor position="386" topLine="6" />
+	<File name="main_linux.cpp" open="1" top="1" tabpos="0">
+		<Cursor position="1649" topLine="0" />
 	</File>
 </CodeBlocks_layout_file>

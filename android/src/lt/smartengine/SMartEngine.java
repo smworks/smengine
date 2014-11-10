@@ -84,11 +84,20 @@ public class SMartEngine extends Activity implements OnTouchListener, SensorEven
 
     @Override protected void onPause() {
     	Log.d(TAG, "onPause");
-        super.onPause();
         if (hasRotationSensor) {
         	sensorManager.unregisterListener(this);
         }
+        if (isFinishing()) {
+        	openGLSurface.queueEvent(new Runnable() {
+    			@Override
+    			public void run() {
+    				jni.onPause();
+    				jni.onDestroy();
+    			}
+    		});
+        }
         openGLSurface.onPause();
+        super.onPause();
     }
     
     @Override protected void onDestroy() {

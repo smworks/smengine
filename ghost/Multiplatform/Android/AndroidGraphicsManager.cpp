@@ -469,7 +469,7 @@ bool AndroidGraphicsManager::setVertexBuffer(
 		glGenBuffers(1, &id);
 	}
 	bindBuffer(id);
-	glBufferData(GL_ARRAY_BUFFER, size,	buffer, GL_STATIC_DRAW);
+	glBufferData(GL_ARRAY_BUFFER, size, buffer, GL_STATIC_DRAW);
 	return !checkGLError("Setting vertex buffer");
 }
 

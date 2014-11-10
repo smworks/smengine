@@ -85,16 +85,9 @@ class OpenGLSurface extends GLSurfaceView {
 	}
 	
 	@Override public void onPause() {
-        queueEvent(new Runnable() {
-			@Override
-			public void run() {
-				jni.onPause();
-		        jni.onDestroy();
-			}
-		});
         super.onPause();
 	}
-
+	
 	private static class ContextFactory implements GLSurfaceView.EGLContextFactory {
 		private static int EGL_CONTEXT_CLIENT_VERSION = 0x3098;
 
@@ -109,6 +102,7 @@ class OpenGLSurface extends GLSurfaceView {
 
 		public void destroyContext(EGL10 egl, EGLDisplay display,
 				EGLContext context) {
+			Log.d(SMartEngine.TAG, "Destroying OpenGL ES 2.0 context.");
 			egl.eglDestroyContext(display, context);
 		}
 	}

@@ -359,7 +359,7 @@ void GraphicsManager::renderGuiText(Node* node) {
 	CHECK_GL_ERROR("Problem with text renderer");
 }
 
-struct zComparator { 
+struct zComparator {
    bool operator()(Node* left, Node* right) {
 	   return left->getPos().getZ() < right->getPos().getZ();
    }

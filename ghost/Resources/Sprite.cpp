@@ -90,7 +90,7 @@ bool Sprite::isValid() {
 
 
 SIZE Sprite::getVertexCount() {
-	return sizeof(g_planeVertices) / 3;
+	return 6;
 }
 
 

@@ -58,6 +58,7 @@
 #include <netdb.h>
 #include <netinet/in.h>
 #include <resolv.h>
+#include <assert.h>
 
 using namespace std;
 
@@ -97,6 +98,15 @@ typedef SIZE* POINTER;
     }
 #else
     #define PROFILE(...)
+#endif
+
+#ifdef SMART_DEBUG
+	#define CHECK_GL_ERROR(msg) checkGLError(msg)
+#define ASSERT(expression, ...) \
+	if (!(expression)) { LOGE(__VA_ARGS__); } assert(expression)
+#else
+	#define CHECK_GL_ERROR(msg)
+	#define ASSERT(expression, ...) if (!(expression)) { LOGE(__VA_ARGS__); }
 #endif
 
 // GRAPHICS.

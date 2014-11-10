@@ -63,7 +63,7 @@ void GUISurface::resize() {
 }
 
 SIZE GUISurface::getVertexCount() {
-	return sizeof(g_planeVertices) / 3;
+	return 6;
 }
 
 
@@ -96,7 +96,7 @@ SIZE GUISurface::getRenderCount() {
 }
 
 void GUISurface::setRenderable(SIZE i) {
-	
+
 }
 
 SIZE GUISurface::getVertexStride() {
