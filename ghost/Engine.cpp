@@ -53,7 +53,7 @@ Engine::operator void*() {
 	if (g_##name##Tmp > g_##name##Max) { g_##name##Max = g_##name##Tmp; }\
 	if (g_##name##Tmp < g_##name##Min) { g_##name##Min = g_##name##Tmp; }\
 	g_##name += g_##name##Tmp;\
-	
+
 #define DISPLAY_TIMER(name) \
 	#name": " << (double) g_##name / (double) g_fpsCount * 0.001 <<\
 	" (min: " << (double) g_##name##Min * 0.001 <<\
@@ -62,8 +62,8 @@ Engine::operator void*() {
 //UINT64 startInput = getMicroseconds();
 //	services_->getInput()->update();
 //	g_inputTime += (getMicroseconds() - startInput);
-GUIText* g_debugText;
-Node* g_debugNode;
+GUIText* g_debugText = 0;
+Node* g_debugNode = 0;
 UINT32 g_fpsCount = 0;
 INIT_TIMER(Frame)
 INIT_TIMER(Physics)
@@ -91,18 +91,18 @@ Engine::Engine(ServiceLocator* services) :
 	time_(0.0f),
 	running_(false)
 {
-    LOGD("Size of integer: %u", (UINT32) sizeof(int));
-    LOGD("Size of long: %u", (UINT32) sizeof(long));
-    LOGD("Size of float: %u", (UINT32) sizeof(float));
-    LOGD("Size of char: %u", (UINT32) sizeof(char));
-    LOGD("Size of short: %u", (UINT32) sizeof(short));
-	LOGD("Size of UINT8: %u", (UINT32) sizeof(UINT8));
-	LOGD("Size of UINT16: %u", (UINT32) sizeof(UINT16));
-	LOGD("Size of UINT32: %u", (UINT32) sizeof(UINT32));
-	LOGD("Size of UINT64: %u", (UINT32) sizeof(UINT64));
-	LOGD("Size of SIZE: %u", (UINT32) sizeof(SIZE));
-	LOGD("Size of POINTER: %u", (UINT32) sizeof(POINTER));
-    LOGD("Started creating engine object.");
+//    LOGD("Size of integer: %u", (UINT32) sizeof(int));
+//    LOGD("Size of long: %u", (UINT32) sizeof(long));
+//    LOGD("Size of float: %u", (UINT32) sizeof(float));
+//    LOGD("Size of char: %u", (UINT32) sizeof(char));
+//    LOGD("Size of short: %u", (UINT32) sizeof(short));
+//	LOGD("Size of UINT8: %u", (UINT32) sizeof(UINT8));
+//	LOGD("Size of UINT16: %u", (UINT32) sizeof(UINT16));
+//	LOGD("Size of UINT32: %u", (UINT32) sizeof(UINT32));
+//	LOGD("Size of UINT64: %u", (UINT32) sizeof(UINT64));
+//	LOGD("Size of SIZE: %u", (UINT32) sizeof(SIZE));
+//	LOGD("Size of POINTER: %u", (UINT32) sizeof(POINTER));
+//    LOGD("Started creating engine object.");
 	// Provide services that do not depend on others at this point.
 	services_->provide(NEW ScriptManager());
 	services_->provide(NEW Input());
@@ -126,12 +126,19 @@ Engine::Engine(ServiceLocator* services) :
 	services_->getSettings()->setScene("start.xml");
 	services_->getScriptManager()->initialize(services_);
     PROFILE("Finished creating engine object.");
+    LOGI("Engine object created.");
 }
 
 Engine::~Engine() {
 	services_->getScriptManager()->quit();
 	services_->release();
 	delete services_;
+#ifdef SMART_DEBUG
+    g_debugNode = 0;
+    g_monoNode = 0;
+    g_rgbaNode = 0;
+#endif
+	LOGI("Engine object deleted.");
 }
 
 void Engine::loadScene() {
@@ -346,7 +353,7 @@ void Engine::computeFrame() {
 			<< "ms\n  Text: " << renderTextTime
 			<< "ms\nResolution: " << services_->getScreenWidth()
 			<< "x" << services_->getScreenHeight() << "px\n";
-		g_debugText->setText(ss.str());
+        g_debugText->setText(ss.str());
 		g_fpsCount = 0;
 		g_time = 0.0f;
 		RESET_TIMER(Frame)

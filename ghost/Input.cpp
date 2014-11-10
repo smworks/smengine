@@ -36,6 +36,7 @@ void Input::update() {
         InputEvent& event = (*it);
         switch (event.type) {
         case TOUCH_SENSOR:
+            LOGI("TOUCH");
             handleTouch(
 				event.x, event.y, event.state == PRESSED ? true : false);
             break;

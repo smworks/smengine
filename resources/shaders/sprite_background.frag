@@ -3,7 +3,7 @@ varying vec2 varTexCoords;
 
 #define MAX_ITER 4
 void main( void ) {
-	uTimer = uTimer * 0.1;
+	float time = uTimer * 0.1;
 	vec2 sp = varTexCoords;//vec2(.4, .7);
 	vec2 p = sp*6.0 - vec2(125.0);
 	vec2 i = p;
@@ -13,7 +13,7 @@ void main( void ) {
 
 	for (int n = 0; n < MAX_ITER; n++) 
 	{
-		float t = uTimer* (1.0 - (3.0 / float(n+1)));
+		float t = time* (1.0 - (3.0 / float(n+1)));
 		i = p + vec2(cos(t - i.x) + sin(t + i.y), sin(t - i.y) + cos(t + i.x));
 		c += 1.0/length(vec2(p.x / (sin(i.x+t)/inten),p.y / (cos(i.y+t)/inten)));
 	}
