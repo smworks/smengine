@@ -35,6 +35,7 @@ import android.view.WindowManager;
 class OpenGLSurface extends GLSurfaceView {
 	private Context context = null;
 	private JNI jni = null;
+	private long engine;
 
 	public OpenGLSurface(Context context, JNI jni) {
 		super(context);
@@ -278,15 +279,23 @@ class OpenGLSurface extends GLSurfaceView {
 		protected int mStencilSize;
 		private int[] mValue = new int[1];
 	}
+	
+	public long getEngine() {
+		return engine;
+	}
+	
+	public void setEngine(long engine) {
+		this.engine = engine;
+	}
 
 	private class Renderer implements GLSurfaceView.Renderer {
 		public void onDrawFrame(GL10 gl) {
-			jni.render();
+			jni.render(engine);
 		}
 
 		public void onSurfaceChanged(GL10 gl, int width, int height) {
 			Log.d(SMartEngine.TAG, "Surface changed.");
-			jni.resize(width, height);
+			jni.resize(width, height, engine);
 		}
 
 		@SuppressWarnings("deprecation")
@@ -296,8 +305,8 @@ class OpenGLSurface extends GLSurfaceView {
 				.getDefaultDisplay();
 			Log.d(SMartEngine.TAG, "Starting engine with resolution: "
 				+ display.getWidth() + "x" + display.getHeight() + ".");
-			jni.onCreate(display.getHeight(), display.getWidth());
-			jni.onResume();
+			engine = jni.onCreate(display.getHeight(), display.getWidth());
+			jni.onResume(engine);
 		}
 		
 	}

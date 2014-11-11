@@ -1,12 +1,12 @@
 ﻿/*
- * LinuxGraphicsManager.h
+ * AndroidGraphicsManager.h
  *
- *  Created on: 2013.03.26
+ *  Created on: 2013.03.31
  *      Author: Martynas Šustavičius
  */
 
-#ifndef LINUXGRAPHICSMANAGER_H_
-#define LINUXGRAPHICSMANAGER_H_
+#ifndef ANDROIDGRAPHICSMANAGER_H_
+#define ANDROIDGRAPHICSMANAGER_H_
 
 #include "../Ghost.h"
 #include "../GraphicsManager.h"
@@ -14,16 +14,16 @@ class ServiceLocator;
 class Shader;
 class TextureRGBA;
 
-class LinuxGraphicsManager : public GraphicsManager {
+class AndroidGraphicsManager : public GraphicsManager {
 public:
-	LinuxGraphicsManager(ServiceLocator* services);
-	~LinuxGraphicsManager();
-
+	AndroidGraphicsManager(ServiceLocator* services);
+	~AndroidGraphicsManager();
+	
 	/**
 	 * @see GraphicsManager.
 	 */
 	bool isGraphicsContextAvailable();
-
+	
 	/**
 	 * @see GraphicsManager.
 	 */
@@ -53,7 +53,7 @@ public:
 	/**
 	 * @see GraphicsManager.
 	 */
-	bool setShader(UINT32& id, string vert, string frag, int handles[]);
+	bool setShader(UINT32& id, const string& name, int handles[]);
 
 	/**
 	 * @see GraphicsManager.
@@ -71,7 +71,7 @@ public:
 	 * @see GraphicsManager.
 	 */
 	int getShaderHandle(UINT32 id, const string& name);
-
+	
 	/**
 	 * @see GraphicsManager.
 	 */
@@ -82,12 +82,12 @@ public:
 	 * @see GraphicsManager.
 	 */
 	void unsetFrameBuffer(UINT32& id, UINT32& color, UINT32& depth);
-
+	
 	/**
 	 * @see GraphicsManager.
 	 */
 	void useFrameBuffer(UINT32 id);
-
+	
 	/**
 	 * @see GraphicsManager.
 	 */
@@ -98,7 +98,7 @@ public:
 	 */
 	void unsetVertexBuffer(UINT32& id);
 
-    /**
+	/**
 	 * @see GraphicsManager.
 	 */
 	bool checkSupport(Support key);

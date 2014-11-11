@@ -17,6 +17,7 @@ import android.view.View.OnTouchListener;
 import android.view.WindowManager;
 
 
+@SuppressLint("ClickableViewAccessibility")
 public class SMartEngine extends Activity implements OnTouchListener, SensorEventListener {
 
 	public static final String TAG = "SMart Engine";
@@ -31,7 +32,7 @@ public class SMartEngine extends Activity implements OnTouchListener, SensorEven
     Sensor rotationSensor;
     float rotationMatrix[] = new float[9];
 
-	@SuppressLint({ "InlinedApi", "NewApi" })
+	@SuppressLint({ "InlinedApi", "NewApi", "ClickableViewAccessibility" })
 	@Override protected void onCreate(Bundle icicle) {
     	Log.d(TAG, "onCreate");
         super.onCreate(icicle);
@@ -91,8 +92,9 @@ public class SMartEngine extends Activity implements OnTouchListener, SensorEven
         	openGLSurface.queueEvent(new Runnable() {
     			@Override
     			public void run() {
-    				jni.onPause();
-    				jni.onDestroy();
+    				jni.onPause(openGLSurface.getEngine());
+    				jni.onDestroy(openGLSurface.getEngine());
+    				openGLSurface.setEngine(0);
     			}
     		});
         }
@@ -112,7 +114,7 @@ public class SMartEngine extends Activity implements OnTouchListener, SensorEven
     	openGLSurface.queueEvent(new Runnable() {
 			@Override
 			public void run() {
-				jni.provideTouchInput(x, y, action != MotionEvent.ACTION_UP);
+				jni.provideTouchInput(x, y, action != MotionEvent.ACTION_UP, openGLSurface.getEngine());
 			}
 		});
     	return true;

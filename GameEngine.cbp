@@ -929,6 +929,8 @@
 		<Unit filename="ghost/Resources/Vertex.h" />
 		<Unit filename="ghost/ScenarioManager.cpp" />
 		<Unit filename="ghost/ScenarioManager.h" />
+		<Unit filename="ghost/SceneManager.cpp" />
+		<Unit filename="ghost/SceneManager.h" />
 		<Unit filename="ghost/ScriptBindings.cpp" />
 		<Unit filename="ghost/ScriptBindings.h" />
 		<Unit filename="ghost/ScriptManager.cpp" />

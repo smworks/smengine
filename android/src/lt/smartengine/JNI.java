@@ -36,8 +36,9 @@ public class JNI {
 	 * @param x - column of screen pixels.
 	 * @param y - row of screen pixels.
 	 * @param pressed - if true, means that button is pressed.
+	 * @param engine - pointer to engine object.
 	 */
-	public native void provideTouchInput(int x, int y, boolean pressed);
+	public native void provideTouchInput(int x, int y, boolean pressed, long engine);
 	
 	/**
 	 * Sends accelerometer values to native code.
@@ -51,35 +52,41 @@ public class JNI {
 	 * Creates game engine object.
 	 * @param width - the current view width.
 	 * @param height - the current view height.
+	 * @return Pointer to engine object, that must be passed to other methods.
 	 */
-	public native void onCreate(int width, int height);
+	public native long onCreate(int width, int height);
 
 	/**
 	 * Starts running game engine.
+	 * @param engine - pointer to engine object.
 	 */
-	public native void onResume();
+	public native void onResume(long engine);
 
 	/**
 	 * Stops game engine from doing any work.
+	 * @param engine - pointer to engine object.
 	 */
-	public native void onPause();
+	public native void onPause(long engine);
 
 	/**
 	 * Destroys game engine object.
+	 * @param engine - pointer to engine object.
 	 */
-	public native void onDestroy();
+	public native void onDestroy(long engine);
 
 	/**
 	 * Notifies game engine that current resolution has changed.
 	 * @param width - new width of the screen in pixels.
 	 * @param height - new height of the screen in pixels.
+	 * @param engine - pointer to engine object.
 	 */
-	public native void resize(int width, int height);
+	public native void resize(int width, int height, long engine);
 
 	/**
 	 * Renders one frame representing current game engine scene.
+	 * @param engine - pointer to engine object.
 	 */
-	public native void render();
+	public native void render(long engine);
 	
     /**
      * Loads specified file into byte array.

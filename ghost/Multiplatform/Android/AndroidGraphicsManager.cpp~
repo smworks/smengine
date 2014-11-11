@@ -209,32 +209,21 @@ int loadShader(GLuint type, const char* source) {
 }
 
 bool AndroidGraphicsManager::setShader(
-	UINT32& id, const string& name, int handles[])
+	UINT32& id, string vert, string frag, int handles[])
 {
-	string vertex, fragment;
-	services_->getFileManager()->loadText(vertex, (GHOST_SHADERS + name + SHADER_VERTEX_SUFFIX).c_str());
-	services_->getFileManager()->loadText(fragment, (GHOST_SHADERS + name + SHADER_FRAGMENT_SUFFIX).c_str());
-	if (vertex.length() == 0) {
-		LOGW("Vertex shader is empty for \"%s\".", name.c_str());
-		return false;
-	}
-	if (fragment.length() == 0) {
-		LOGW("Fragment shader is empty for \"%s\".", name.c_str());
-		return false;
-	}
-	fragment = "#ifdef GL_FRAGMENT_PRECISION_HIGH\n"
+	frag = "#ifdef GL_FRAGMENT_PRECISION_HIGH\n"
 		"precision highp float;\n"
 		"#else\n"
 		"precision mediump float;\n"
-		"#endif\n" + fragment;
+		"#endif\n" + frag;
 	GLuint vertexId, fragmentId;
 	GLint linked;
 	if ((vertexId = loadShader(GL_VERTEX_SHADER, vertex.c_str())) == 0) {
-		LOGW("Vertex part of shader not loaded for \"%s\".", name.c_str());
+		LOGW("Vertex part of shader not loaded for \"%s\".", vert.c_str());
 		return false;
 	}
 	if ((fragmentId = loadShader(GL_FRAGMENT_SHADER, fragment.c_str())) == 0) {
-		LOGW("Fragment part of shader not loaded for \"%s\".", name.c_str());
+		LOGW("Fragment part of shader not loaded for \"%s\".", frag.c_str());
 		glDeleteShader(vertexId);
 		return false;
 	}
@@ -469,7 +458,7 @@ bool AndroidGraphicsManager::setVertexBuffer(
 		glGenBuffers(1, &id);
 	}
 	bindBuffer(id);
-	glBufferData(GL_ARRAY_BUFFER, size,	buffer, GL_STATIC_DRAW);
+	glBufferData(GL_ARRAY_BUFFER, size, buffer, GL_STATIC_DRAW);
 	return !checkGLError("Setting vertex buffer");
 }
 

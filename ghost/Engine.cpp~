@@ -139,6 +139,7 @@ Engine::~Engine() {
     g_monoNode = 0;
     g_rgbaNode = 0;
 #endif
+	LOGI("Engine object deleted.");
 }
 
 void Engine::loadScene() {
