@@ -100,16 +100,6 @@ void GraphicsManager::create() {
 	glEnable(GL_DITHER);
 	// Specify blending function.
 	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
-	// Initialize loading screen.
-	// Load loading screen shader.
-	loadingShader_ = NEW Shader(services_);
-	loadingShader_->getAttributes().setString(
-		Resource::ATTR_FILE, settings_->getString(
-			Settings::LOADING_SCREEN_SHADER));
-	loadingShader_->create();
-	if (loadingShader_ == 0) {
-		LOGE("Unable to load default shader.");
-	}
 	// Load screen plane.
 	StaticObject* obj = NEW StaticObject(services_);
 	obj->getAttributes().setString(
@@ -118,12 +108,6 @@ void GraphicsManager::create() {
 		StaticObject::ATTR_TYPE, StaticObject::VAL_PLANE);
 	obj->create();
 	screenPlane_ = obj;
-	// Load loading screen texture.
-	loadingTexture_ = NEW TextureRGBA(services_);
-	loadingTexture_->getAttributes().setString(
-		Resource::ATTR_FILE, LOADING_BACKGROUND);
-	loadingTexture_->create();
-	CHECK_GL_ERROR("Error initialising graphics manager.");
 	// Load immediate mode shader.
 	immediateShader_ = NEW Shader(services_);
 	string& immediateShaderName = settings_->getString(
@@ -165,14 +149,13 @@ void GraphicsManager::create() {
 	//rp->setShader(shader);
 	//passes_.push_back(rp);
 	startTime_ = getMicroseconds();
+	CHECK_GL_ERROR("Error initialising graphics manager.");
 }
 
 void GraphicsManager::release() {
 	unsetVertexBuffer(planeVBO_);
 	unsetVertexBuffer(planeUVBO_);
-	delete loadingTexture_;
 	delete screenPlane_;
-	delete loadingShader_;
 	vector<RenderPass*>::iterator it = passes_.begin();
 	while (it != passes_.end()) {
 		delete (*it);
@@ -263,46 +246,6 @@ void GraphicsManager::resize(UINT32 width, UINT32 height) {
 		delete backBuffer_;
 	}
 	backBuffer_ = NEW FrameBuffer(this, width, height);
-}
-
-void GraphicsManager::renderLoading() {
-	services_->updateTimer(1000.0f / 30.0f);
-	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-	int shaderId = loadingShader_->getId();
-	useProgram(shaderId);
-	int hTexture = glGetUniformLocation(shaderId,
-			SHADER_MAIN_TEXTURE);
-	if (!loadingShader_->hasHandle(Shader::WVP)
-		||!loadingShader_->hasHandle(Shader::POS)
-		|| !loadingShader_->hasHandle(Shader::UV)) {
-		LOGE("Loading screen shader does not "
-			"contain required variables.");
-		return;
-	}
-	loadingShader_->setMatrix4(Shader::WVP, screenMatrix_);
-	loadingShader_->setFloat(Shader::TIMER, getMicroseconds() / 1000000.0f);
-	// Screen width.
-	loadingShader_->setFloat(Shader::SCREEN_WIDTH,
-		(float) services_->getScreenWidth());
-	// Screen height.
-	loadingShader_->setFloat(Shader::SCREEN_HEIGHT,
-		(float) services_->getScreenHeight());
-	bindTexture(loadingTexture_->getId());
-	glUniform1i(hTexture, 0);
-	SIZE stride = screenPlane_->getVertexStride();
-	bindBuffer(screenPlane_->getCBO());
-	glEnableVertexAttribArray(loadingShader_->getHandle(Shader::POS));
-	glVertexAttribPointer(
-		loadingShader_->getHandle(Shader::POS), 3, GL_FLOAT, GL_FALSE,
-		stride, ((char*) 0) + screenPlane_->getPosOffset());
-	glEnableVertexAttribArray(loadingShader_->getHandle(Shader::UV));
-	glVertexAttribPointer(
-		loadingShader_->getHandle(Shader::UV), 2, GL_FLOAT, GL_FALSE,
-		stride, ((char*) 0) + screenPlane_->getUVOffset());
-	glDrawArrays(GL_TRIANGLES, 0, (GLint) screenPlane_->getVertexCount());
-	glDisableVertexAttribArray(loadingShader_->getHandle(Shader::UV));
-	glDisableVertexAttribArray(loadingShader_->getHandle(Shader::POS));
-	CHECK_GL_ERROR("Error while rendering loading screen");
 }
 
 void GraphicsManager::render() {

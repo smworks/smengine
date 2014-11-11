@@ -67,6 +67,8 @@ public:
 		COLOR_BUFFER, DEPTH_BUFFER,
 		HANDLE_COUNT
 	};
+	static const string ATTR_VERTEX_SHADER;
+	static const string ATTR_FRAGMENT_SHADER;
 public:
 	Shader(ServiceLocator* services);
 	~Shader();
@@ -157,6 +159,18 @@ public:
 	 * @return Reference to specified handle.
 	 */
 	int& getHandle(HandleType type);
+
+	/**
+	 * @param services - service locator object.
+	 * @return Default sprite shader.
+	 */
+	static Shader* getDefaultSpriteShader(ServiceLocator* services);
+
+	/**
+	 * @param services - service locator object.
+	 * @return Default model shader.
+	 */
+	static Shader* getDefaultModelShader(ServiceLocator* services);
 protected:
 	UINT32 id_;
 	int handles_[HANDLE_COUNT];

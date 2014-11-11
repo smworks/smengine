@@ -54,7 +54,7 @@ public:
 	/**
 	 * @see GraphicsManager.
 	 */
-	bool setShader(UINT32& id, const string& name, int handles[]);
+	bool setShader(UINT32& id, string vert, string frag, int handles[]);
 
 	/**
 	 * @see GraphicsManager.

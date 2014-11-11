@@ -235,17 +235,7 @@ int StaticObject::getUVOffset() {
 }
 
 Shader* StaticObject::getDefaultShader() {
-	ServiceLocator* sl = getServiceLocator();
-	string& name = sl->getSettings()->getString(
-		Settings::DEFAULT_MODEL_SHADER);
-	Shader* shader = dynamic_cast<Shader*>(sl->getRM()->get(SHADER, name));
-	if (shader == 0) {
-		shader = NEW Shader(sl);
-		shader->getAttributes().setString(ATTR_FILE, name);
-		shader->create();
-		sl->getRM()->add(name, shader);
-	}
-	return shader;
+	return Shader::getDefaultModelShader(getServiceLocator());
 }
 
 BoundingVolume* StaticObject::getBoundingVolume() {

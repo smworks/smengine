@@ -126,6 +126,8 @@ Engine::Engine(ServiceLocator* services) :
 	services_->getSettings()->setScene("start.xml");
 	services_->getScriptManager()->initialize(services_);
     PROFILE("Finished creating engine object.");
+	loadScene();
+	time_ = 0;
     LOGI("Engine object created.");
 }
 
@@ -215,13 +217,11 @@ void Engine::loadScene() {
 	// Other data creation.
 	services_->getGUIManager()->refreshNodes(services_->getRootNode());
 	services_->getScriptManager()->start();
-	services_->getScriptManager()->resume();
 	resizeResources(services_->getRootNode());
     PROFILE("Finished loading scene.")
 }
 
 
-bool g_readyToLoad = false;
 void Engine::computeFrame() {
 	if (!running_) {
 		return;
@@ -240,18 +240,6 @@ void Engine::computeFrame() {
 #endif
 	if (error_) {
 		return;
-	}
-	if (!services_->getSettings()->isSceneLoaded()) {
-		if (!g_readyToLoad) {
-			services_->getGraphicsManager()->renderLoading();
-			g_readyToLoad = true;
-			return;
-		}
-		else {
-			loadScene();
-			g_readyToLoad = false;
-			time_ = 0;
-		}
 	}
 #ifdef SMART_DEBUG
 	// Rezerve area for 128x128 texture in monochrome texture atlas.

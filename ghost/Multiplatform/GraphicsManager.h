@@ -26,7 +26,6 @@ class ServiceLocator;
 
 #define USE_POST_PROCESSING "use_post_processing"
 #define PLANE "plane"
-#define LOADING_BACKGROUND "loading.png"
 
 class GraphicsManager {
 public:
@@ -111,11 +110,12 @@ public:
 	/**
 	 * Compiles shader.
 	 * @param id - id of the shader.
-	 * @param name - name of the shader.
+	 * @param vert - vertex shader code.
+	 * @param frag - fragment shader code.
 	 * @param handles - array of handles to shader variables.
 	 * @return True on success.
 	 */
-	virtual bool setShader(UINT32& id, const string& name, int handles[]) = 0;
+	virtual bool setShader(UINT32& id, string vert, string frag, int handles[]) = 0;
 
 	/**
 	 * Removes shader from graphics memory.
@@ -213,13 +213,6 @@ public:
 	void resize(UINT32 width, UINT32 height);
 
 	/**
-	 * Renders loading screen.
-	 * Method is used to render something lightweight,
-	 * while scene is being constructed.
-	 */
-	void renderLoading();
-
-	/**
 	 * Render scene.
 	 */
 	void render();
@@ -307,6 +300,7 @@ public:
 	 * @return True if new buffer was bound.
 	 */
 	bool bindBuffer(SIZE id);
+
 protected:
 	ServiceLocator* services_;
 	Settings* settings_;
@@ -323,10 +317,8 @@ protected:
 	Mat4 screenMatrix_;
 	Mat4 viewMatrix_;
 	Renderable* screenPlane_;
-	Shader* loadingShader_;
 	Shader* immediateShader_;
 	Shader* textShader_;
-	TextureRGBA* loadingTexture_;
 	vector<RenderPass*> passes_;
 	FrameBuffer* frontBuffer_;
 	FrameBuffer* backBuffer_;
