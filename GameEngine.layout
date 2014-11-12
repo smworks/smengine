@@ -4,13 +4,13 @@
 	<File name="dependencies/includes/bullet/BulletCollision/NarrowPhaseCollision/btPolyhedralContactClipping.cpp" open="0" top="0" tabpos="0">
 		<Cursor position="8884" topLine="287" />
 	</File>
-	<File name="ghost/Engine.cpp" open="1" top="0" tabpos="1">
-		<Cursor position="6522" topLine="131" />
+	<File name="ghost/Engine.cpp" open="1" top="1" tabpos="0">
+		<Cursor position="1818" topLine="60" />
 	</File>
-	<File name="ghost/GUIManager.cpp" open="1" top="1" tabpos="3">
+	<File name="ghost/GUIManager.cpp" open="0" top="0" tabpos="3">
 		<Cursor position="1541" topLine="7" />
 	</File>
-	<File name="ghost/Input.cpp" open="1" top="0" tabpos="2">
+	<File name="ghost/Input.cpp" open="0" top="0" tabpos="2">
 		<Cursor position="3405" topLine="121" />
 	</File>
 	<File name="ghost/Multiplatform/GraphicsManager.cpp" open="0" top="0" tabpos="2">
@@ -23,16 +23,16 @@
 		<Cursor position="1459" topLine="55" />
 	</File>
 	<File name="ghost/Multiplatform/Linux/LinuxGraphicsManager.cpp" open="0" top="0" tabpos="0">
-		<Cursor position="1303" topLine="363" />
+		<Cursor position="5167" topLine="151" />
+	</File>
+	<File name="ghost/Multiplatform/Linux/LinuxGraphicsManager.h" open="0" top="0" tabpos="0">
+		<Cursor position="1264" topLine="12" />
 	</File>
 	<File name="ghost/Multiplatform/Linux/LinuxServiceLocator.cpp" open="0" top="0" tabpos="0">
-		<Cursor position="131" topLine="0" />
+		<Cursor position="2406" topLine="48" />
 	</File>
 	<File name="ghost/Multiplatform/Linux/LinuxServiceLocator.h" open="0" top="0" tabpos="0">
 		<Cursor position="171" topLine="0" />
-	</File>
-	<File name="ghost/Multiplatform/Linux/LinuxSystem.h" open="0" top="0" tabpos="0">
-		<Cursor position="1430" topLine="50" />
 	</File>
 	<File name="ghost/ObjParser.cpp" open="0" top="0" tabpos="3">
 		<Cursor position="9913" topLine="353" />

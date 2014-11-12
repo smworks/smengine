@@ -855,7 +855,6 @@
 		<Unit filename="ghost/Multiplatform/Linux/LinuxServiceLocator.h" />
 		<Unit filename="ghost/Multiplatform/Linux/LinuxSocket.cpp" />
 		<Unit filename="ghost/Multiplatform/Linux/LinuxSocket.h" />
-		<Unit filename="ghost/Multiplatform/Linux/LinuxSystem.h" />
 		<Unit filename="ghost/Multiplatform/Linux/LinuxThread.cpp" />
 		<Unit filename="ghost/Multiplatform/Linux/LinuxThread.h" />
 		<Unit filename="ghost/Multiplatform/ServiceLocator.cpp" />
