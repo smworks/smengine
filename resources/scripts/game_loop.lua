@@ -16,7 +16,7 @@ function start()
 	background = Sprite.new("background_color")
 	background:setScaleXYZ(width, height, 1.0)
 	background:setPosXY(width / 2.0, height / 2.0)
-	backgroundShader = Shader.new("sprite_background_ocean")
+	backgroundShader = Shader.new("wallpaper_fractal_3d_3")
 	background:setShader(backgroundShader)
 end
 
