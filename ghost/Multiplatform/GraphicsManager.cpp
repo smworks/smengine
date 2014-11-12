@@ -28,12 +28,6 @@
 
 #define MAX_ACTIVE_TEXTURES 32
 
-#ifdef SMART_DEBUG
-	extern UINT64 g_renderModelTime;
-	extern UINT64 g_renderSpriteTime;
-	extern UINT64 g_renderTextTime;
-#endif
-
 GraphicsManager::GraphicsManager(ServiceLocator* services) :
 	services_(services),
 	frontBuffer_(0),
@@ -356,9 +350,6 @@ void GraphicsManager::color(float r, float g, float b, float a) {
 void GraphicsManager::renderScene(NodeType type) {
 	static vector<Node*>::const_iterator it;
 	if (type == ALL || type == MODEL) {
-#ifdef SMART_DEBUG
-		UINT64 start = getMicroseconds();
-#endif
 		glEnable(GL_DEPTH_TEST);
 		it = modelArray_.begin();
 		while (it != modelArray_.end())	{
@@ -366,14 +357,8 @@ void GraphicsManager::renderScene(NodeType type) {
 			it++;
 		}
 		glDisable(GL_DEPTH_TEST);
-#ifdef SMART_DEBUG
-		g_renderModelTime += (getMicroseconds() - start);
-#endif
 	}
 	if (type == ALL || type == SPRITE || type == SPRITE_TEXT) {
-#ifdef SMART_DEBUG
-		UINT64 start = getMicroseconds();
-#endif
 		glEnable(GL_DEPTH_TEST);
 		glEnable(GL_BLEND);
 		it = spriteArray_.begin();
@@ -383,14 +368,8 @@ void GraphicsManager::renderScene(NodeType type) {
 		}
 		glDisable(GL_BLEND);
 		glDisable(GL_DEPTH_TEST);
-#ifdef SMART_DEBUG
-		g_renderSpriteTime += (getMicroseconds() - start);
-#endif
 	}
 	if (type == ALL || type == TEXT || type == SPRITE_TEXT) {
-#ifdef SMART_DEBUG
-		UINT64 start = getMicroseconds();
-#endif
 		//glEnable(GL_DEPTH_TEST);
 		glEnable(GL_BLEND);
 		it = textArray_.begin();
@@ -402,9 +381,6 @@ void GraphicsManager::renderScene(NodeType type) {
 		}
 		glDisable(GL_BLEND);
 		//glDisable(GL_DEPTH_TEST);
-#ifdef SMART_DEBUG
-	g_renderTextTime += (getMicroseconds() - start);
-#endif
 	}
 }
 
