@@ -1,73 +1,79 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes" ?>
 <CodeBlocks_layout_file>
-	<ActiveTarget name="Debug" />
-	<File name="dependencies/includes/bullet/BulletCollision/NarrowPhaseCollision/btPolyhedralContactClipping.cpp" open="0" top="0" tabpos="0">
-		<Cursor position="8884" topLine="287" />
+	<ActiveTarget name="Release" />
+	<File name="ghost/ResourceManager.cpp" open="0" top="0" tabpos="1" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+		<Cursor>
+			<Cursor1 position="0" topLine="0" />
+		</Cursor>
 	</File>
-	<File name="ghost/Engine.cpp" open="1" top="1" tabpos="0">
-		<Cursor position="1818" topLine="60" />
+	<File name="dependencies/includes/bullet/BulletCollision/CollisionDispatch/btCollisionObject.h" open="0" top="0" tabpos="0" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+		<Cursor>
+			<Cursor1 position="3547" topLine="67" />
+		</Cursor>
 	</File>
-	<File name="ghost/GUIManager.cpp" open="0" top="0" tabpos="3">
-		<Cursor position="1541" topLine="7" />
+	<File name="ghost/Multiplatform/ServiceLocator.h" open="0" top="0" tabpos="0" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+		<Cursor>
+			<Cursor1 position="2403" topLine="94" />
+		</Cursor>
 	</File>
-	<File name="ghost/Input.cpp" open="0" top="0" tabpos="2">
-		<Cursor position="3405" topLine="121" />
+	<File name="ghost/Multiplatform/GraphicsManager.cpp" open="0" top="0" tabpos="2" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+		<Cursor>
+			<Cursor1 position="0" topLine="0" />
+		</Cursor>
 	</File>
-	<File name="ghost/Multiplatform/GraphicsManager.cpp" open="0" top="0" tabpos="2">
-		<Cursor position="4843" topLine="92" />
+	<File name="ghost/Settings.h" open="0" top="0" tabpos="0" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+		<Cursor>
+			<Cursor1 position="552" topLine="12" />
+		</Cursor>
 	</File>
-	<File name="ghost/Multiplatform/GraphicsManager.h" open="0" top="0" tabpos="0">
-		<Cursor position="8960" topLine="288" />
+	<File name="ghost/Multiplatform/Linux/LinuxGhost.h" open="0" top="0" tabpos="0" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+		<Cursor>
+			<Cursor1 position="2711" topLine="95" />
+		</Cursor>
 	</File>
-	<File name="ghost/Multiplatform/Linux/LinuxGhost.h" open="0" top="0" tabpos="0">
-		<Cursor position="1459" topLine="55" />
+	<File name="ghost/GUIManager.cpp" open="0" top="0" tabpos="3" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+		<Cursor>
+			<Cursor1 position="0" topLine="0" />
+		</Cursor>
 	</File>
-	<File name="ghost/Multiplatform/Linux/LinuxGraphicsManager.cpp" open="0" top="0" tabpos="0">
-		<Cursor position="5167" topLine="151" />
+	<File name="ghost/Settings.cpp" open="0" top="0" tabpos="0" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+		<Cursor>
+			<Cursor1 position="1264" topLine="27" />
+		</Cursor>
 	</File>
-	<File name="ghost/Multiplatform/Linux/LinuxGraphicsManager.h" open="0" top="0" tabpos="0">
-		<Cursor position="1264" topLine="12" />
+	<File name="ghost/Engine.cpp" open="0" top="0" tabpos="0" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+		<Cursor>
+			<Cursor1 position="2148" topLine="39" />
+		</Cursor>
 	</File>
-	<File name="ghost/Multiplatform/Linux/LinuxServiceLocator.cpp" open="0" top="0" tabpos="0">
-		<Cursor position="2406" topLine="48" />
+	<File name="ghost/ObjParser.cpp" open="0" top="0" tabpos="3" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+		<Cursor>
+			<Cursor1 position="0" topLine="0" />
+		</Cursor>
 	</File>
-	<File name="ghost/Multiplatform/Linux/LinuxServiceLocator.h" open="0" top="0" tabpos="0">
-		<Cursor position="171" topLine="0" />
+	<File name="ghost/Input.cpp" open="0" top="0" tabpos="2" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+		<Cursor>
+			<Cursor1 position="0" topLine="0" />
+		</Cursor>
 	</File>
-	<File name="ghost/ObjParser.cpp" open="0" top="0" tabpos="3">
-		<Cursor position="9913" topLine="353" />
+	<File name="dependencies/includes/lua/loslib.c" open="0" top="0" tabpos="0" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+		<Cursor>
+			<Cursor1 position="2199" topLine="87" />
+		</Cursor>
 	</File>
-	<File name="ghost/PhysicsManager.h" open="0" top="0" tabpos="4">
-		<Cursor position="3728" topLine="120" />
+	<File name="main_linux.cpp" open="0" top="0" tabpos="0" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+		<Cursor>
+			<Cursor1 position="6925" topLine="222" />
+		</Cursor>
 	</File>
-	<File name="ghost/ResourceManager.cpp" open="0" top="0" tabpos="1">
-		<Cursor position="4019" topLine="86" />
+	<File name="ghost/PhysicsManager.h" open="0" top="0" tabpos="4" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+		<Cursor>
+			<Cursor1 position="0" topLine="0" />
+		</Cursor>
 	</File>
-	<File name="ghost/Resources/GUISurface.cpp" open="0" top="0" tabpos="0">
-		<Cursor position="1244" topLine="9" />
-	</File>
-	<File name="ghost/Resources/GUIText.cpp" open="0" top="0" tabpos="0">
-		<Cursor position="4186" topLine="109" />
-	</File>
-	<File name="ghost/Resources/GUIText.h" open="0" top="0" tabpos="0">
-		<Cursor position="289" topLine="0" />
-	</File>
-	<File name="ghost/Resources/Sprite.cpp" open="0" top="0" tabpos="0">
-		<Cursor position="2027" topLine="51" />
-	</File>
-	<File name="ghost/Resources/StaticObject.cpp" open="0" top="0" tabpos="0">
-		<Cursor position="4481" topLine="134" />
-	</File>
-	<File name="ghost/Resources/TextureRGBA.cpp" open="0" top="0" tabpos="0">
-		<Cursor position="1108" topLine="20" />
-	</File>
-	<File name="ghost/Shapes.h" open="0" top="0" tabpos="0">
-		<Cursor position="196" topLine="0" />
-	</File>
-	<File name="ghost/ThreadManager.cpp" open="0" top="0" tabpos="0">
-		<Cursor position="1514" topLine="18" />
-	</File>
-	<File name="main_linux.cpp" open="0" top="0" tabpos="0">
-		<Cursor position="1649" topLine="0" />
+	<File name="ghost/Multiplatform/Linux/LinuxGraphicsManager.cpp" open="0" top="0" tabpos="0" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+		<Cursor>
+			<Cursor1 position="835" topLine="0" />
+		</Cursor>
 	</File>
 </CodeBlocks_layout_file>

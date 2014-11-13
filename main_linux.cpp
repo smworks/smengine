@@ -5,7 +5,7 @@
 #include "ghost/Multiplatform/Linux/LinuxServiceLocator.h"
 
 Engine* GHOST = 0;
-bool fullscreen = true;
+bool fullscreen = false;
 
 void load();
 void resize(int width, int height);
@@ -242,11 +242,11 @@ void close() {
 int main(int argc, char** argv) {
 	glutInit(&argc, argv);
 	glutInitDisplayMode(GLUT_DEPTH | GLUT_DOUBLE | GLUT_RGBA);
-	glutInitWindowSize(glutGet(GLUT_SCREEN_WIDTH), glutGet(GLUT_SCREEN_HEIGHT));
-	glutInitWindowPosition(0, 0);
+	glutInitWindowSize(640, 480);
 	glutCreateWindow("Game engine");
-	glutFullScreen();
 	glutReshapeFunc(resize);
+	//glutReshapeWindow(640, 480);
+    glutInitWindowPosition(100, 100);
 	glutDisplayFunc(computeFrame);
 	glutIdleFunc(computeFrame);
 	glutMouseFunc(handleMouseButtons);

@@ -37,7 +37,7 @@ function start()
 		"fractal_2d_2",
 		-- "fractal_3d", -- Doesn't work on LG Optimus L3 II
 		-- "fractal_3d_2", -- Crashes on LG Optimus L3 II
-		-- "fractal_3d_3", -- Crashes on LG Optimus L3 II
+		"fractal_3d_3",
 		-- "fractal_3d_4", -- Too many constants on S5, Crashes on LG Optimus L3 II
 		"grass",
 		"grass_fields",

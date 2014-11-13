@@ -22,19 +22,19 @@
         android:largeHeap="true"
         android:hardwareAccelerated="true">
         
-<!--         <activity -->
-<!--             android:name="SMartEngine" -->
-<!--             android:theme="@android:style/Theme.NoTitleBar.Fullscreen" -->
-<!--             android:launchMode="singleTask" -->
-<!--             android:screenOrientation="portrait" -->
-<!--             android:configChanges="orientation|keyboardHidden"> -->
+        <activity
+            android:name="SMartEngine"
+            android:theme="@android:style/Theme.NoTitleBar.Fullscreen"
+            android:launchMode="singleTask"
+            android:screenOrientation="portrait"
+            android:configChanges="orientation|keyboardHidden">
             
-<!--             <intent-filter> -->
-<!--                 <action android:name="android.intent.action.MAIN" /> -->
-<!--                 <category android:name="android.intent.category.LAUNCHER" /> -->
-<!--             </intent-filter> -->
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
             
-<!--         </activity> -->
+        </activity>
         
 		<service android:name=".Wallpaper"
 		    android:permission="android.permission.BIND_WALLPAPER"

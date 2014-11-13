@@ -17,10 +17,12 @@
 					<Add option="-D_DEBUG" />
 				</Compiler>
 				<Linker>
+					<Add option="-lpthread" />
+					<Add option="-lGL" />
 					<Add option="-lglut" />
+					<Add option="-lGLEW" />
 					<Add option="-lfmodex" />
 					<Add option="-lz" />
-					<Add option="-lGLEW" />
 					<Add directory="/home/martynas/Dropbox/Workspace/GameEngine/dependencies/libs/linux" />
 				</Linker>
 			</Target>
@@ -35,10 +37,12 @@
 				</Compiler>
 				<Linker>
 					<Add option="-s" />
+					<Add option="-lpthread" />
+					<Add option="-lGL" />
 					<Add option="-lglut" />
+					<Add option="-lGLEW" />
 					<Add option="-lfmodex" />
 					<Add option="-lz" />
-					<Add option="-lGLEW" />
 					<Add directory="/home/martynas/Dropbox/Workspace/GameEngine/dependencies/libs/linux" />
 				</Linker>
 			</Target>
