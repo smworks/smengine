@@ -9,6 +9,25 @@
 #define PHYSICSMANAGER_H_
 
 #include "Multiplatform/Ghost.h"
+#ifdef DISABLE_PHYSICS
+class PhysicsManager {
+public:
+	PhysicsManager(ServiceLocator* services) {}
+	~PhysicsManager() {}
+	void reset() {}
+	void update(double time) {}
+	void add(Node* node) {}
+	void move(Node* node, Vec3& force, bool linear = false) {}
+	void rotate(
+		Node* node, Vec3& angularMomentum, bool linear = false) {}
+	void remove(Node* node) {}
+	void updateNode(Node* node) {}
+	Node* rayCast(Vec3& start, Vec3& end) {}
+	void setDebug(bool state) {}
+	void setGraphicsManager(GraphicsManager* gm) {}
+	Vehicle* getVehicle(Node* node) {}
+};
+#else
 #include "../dependencies/includes/bullet/btBulletDynamicsCommon.h"
 
 class Node;
@@ -144,14 +163,13 @@ public:
 	 * @return Vehicle object.
 	 */
 	Vehicle* getVehicle(Node* node);
-
+private:
 	/**
 	 * Adds parameters like friction, damping and restitution to body.
 	 * @param body - body that will have attributes applied.
 	 * @param attributes - attribute object.
 	 */
 	void setupAttributes(btRigidBody* body, Attributes& attributes);
-private:
 	void addBox(Node* node);
 	void addSphere(Node* node);
 	void addMesh(Node* node);
@@ -174,4 +192,5 @@ private:
 	bool debug_;
 };
 
+#endif
 #endif

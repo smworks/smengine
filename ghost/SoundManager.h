@@ -9,6 +9,17 @@
 #define SOUNDMANAGER_H_
 
 #include "Multiplatform/Ghost.h"
+
+#ifdef DISABLE_SOUND
+class SoundManager {
+public:
+	SoundManager(ServiceLocator* services) {}
+	~SoundManager() {}
+	void reset() {}
+	void play(Sound* sound) {}
+	void update() {}
+};
+#else
 #include "../dependencies/includes/fmod/fmod.hpp"
 class ServiceLocator;
 class Sound;
@@ -41,4 +52,5 @@ protected:
 	FMOD::Sound* sound_;
 };
 
+#endif
 #endif
