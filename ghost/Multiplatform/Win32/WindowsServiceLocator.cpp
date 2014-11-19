@@ -5,6 +5,7 @@
  *      Author: MS
  */
 
+#include "WindowsSoundManager.h"
 #include "WindowsServiceLocator.h"
 #include "WindowsThread.h"
 #include "WindowsSocket.h"
@@ -16,7 +17,8 @@ WindowsServiceLocator::WindowsServiceLocator() :
 		nScreenWidth_(0),
 		nScreenHeight_(0),
 		graphicsManager_(0),
-		fileManager_(0)
+		fileManager_(0),
+		soundManager_(0)
 {
 	// Initialize counter.
 	LARGE_INTEGER pf;
@@ -100,4 +102,12 @@ FileManager* WindowsServiceLocator::getFileManager() {
 		fileManager_ = NEW WindowsFileManager();
 	}
 	return fileManager_;
+}
+
+SoundManager* WindowsServiceLocator::getSoundManager() {
+	if (soundManager_ == 0) {
+		soundManager_ = NEW WindowsSoundManager();
+		LOGD("Sound manager initialized.");
+	}
+	return soundManager_;
 }

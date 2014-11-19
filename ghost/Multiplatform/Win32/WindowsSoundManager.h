@@ -8,17 +8,30 @@
 #ifndef WINDOWSSOUNDMANAGER_H_
 #define WINDOWSSOUNDMANAGER_H_
 
+#ifdef DISABLE_SOUND
+class WindowsSoundManager : public SoundManager {
+public:
+	WindowsSoundManager() {}
+	~WindowsSoundManager() {}
+	void reset() {}
+	void play(Sound* sound) {}
+	void play(string name, bool repeat) {}
+	void update() {}
+};
+#else
+
 #include "../../Resources/Sound.h"
 #include "../../../dependencies/includes/fmod/win32/fmod.hpp"
 #include "../../../dependencies/includes/fmod/win32/fmod_errors.h"
 
-#ifdef _DEBUG
+#ifdef SMART_DEBUG
 	#pragma comment(lib, "fmodexL_vc.lib")
 #else
 	#pragma comment(lib, "fmodex_vc.lib")
 #endif
 
 #include "../SoundManager.h"
+
 #include <vector>
 #include <algorithm>
 
@@ -35,6 +48,11 @@ public:
 	/**
 	 * @see SoundManager
 	 */
+	void play(Sound* sound);
+
+	/**
+	 * @see SoundManager
+	 */
 	void play(string name, bool repeat);
 
 	/**
@@ -47,4 +65,5 @@ protected:
 	FMOD::Sound* sound_;
 };
 
+#endif
 #endif

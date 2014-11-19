@@ -5,6 +5,7 @@
  *      Author: Martynas Šustavičius
  */
 
+#ifndef DISABLE_SOUND
 #include "WindowsSoundManager.h"
 
 WindowsSoundManager::WindowsSoundManager() :
@@ -65,6 +66,32 @@ WindowsSoundManager::~WindowsSoundManager() {
 void WindowsSoundManager::reset() {
 }
 
+void WindowsSoundManager::play(Sound* sound) {
+	FMOD_RESULT result;
+	int flags = FMOD_HARDWARE | FMOD_2D | FMOD_OPENMEMORY | FMOD_CREATESTREAM;
+	if (sound->isRepeatable()) {
+		flags |= FMOD_LOOP_NORMAL;
+	}
+	else {
+		flags |= FMOD_LOOP_OFF;
+	}
+	FMOD_CREATESOUNDEXINFO settings;
+	memset(&settings, 0, sizeof(FMOD_CREATESOUNDEXINFO));
+	settings.cbsize = sizeof(FMOD_CREATESOUNDEXINFO);
+	settings.length = sound->getBufferSize();
+	result = soundSystem_->createSound(
+		reinterpret_cast<char* const>(sound->getBuffer()), flags, &settings, &sound_);
+	if (result != FMOD_OK) {
+		LOGW("Unable to create sound: %s.", sound->getName().c_str());
+		return;
+	}
+	result = soundSystem_->playSound(
+		FMOD_CHANNEL_FREE, sound_, false, &soundChannel_);
+	if (result != FMOD_OK) {
+		LOGW("Unable to play sound: %s.", sound->getName().c_str());
+	}
+}
+
 void WindowsSoundManager::play(string name, bool repeat) {
 	FMOD_RESULT result;
 	int flags = FMOD_HARDWARE | FMOD_2D;
@@ -91,3 +118,5 @@ void WindowsSoundManager::play(string name, bool repeat) {
 void WindowsSoundManager::update() {
 	soundSystem_->update();
 }
+
+#endif

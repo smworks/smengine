@@ -947,9 +947,6 @@
     <ClCompile Include="ghost\ModelData.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="ghost\SoundManager.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="ghost\Multiplatform\ServiceLocator.cpp">
       <Filter>Source Files\Multiplatform</Filter>
     </ClCompile>
@@ -973,6 +970,9 @@
     </ClCompile>
     <ClCompile Include="ghost\SceneManager.cpp">
       <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="ghost\Multiplatform\Win32\WindowsSoundManager.cpp">
+      <Filter>Source Files\Multiplatform\Win32</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -1843,9 +1843,6 @@
     <ClInclude Include="ghost\HashMap.h">
       <Filter>Source Files</Filter>
     </ClInclude>
-    <ClInclude Include="ghost\SoundManager.h">
-      <Filter>Source Files</Filter>
-    </ClInclude>
     <ClInclude Include="ghost\Multiplatform\ServiceLocator.h">
       <Filter>Source Files\Multiplatform</Filter>
     </ClInclude>
@@ -1866,6 +1863,12 @@
     </ClInclude>
     <ClInclude Include="ghost\SceneManager.h">
       <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="ghost\Multiplatform\Win32\WindowsSoundManager.h">
+      <Filter>Source Files\Multiplatform\Win32</Filter>
+    </ClInclude>
+    <ClInclude Include="ghost\Multiplatform\SoundManager.h">
+      <Filter>Source Files\Multiplatform</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

@@ -15,6 +15,7 @@ function start()
 	height = getScreenHeight()
 	-- Shader array.
 	shaderIndex = 1;
+	playSound("sound.mid", true);
 	shaders = {
 		--"abstract",
 		--"abstract_2",

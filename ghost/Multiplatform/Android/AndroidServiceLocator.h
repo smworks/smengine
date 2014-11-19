@@ -10,11 +10,6 @@
 
 #include "../Ghost.h"
 #include "../ServiceLocator.h"
-class AndroidThread;
-class AndroidGraphicsManager;
-class AndroidFileManager;
-class AndroidSocket;
-class TextureRGBA;
 
 class AndroidServiceLocator : public ServiceLocator {
 public:

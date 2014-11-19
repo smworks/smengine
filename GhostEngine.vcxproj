@@ -334,6 +334,7 @@
     <ClCompile Include="ghost\Multiplatform\GraphicsManager.cpp" />
     <ClCompile Include="ghost\Multiplatform\ServiceLocator.cpp" />
     <ClCompile Include="ghost\Multiplatform\Win32\WindowsSocket.cpp" />
+    <ClCompile Include="ghost\Multiplatform\Win32\WindowsSoundManager.cpp" />
     <ClCompile Include="ghost\NetworkManager.cpp" />
     <ClCompile Include="ghost\NodeManager.cpp" />
     <ClCompile Include="ghost\Resources\Scenario.cpp" />
@@ -386,7 +387,6 @@
     <ClCompile Include="ghost\ResourceManager.cpp" />
     <ClCompile Include="ghost\Settings.cpp" />
     <ClCompile Include="ghost\Shapes.cpp" />
-    <ClCompile Include="ghost\SoundManager.cpp" />
     <ClCompile Include="ghost\TerrainParser.cpp" />
     <ClCompile Include="ghost\TextManager.cpp" />
     <ClCompile Include="ghost\TextureAtlas.cpp" />
@@ -625,7 +625,9 @@
     <ClInclude Include="ghost\ModelData.h" />
     <ClInclude Include="ghost\Multiplatform\ServiceLocator.h" />
     <ClInclude Include="ghost\Multiplatform\Socket.h" />
+    <ClInclude Include="ghost\Multiplatform\SoundManager.h" />
     <ClInclude Include="ghost\Multiplatform\Win32\WindowsSocket.h" />
+    <ClInclude Include="ghost\Multiplatform\Win32\WindowsSoundManager.h" />
     <ClInclude Include="ghost\NetworkManager.h" />
     <ClInclude Include="ghost\NodeManager.h" />
     <ClInclude Include="ghost\Resources\Scenario.h" />
@@ -685,7 +687,6 @@
     <ClInclude Include="ghost\ResourceManager.h" />
     <ClInclude Include="ghost\Settings.h" />
     <ClInclude Include="ghost\Shapes.h" />
-    <ClInclude Include="ghost\SoundManager.h" />
     <ClInclude Include="ghost\TerrainParser.h" />
     <ClInclude Include="ghost\TextManager.h" />
     <ClInclude Include="ghost\TextureAtlas.h" />

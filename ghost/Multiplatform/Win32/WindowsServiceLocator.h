@@ -17,69 +17,74 @@ public:
 	~WindowsServiceLocator();
 
 	/**
-	 * @see System
+	 * @see ServiceLocator
 	 */
 	double getFrameTime();
 
 	/**
-	 * @see System
+	 * @see ServiceLocator
 	 */
 	void setScreenWidth(int width);
 
 	/**
-	 * @see System
+	 * @see ServiceLocator
 	 */
 	void setScreenHeight(int height);
 
 	/**
-	 * @see System
+	 * @see ServiceLocator
 	 */
 	int	getScreenWidth();
 
 	/**
-	 * @see System
+	 * @see ServiceLocator
 	 */
 	int getScreenHeight();
 
 	/**
-	 * @see System
+	 * @see ServiceLocator
 	 */
 	void exit();
 
 	/**
-	 * @see System
+	 * @see ServiceLocator
 	 */
 	bool isFinished();
 
 	/**
-	 * @see System
+	 * @see ServiceLocator
 	 */
 	double updateTimer(float sleep = 0.0f);
 
 	/**
-	 * @see System
+	 * @see ServiceLocator
 	 */
 	Thread* createThread();
 
 	/**
-	 * @see System.
+	 * @see ServiceLocator.
 	 */
 	UINT32 getCurrentThreadId();
 
 	/**
-	 * @see System.
+	 * @see ServiceLocator.
 	 */
 	Socket* createSocket();
 
 	/**
-	 * @see System
+	 * @see ServiceLocator
 	 */
 	GraphicsManager* getGraphicsManager();
 
 	/**
-	 * @see System
+	 * @see ServiceLocator
 	 */
 	FileManager* getFileManager();
+
+	/**
+	 * @see ServiceLocator
+	 */
+	SoundManager* getSoundManager();
 private:
 private:
 	int nScreenWidth_;
@@ -92,6 +97,7 @@ private:
 	double frameDuration_;
 	GraphicsManager* graphicsManager_;
 	FileManager* fileManager_;
+	SoundManager* soundManager_;
 };
 
 #endif
