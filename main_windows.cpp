@@ -398,7 +398,7 @@ int WINAPI WinMain (HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLin
 		_CrtSetDbgFlag (_CRTDBG_ALLOC_MEM_DF | _CRTDBG_LEAK_CHECK_DF);
 		_CrtSetReportMode(_CRT_ERROR, _CRTDBG_MODE_DEBUG);
 	#endif
-    LPCWSTR appname = TEXT("SMart Engine");
+    LPCWSTR appname = TEXT("SMEngine");
 	// Define the window class.
 	WNDCLASSEX w;
 	ZeroMemory(&w, sizeof(WNDCLASSEX));

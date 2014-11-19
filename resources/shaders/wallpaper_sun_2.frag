@@ -115,14 +115,13 @@ vec3 ToneMap(vec3 color) {
     return toneMappedColor;
 }
 
-void main() 
+void main()
 { 
 	vec2 resolution = vec2(uScreenWidth, uScreenHeight);
     sunDirection = normalize(vec3(-(-0.5)*2., -1, (-0.5)*2.));
 	
     // General parameter setup
 	vec2 vPos = 2.0*gl_FragCoord.xy/resolution.xy - 1.0; 					// map vPos to -1..1
-	float t = uTimer*0.0;									// uTimer value, used to animate stuff
 	float screenAspectRatio = resolution.x/resolution.y;					// the aspect ratio of the screen (e.g. 16:9)
 	vec3 finalColor = vec3(0.1);								// The background color, dark gray in this case
 	

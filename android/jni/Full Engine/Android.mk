@@ -1,5 +1,15 @@
 LOCAL_PATH := $(call my-dir)
 
+#FMOD Ex Shared Library#########
+
+include $(CLEAR_VARS)
+
+LOCAL_MODULE            := fmodex
+LOCAL_SRC_FILES         := ../../dependencies/libs/android/armeabi/libfmodex.so
+LOCAL_EXPORT_C_INCLUDES := $(LOCAL_PATH)/../../dependencies/includes/fmod/android
+
+include $(PREBUILT_SHARED_LIBRARY)
+
 #lua############################
 
 include $(CLEAR_VARS)
@@ -30,6 +40,10 @@ LOCAL_MODULE := ghost
 
 FILE_LIST := $(wildcard $(LOCAL_PATH)/../../main_android.cpp)
 
+FILE_LIST += $(wildcard $(LOCAL_PATH)/../../dependencies/includes/bullet/BulletCollision/**/*.cpp)
+FILE_LIST += $(wildcard $(LOCAL_PATH)/../../dependencies/includes/bullet/BulletDynamics/**/*.cpp)
+FILE_LIST += $(wildcard $(LOCAL_PATH)/../../dependencies/includes/bullet/LinearMath/*.cpp)
+
 FILE_LIST += $(wildcard $(LOCAL_PATH)/../../dependencies/includes/freetype/*.c)
 
 FILE_LIST += $(wildcard $(LOCAL_PATH)/../../ghost/Multiplatform/Android/*.cpp)
@@ -43,8 +57,9 @@ LOCAL_LDLIBS := -llog -lGLESv2 -L$(SYSROOT)/usr/lib -ldl -L$(SYSROOT)/usr/lib -l
 # Support for additional libraries
 #LOCAL_CFLAGS := -D__GXX_EXPERIMENTAL_CXX0X__ -std=gnu++11
 #LOCAL_CFLAGS := -DANDROID_NDK -Wno-psabi -std=gnu++11
-#LOCAL_CFLAGS := -DNDEBUG
+LOCAL_CFLAGS := -DNDEBUG
 LOCAL_C_INCLUDES := $(LOCAL_PATH)/libpng/ $(LOCAL_PATH)/lua/
+LOCAL_SHARED_LIBRARIES := fmodex
 LOCAL_STATIC_LIBRARIES := libpng lua
 
 include $(BUILD_SHARED_LIBRARY)

@@ -16,52 +16,51 @@ function start()
 	-- Shader array.
 	shaderIndex = 1;
 	shaders = {
-		"abstract",
-		"abstract_2",
+		--"abstract",
+		--"abstract_2",
 		--"abstract_3", -- Doesn't work on Galaxy S5, crashes on LG Optimus L3 II
-		"abstract_4",
-		"abstract_5",
-		"bouncing_ball",
+		--"abstract_4",
+		--"bouncing_ball",
 		-- "bricks", -- Crashes on Galaxy S5
-		"bubbles",
-		"bubbles_2",
-		"bubbles_3",
-		"bubbles_4",
-		"bubbles_5",
-		"cigarette_burn",
+		--"bubbles",
+		--"bubbles_2",
+		--"bubbles_3",
+		--"bubbles_4",
+		--"cigarette_burn",
 		-- "city", -- Crashes on LG Optimus L3 II
-		"clouds",
+		--"clouds",
 		-- "clouds_2", -- Crashes on Galaxy S5
-		"cobweb",
-		"fractal_2d",
-		"fractal_2d_2",
+		--"cobweb",
+		--"fractal_2d",
+		--"fractal_2d_2",
 		-- "fractal_3d", -- Doesn't work on LG Optimus L3 II
 		-- "fractal_3d_2", -- Crashes on LG Optimus L3 II
 		-- "fractal_3d_3", -- Crashes on LG Optimus L3 II
 		-- "fractal_3d_4", -- Too many constants on S5, Crashes on LG Optimus L3 II
-		"grass",
-		"grass_fields",
-		"lemons",
-		"line",
+		--"grass",
+		--"grass_fields",
+		--"lemons",
+		--"line",
 		"lines",
-		"matrix",
+		--"matrix",
 		"noise",
-		"ocean",
-		"ocean_2",
+		-- "ocean",
+		--"ocean_2",
 		-- "octopus", -- Crashes on LG Optimus L3 II
-		"palm",
-		"smoke",
-		"space",
-		"space_2",
-		"space_3",
-		"sphere",
-		"sun",
-		"sun_2",
+		--"palm",
+		--"smoke",
+		--"space",
+		--"space_2",
+		--"space_3",
+		--"sphere",
+		"squares",
+		--"sun",
+		--"sun_2",
 		-- "toon_fractal", -- Crashes on LG Optimus L3 II
 		-- "tree", -- Crashes on LG Optimus L3 II
-		"tunnel",
-		"tunnel_2",
-		"vortex",
+		--"tunnel",
+		--"tunnel_2",
+		--"vortex",
 		-- "water", -- Crashes on LG Optimus L3 II
 		"waves"
 	}

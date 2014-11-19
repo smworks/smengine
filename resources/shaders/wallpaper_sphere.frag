@@ -2,6 +2,8 @@ uniform float uScreenWidth;
 uniform float uScreenHeight;
 uniform float uTimer;
 
+float sint = sin(uTimer);
+
 float sphere(vec3 ray, vec3 dir, vec3 center, float radius)
 {
 	vec3 rc = ray-center;
@@ -15,7 +17,7 @@ float sphere(vec3 ray, vec3 dir, vec3 center, float radius)
 
 vec3 background(float t, vec3 rd)
 {
-	vec3 light = normalize(vec3(sin(t), 0.6, cos(t)));
+	vec3 light = normalize(vec3(sint, 0.6, cos(t)));
 	float sun = max(0.0, dot(rd, light));
 	float sky = max(0.0, dot(rd, vec3(0.0, 1.0, 0.0)));
 	float ground = max(0.0, -dot(rd, vec3(0.0, 1.0, 0.0)));
@@ -30,11 +32,11 @@ void main(void)
 	vec2 uv = (-1.0 + 2.0*gl_FragCoord.xy / vec2(uScreenWidth, uScreenHeight)) * vec2(uScreenWidth/uScreenHeight, 1.0);
 	vec3 ro = vec3(0.0, 0.0, -3.0);
 	vec3 rd = normalize(vec3(uv, 1.0));
-	vec3 p = vec3(0.0, 0.0, 0.0);
+	vec3 p = vec3(0.0, sint, 0.0);
 	float t = sphere(ro, rd, p, 1.0);
 	vec3 nml = normalize(p - (ro+rd*t));
 	vec3 bgCol = background(uTimer, rd);
 	rd = reflect(rd, nml);
-	vec3 col = background(uTimer, rd) * vec3(0.9, 0.8, 1.0);
+	vec3 col = background(uTimer, rd) * vec3(0.8, 1.0, 0.8);
 	gl_FragColor = vec4( mix(bgCol, col, step(0.0, t)), 1.0 );
 }
