@@ -7,7 +7,6 @@
 
 #ifndef DISABLE_SOUND
 #include "AndroidSoundManager.h"
-#include "../../Resources/Sound.h"
 
 AndroidSoundManager::AndroidSoundManager() :
 	soundSystem_(0),

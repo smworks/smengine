@@ -8,7 +8,7 @@
 #include "ScriptBindings.h"
 #include "ScriptManager.h"
 #include "Multiplatform/ServiceLocator.h"
-#include "Multiplatform/SoundManager.h"
+#include "SoundManager.h"
 #include "Settings.h"
 #include "Input.h"
 #include "Node.h"

@@ -8,7 +8,6 @@
 #ifndef VEHICLE_H_
 #define VEHICLE_H_
 
-#ifndef DISABLE_PHYSICS
 #include "../Multiplatform/Ghost.h"
 class Resource;
 class Node;
@@ -74,5 +73,4 @@ private:
 	float rollInfluence_;
 };
 
-#endif
 #endif

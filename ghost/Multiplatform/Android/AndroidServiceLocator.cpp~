@@ -120,7 +120,7 @@ FileManager* AndroidServiceLocator::getFileManager() {
 
 SoundManager* AndroidServiceLocator::getSoundManager() {
 	if (soundManager_ == 0) {
-		soundManager_ = NEW AndroidSoundManager();
+		soundManager_ = NEW AndroidSoundManager(this);
 		LOGD("Sound manager initialized.");
 	}
 	return soundManager_;

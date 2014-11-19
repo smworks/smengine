@@ -183,6 +183,7 @@ private:
 	SceneManager* sceneManager_;
 	ScriptManager* scriptManager_;
 	Settings* settings_;
+	SoundManager* soundManager_;
 	TextManager* textManager_;
 	TextureAtlas* textureAtlas_;
 	ThreadManager* threadManager_;

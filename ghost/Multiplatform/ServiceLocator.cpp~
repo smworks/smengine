@@ -35,6 +35,7 @@ ServiceLocator::ServiceLocator() :
 	sceneManager_(0),
 	scriptManager_(0),
 	settings_(0),
+	soundManager_(0),
 	textManager_(0),
 	textureAtlas_(0),
 	threadManager_(0),

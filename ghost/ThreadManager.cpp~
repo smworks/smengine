@@ -64,7 +64,7 @@ void ThreadManager::joinAll() {
 	vector<Thread*>::iterator it = threads_.begin();
 	LOGD("JOIN ALL Called.");
 	for (; it != threads_.end();) {
-		LOGD("DELETING: %llu", (*it)->getId());
+		LOGD("DELETING: %d", (*it)->getId());
 		delete (*it);
 		threads_.erase(it);
 	}

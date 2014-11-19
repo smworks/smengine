@@ -17,7 +17,7 @@ import android.util.Log;
 public class JNI {
 
 	static {
-		System.loadLibrary("fmodex");
+		//System.loadLibrary("fmodex");
 		System.loadLibrary("ghost");
 	}
 	

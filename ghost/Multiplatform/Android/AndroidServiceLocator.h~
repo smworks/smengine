@@ -112,7 +112,6 @@ private:
 	double frameDuration_;
 	GraphicsManager* graphicsManager_;
 	FileManager* fileManager_;
-	SoundManager* soundManager_;
 	JNIEnv* env_;
 	jobject obj_;
 };

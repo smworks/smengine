@@ -10,8 +10,6 @@
 
 #include "Ghost.h"
 
-class Sound;
-
 class SoundManager {
 public:
 	virtual ~SoundManager() {}

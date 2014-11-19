@@ -8,7 +8,7 @@
 #ifndef ANDROIDGHOST_H_
 #define ANDROIDGHOST_H_
 
-#ifndef NDEBUG
+#ifdef NDEBUG
 #define SMART_DEBUG
 #endif
 

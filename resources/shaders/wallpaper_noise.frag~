@@ -9,5 +9,5 @@ float hash2(vec2 uv) {
 void main( void ) {
 	vec2 p = gl_FragCoord.xy / vec2(uScreenWidth, uScreenHeight);
 	float color = 0.1 + hash2(p*uTimer)*0.5;	
-	gl_FragColor = vec4(color, color, color, 1.0);
+	gl_FragColor = vec4(color, 1.0);
 }

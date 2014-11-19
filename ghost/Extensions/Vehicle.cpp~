@@ -5,7 +5,6 @@
  *      Author: Martynas Ðustavièius
  */
 
-#ifndef DISABLE_PHYSICS
 #include "Vehicle.h"
 #include "../../dependencies/includes/bullet/BulletDynamics/Vehicle/btRaycastVehicle.h"
 #include "../../dependencies/includes/bullet/BulletCollision/CollisionShapes/btCompoundShape.h"
@@ -290,5 +289,3 @@ float Vehicle::getWheelFriction() {
 float Vehicle::getRollInfluence() {
 	return rollInfluence_;
 }
-
-#endif
