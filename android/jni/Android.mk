@@ -43,7 +43,8 @@ LOCAL_LDLIBS := -llog -lGLESv2 -L$(SYSROOT)/usr/lib -ldl -L$(SYSROOT)/usr/lib -l
 # Support for additional libraries
 #LOCAL_CFLAGS := -D__GXX_EXPERIMENTAL_CXX0X__ -std=gnu++11
 #LOCAL_CFLAGS := -DANDROID_NDK -Wno-psabi -std=gnu++11
-LOCAL_CFLAGS := -DDISABLE_PHYSICS -DDISABLE_SOUND
+LOCAL_CFLAGS := -Os -fvisibility=hidden -ffunction-sections -fdata-sections -DDISABLE_PHYSICS -DDISABLE_SOUND
+LOCAL_LDFLAGS := -Wl,--gc-sections
 LOCAL_C_INCLUDES := $(LOCAL_PATH)/libpng/ $(LOCAL_PATH)/lua/
 LOCAL_STATIC_LIBRARIES := libpng lua
 

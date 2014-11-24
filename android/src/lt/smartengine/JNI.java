@@ -47,6 +47,14 @@ public class JNI {
 	 * @param z - gravity vector z component.
 	 */
 	public native void provideAccelerometerInput(float x, float y, float z);
+	
+	/**
+	 * Sends string key-value pair to inner engine Settings object.
+	 * @param name - name of the string.
+	 * @param value - string value.
+	 * @param engine - pointer to engine object.
+	 */
+	public native void setString(String name, String value, long engine);
 
 	/**
 	 * Creates game engine object.

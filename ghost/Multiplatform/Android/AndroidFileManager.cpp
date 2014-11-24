@@ -28,15 +28,20 @@ bool AndroidFileManager::loadRaw(
 {
 	jstring jstr = env_->NewStringUTF(path);
 	jclass objClass = env_->GetObjectClass(obj_);
-    jmethodID messageMe = env_->GetMethodID(objClass, "loadAsset", "(Ljava/lang/String;)[B");
-    jobject result = env_->CallObjectMethod(obj_, messageMe, jstr);
+	jmethodID messageMe = env_->GetMethodID(objClass, "loadAsset", "(Ljava/lang/String;)[B");
+	jobject result = env_->CallObjectMethod(obj_, messageMe, jstr);
 	jbyteArray arr = (jbyteArray) result;
 	jsize len = env_->GetArrayLength(arr);
 	size = len;
 	jbyte* buff = env_->GetByteArrayElements(arr, 0);
 	bytes = NEW INT8[size];
 	memcpy(bytes, buff, size);
-	env_->ReleaseByteArrayElements(arr, buff, 0);	
+	env_->ReleaseByteArrayElements(arr, buff, 0);
+	if (size == 0) {
+		delete [] bytes;
+		bytes = 0;
+		return false;
+	}
 	return true;
 }
 

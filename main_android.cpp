@@ -8,9 +8,11 @@
 #include "ghost/Input.h"
 #include "ghost/Multiplatform/Android/AndroidServiceLocator.h"
 #include "ghost/Engine.h"
+#include "ghost/Settings.h"
 
 extern "C" {
 	JNIEXPORT void JNICALL Java_lt_smartengine_JNI_provideTouchInput(JNIEnv* env, jobject obj, jint x, jint y, jboolean pressed, jlong engine);
+	JNIEXPORT void JNICALL Java_lt_smartengine_JNI_setString(JNIEnv* env, jobject obj, jstring name, jstring value, jlong engine);
 	JNIEXPORT jlong JNICALL Java_lt_smartengine_JNI_onCreate(JNIEnv* env, jobject obj,  jint width, jint height);
 	JNIEXPORT void JNICALL Java_lt_smartengine_JNI_onResume(JNIEnv* env, jobject obj, jlong engine);
 	JNIEXPORT void JNICALL Java_lt_smartengine_JNI_onPause(JNIEnv* env, jobject obj, jlong engine);
@@ -19,10 +21,24 @@ extern "C" {
 	JNIEXPORT void JNICALL Java_lt_smartengine_JNI_render(JNIEnv* env, jobject obj, jlong engine);
 };
 
+JNIEXPORT void JNICALL Java_lt_smartengine_JNI_setString(JNIEnv* env, jobject obj, jstring name, jstring value, jlong engine) {
+	Engine* e = (Engine*) engine;
+	if (e != 0) {
+		ServiceLocator* s = e->getServiceLocator();
+		const char* cn = env->GetStringUTFChars(name, JNI_FALSE);
+		const char* cv = env->GetStringUTFChars(value, JNI_FALSE);
+		string n(cn);
+		string v(cv);
+		s->getSettings()->setString(n, v);
+  		env->ReleaseStringUTFChars(name, cn);
+		env->ReleaseStringUTFChars(value, cv);
+	}
+}
+
 JNIEXPORT void JNICALL Java_lt_smartengine_JNI_provideTouchInput(JNIEnv* env, jobject obj, jint x, jint y, jboolean pressed, jlong engine) {
 	Engine* e = (Engine*) engine;
-	ServiceLocator* s = e->getServiceLocator();
 	if (e != 0) {
+		ServiceLocator* s = e->getServiceLocator();
 		s->getInput()->provideTouch(x, s->getScreenHeight() - y, pressed ? Input::PRESSED : Input::RELEASED);
 	}
 }

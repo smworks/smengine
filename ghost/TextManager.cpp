@@ -28,7 +28,9 @@ struct GlyphObject {
 
 TextManager::TextManager(ServiceLocator* services) :
 	services_(services),
-	fontSize_(0)
+	fontSize_(0),
+	symbolCache_(0),
+	error_(false)
 {
 	GLfloat vertices[] = {
 		0.0f, 0.0f, 0.0f,
@@ -42,6 +44,8 @@ TextManager::TextManager(ServiceLocator* services) :
 	err_ = FT_Init_FreeType(&lib_);
 	if (err_) {
 		LOGW("Failed to initialize font library.");
+		error_ = true;
+		return;
 	}
 	SIZE size;
 	string path = GHOST_FONTS + string("arial.ttf");
@@ -53,6 +57,8 @@ TextManager::TextManager(ServiceLocator* services) :
 			lib_, (const FT_Byte*) fontBuffer_, size, 0, &face_);
 		if (err_) {
 			LOGW("Unable to load font from memory. Error code: %d.", err_);
+			error_ = true;
+			return;
 		}
 		err_ = FT_Select_Charmap(face_, FT_ENCODING_UNICODE);
 		if (err_) {
@@ -61,6 +67,8 @@ TextManager::TextManager(ServiceLocator* services) :
 		setFontSize(12);
 	} else {
 		LOGE("Unable to load font \"%s\" from file.", path.c_str());
+		error_ = true;
+		return;
 	}
 	symbolCache_ = new Symbol**[SYMBOL_CACHE_SIZE];
 	for (SIZE i = 0; i < SYMBOL_CACHE_SIZE; i++) {
@@ -73,10 +81,12 @@ TextManager::TextManager(ServiceLocator* services) :
 }
 
 TextManager::~TextManager() {
-	for (SIZE i = 0; i < SYMBOL_CACHE_SIZE; i++) {
-		delete [] symbolCache_[i];
+	if (symbolCache_ != 0) {
+		for (SIZE i = 0; i < SYMBOL_CACHE_SIZE; i++) {
+			delete [] symbolCache_[i];
+		}
+		delete [] symbolCache_;
 	}
-	delete [] symbolCache_;
 	err_ = FT_Done_FreeType(lib_);
 	if (err_) {
 		LOGW("Failed to release font library.");
@@ -86,6 +96,10 @@ TextManager::~TextManager() {
 }
 
 void TextManager::setFontSize(SIZE size) {
+	if (error_) {
+		LOGW("Unable to call setFontSize(), because text manager not initialized properly.");
+		return;
+	}
 	if (size != fontSize_) {
 		fontSize_ = size;
 		err_ = FT_Set_Pixel_Sizes(face_, 0, (FT_UInt) fontSize_);
@@ -96,6 +110,10 @@ void TextManager::setFontSize(SIZE size) {
 }
 
 Texture* TextManager::getText(const string& text, int size) {
+	if (error_) {
+		LOGW("Unable to call getText(), because text manager not initialized properly.");
+		return 0;
+	}
 	setFontSize(size);
 	string name = "cache_";
 	name += text;

@@ -73,6 +73,10 @@ string& Settings::getString(const string& name) {
 	return ret;
 }
 
+void Settings::setString(string name, string value) {
+	settingsString_.insert(pair<string, string>(name, value));
+}
+
 int Settings::getInt(const string& name) {
 	static unordered_map<string, int>::iterator it;
 	it = settingsInt_.find(name);

@@ -50,6 +50,13 @@ public:
 	string& getString(const string& name);
 
 	/**
+	 * Sets string parameter.
+	 * @param name - name of the string.
+	 * @param value - string value.
+	 */
+	void setString(string name, string value);
+
+	/**
 	 * @param name - parameter name.
 	 * @return Value that belongs to specified parameter.
 	 * If no parameter was found, return -1.

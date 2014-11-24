@@ -59,6 +59,7 @@ private:
 	ServiceLocator* services_;
 	SIZE fontSize_;
 	Symbol*** symbolCache_;
+	bool error_;
 };
 
 #endif
