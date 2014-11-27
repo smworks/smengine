@@ -34,6 +34,11 @@ WindowsServiceLocator::WindowsServiceLocator() :
 WindowsServiceLocator::~WindowsServiceLocator() {
 	graphicsManager_->release();
 	delete graphicsManager_;
+	graphicsManager_ = 0;
+	if (soundManager_ != 0) {
+		delete soundManager_;
+		soundManager_ = 0;
+	}
 	if (fileManager_ != 0) {
 		delete fileManager_;
 		fileManager_ = 0;

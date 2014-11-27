@@ -330,6 +330,7 @@ void registerClasses() {
 	registerScenario();
 	registerScenarioManager();
 	registerSceneManager();
+	registerSettings();
 }
 
 int getNode(lua_State* L) {
@@ -1756,4 +1757,35 @@ void registerSceneManager() {
 	ADD_METHOD(methods, "getBackgroundHeight", sceneManagerGetBackgroundHeight);
 	ScriptManager::addFunction("getSceneManager", getSceneManager);
     ScriptManager::addClass("SceneManager", methods);
+}
+
+int getSettings(lua_State* L) {
+	SM_RETURN_OBJECT(L, "Settings", Settings, SM_GET_SL()->getSettings());
+    return 1;
+}
+
+int settingsGetString(lua_State* L) {
+	Settings* settings = SM_GET_OBJECT(L, 0, Settings);
+	ASSERT(SM_GET_ARGUMENT_COUNT(L) != 1,
+		"Function getString() takes setting name as parameter.");
+	string name = SM_GET_STRING(L, 1);
+	SM_RETURN_STRING(L, settings->getString(name).c_str());
+	return 1;
+}
+
+int settingsSetString(lua_State* L) {
+	Settings* settings = SM_GET_OBJECT(L, 0, Settings);
+	ASSERT(SM_GET_ARGUMENT_COUNT(L) != 2,
+		"Function setString() takes setting name and value as parameters.");
+	string name = SM_GET_STRING(L, 1);
+	string value = SM_GET_STRING(L, );
+	settings->setString(name, value);
+	return 0;
+}
+
+void registerSettings() {
+    unordered_map<string, int (*)(lua_State*)> methods;
+	ADD_METHOD(methods, "getString", settingsGetString);
+	ScriptManager::addFunction("getSettings", getSettings);
+    ScriptManager::addClass("Settings", methods);
 }

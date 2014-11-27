@@ -41,5 +41,6 @@ void registerVehicle();
 void registerScenario();
 void registerScenarioManager();
 void registerSceneManager();
+void registerSettings();
 
 #endif
