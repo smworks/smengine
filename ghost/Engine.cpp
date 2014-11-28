@@ -45,7 +45,7 @@ Engine::Engine(ServiceLocator* services) :
 	error_(false),
 	time_(0.0f),
 	running_(false)
-#ifdef SMART_DEBUG
+#ifdef SMART_DEBUG_TEXT
 	,debugText_(0),
 	debugNode_(0),
 	debugFpsCount_(0),
@@ -96,7 +96,7 @@ Engine::~Engine() {
 	services_->getScriptManager()->quit();
 	services_->release();
 	delete services_;
-#ifdef SMART_DEBUG
+#ifdef SMART_DEBUG_TEXT
     debugNode_ = 0;
 #endif
 }
@@ -118,7 +118,7 @@ void Engine::loadScene() {
 		error_ = true;
 		return;
 	}
-#ifdef SMART_DEBUG
+#ifdef SMART_DEBUG_TEXT
 	// FPS message creation.
     if (debugNode_ == 0) {
         debugNode_ = NEW Node;
@@ -197,7 +197,7 @@ void Engine::computeFrame() {
 	if (error_) {
 		return;
 	}
-#ifdef SMART_DEBUG
+#ifdef SMART_DEBUG_TEXT
 	//// Rezerve area for 128x128 texture in monochrome texture atlas.
 	//if (services_->getInput()->keyReleased(Input::B)) {
 	//	UINT32 id;
@@ -400,7 +400,7 @@ void Engine::resizeScreen(UINT32 width, UINT32 height) {
 	services_->getGraphicsManager()->resize(width, height);
 	resizeResources(services_->getRootNode());
 	services_->getScriptManager()->resize();
-#ifdef SMART_DEBUG
+#ifdef SMART_DEBUG_TEXT
 	debugTime_ = 1001.0f;
 #endif
     PROFILE("Window resized.");

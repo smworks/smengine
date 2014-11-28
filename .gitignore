@@ -29,3 +29,5 @@ android/*
 !SMart Engine/
 SMart Engine/*
 !SMart Engine/SMart Engine.xcodeproj
+# Release projects.
+!releases/

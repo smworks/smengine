@@ -11,17 +11,17 @@
 #include "ghost/Settings.h"
 
 extern "C" {
-	JNIEXPORT void JNICALL Java_lt_smartengine_JNI_provideTouchInput(JNIEnv* env, jobject obj, jint x, jint y, jboolean pressed, jlong engine);
-	JNIEXPORT void JNICALL Java_lt_smartengine_JNI_setString(JNIEnv* env, jobject obj, jstring name, jstring value, jlong engine);
-	JNIEXPORT jlong JNICALL Java_lt_smartengine_JNI_onCreate(JNIEnv* env, jobject obj,  jint width, jint height);
-	JNIEXPORT void JNICALL Java_lt_smartengine_JNI_onResume(JNIEnv* env, jobject obj, jlong engine);
-	JNIEXPORT void JNICALL Java_lt_smartengine_JNI_onPause(JNIEnv* env, jobject obj, jlong engine);
-	JNIEXPORT void JNICALL Java_lt_smartengine_JNI_onDestroy(JNIEnv* env, jobject obj, jlong engine);
-	JNIEXPORT void JNICALL Java_lt_smartengine_JNI_resize(JNIEnv* env, jobject obj,  jint width, jint height, jlong engine);
-	JNIEXPORT void JNICALL Java_lt_smartengine_JNI_render(JNIEnv* env, jobject obj, jlong engine);
+	JNIEXPORT void JNICALL Java_lt_smworks_JNI_provideTouchInput(JNIEnv* env, jobject obj, jint x, jint y, jboolean pressed, jlong engine);
+	JNIEXPORT void JNICALL Java_lt_smworks_JNI_setString(JNIEnv* env, jobject obj, jstring name, jstring value, jlong engine);
+	JNIEXPORT jlong JNICALL Java_lt_smworks_JNI_onCreate(JNIEnv* env, jobject obj,  jint width, jint height);
+	JNIEXPORT void JNICALL Java_lt_smworks_JNI_onResume(JNIEnv* env, jobject obj, jlong engine);
+	JNIEXPORT void JNICALL Java_lt_smworks_JNI_onPause(JNIEnv* env, jobject obj, jlong engine);
+	JNIEXPORT void JNICALL Java_lt_smworks_JNI_onDestroy(JNIEnv* env, jobject obj, jlong engine);
+	JNIEXPORT void JNICALL Java_lt_smworks_JNI_resize(JNIEnv* env, jobject obj,  jint width, jint height, jlong engine);
+	JNIEXPORT void JNICALL Java_lt_smworks_JNI_render(JNIEnv* env, jobject obj, jlong engine);
 };
 
-JNIEXPORT void JNICALL Java_lt_smartengine_JNI_setString(JNIEnv* env, jobject obj, jstring name, jstring value, jlong engine) {
+JNIEXPORT void JNICALL Java_lt_smworks_JNI_setString(JNIEnv* env, jobject obj, jstring name, jstring value, jlong engine) {
 	Engine* e = (Engine*) engine;
 	if (e != 0) {
 		ServiceLocator* s = e->getServiceLocator();
@@ -35,7 +35,7 @@ JNIEXPORT void JNICALL Java_lt_smartengine_JNI_setString(JNIEnv* env, jobject ob
 	}
 }
 
-JNIEXPORT void JNICALL Java_lt_smartengine_JNI_provideTouchInput(JNIEnv* env, jobject obj, jint x, jint y, jboolean pressed, jlong engine) {
+JNIEXPORT void JNICALL Java_lt_smworks_JNI_provideTouchInput(JNIEnv* env, jobject obj, jint x, jint y, jboolean pressed, jlong engine) {
 	Engine* e = (Engine*) engine;
 	if (e != 0) {
 		ServiceLocator* s = e->getServiceLocator();
@@ -43,7 +43,7 @@ JNIEXPORT void JNICALL Java_lt_smartengine_JNI_provideTouchInput(JNIEnv* env, jo
 	}
 }
 
-JNIEXPORT jlong JNICALL Java_lt_smartengine_JNI_onCreate(JNIEnv* env, jobject obj, jint width, jint height) {
+JNIEXPORT jlong JNICALL Java_lt_smworks_JNI_onCreate(JNIEnv* env, jobject obj, jint width, jint height) {
 	LOGI("Native onCreate");
 	obj = env->NewGlobalRef(obj);
 	LOGD("Creating new engine object.");
@@ -54,7 +54,7 @@ JNIEXPORT jlong JNICALL Java_lt_smartengine_JNI_onCreate(JNIEnv* env, jobject ob
 	return (jlong) engine;
 }
 
-JNIEXPORT void JNICALL Java_lt_smartengine_JNI_onResume(JNIEnv* env, jobject obj, jlong engine) {
+JNIEXPORT void JNICALL Java_lt_smworks_JNI_onResume(JNIEnv* env, jobject obj, jlong engine) {
 	LOGI("Native onResume: %lld", engine);
 	Engine* e = (Engine*) engine;
 	if (e == 0) {
@@ -65,7 +65,7 @@ JNIEXPORT void JNICALL Java_lt_smartengine_JNI_onResume(JNIEnv* env, jobject obj
 	
 }
 
-JNIEXPORT void JNICALL Java_lt_smartengine_JNI_onPause(JNIEnv* env, jobject obj, jlong engine) {
+JNIEXPORT void JNICALL Java_lt_smworks_JNI_onPause(JNIEnv* env, jobject obj, jlong engine) {
 	LOGI("Native onPause: %lld", engine);
 	Engine* e = (Engine*) engine;
 	if (e == 0) {
@@ -75,7 +75,7 @@ JNIEXPORT void JNICALL Java_lt_smartengine_JNI_onPause(JNIEnv* env, jobject obj,
 	e->pause();
 }
 
-JNIEXPORT void JNICALL Java_lt_smartengine_JNI_onDestroy(JNIEnv* env, jobject obj, jlong engine) {
+JNIEXPORT void JNICALL Java_lt_smworks_JNI_onDestroy(JNIEnv* env, jobject obj, jlong engine) {
 	LOGI("Native onDestroy: %lld", engine);
 	Engine* e = (Engine*) engine;
 	if (e == 0) {
@@ -86,7 +86,7 @@ JNIEXPORT void JNICALL Java_lt_smartengine_JNI_onDestroy(JNIEnv* env, jobject ob
 	e = 0;
 }
 
-JNIEXPORT void JNICALL Java_lt_smartengine_JNI_resize(JNIEnv* env, jobject obj,  jint width, jint height, jlong engine) {
+JNIEXPORT void JNICALL Java_lt_smworks_JNI_resize(JNIEnv* env, jobject obj,  jint width, jint height, jlong engine) {
 	LOGI("Native resize: %lld", engine);
 	Engine* e = (Engine*) engine;
 	if (e == 0) {
@@ -96,7 +96,7 @@ JNIEXPORT void JNICALL Java_lt_smartengine_JNI_resize(JNIEnv* env, jobject obj, 
 	e->resizeScreen(width, height);
 }
 
-JNIEXPORT void JNICALL Java_lt_smartengine_JNI_render(JNIEnv* env, jobject obj, jlong engine) {
+JNIEXPORT void JNICALL Java_lt_smworks_JNI_render(JNIEnv* env, jobject obj, jlong engine) {
 	Engine* e = (Engine*) engine;
 	if (e == 0) {
 		LOGW("Engine instance not provided by Java runtime.");

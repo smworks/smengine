@@ -1,0 +1,4 @@
+Certificate expires on Thu Mar 31 18:26:27 EEST 3014.
+Certificate fingerprints:
+MD5 : 12:DB:AE:65:E8:75:E2:77:A8:8F:84:D8:01:BF:21:6F
+SHA1: 21:2E:C2:F3:49:7F:AA:4E:35:F8:3E:60:D6:A1:7B:65:0F:41:E9:CA

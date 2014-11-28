@@ -121,14 +121,14 @@ public:
 	 * referenced in code.
 	 * @param map - map containing method names and pointers to methods.
 	 */
-    static void addClass(
+	static void addClass(
 		string name, unordered_map<string, int (*)(lua_State*)> map);
 
-    /**
-     * Provides static access for all
-     * lua functions added or overriden by game engine.
-     * @return ServiceLocator object.
-     */
+	/**
+	 * Provides static access for all
+	 * lua functions added or overriden by game engine.
+	 * @return ServiceLocator object.
+	 */
 	static ServiceLocator* getServiceLocator();
 
 	/**

@@ -30,7 +30,8 @@ unordered_map<string, int (*)(lua_State*)> ScriptManager::functions_;
 Script* ScriptManager::script_ = 0;
 
 ScriptManager::ScriptManager() {
-    serviceLocator_ = 0;
+	serviceLocator_ = 0;
+	script_ = 0;
 	state_ = luaL_newstate();
 //	// Specifie required libraries.
 //	static const luaL_Reg libraries[] = {
@@ -46,16 +47,18 @@ ScriptManager::ScriptManager() {
 //			ScriptManager::state_, library->name, library->func, 1);
 //		lua_settop(ScriptManager::state_, 0);
 //	}
-    luaL_openlibs(state_);
-    LOGD("Created script manager.");
+	luaL_openlibs(state_);
+	LOGD("Created script manager.");
 }
 
 ScriptManager::~ScriptManager() {
-	lua_close(ScriptManager::state_);
-	state_ = 0;
-	serviceLocator_ = 0;
-	script_ = 0;
-    LOGD("Deleted script manager.");
+	if (ScriptManager::state_ != 0) {
+		lua_close(ScriptManager::state_);
+		state_ = 0;
+		serviceLocator_ = 0;
+		script_ = 0;
+	}
+	LOGD("Deleted script manager.");
 }
 
 bool ScriptManager::isReady() {
