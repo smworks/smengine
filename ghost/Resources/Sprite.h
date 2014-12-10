@@ -157,6 +157,7 @@ private:
 	Texture* image_;
     SIZE spriteCount_;
     SIZE spriteIndex_;
+	float width_, height_;
 };
 
 #endif /* SPRITE_H_ */

@@ -8,7 +8,7 @@
 #include "Sprite.h"
 #include "Vertex.h"
 #include "Shader.h"
-#include "../Settings.h"
+#include "../Multiplatform/Database.h"
 #include "../ScriptManager.h"
 #include "../Shapes.h"
 #include "../ResourceManager.h"
@@ -24,7 +24,9 @@ Sprite::Sprite(ServiceLocator* services) :
 	image_(0),
 	uvBO_(0),
     spriteCount_(0),
-	spriteIndex_(0)
+	spriteIndex_(0),
+	width_(1.0f),
+	height_(1.0f)
 	//animationCount_(0),
 	//uvBO_(0),
 	//animationIndex_(0)
@@ -55,6 +57,8 @@ bool Sprite::create() {
             spriteCount_ = 1;
         }
     }
+	width_ = getAttributes().getFloat(ATTR_WIDTH, width_);
+	height_ = getAttributes().getFloat(ATTR_HEIGHT, height_);
     setSpriteCount(spriteCount_);
 	if (checkGLError("Compiling sprite data.")) {
 		release();
@@ -189,8 +193,8 @@ void Sprite::setSpriteCount(SIZE count) {
         for (SIZE j = 0; j < vertexCount; j++) {
             tmp.uv[0] = uv[j * 2 + 0];
             tmp.uv[1] = uv[j * 2 + 1];
-			tmp.pos[0] = g_planeVertices[j * 3 + 0];
-            tmp.pos[1] = g_planeVertices[j * 3 + 1];
+			tmp.pos[0] = g_planeVertices[j * 3 + 0] * width_;
+            tmp.pos[1] = g_planeVertices[j * 3 + 1] * height_;
             tmp.pos[2] = g_planeVertices[j * 3 + 2];
             vert.push_back(tmp);
         }

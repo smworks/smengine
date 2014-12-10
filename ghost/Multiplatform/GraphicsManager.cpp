@@ -7,7 +7,7 @@
 
 #include "GraphicsManager.h"
 #include "ServiceLocator.h"
-#include "../Settings.h"
+#include "../Multiplatform/Database.h"
 #include "../Camera.h"
 #include "../Node.h"
 #include "../TextureAtlas.h"
@@ -39,7 +39,8 @@ GraphicsManager::GraphicsManager(ServiceLocator* services) :
 	bufferId_(0),
 	planeVBO_(0),
 	planeUVBO_(0),
-	startTime_(0)
+	startTime_(0),
+	database_(0)
 {
 	fill(maxValues_, maxValues_ + MAX_COUNT, 0);
 	fill(supportValues_, supportValues_ + SUPPORT_COUNT, 2);
@@ -69,7 +70,7 @@ void GraphicsManager::create() {
         Shapes::getShape(Shapes::SHAPE_SCREEN_PLANE, Shapes::VERTEX_TEX));
 	setVertexBuffer(planeUVBO_, &(*uvbo)[0], (UINT32) uvbo->size() * sizeof(VertexT));
 	delete uvbo;
-	settings_ = services_->getSettings();
+	database_ = services_->getDB();
 	camera_ = services_->getCamera();
 	resourceManager_ = services_->getRM();
 	textManager_ = services_->getTextManager();
@@ -104,15 +105,15 @@ void GraphicsManager::create() {
 	screenPlane_ = obj;
 	// Load immediate mode shader.
 	immediateShader_ = NEW Shader(services_);
-	string& immediateShaderName = settings_->getString(
-		Settings::IMMEDIATE_MODE_SHADER);
+	string& immediateShaderName = database_->getString(
+		Database::IMMEDIATE_MODE_SHADER);
 	immediateShader_->getAttributes().setString(
 		Resource::ATTR_FILE, immediateShaderName);
 	immediateShader_->create();
 	resourceManager_->add(immediateShaderName, immediateShader_);
 	// Load text shader.
 	textShader_ = NEW Shader(services_);
-	string& textShaderName = settings_->getString(Settings::DEFAULT_TEXT_SHADER);
+	string& textShaderName = database_->getString(Database::DEFAULT_TEXT_SHADER);
 	textShader_->getAttributes().setString(Resource::ATTR_FILE, textShaderName);
 	textShader_->create();
 	resourceManager_->add(textShaderName, textShader_);
@@ -226,7 +227,7 @@ void GraphicsManager::resize(UINT32 width, UINT32 height) {
 	Matrix::projection2D(proj,
 		(float) services_->getScreenWidth(),
 		(float) services_->getScreenHeight(),
-		settings_->getFloat(Settings::FAR_PLANE_DISTANCE));
+		database_->getFloat(Database::FAR_PLANE_DISTANCE));
 	Matrix::multiply(
 		proj,
 		posScale,
@@ -282,7 +283,7 @@ void GraphicsManager::renderGuiText(Node* node) {
 	glUniform1i(texture, 0);
 	glEnableVertexAttribArray(textShader_->getHandle(Shader::POS));
 	glEnableVertexAttribArray(textShader_->getHandle(Shader::UV));
-	Matrix::identity(matPosScale);
+	Matrix::translate(matPosScale, text->getPosX(), text->getPosY(), 0.0);
 	Matrix::multiply(camera_->getProjection2D(), matPosScale, matProjPosScale);
 	textShader_->setMatrix4(Shader::WVP, matProjPosScale);
 	bindBuffer(text->getTextVBO());
@@ -475,26 +476,34 @@ void GraphicsManager::renderNode(
 		Matrix::multiply(res, rot, tmp);
 		Matrix::multiply(tmp, scale, res);
 	} else {
-		Vec3 p;
-		Vec3 s = node->getScale();
-		node->getPosAbs(p);
-		Quaternion& q = node->getRot();
-		Vec3 r(q.getX(), q.getY(), q.getZ());
-		float width = s.getX();
-		float height = s.getY();
-		float x = p.getX();
-		float y = p.getY();
-		Mat4 tmp;
-		Mat4 pos;
-		Mat4 rot;
-		Mat4 scale;
-		Vec3& camPos = services_->getCamera()->getPos();
-		Matrix::translate(pos, x - camPos.getX(), y - camPos.getY(), p.getZ());
-		Matrix::rotateXYZ(rot, r.getX(), r.getY(), r.getZ());
-		Matrix::scale(scale, width, height, 1.0f);
-		Matrix::multiply(mat, pos, res);
-		Matrix::multiply(res, rot, tmp);
-		Matrix::multiply(tmp, scale, res);
+		//Vec3 p = node->getPos();
+		//Vec3 s = node->getScale();
+		////node->getPosAbs(p);
+		//Quaternion& q = node->getRot();
+		//Vec3 r(q.getX(), q.getY(), q.getZ());
+		//float width = s.getX();
+		//float height = s.getY();
+		//float x = p.getX();
+		//float y = p.getY();
+		//Mat4 tmp;
+		//Mat4 pos;
+		//Mat4 rot;
+		//Mat4 scale;
+		//Vec3& camPos = services_->getCamera()->getPos();
+		//Matrix::translate(pos, x - camPos.getX(), y - camPos.getY(), p.getZ());
+		//Matrix::rotateXYZ(rot, r.getX(), r.getY(), r.getZ());
+		//Matrix::scale(scale, width, height, 1.0f);
+
+		//
+
+		//Matrix::multiply(mat, pos, res);
+		//Matrix::multiply(res, rot, tmp);
+		//Matrix::multiply(tmp, scale, res);
+
+		//Matrix::multiply(node->getParent()->getMatrix(), res, tmp);
+		//Matrix::copy(tmp, res);
+
+		Matrix::multiply(mat, node->getMatrix(), res);
 	}
 	// World * View * Projection matrix.
 	shader->setMatrix4(Shader::WVP, res);
@@ -745,7 +754,7 @@ void GraphicsManager::renderQuad(
 	Matrix::projection2D(proj,
 		(float) services_->getScreenWidth(),
 		(float) services_->getScreenHeight(),
-		settings_->getFloat(Settings::FAR_PLANE_DISTANCE));
+		database_->getFloat(Database::FAR_PLANE_DISTANCE));
 	Matrix::multiply(
 		proj,
 		posScale,

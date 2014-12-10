@@ -94,12 +94,14 @@ bool InitGraphics(UINT32 width, UINT32 height)
 		LOGE("GLEW doesn't support OpenGL 2.1");
 		return false;
 	}
-	GHOST = new Engine(new WindowsServiceLocator());
+	WindowsServiceLocator* wsl = new WindowsServiceLocator();
+	wsl->setScreenWidth(width);
+	wsl->setScreenHeight(height);
+	GHOST = new Engine(wsl);
 	if (!*GHOST) {
 		return false;
 	}
 	stopped = false;
-	GHOST->resizeScreen(width, height);
 	return true;
 }
 

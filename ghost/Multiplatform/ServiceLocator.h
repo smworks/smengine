@@ -26,13 +26,13 @@ class RenderManager;
 class ResourceManager;
 class SceneManager;
 class ScriptManager;
-class Settings;
 class SoundManager;
 class TextManager;
 class TextureAtlas;
 class ThreadManager;
 class NetworkManager;
 class NodeManager;
+class Database;
 
 class ServiceLocator {
 public:
@@ -125,6 +125,12 @@ public:
 	 * @return Pointer to sound manager.
 	 */
 	virtual SoundManager* getSoundManager() = 0;
+
+	/**
+	 * Return database instance.
+	 * @return Pointer to database.
+	 */
+	virtual Database* getDB() = 0;
 public:
 	ServiceLocator();
 	ServiceLocator(const ServiceLocator& services);
@@ -159,8 +165,6 @@ public:
 	SceneManager* getSceneManager();
 	void provide(ScriptManager* scriptManager);
 	ScriptManager* getScriptManager();
-	void provide(Settings* settings);
-	Settings* getSettings();
 	void provide(TextManager* textManager);
 	TextManager* getTextManager();
 	void provide(TextureAtlas* textureAtlas);
@@ -182,7 +186,6 @@ private:
 	ScenarioManager* scenarioManager_;
 	SceneManager* sceneManager_;
 	ScriptManager* scriptManager_;
-	Settings* settings_;
 	TextManager* textManager_;
 	TextureAtlas* textureAtlas_;
 	ThreadManager* threadManager_;

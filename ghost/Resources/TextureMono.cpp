@@ -37,8 +37,9 @@ bool TextureMono::create() {
 		LOGW("No file name specified for texture.");
 		return false;
 	}
+	bool alpha = false;
 	buffer_ = reinterpret_cast<UINT8*>(loadPng(getServiceLocator(),
-		(GHOST_SPRITES + getAttribute(ATTR_FILE)).c_str(), width_, height_));
+		(GHOST_SPRITES + getAttribute(ATTR_FILE)).c_str(), width_, height_, alpha));
 	if (buffer_ == 0) {
 		LOGW("Unable to load file \"%s\".", getAttribute(ATTR_FILE).c_str());
 		return false;

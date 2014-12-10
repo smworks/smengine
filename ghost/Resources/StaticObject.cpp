@@ -7,6 +7,7 @@
 
 #include "StaticObject.h"
 #include "../Multiplatform/ServiceLocator.h"
+#include "../Multiplatform/Database.h"
 #include "Vertex.h"
 #include "TextureRGBA.h"
 #include "Shader.h"
@@ -16,7 +17,6 @@
 #include "../ResourceManager.h"
 #include "../Shapes.h"
 #include "../ScriptManager.h"
-#include "../Settings.h"
 #include "../BoundingSphere.h"
 #include "../BoundingBox.h"
 #include "../Utils.h"

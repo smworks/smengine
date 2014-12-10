@@ -10,6 +10,7 @@
 #include "Multiplatform/ServiceLocator.h"
 #include "Multiplatform/GraphicsManager.h"
 #include "Multiplatform/SoundManager.h"
+#include "Multiplatform/Database.h"
 #include "PhysicsManager.h"
 #include "ResourceManager.h"
 #include "Node.h"
@@ -19,7 +20,6 @@
 #include "Resources/TextureRGBA.h"
 #include "Resources/AtlasTexture.h"
 #include "Resources/Sprite.h"
-#include "Settings.h"
 #include "Input.h"
 #include "Environment.h"
 #include "ScriptManager.h"
@@ -69,8 +69,7 @@ Engine::Engine(ServiceLocator* services) :
 	services_->provide(NEW ScriptManager());
 	services_->provide(NEW Input());
 	services_->provide(NEW Environment());
-	services_->provide(NEW Settings(services_->getFileManager()));
-	services_->provide(NEW Camera(services_->getSettings()));
+	services_->provide(NEW Camera(services_->getDB()));
 	services_->provide(NEW NodeManager(services_));
 	services_->provide(NEW SceneManager(services_));
 	services_->provide(NEW ScenarioManager(services_));
@@ -85,7 +84,7 @@ Engine::Engine(ServiceLocator* services) :
 	services_->getGraphicsManager()->create();
 	services_->provide(NEW TextureAtlas(services_));
 	services_->getPhysicsManager()->setGraphicsManager(services_->getGraphicsManager());
-	services_->getSettings()->setScene("start.xml");
+	services_->getDB()->setScene("start.xml");
 	services_->getScriptManager()->initialize(services_);
 	PROFILE("Finished creating engine object.");
 	loadScene();
@@ -109,10 +108,10 @@ void Engine::loadScene() {
 		delete services_->getRootNode();
 	}
 	services_->getThreadManager()->joinAll();
-	services_->getSettings()->setSceneLoaded(true);
+	services_->getDB()->setSceneLoaded(true);
 	// Load scene hierarchy.
 	services_->provide(services_->getRM()->loadScene(
-		GHOST_SCENES + services_->getSettings()->getScene()));
+		GHOST_SCENES + services_->getDB()->getScene()));
 	if (services_->getRootNode() == 0) {
 		LOGE("Error loading scene. Root node is null.");
 		error_ = true;
@@ -186,7 +185,7 @@ void Engine::computeFrame() {
 //	MEASURE_BEFORE_TIMER(Frame)
 //#endif
     services_->updateTimer(
-		services_->getSettings()->getFloat(Settings::FRAME_DURATION));
+		services_->getDB()->getFloat(Database::FRAME_DURATION));
     time_ = services_->getFrameTime();
 //#ifdef SMART_DEBUG
 //    if (services_->getInput()->keyReleased(Input::F)) {
@@ -394,9 +393,9 @@ void Engine::resizeScreen(UINT32 width, UINT32 height) {
 	services_->setScreenWidth(width);
 	services_->setScreenHeight(height);
 	services_->getCamera()->updateProjections(width, height,
-		services_->getSettings()->getFloat(Settings::FIELD_OF_VIEW),
-		services_->getSettings()->getFloat(Settings::NEAR_PLANE_DISTANCE),
-		services_->getSettings()->getFloat(Settings::FAR_PLANE_DISTANCE));
+		services_->getDB()->getFloat(Database::FIELD_OF_VIEW),
+		services_->getDB()->getFloat(Database::NEAR_PLANE_DISTANCE),
+		services_->getDB()->getFloat(Database::FAR_PLANE_DISTANCE));
 	services_->getGraphicsManager()->resize(width, height);
 	resizeResources(services_->getRootNode());
 	services_->getScriptManager()->resize();

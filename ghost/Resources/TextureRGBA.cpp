@@ -42,8 +42,9 @@ bool TextureRGBA::create() {
 		LOGW("No file name specified for texture.");
 		return false;
 	}
+	bool alpha = false;
 	buffer_ = reinterpret_cast<UINT8*>(loadPng(getServiceLocator(),
-		(GHOST_SPRITES + getAttribute(ATTR_FILE)).c_str(), width_, height_));
+		(GHOST_SPRITES + getAttribute(ATTR_FILE)).c_str(), width_, height_, alpha));
 	ASSERT(buffer_ != 0, "Unable to load file \"%s\".", getAttribute(ATTR_FILE).c_str());
     vector<VertexPT>* cbo = static_cast<vector<VertexPT>*>(
         Shapes::getShape(Shapes::SHAPE_SCREEN_PLANE,

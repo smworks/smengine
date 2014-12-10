@@ -99,6 +99,9 @@
     <Filter Include="Resource Files\shaders">
       <UniqueIdentifier>{b110e0a8-82f0-43ae-9a95-efdbc5371fe7}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source Files\SQLite">
+      <UniqueIdentifier>{0df9e1d9-7740-412d-bef9-bbc0eff245b3}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="ghost\Camera.cpp">
@@ -178,9 +181,6 @@
     </ClCompile>
     <ClCompile Include="ghost\Resources\Sound.cpp">
       <Filter>Source Files\Resources</Filter>
-    </ClCompile>
-    <ClCompile Include="ghost\Settings.cpp">
-      <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="ghost\Resources\Light.cpp">
       <Filter>Source Files\Resources</Filter>
@@ -974,6 +974,21 @@
     <ClCompile Include="ghost\Multiplatform\Win32\WindowsSoundManager.cpp">
       <Filter>Source Files\Multiplatform\Win32</Filter>
     </ClCompile>
+    <ClCompile Include="dependencies\includes\sqlite\shell.c">
+      <Filter>Source Files\SQLite</Filter>
+    </ClCompile>
+    <ClCompile Include="dependencies\includes\sqlite\sqlite3.c">
+      <Filter>Source Files\SQLite</Filter>
+    </ClCompile>
+    <ClCompile Include="ghost\Multiplatform\Database.cpp">
+      <Filter>Source Files\Multiplatform</Filter>
+    </ClCompile>
+    <ClCompile Include="ghost\Multiplatform\Win32\WindowsDatabase.cpp">
+      <Filter>Source Files\Multiplatform\Win32</Filter>
+    </ClCompile>
+    <ClCompile Include="ghost\Resources\TextureRGB.cpp">
+      <Filter>Source Files\Resources</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="ghost\Camera.h">
@@ -1010,9 +1025,6 @@
       <Filter>Source Files</Filter>
     </ClInclude>
     <ClInclude Include="ghost\Xml.h">
-      <Filter>Source Files</Filter>
-    </ClInclude>
-    <ClInclude Include="ghost\Settings.h">
       <Filter>Source Files</Filter>
     </ClInclude>
     <ClInclude Include="ghost\ResourceManager.h">
@@ -1870,6 +1882,21 @@
     <ClInclude Include="ghost\Multiplatform\SoundManager.h">
       <Filter>Source Files\Multiplatform</Filter>
     </ClInclude>
+    <ClInclude Include="dependencies\includes\sqlite\sqlite3.h">
+      <Filter>Source Files\SQLite</Filter>
+    </ClInclude>
+    <ClInclude Include="dependencies\includes\sqlite\sqlite3ext.h">
+      <Filter>Source Files\SQLite</Filter>
+    </ClInclude>
+    <ClInclude Include="ghost\Multiplatform\Database.h">
+      <Filter>Source Files\Multiplatform</Filter>
+    </ClInclude>
+    <ClInclude Include="ghost\Multiplatform\Win32\WindowsDatabase.h">
+      <Filter>Source Files\Multiplatform\Win32</Filter>
+    </ClInclude>
+    <ClInclude Include="ghost\Resources\TextureRGB.h">
+      <Filter>Source Files\Resources</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="resources\scenes\level.cfg">
@@ -1895,9 +1922,6 @@
     </None>
     <None Include="resources\models\sphere.mtl">
       <Filter>Resource Files\models</Filter>
-    </None>
-    <None Include="resources\scripts\game_loop.lua">
-      <Filter>Resource Files\scripts</Filter>
     </None>
     <None Include="resources\shaders\default_model.frag">
       <Filter>Resource Files\shaders</Filter>
@@ -1988,6 +2012,9 @@
     </None>
     <None Include="resources\shaders\water.vert">
       <Filter>Resource Files\shaders</Filter>
+    </None>
+    <None Include="resources\scripts\logic.lua">
+      <Filter>Resource Files\scripts</Filter>
     </None>
   </ItemGroup>
   <ItemGroup>

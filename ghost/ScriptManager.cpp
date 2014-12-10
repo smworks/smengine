@@ -7,10 +7,10 @@
 
 #include "ScriptManager.h"
 #include "Multiplatform/ServiceLocator.h"
+#include "Multiplatform/Database.h"
 #include "Input.h"
 #include "Node.h"
 #include "Resources/Script.h"
-#include "Settings.h"
 #include "ScriptBindings.h"
 #include "GUIManager.h"
 

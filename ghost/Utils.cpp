@@ -218,7 +218,7 @@ void readPng(png_structp png, png_bytep data, png_size_t size) {
 }
 
 #define HEADER_SIZE 8
-INT8* pngToRaw(INT8* in, UINT32& width, UINT32& height, bool upperLeft) {
+INT8* pngToRaw(INT8* in, UINT32& width, UINT32& height, bool& alpha, bool upperLeft) {
 	if (in == 0) {
 		LOGW("No PNG byte buffer specified.");
 		return 0;
@@ -272,6 +272,42 @@ INT8* pngToRaw(INT8* in, UINT32& width, UINT32& height, bool upperLeft) {
 	// Get info about PNG.
 	png_get_IHDR(png_ptr, info_ptr, &pngW, &pngH, &bit_depth, &color_type,
 	NULL, NULL, NULL);
+	// Log image info.
+	string col = "Unknown";
+	switch (color_type) {
+	case PNG_COLOR_TYPE_GRAY:
+		col = "PNG_COLOR_TYPE_GRAY";
+		break;
+	case PNG_COLOR_TYPE_GRAY_ALPHA:
+		col = "PNG_COLOR_TYPE_GRAY_ALPHA";
+		alpha = true;
+		break;
+	case PNG_COLOR_TYPE_PALETTE:
+		col = "PNG_COLOR_TYPE_PALETTE";
+		break;
+	case PNG_COLOR_TYPE_RGB:
+		col = "PNG_COLOR_TYPE_RGB";
+		break;
+	case PNG_COLOR_TYPE_RGB_ALPHA:
+		col = "PNG_COLOR_TYPE_RGB_ALPHA";
+		alpha = true;
+		break;
+	}
+	if (bit_depth == 16) {
+		LOGD("Image channel size is 16 bit, so striping it to 8.");
+        png_set_strip_16(png_ptr);
+	}
+	if (color_type == PNG_COLOR_TYPE_PALETTE) {
+		LOGD("Converting png from 8 bit to 24.");
+		alpha = false;
+        png_set_palette_to_rgb(png_ptr);
+	}
+    if (png_get_valid(png_ptr, info_ptr, PNG_INFO_tRNS)) {
+		LOGD("Adding alpha channel to RGB image.");
+		alpha = true;
+		png_set_tRNS_to_alpha(png_ptr);
+	}
+	LOGD("Image. Width=%d, height=%d, bit depth=%d, color type=%s", pngW, pngH, bit_depth, col.c_str());
 	width = pngW;
 	height = pngH;
 	// Update the png info struct.
@@ -318,7 +354,9 @@ INT8* pngToRaw(INT8* in, UINT32& width, UINT32& height, bool upperLeft) {
 	return buffer;
 }
 
-INT8* loadPng(ServiceLocator* services, const char* path, UINT32& width, UINT32& height, bool upperLeft) {
+INT8* loadPng(ServiceLocator* services, const char* path,
+	UINT32& width, UINT32& height, bool& alpha, bool upperLeft)
+{
 	if (path == 0) {
 		LOGW("No image file path specified. Unable to load image.");
 		return 0;
@@ -326,7 +364,7 @@ INT8* loadPng(ServiceLocator* services, const char* path, UINT32& width, UINT32&
 	INT8* bytes = 0;
 	SIZE size;
 	services->getFileManager()->loadRaw(bytes, size, path);
-	INT8* buffer = pngToRaw(bytes, width, height, upperLeft);
+	INT8* buffer = pngToRaw(bytes, width, height, alpha, upperLeft);
 	delete[] bytes;
 	if (buffer == 0) {
 		LOGW("Unable to convert PNG to raw format for path: \"%s\".", path);

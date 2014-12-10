@@ -108,13 +108,15 @@ void Node::addChild(Node* node) {
 	children_.push_back(node);
 }
 
-void Node::removeChild(Node* node) {
+void Node::removeChild(Node* node, bool deleteNode) {
 	static vector<Node*>::iterator it;
 	it = children_.begin();
 	while (it != children_.end()) {
 		if ((*it) == node) {
 			children_.erase(it);
-			delete node;
+			if (deleteNode) {
+				delete node;
+			}
 			return;
 		}
 		it++;

@@ -8,6 +8,8 @@
 #ifndef WINDOWSGHOST_H_
 #define WINDOWSGHOST_H_
 
+#define _CRT_SECURE_NO_WARNINGS
+
 #ifdef _DEBUG
 #define SMART_DEBUG
 #endif

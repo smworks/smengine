@@ -11,6 +11,7 @@
 #include "WindowsSocket.h"
 #include "WindowsGraphicsManager.h"
 #include "WindowsFileManager.h"
+#include "WindowsDatabase.h"
 
 WindowsServiceLocator::WindowsServiceLocator() :
 		exit_(false),
@@ -18,7 +19,8 @@ WindowsServiceLocator::WindowsServiceLocator() :
 		nScreenHeight_(0),
 		graphicsManager_(0),
 		fileManager_(0),
-		soundManager_(0)
+		soundManager_(0),
+		database_(0)
 {
 	// Initialize counter.
 	LARGE_INTEGER pf;
@@ -38,6 +40,10 @@ WindowsServiceLocator::~WindowsServiceLocator() {
 	if (soundManager_ != 0) {
 		delete soundManager_;
 		soundManager_ = 0;
+	}
+	if (database_ != 0) {
+		delete database_;
+		database_ = 0;
 	}
 	if (fileManager_ != 0) {
 		delete fileManager_;
@@ -115,4 +121,12 @@ SoundManager* WindowsServiceLocator::getSoundManager() {
 		LOGD("Sound manager initialized.");
 	}
 	return soundManager_;
+}
+
+Database* WindowsServiceLocator::getDB() {
+	if (database_ == 0) {
+		database_ = NEW WindowsDatabase(getFileManager());
+		LOGD("Database initialized.");
+	}
+	return database_;
 }

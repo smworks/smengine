@@ -75,9 +75,8 @@ void Quaternion::normalise() {
 }
 
 void Quaternion::setXYZ(float x, float y, float z) {
-	float yaw = y, pitch = x;
-	y = pitch * 0.0174532925f;
-	x = yaw * 0.0174532925f;
+	y *= 0.0174532925f;
+	x *= 0.0174532925f;
 	z *= 0.0174532925f;
     float rollOver2 = z * 0.5f;
     float sinRollOver2 = (float)sin((double)rollOver2);
@@ -159,15 +158,18 @@ void Quaternion::addZ(float val, bool global) {
 }
 
 void Quaternion::setX(float val) {
-	setXYZ(val, getY(), getZ());
+	addX(val - getX());
+	//setXYZ(val, getY(), getZ());
 }
 
 void Quaternion::setY(float val) {
-	setXYZ(getX(), val, getZ());
+	addY(val - getY());
+	//setXYZ(getX(), val, getZ());
 }
 
 void Quaternion::setZ(float val) {
-	setXYZ(getX(), getY(), val);
+	addZ(val - getZ());
+	//setXYZ(getX(), getY(), val);
 }
 
 float Quaternion::getX() {

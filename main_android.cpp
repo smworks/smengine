@@ -48,8 +48,9 @@ JNIEXPORT jlong JNICALL Java_lt_smworks_JNI_onCreate(JNIEnv* env, jobject obj, j
 	obj = env->NewGlobalRef(obj);
 	LOGD("Creating new engine object.");
 	ServiceLocator* sl = new AndroidServiceLocator(env, obj);
+	sl->setScreenWidth(width);
+	sl->setScreenHeight(height);
 	Engine* engine = new Engine(sl);
-	engine->resizeScreen(width, height);
 	LOGD("Engine instance id: %lld", (jlong) engine);
 	return (jlong) engine;
 }

@@ -122,8 +122,10 @@ public:
 
 	/**
 	 * @param child - child to be removed.
+	 * @param deleteNode - set true to also delete node and it's
+	 * childrend completely.
 	 */
-	void removeChild(Node* child);
+	void removeChild(Node* child, bool deleteNode);
 
 	/**
 	 * @param name - name of the child node.

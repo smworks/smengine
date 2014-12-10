@@ -51,6 +51,8 @@ bool WindowsGraphicsManager::setTexture(
 	if (textureType == Texture::MONO) {
 		type = GL_ALPHA;
 		glPixelStorei(GL_UNPACK_ALIGNMENT, 1);
+	} else if (textureType == Texture::RGB) {
+		type = GL_RGB;
 	}
 	glTexImage2D(
 		GL_TEXTURE_2D, 0, type,
@@ -83,6 +85,8 @@ bool WindowsGraphicsManager::updateTexture(
 	int type = GL_RGBA;
 	if (textureType == Texture::MONO) {
 		type = GL_ALPHA;
+	} else if (textureType == Texture::RGB) {
+		type = GL_RGB;
 	}
 	bindTexture(id);
 	glTexSubImage2D(GL_TEXTURE_2D, 0, colOffset, rowOffset,

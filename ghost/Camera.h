@@ -12,7 +12,7 @@
 #include "Matrix.h"
 
 class Node;
-class Settings;
+class Database;
 
 class Camera {
 public:
@@ -26,7 +26,7 @@ public:
 		float a, b, c, d;
 	};
 public:
-	Camera(Settings* settings);
+	Camera(Database* settings);
 	~Camera();
 
 	/**
@@ -119,7 +119,7 @@ private:
 	float width_, height_;
 	Plane planes[6];
 	Node* follow_, * lookAt_;
-	Settings* settings_;
+	Database* database_;
 };
 
 #endif /* CAMERA_H_ */

@@ -7,14 +7,14 @@
 
 #include "Camera.h"
 #include "Node.h"
-#include "Settings.h"
+#include "Multiplatform/Database.h"
 
-Camera::Camera(Settings* settings) :
+Camera::Camera(Database* database) :
 	width_(0.0f),
 	height_(0.0f),
 	follow_(0),
 	lookAt_(0),
-	settings_(settings)
+	database_(database)
 {
 	Matrix::identity(projection2D_);
 	Matrix::identity(projection3D_);

@@ -13,11 +13,11 @@
 #include "../ResourceManager.h"
 #include "../Multiplatform/ServiceLocator.h"
 #include "../Multiplatform/GraphicsManager.h"
+#include "../Multiplatform/Database.h"
 #include "../Node.h"
 #include "../Input.h"
 #include "../TextManager.h"
 #include "../ScriptManager.h"
-#include "../Settings.h"
 #include "../Camera.h"
 
 GUIText::GUIText(ServiceLocator* services) :

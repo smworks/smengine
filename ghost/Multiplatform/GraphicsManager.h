@@ -12,7 +12,7 @@
 #include "../Matrix.h"
 #include "../Color.h"
 class GraphicsManager;
-class Settings;
+class Database;
 class Camera;
 class ResourceManager;
 class TextManager;
@@ -303,7 +303,7 @@ public:
 
 protected:
 	ServiceLocator* services_;
-	Settings* settings_;
+	Database* database_;
 	Camera* camera_;
 	ResourceManager* resourceManager_;
 	TextManager* textManager_;

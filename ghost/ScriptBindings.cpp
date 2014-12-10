@@ -9,7 +9,7 @@
 #include "ScriptManager.h"
 #include "Multiplatform/ServiceLocator.h"
 #include "Multiplatform/SoundManager.h"
-#include "Settings.h"
+#include "Multiplatform/Database.h"
 #include "Input.h"
 #include "Node.h"
 #include "Camera.h"
@@ -28,6 +28,7 @@
 #include "Resources/Texture.h"
 #include "Resources/TextureMono.h"
 #include "Resources/TextureRGBA.h"
+#include "Resources/TextureRGB.h"
 #include "Resources/AtlasTexture.h"
 #include "Resources/GUIButton.h"
 #include "Resources/Scenario.h"
@@ -71,7 +72,8 @@
 
 #define METHOD_ADD_SET_STATE(class_name, method_name, method_call, state) \
 	int method_name(lua_State* L) { \
-		ASSERT(SM_GET_ARGUMENT_COUNT(L) == 2, "Bad argument count while adding/setting state."); \
+		ASSERT(SM_GET_ARGUMENT_COUNT(L) == 2, "Bad argument count while adding/setting data." \
+			" Method: " #method_name); \
 		class_name* obj = SM_GET_OBJECT(L, 0, class_name); \
 		float value = SM_GET_FLOAT(L, 1); \
 		if (obj != 0) { \
@@ -83,7 +85,8 @@
 
 #define METHOD_ADD_SET(class_name, method_name, method_call) \
 	int method_name(lua_State* L) { \
-		ASSERT(SM_GET_ARGUMENT_COUNT(L) == 2, "Bad argument count while adding/setting state."); \
+		ASSERT(SM_GET_ARGUMENT_COUNT(L) == 2, "Bad argument count while adding/setting data." \
+			" Method: " #method_name); \
 		class_name* obj = SM_GET_OBJECT(L, 0, class_name); \
 		float value = SM_GET_FLOAT(L, 1); \
 		if (obj != 0) { \
@@ -105,7 +108,8 @@
 
 #define METHOD_ADD_SET_TWO_STATE(class_name, method_name, method1, method2, state) \
 	int method_name(lua_State* L) { \
-		ASSERT(SM_GET_ARGUMENT_COUNT(L) == 3, "Bad argument count while adding/setting state."); \
+		ASSERT(SM_GET_ARGUMENT_COUNT(L) == 3, "Bad argument count while adding/setting data." \
+			" Method: " #method_name); \
 		class_name* obj = SM_GET_OBJECT(L, 0, class_name); \
 		float param1 = SM_GET_FLOAT(L, 1); \
 		float param2 = SM_GET_FLOAT(L, 2); \
@@ -119,7 +123,8 @@
 
 #define METHOD_ADD_SET_TWO(class_name, method_name, method1, method2) \
 	int method_name(lua_State* L) { \
-		ASSERT(SM_GET_ARGUMENT_COUNT(L) == 3, "Bad argument count while adding/setting state."); \
+		ASSERT(SM_GET_ARGUMENT_COUNT(L) == 3, "Bad argument count while adding/setting data." \
+			" Method: " #method_name); \
 		class_name* obj = SM_GET_OBJECT(L, 0, class_name); \
 		float param1 = SM_GET_FLOAT(L, 1); \
 		float param2 = SM_GET_FLOAT(L, 2); \
@@ -145,7 +150,8 @@
 
 #define METHOD_ADD_SET_THREE_STATE(class_name, method_name, method, state) \
 	int method_name(lua_State* L) { \
-		ASSERT(SM_GET_ARGUMENT_COUNT(L) == 4, "Bad argument count while adding/setting state."); \
+		ASSERT(SM_GET_ARGUMENT_COUNT(L) == 4, "Bad argument count while adding/setting data." \
+			" Method: " #method_name); \
 		class_name* obj = SM_GET_OBJECT(L, 0, class_name); \
 		float param1 = SM_GET_FLOAT(L, 1); \
 		float param2 = SM_GET_FLOAT(L, 2); \
@@ -159,7 +165,8 @@
 
 #define METHOD_ADD_SET_THREE(class_name, method_name, method) \
 	int method_name(lua_State* L) { \
-		ASSERT(SM_GET_ARGUMENT_COUNT(L) == 4, "Bad argument count while adding/setting state."); \
+		ASSERT(SM_GET_ARGUMENT_COUNT(L) == 4, "Bad argument count while adding/setting data." \
+			" Method: " #method_name); \
 		class_name* obj = SM_GET_OBJECT(L, 0, class_name); \
 		float param1 = SM_GET_FLOAT(L, 1); \
 		float param2 = SM_GET_FLOAT(L, 2); \
@@ -275,9 +282,17 @@ int playSound(lua_State* L) {
 	return 0;
 }
 
+int getTexture(lua_State* L) {
+	ASSERT(SM_GET_ARGUMENT_COUNT(L) == 1, "No texture name specified for getTexture()");
+	string val = SM_GET_STRING(L, 0);
+	Texture* texture = static_cast<Texture*>(SM_GET_RM()->get(Resource::TEXTURE_2D, val));
+	SM_RETURN_OBJECT(L, "Texture", Texture, texture);
+	return 1;
+}
+
 int loadScene(lua_State* L) {
 	string val = SM_GET_STRING(L, 0);
-	SM_GET_SL()->getSettings()->setScene(val);
+	SM_GET_SL()->getDB()->setScene(val);
 	return 0;
 }
 
@@ -305,6 +320,7 @@ void registerFunctions() {
 	ScriptManager::addFunction("print", print);
 	ScriptManager::addFunction("pointerIsOver", pointerIsOver);
 	ScriptManager::addFunction("playSound", playSound);
+	ScriptManager::addFunction("getTexture", getTexture);
 	ScriptManager::addFunction("loadScene", loadScene);
 	ScriptManager::addFunction("exit", exit);
 	ScriptManager::addFunction("getScreenWidth", getScreenWidth);
@@ -330,7 +346,7 @@ void registerClasses() {
 	registerScenario();
 	registerScenarioManager();
 	registerSceneManager();
-	registerSettings();
+	registerDatabase();
 }
 
 int getNode(lua_State* L) {
@@ -359,6 +375,32 @@ int deleteNode(lua_State* L) {
 	//Node* node = *(Node**) luaL_checkudata(L, 1, "node");
  //   delete node;
     return 0;
+}
+
+int nodeSetParent(lua_State* L) {
+	Node* child = SM_GET_OBJECT(L, 0, Node);
+	ASSERT(SM_GET_ARGUMENT_COUNT(L) == 2, "Wrong argument count for setParent()");
+	Node* parent = SM_GET_OBJECT(L, 1, Node);
+	Node* oldParent = child->getParent();
+	if (oldParent != 0) {
+		oldParent->removeChild(child, false);
+	}
+	child->setParent(parent);
+	parent->addChild(child);
+	return 0;
+}
+
+int nodeAddChild(lua_State* L) {
+	Node* parent = SM_GET_OBJECT(L, 0, Node);
+	ASSERT(SM_GET_ARGUMENT_COUNT(L) == 2, "Wrong argument count for addChild()");
+	Node* child = SM_GET_OBJECT(L, 1, Node);
+	Node* oldParent = child->getParent();
+	if (oldParent != 0) {
+		oldParent->removeChild(child, false);
+	}
+	child->setParent(parent);
+	parent->addChild(child);
+	return 0;
 }
 
 int nodeDisablePhysics(lua_State* L) {
@@ -825,6 +867,8 @@ void registerNode() {
 	ADD_METHOD(methods, "getNode", getNode);
     ADD_METHOD(methods, "new", newNode);
     ADD_METHOD(methods, "__gc", deleteNode);
+	ADD_METHOD(methods, "setParent", nodeSetParent);
+	ADD_METHOD(methods, "addChild", nodeAddChild);
 	ADD_METHOD(methods, "disablePhysics", nodeDisablePhysics);
 	ADD_METHOD(methods, "setMass", nodeSetMass);
 	ADD_METHOD(methods, "accelerate", nodeAccelerate);
@@ -1031,16 +1075,30 @@ void registerModel() {
 
 int newSprite(lua_State* L) {
 	int argc = SM_GET_ARGUMENT_COUNT(L);
+	ASSERT(argc >= 1 && argc <= 4, "Argument count for Sprite constructor is invalid.");
 	string val = SM_GET_STRING(L, 0);
 	Sprite* sprite = static_cast<Sprite*>(SM_GET_RM()->get(
 		Resource::SPRITE, val));
 	if (sprite == 0) {
 		sprite = NEW Sprite(ScriptManager::getServiceLocator());
+		if (argc == 3 || argc == 4) {
+			float width = SM_GET_FLOAT(L, 1);
+			float height = SM_GET_FLOAT(L, 2);
+			sprite->getAttributes().setFloat(Sprite::ATTR_WIDTH, width);
+			sprite->getAttributes().setFloat(Sprite::ATTR_HEIGHT, height);
+		} else if (argc == 2) {
+			Texture* texture = SM_GET_OBJECT(L, 1, Texture);
+			float width = (float) texture->getWidth();
+			float height = (float) texture->getHeight();
+			sprite->getAttributes().setFloat(Sprite::ATTR_WIDTH, width);
+			sprite->getAttributes().setFloat(Sprite::ATTR_HEIGHT, height);
+		}
 		sprite->create();
 		SM_GET_RM()->add(val, sprite);
 	}
-	if (argc > 1) {
-		Texture* texture = SM_GET_OBJECT(L, 1, Texture);
+	if (argc == 4 || argc == 2) {
+		int index = argc == 2 ? 1 : 3;
+		Texture* texture = SM_GET_OBJECT(L, index, Texture);
 		if (texture != 0) {
 			sprite->addTexture(texture);
 		}
@@ -1063,16 +1121,21 @@ void registerSprite() {
 int newTexture(lua_State* L) {
 	int argc = SM_GET_ARGUMENT_COUNT(L);
 	ASSERT(SM_IS_STRING(L, 0), "First argument to Texture constructor must be name.");
-	ASSERT(argc == 2 || argc == 4, "Wrong argument count for Texture constructor.");
+	ASSERT(argc == 2 || argc == 4 || argc == 8, "Wrong argument count for Texture constructor.");
 	string name = SM_GET_STRING(L, 0);
 	ASSERT(static_cast<Texture*>(SM_GET_RM()->get(Resource::TEXTURE_2D, name)) == 0,
 		"Texture with name %s already exist.", name.c_str());
-		string type = SM_GET_STRING(L, 1);
+	string type = SM_GET_STRING(L, 1);
 	Texture* texture = 0;
+	bool alpha = false;
 	if (argc == 2) {
 		if (SM_IS_STRING(L, 1)) {
 			if (type == Texture::VAL_MONO) {
 				texture = NEW TextureMono(SM_GET_SL());
+				texture->getAttributes().setString(Resource::ATTR_FILE, name);
+				texture->create();
+			} else if (type == Texture::VAL_RGB) {
+				texture = NEW TextureRGB(SM_GET_SL());
 				texture->getAttributes().setString(Resource::ATTR_FILE, name);
 				texture->create();
 			} else {
@@ -1084,8 +1147,12 @@ int newTexture(lua_State* L) {
 			HttpResponse* response = SM_GET_OBJECT(L, 1, HttpResponse);
 			UINT32 width, height;
 			UINT8* raw = reinterpret_cast<UINT8*>(
-				pngToRaw(response->getContent(), width, height));
-			texture = NEW TextureRGBA(SM_GET_SL());
+				pngToRaw(response->getContent(), width, height, alpha));
+			if (alpha) {
+				texture = NEW TextureRGBA(SM_GET_SL());
+			} else {
+				texture = NEW TextureRGB(SM_GET_SL());
+			}
 			texture->create(width, height);
 			for (UINT32 row = 0; row < height; row++) {
 				for (UINT32 col = 0; col < width; col++) {
@@ -1100,10 +1167,30 @@ int newTexture(lua_State* L) {
 		if (type == Texture::VAL_MONO) {
 			texture = NEW TextureMono(SM_GET_SL());
 			texture->create(width, height);
+		} else if (type == Texture::VAL_RGB) {
+			texture = NEW TextureRGB(SM_GET_SL());
+			texture->create(width, height);
 		} else {
 			texture = NEW TextureRGBA(SM_GET_SL());
 			texture->create(width, height);
 		}
+	}
+	if (argc == 7) {
+		UINT8 color[] = {
+			SM_GET_BYTE(L, 4),
+			SM_GET_BYTE(L, 5),
+			SM_GET_BYTE(L, 6)
+		};
+		texture->rectangle(0, 0, texture->getWidth(), texture->getHeight(), color);
+	}
+	else if (argc == 8) {
+		UINT8 color[] = {
+			SM_GET_BYTE(L, 4),
+			SM_GET_BYTE(L, 5),
+			SM_GET_BYTE(L, 6),
+			SM_GET_BYTE(L, 7)
+		};
+		texture->rectangle(0, 0, texture->getWidth(), texture->getHeight(), color);
 	}
 	SM_GET_RM()->add(name, texture);
 	SM_RETURN_OBJECT(L, "Texture", Texture, texture);
@@ -1165,6 +1252,19 @@ int textureCircle(lua_State* L) {
     return 0;
 }
 
+int textureFilledCircle(lua_State* L) {
+    Texture* texture = SM_GET_OBJECT(L, 0, Texture);
+	UINT8 color[] = {
+		SM_GET_BYTE(L, 4),
+		SM_GET_BYTE(L, 5),
+		SM_GET_BYTE(L, 6),
+		SM_GET_BYTE(L, 7)
+	};
+	texture->filledCircle(SM_GET_INT(L, 1), SM_GET_INT(L, 2),
+		SM_GET_INT(L, 3), color);
+    return 0;
+}
+
 int textureCommit(lua_State* L) {
     Texture* texture = SM_GET_OBJECT(L, 0, Texture);
 	texture->commit();
@@ -1178,6 +1278,7 @@ void registerTexture() {
 	ADD_METHOD(methods, "line", ::textureLine);
 	ADD_METHOD(methods, "rectangle", ::textureRectangle);
 	ADD_METHOD(methods, "circle", ::textureCircle);
+	ADD_METHOD(methods, "filledCircle", ::textureFilledCircle);
 	ADD_METHOD(methods, "commit", ::textureCommit);
     ADD_METHOD(methods, "__gc", ::deleteTexture);
     ScriptManager::addClass("Texture", methods);
@@ -1215,10 +1316,7 @@ void registerGUISurface() {
 
 int newGUIText(lua_State* L) {
 	int argc = SM_GET_ARGUMENT_COUNT(L);
-	if (argc == 0) {
-		LOGW("Wrong argument count for GUIText constructor.");
-		return 0;
-	}
+	ASSERT(argc == 1, "Wrong argument count for GUIText.new");
 	string name = SM_GET_STRING(L, 0);
 	GUIText* text = dynamic_cast<GUIText*>(SM_GET_RM()->get(Resource::GUI_SURFACE, name));
 	if (text == 0) {
@@ -1759,33 +1857,34 @@ void registerSceneManager() {
     ScriptManager::addClass("SceneManager", methods);
 }
 
-int getSettings(lua_State* L) {
-	SM_RETURN_OBJECT(L, "Settings", Settings, SM_GET_SL()->getSettings());
+int getDB(lua_State* L) {
+	SM_RETURN_OBJECT(L, "Database", Database, SM_GET_SL()->getDB());
     return 1;
 }
 
-int settingsGetString(lua_State* L) {
-	Settings* settings = SM_GET_OBJECT(L, 0, Settings);
+int databaseGetString(lua_State* L) {
+	Database* db = SM_GET_OBJECT(L, 0, Database);
 	ASSERT(SM_GET_ARGUMENT_COUNT(L) != 1,
 		"Function getString() takes setting name as parameter.");
 	string name = SM_GET_STRING(L, 1);
-	SM_RETURN_STRING(L, settings->getString(name).c_str());
+	SM_RETURN_STRING(L, db->getString(name).c_str());
 	return 1;
 }
 
-int settingsSetString(lua_State* L) {
-	Settings* settings = SM_GET_OBJECT(L, 0, Settings);
+int databaseSetString(lua_State* L) {
+	Database* db = SM_GET_OBJECT(L, 0, Database);
 	ASSERT(SM_GET_ARGUMENT_COUNT(L) != 2,
 		"Function setString() takes setting name and value as parameters.");
 	string name = SM_GET_STRING(L, 1);
-	string value = SM_GET_STRING(L, );
-	settings->setString(name, value);
+	string value = SM_GET_STRING(L, 2);
+	db->setString(name, value);
 	return 0;
 }
 
-void registerSettings() {
+void registerDatabase() {
     unordered_map<string, int (*)(lua_State*)> methods;
-	ADD_METHOD(methods, "getString", settingsGetString);
-	ScriptManager::addFunction("getSettings", getSettings);
-    ScriptManager::addClass("Settings", methods);
+	ADD_METHOD(methods, "getString", databaseGetString);
+	ADD_METHOD(methods, "setString", databaseSetString);
+	ScriptManager::addFunction("getDB", getDB);
+    ScriptManager::addClass("Database", methods);
 }

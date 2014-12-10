@@ -38,6 +38,7 @@ bool Shader::create() {
 			LOGW("Unable to compile shader: %s.", file.c_str());
 			return false;
 		}
+		LOGD("Loaded \"%s\" shader.", file.c_str());
 	} else {
 		vert = getAttribute(ATTR_VERTEX_SHADER);
 		frag = getAttribute(ATTR_FRAGMENT_SHADER);
@@ -52,7 +53,6 @@ bool Shader::create() {
 			return false;
 		}
 	}
-    LOGD("Loaded \"%s\" shader.", getAttribute(ATTR_FILE).c_str());
 	return true;
 }
 

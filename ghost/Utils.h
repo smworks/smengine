@@ -190,11 +190,12 @@ void* rgba8888ToRgba4444(void* in, int size);
  * @param in - pointer to PNG data.
  * @param width - image width in pixels.
  * @param height - image height in pixels.
+ * @param alpha - indicator whether image is simple RGB or RGBA.
  * @param upperLeft - optional parameter that specifies from which corner to load image.
  * Default is lower left. Specify true for upper left.
  * @return Pointer to raw image, or 0 if error occurred.
  */
-INT8* pngToRaw(INT8* in, UINT32& width, UINT32& height, bool upperLeft = false);
+INT8* pngToRaw(INT8* in, UINT32& width, UINT32& height, bool& alpha, bool upperLeft = false);
 
 /**
  * Loads PNG image from specified path, converts it to raw format and
@@ -203,11 +204,12 @@ INT8* pngToRaw(INT8* in, UINT32& width, UINT32& height, bool upperLeft = false);
  * @param path - image path.
  * @param width - width of the image.
  * @param height - height of the image.
+ * @param alpha - indicator whether image is simple RGB or RGBA.
  * @param upperLeft - optional parameter that specifies from which corner to load image.
  * Default is lower left. Specify true for upper left.
  * @return Pointer to raw image, or 0 if error occurred.
  */
 INT8* loadPng(
-	ServiceLocator* services, const char* path, UINT32& width, UINT32& height, bool upperLeft = false);
+	ServiceLocator* services, const char* path, UINT32& width, UINT32& height, bool& alpha, bool upperLeft = false);
 
 #endif

@@ -51,8 +51,9 @@ bool CubeMap::create() {
 	UINT8** sides = NEW UINT8*[6];
 	UINT32 width = 0, height = 0;
 	for (UINT32 i = 0; i < 6; i++) { // TODO: fix issue with last parameter true.
+		bool alpha;
 		sides[i] = reinterpret_cast<UINT8*>(loadPng(getServiceLocator(),
-			(GHOST_SPRITES + files[i]).c_str(), width, height, true));
+			(GHOST_SPRITES + files[i]).c_str(), width, height, alpha, true));
 	}
 	int num = width;
 	while (num > 2) {

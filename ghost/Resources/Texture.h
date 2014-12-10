@@ -22,6 +22,7 @@ public:
 	static const string ATTR_TYPE;
 	static const string VAL_MONO;
 	static const string VAL_RGBA;
+	static const string VAL_RGB;
 public:
 	/**
 	 * Custom constructor used to initialize
@@ -168,6 +169,18 @@ public:
 	 * one byte, for TextureRGBA it will be four and so on...
 	 */
 	void circle(UINT32 row, UINT32 col, UINT32 radius,
+		UINT8* color);
+
+	/**
+	 * Draws filled circle of specified color on the texture.
+	 * Alghorithm used: Bresenham Algorithm for a full circle.
+	 * @param row - row that crosses the center of the circle.
+	 * @param col - column that crosses the center of the circle.
+	 * @param color - byte array where each byte
+	 * represents color component. For TextureMono it will only be
+	 * one byte, for TextureRGBA it will be four and so on...
+	 */
+	void filledCircle(UINT32 row, UINT32 col, UINT32 radius,
 		UINT8* color);
 
 	/**

@@ -310,6 +310,8 @@
     <ClCompile Include="dependencies\includes\lua\lundump.c" />
     <ClCompile Include="dependencies\includes\lua\lvm.c" />
     <ClCompile Include="dependencies\includes\lua\lzio.c" />
+    <ClCompile Include="dependencies\includes\sqlite\shell.c" />
+    <ClCompile Include="dependencies\includes\sqlite\sqlite3.c" />
     <ClCompile Include="dependencies\includes\zlib\adler32.c" />
     <ClCompile Include="dependencies\includes\zlib\compress.c" />
     <ClCompile Include="dependencies\includes\zlib\crc32.c" />
@@ -331,14 +333,17 @@
     <ClCompile Include="ghost\HttpRequest.cpp" />
     <ClCompile Include="ghost\HttpResponse.cpp" />
     <ClCompile Include="ghost\ModelData.cpp" />
+    <ClCompile Include="ghost\Multiplatform\Database.cpp" />
     <ClCompile Include="ghost\Multiplatform\GraphicsManager.cpp" />
     <ClCompile Include="ghost\Multiplatform\ServiceLocator.cpp" />
+    <ClCompile Include="ghost\Multiplatform\Win32\WindowsDatabase.cpp" />
     <ClCompile Include="ghost\Multiplatform\Win32\WindowsSocket.cpp" />
     <ClCompile Include="ghost\Multiplatform\Win32\WindowsSoundManager.cpp" />
     <ClCompile Include="ghost\NetworkManager.cpp" />
     <ClCompile Include="ghost\NodeManager.cpp" />
     <ClCompile Include="ghost\Resources\Scenario.cpp" />
     <ClCompile Include="ghost\Resources\Symbol.cpp" />
+    <ClCompile Include="ghost\Resources\TextureRGB.cpp" />
     <ClCompile Include="ghost\ScenarioManager.cpp" />
     <ClCompile Include="ghost\SceneManager.cpp" />
     <ClCompile Include="ghost\ScriptBindings.cpp" />
@@ -385,7 +390,6 @@
     <ClCompile Include="ghost\Node.cpp" />
     <ClCompile Include="ghost\ObjParser.cpp" />
     <ClCompile Include="ghost\ResourceManager.cpp" />
-    <ClCompile Include="ghost\Settings.cpp" />
     <ClCompile Include="ghost\Shapes.cpp" />
     <ClCompile Include="ghost\TerrainParser.cpp" />
     <ClCompile Include="ghost\TextManager.cpp" />
@@ -605,6 +609,8 @@
     <ClInclude Include="dependencies\includes\lua\lundump.h" />
     <ClInclude Include="dependencies\includes\lua\lvm.h" />
     <ClInclude Include="dependencies\includes\lua\lzio.h" />
+    <ClInclude Include="dependencies\includes\sqlite\sqlite3.h" />
+    <ClInclude Include="dependencies\includes\sqlite\sqlite3ext.h" />
     <ClInclude Include="dependencies\includes\zlib\crc32.h" />
     <ClInclude Include="dependencies\includes\zlib\deflate.h" />
     <ClInclude Include="dependencies\includes\zlib\gzguts.h" />
@@ -623,15 +629,18 @@
     <ClInclude Include="ghost\HttpRequest.h" />
     <ClInclude Include="ghost\HttpResponse.h" />
     <ClInclude Include="ghost\ModelData.h" />
+    <ClInclude Include="ghost\Multiplatform\Database.h" />
     <ClInclude Include="ghost\Multiplatform\ServiceLocator.h" />
     <ClInclude Include="ghost\Multiplatform\Socket.h" />
     <ClInclude Include="ghost\Multiplatform\SoundManager.h" />
+    <ClInclude Include="ghost\Multiplatform\Win32\WindowsDatabase.h" />
     <ClInclude Include="ghost\Multiplatform\Win32\WindowsSocket.h" />
     <ClInclude Include="ghost\Multiplatform\Win32\WindowsSoundManager.h" />
     <ClInclude Include="ghost\NetworkManager.h" />
     <ClInclude Include="ghost\NodeManager.h" />
     <ClInclude Include="ghost\Resources\Scenario.h" />
     <ClInclude Include="ghost\Resources\Symbol.h" />
+    <ClInclude Include="ghost\Resources\TextureRGB.h" />
     <ClInclude Include="ghost\ScenarioManager.h" />
     <ClInclude Include="ghost\SceneManager.h" />
     <ClInclude Include="ghost\ScriptBindings.h" />
@@ -685,7 +694,6 @@
     <ClInclude Include="ghost\Node.h" />
     <ClInclude Include="ghost\ObjParser.h" />
     <ClInclude Include="ghost\ResourceManager.h" />
-    <ClInclude Include="ghost\Settings.h" />
     <ClInclude Include="ghost\Shapes.h" />
     <ClInclude Include="ghost\TerrainParser.h" />
     <ClInclude Include="ghost\TextManager.h" />
@@ -729,7 +737,7 @@
     <None Include="resources\scenes\level.cfg">
       <SubType>Designer</SubType>
     </None>
-    <None Include="resources\scripts\game_loop.lua" />
+    <None Include="resources\scripts\logic.lua" />
     <None Include="resources\shaders\default_model.frag" />
     <None Include="resources\shaders\default_model.vert" />
     <None Include="resources\shaders\default_sprite.frag" />

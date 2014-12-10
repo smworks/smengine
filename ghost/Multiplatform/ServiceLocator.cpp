@@ -16,7 +16,6 @@
 #include "../SceneManager.h"
 #include "../ScenarioManager.h"
 #include "../ScriptManager.h"
-#include "../Settings.h"
 #include "../TextManager.h"
 #include "../TextureAtlas.h"
 #include "../ThreadManager.h"
@@ -34,7 +33,6 @@ ServiceLocator::ServiceLocator() :
 	scenarioManager_(0),
 	sceneManager_(0),
 	scriptManager_(0),
-	settings_(0),
 	textManager_(0),
 	textureAtlas_(0),
 	threadManager_(0),
@@ -93,10 +91,6 @@ void ServiceLocator::release() {
 	if (resourceManager_ != 0) {
 		delete resourceManager_;
 		resourceManager_ = 0;
-	}
-	if (settings_ != 0) {
-		delete settings_;
-		settings_ = 0;
 	}
 	if (textManager_ != 0) {
 		delete textManager_;
@@ -203,14 +197,6 @@ void ServiceLocator::provide(ScriptManager* sm) {
 
 ScriptManager* ServiceLocator::getScriptManager() {
 	return scriptManager_;
-}
-
-void ServiceLocator::provide(Settings* settings) {
-	settings_ = settings;
-}
-
-Settings* ServiceLocator::getSettings() {
-	return settings_;
 }
 
 void ServiceLocator::provide(TextManager* textManager) {

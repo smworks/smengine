@@ -2,7 +2,7 @@
 <level>
   <node name="script">
     <resource type="script">
-      <attribute type="file" value="game_loop.lua" />
+      <attribute type="file" value="logic.lua" />
     </resource>
   </node>
 </level>

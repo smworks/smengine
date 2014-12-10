@@ -8,12 +8,12 @@
 #include "ResourceManager.h"
 #include "Multiplatform/ServiceLocator.h"
 #include "Multiplatform/FileManager.h"
+#include "Multiplatform/Database.h"
 #include "Node.h"
 #include "Xml.h"
 #include "Vec3.h"
 #include "Matrix.h"
 #include "Shapes.h"
-#include "Settings.h"
 #include "PhysicsManager.h"
 #include "ScriptManager.h"
 #include "Resources/TextureRGBA.h"
@@ -147,7 +147,7 @@ Node* ResourceManager::loadScene(const string& path) {
 		return 0;
 	}
 	rootNode_ = NEW Node();
-	rootNode_->setName(services_->getSettings()->getString(ROOT_NODE));
+	rootNode_->setName(services_->getDB()->getString(ROOT_NODE));
 	loadNodes(xmlNode, rootNode_);
 	return rootNode_;
 }

@@ -16,6 +16,7 @@ const string Texture::VAL_REPEAT = "repeat";
 const string Texture::ATTR_TYPE = "type";
 const string Texture::VAL_MONO = "mono";
 const string Texture::VAL_RGBA = "rgba";
+const string Texture::VAL_RGB = "rgb";
  
 Texture::Texture(ServiceLocator* services) : Resource(services) {
 }
@@ -61,8 +62,8 @@ void Texture::line(UINT32 startRow, UINT32 startCol,
 void Texture::rectangle(UINT32 startRow, UINT32 startCol,
 	UINT32 width, UINT32 height, UINT8* color)
 {
-	for (UINT32 i = startRow; i < height; i++) {
-		for (UINT32 j = startCol; j < width; j++) {
+	for (UINT32 i = startRow; i < height + startRow; i++) {
+		for (UINT32 j = startCol; j < width + startCol; j++) {
 			setPixel(color, i, j);
 		}
 	}
@@ -95,5 +96,29 @@ void Texture::circle(UINT32 row, UINT32 col, UINT32 radius, UINT8* color) {
 		setPixel(color, row + x, col - y);
 		setPixel(color, row - x, col + y);
 		setPixel(color, row - x, col - y);
+	}
+}
+
+void Texture::filledCircle(UINT32 row, UINT32 col, UINT32 radius, UINT8* color) {
+	int error = 1 - radius;
+	int errorY = 1;
+	int errorX = -2 * radius;
+	int x = radius, y = 0;
+	line(row + radius, col, row - radius, col, color);
+	line(row, col + radius, row, col - radius, color);
+	while(y < x) {
+		// >= 0 produces a slimmer circle. =0 produces the circle picture at radius 11 above
+		if(error > 0) {
+			x--;
+			errorX += 2;
+			error += errorX;
+		}
+		y++;
+		errorY += 2;
+		error += errorY;
+		line(row + y, col + x, row + y, col - x, color);
+		line(row - y, col + x, row - y, col - x, color);
+		line(row + x, col + y, row + x, col - y, color);
+		line(row - x, col + y, row - x, col - y, color);
 	}
 }

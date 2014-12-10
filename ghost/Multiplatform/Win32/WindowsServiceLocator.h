@@ -85,7 +85,11 @@ public:
 	 * @see ServiceLocator
 	 */
 	SoundManager* getSoundManager();
-private:
+
+	/**
+	 * @see ServiceLocator
+	 */
+	Database* getDB();
 private:
 	int nScreenWidth_;
 	int nScreenHeight_;
@@ -98,6 +102,7 @@ private:
 	GraphicsManager* graphicsManager_;
 	FileManager* fileManager_;
 	SoundManager* soundManager_;
+	Database* database_;
 };
 
 #endif
