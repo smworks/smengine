@@ -1,4 +1,6 @@
--- Called when network respoonse is available.
+-- Logic.lua
+
+-- Called when network response is available.
 function eventResponse(response)
 --	if response:getId() == 0 then
 --		picture = Texture.new("picture", response)
@@ -21,20 +23,27 @@ end
 function start()
 	print("Called start()")
 	input = getInput()
+	camera = getCamera()
+	db = getDB()
 	-- Dimensions
 	width = getScreenWidth()
 	height = getScreenHeight()
-	-- Textures
-	grassTexture = Texture.new("grass_1_24.png", "rgb")
-	for i = 0, 24, 1 do
-		for j = 0, 10, 1 do
-			local tmpSprite = Sprite.new("grass", grassTexture)
-			tmpSprite:setPosXY(i * 128.0 + 64.0, j * 128.0 + 64.0)
-		end
+	local offsetX = width * 0.5
+	local offsetY = height * 0.5
+	size = 128.0 * 0.5
+	-- Load tiles from database into textures and
+	-- create multidimensional array to represent map.
+	map = {}
+	local table = db:execute("SELECT * FROM map")
+	for i, t in pairs(table) do
+		local n = t["tile_id"] .. ".png"
+		local text = getTexture(n) == nil and Texture.new(n) or getTexture(n)
+		local tmpSprite = Sprite.new(n, text)
+		tmpSprite:setPosXY(t["x"] * size + offsetX, t["y"] * size + offsetY)
+		tmpSprite:setScaleXYZ(0.5, 0.5, 0.5)
+		map[t["x"]] = {}
+		map[t["x"]][t["y"]] = t["tile_type"]
 	end
-	treeTexture = Texture.new("tree_1.png", "rgba")
-	tree = Sprite.new("tree", treeTexture)
-	tree:setPosXY(128.0 * 4 + 64.0, 128.0 * 2 + 64.0)
 end
 
 -- Called when program is brought to foreground.
@@ -51,8 +60,31 @@ end
 
 -- Called every frame.
 function update()
-	--signIndicator:setMarginLeft(input:getPointerX())
-	--signIndicator:setMarginBottom(input:getPointerY())
+--	if input:keyReleased(constants["W"]) then
+--		camera:addPosY(size)
+--	end
+--	if input:keyReleased(constants["S"]) then
+--		camera:addPosY(-size)
+--	end
+--	if input:keyReleased(constants["A"]) then
+--		camera:addPosX(-size)
+--	end
+--	if input:keyReleased(constants["D"]) then
+--		camera:addPosX(size)
+--	end
+	local offset = 7.0
+	if input:keyPressed(constants["W"]) then
+		camera:addPosY(offset)
+	end
+	if input:keyPressed(constants["S"]) then
+		camera:addPosY(-offset)
+	end
+	if input:keyPressed(constants["A"]) then
+		camera:addPosX(-offset)
+	end
+	if input:keyPressed(constants["D"]) then
+		camera:addPosX(offset)
+	end
 end
 
 -- Called when program is brought to background.
@@ -63,4 +95,10 @@ end
 -- Called when program is about to quit.
 function quit()
 	print("Called quit()")
+end
+
+function tablelength(T)
+  local count = 0
+  for _ in pairs(T) do count = count + 1 end
+  return count
 end

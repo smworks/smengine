@@ -502,8 +502,9 @@ void GraphicsManager::renderNode(
 
 		//Matrix::multiply(node->getParent()->getMatrix(), res, tmp);
 		//Matrix::copy(tmp, res);
-
-		Matrix::multiply(mat, node->getMatrix(), res);
+		Matrix::multiply(mat, node->getMatrix(), matProjPosScale);
+		Matrix::translate(matPos, camera_->getPos().getX(), camera_->getPos().getY(), camera_->getPos().getZ());
+		Matrix::multiply(matProjPosScale, matPos, res);
 	}
 	// World * View * Projection matrix.
 	shader->setMatrix4(Shader::WVP, res);

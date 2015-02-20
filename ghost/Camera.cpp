@@ -10,6 +10,7 @@
 #include "Multiplatform/Database.h"
 
 Camera::Camera(Database* database) :
+	spritesAttached_(false),
 	width_(0.0f),
 	height_(0.0f),
 	follow_(0),
@@ -71,6 +72,18 @@ void Camera::updateProjections(
 	Matrix::projection3D(projection3D_,
 		fov, width_ / height_, nearDist, farDist);
 	Matrix::projection2D(projection2D_,	width_, height_, farDist);
+}
+
+void Camera::attachSpritesToCamera() {
+	spritesAttached_ = true;
+}
+
+void Camera::detachSpritesFromCamera() {
+	spritesAttached_ = false;
+}
+
+bool Camera::areSpritesAttached() {
+	return spritesAttached_;
 }
 
 void Camera::follow(Node* node) {

@@ -205,6 +205,14 @@ public:
 	 * @return True on success.
 	 */
 	virtual bool commit() = 0;
+
+	/**
+	 * Loads image from resources into appropriate texture format.
+	 * @param sl - service locator.
+	 * @param name - name of image file.
+	 * @return Texture object.
+	 */
+	static Texture* load(ServiceLocator* sl, string name);
 };
 
 #endif

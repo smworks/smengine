@@ -14,6 +14,10 @@ class FileManager;
 
 class Database {
 public:
+	struct ResultSet {
+		vector<unordered_map<string, string>> vec;
+	};
+public:
 	static const string CONFIG_FILE;
 	static const string CONFIG;
 	static const string NAME;
@@ -34,13 +38,15 @@ public:
 	 * @param name - name of file containing configuration.
 	 */
 	Database(FileManager* fileManager, const string& name = "");
-	virtual ~Database();
+	virtual ~Database() {}
 
 	/**
-	 * Loads parameters from file.
-	 * @param name - name of configuration file.
+	 * Executes specified query and returns result.
+	 * @param query - SQL query.
+	 * @return ResultSet containing vector that contains hash map with key-value
+	 * pairs representing row from table.
 	 */
-	void fromFile(const string& name);
+	virtual ResultSet execute(string query) = 0;
 
 	/**
 	 * @param name - parameter name.
@@ -106,6 +112,12 @@ public:
 	void setSceneLoaded(bool state) {
 		sceneLoaded_ = state;
 	}
+private:
+	/**
+	 * Loads parameters from file.
+	 * @param name - name of configuration file.
+	 */
+	void fromFile(const string& name);
 private:
 	FileManager* fileManager_;
 	unordered_map<string, string> settingsString_;

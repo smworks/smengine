@@ -46,6 +46,22 @@ public:
 	void updateProjections(
 		UINT32 width, UINT32 height, float fov, float nearDist, float farDist);
 
+
+	/**
+	 * Forces sprites to ignore camera position.
+	 */
+	void attachSpritesToCamera();
+
+	/**
+	 * Forces sprites to move when camera position changes.
+	 */
+	void detachSpritesFromCamera();
+
+	/**
+	 * @return true if sprites are attached.
+	 */
+	bool areSpritesAttached();
+
 	/**
 	 * When camera follows a node, its position is calculated
 	 * relative to node position.
@@ -113,6 +129,7 @@ public:
 	void print();
 
 private:
+	bool spritesAttached_;
 	Vec3 pos_, rot_;
 	Mat4 projection2D_, projection3D_,
 		matPos_, matRot_, mat_;

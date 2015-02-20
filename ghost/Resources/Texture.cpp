@@ -8,6 +8,9 @@
 #include "Texture.h"
 #include "../ScriptManager.h"
 #include "../ResourceManager.h"
+#include "../Utils.h"
+#include "TextureRGB.h"
+#include "TextureRGBA.h"
 
 const string Texture::ATTR_WRAP_U = "wrap_u";
 const string Texture::ATTR_WRAP_V = "wrap_v";
@@ -121,4 +124,22 @@ void Texture::filledCircle(UINT32 row, UINT32 col, UINT32 radius, UINT8* color) 
 		line(row + x, col + y, row + x, col - y, color);
 		line(row - x, col + y, row - x, col - y, color);
 	}
+}
+
+Texture* Texture::load(ServiceLocator* sl, string name) {
+	UINT32 width, height;
+	bool alpha = false;
+	UINT8* buffer = reinterpret_cast<UINT8*>(loadPng(sl,
+		(GHOST_SPRITES + name).c_str(), width, height, alpha));
+	ASSERT(buffer != 0, "Unable to load file \"%s\".", name.c_str());
+	delete [] buffer;
+	Texture* texture = 0;
+	if (alpha) {
+		texture = NEW TextureRGBA(sl);
+	} else {
+		texture = NEW TextureRGB(sl);
+	}
+	texture->getAttributes().setString(Resource::ATTR_FILE, name);
+	texture->create();
+	return texture;
 }

@@ -60,8 +60,9 @@
 #define SM_RETURN_OBJECT(state, name, type, object) \
 	type** udata = (type**) lua_newuserdata(state, sizeof(type*)); \
 	*udata = object; \
-	luaL_getmetatable(L, name); \
-	lua_setmetatable(L, -2)
+	luaL_getmetatable(state, name); \
+	lua_setmetatable(state, -2)
+#define SM_RETURN_NIL(state) lua_pushnil(state)
 #define SM_POP_ARGS(state, argc) lua_pop(state, argc)
 #define SM_GET_SL() ScriptManager::getServiceLocator()
 #define SM_GET_RM() SM_GET_SL()->getRM()
@@ -286,7 +287,11 @@ int getTexture(lua_State* L) {
 	ASSERT(SM_GET_ARGUMENT_COUNT(L) == 1, "No texture name specified for getTexture()");
 	string val = SM_GET_STRING(L, 0);
 	Texture* texture = static_cast<Texture*>(SM_GET_RM()->get(Resource::TEXTURE_2D, val));
-	SM_RETURN_OBJECT(L, "Texture", Texture, texture);
+	if (texture == 0) {
+		SM_RETURN_NIL(L);
+	} else {
+		SM_RETURN_OBJECT(L, "Texture", Texture, texture);
+	}
 	return 1;
 }
 
@@ -1088,6 +1093,7 @@ int newSprite(lua_State* L) {
 			sprite->getAttributes().setFloat(Sprite::ATTR_HEIGHT, height);
 		} else if (argc == 2) {
 			Texture* texture = SM_GET_OBJECT(L, 1, Texture);
+			ASSERT(texture != 0, "Texture for sprite %s is null.", val.c_str());
 			float width = (float) texture->getWidth();
 			float height = (float) texture->getHeight();
 			sprite->getAttributes().setFloat(Sprite::ATTR_WIDTH, width);
@@ -1121,15 +1127,17 @@ void registerSprite() {
 int newTexture(lua_State* L) {
 	int argc = SM_GET_ARGUMENT_COUNT(L);
 	ASSERT(SM_IS_STRING(L, 0), "First argument to Texture constructor must be name.");
-	ASSERT(argc == 2 || argc == 4 || argc == 8, "Wrong argument count for Texture constructor.");
+	ASSERT(argc == 1 || argc == 2 || argc == 4 || argc == 8, "Wrong argument count for Texture constructor.");
 	string name = SM_GET_STRING(L, 0);
 	ASSERT(static_cast<Texture*>(SM_GET_RM()->get(Resource::TEXTURE_2D, name)) == 0,
-		"Texture with name %s already exist.", name.c_str());
-	string type = SM_GET_STRING(L, 1);
+		"Texture with name %s already exists.", name.c_str());
 	Texture* texture = 0;
 	bool alpha = false;
-	if (argc == 2) {
+	if (argc == 1) {
+		texture = Texture::load(SM_GET_SL(), name);
+	} else if (argc == 2) {
 		if (SM_IS_STRING(L, 1)) {
+			string type = SM_GET_STRING(L, 1);
 			if (type == Texture::VAL_MONO) {
 				texture = NEW TextureMono(SM_GET_SL());
 				texture->getAttributes().setString(Resource::ATTR_FILE, name);
@@ -1162,6 +1170,7 @@ int newTexture(lua_State* L) {
 			delete[] raw;
 		}
 	} else {
+		string type = SM_GET_STRING(L, 1);
 		int width = SM_GET_INT(L, 2);
 		int height = SM_GET_INT(L, 3);
 		if (type == Texture::VAL_MONO) {
@@ -1881,10 +1890,35 @@ int databaseSetString(lua_State* L) {
 	return 0;
 }
 
+int databaseExecute(lua_State* L) {
+	Database* db = SM_GET_OBJECT(L, 0, Database);
+	ASSERT(SM_GET_ARGUMENT_COUNT(L) != 1,
+		"Function execute() takes SQL query as parameter.");
+	string query = SM_GET_STRING(L, 1);
+	Database::ResultSet rs = db->execute(query);
+	int size = rs.vec.size();
+	lua_newtable(L);
+	for (int i = 0; i < size; i++) {
+		unordered_map<string, string>& map = rs.vec[i];
+		unordered_map<string, string>::const_iterator it = map.begin();
+		lua_pushnumber(L, i + 1);
+		lua_newtable(L);
+		while (it != map.end()) {
+			lua_pushstring(L, it->first.c_str());
+			lua_pushstring(L, it->second.c_str());
+			lua_settable(L, -3);
+			it++;
+		}
+		lua_settable(L, -3);
+	}
+	return 1;
+}
+
 void registerDatabase() {
     unordered_map<string, int (*)(lua_State*)> methods;
 	ADD_METHOD(methods, "getString", databaseGetString);
 	ADD_METHOD(methods, "setString", databaseSetString);
+	ADD_METHOD(methods, "execute", databaseExecute);
 	ScriptManager::addFunction("getDB", getDB);
     ScriptManager::addClass("Database", methods);
 }
