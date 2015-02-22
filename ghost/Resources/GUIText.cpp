@@ -101,6 +101,9 @@ void GUIText::update() {
 		if (symbolOffset > maxWidth) {
 			maxWidth = (float) symbolOffset;
 		}
+		if (text_[i] == ' ') {
+			continue;
+		}
 		// Generate vbo.
 		const float* uv = symbol->getUV();
 		tmp.pos[0] = startX; tmp.pos[1] = startY; tmp.pos[2] = 0;

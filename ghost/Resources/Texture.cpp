@@ -235,9 +235,9 @@ bool Texture::create() {
 
 
 void Texture::addDimensions(Texture* texture, UINT32 w, UINT32 h) {
-	//ASSERT(w > 0 && h > 0, "Texture dimensions must be bigger than 0.");
+	ASSERT(w > 0 && h > 0, "Texture dimensions must be bigger than 0.");
 	texture->getAttributes().setInt(Texture::ATTR_WIDTH, w);
-	texture->getAttributes().setInt(Texture::ATTR_HEIGHT, w);
+	texture->getAttributes().setInt(Texture::ATTR_HEIGHT, h);
 }
 
 Texture* Texture::prepareNewTexture(Texture* texture, UINT32 w, UINT32 h) {

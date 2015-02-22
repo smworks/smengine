@@ -54,15 +54,15 @@ bool GUISurface::create() {
 	// 	if (getAttribute(ATTR_TRANSPARENCY).length() > 0) {
 	//	setTransparency(toFloat(getAttribute(ATTR_TRANSPARENCY).c_str()));
 	//}
-	marginLeft_ = getAttributes().getFloat(ATTR_MARGIN_LEFT);
-	marginBottom_ = getAttributes().getFloat(ATTR_MARGIN_BOTTOM);
-    marginRight_ = getAttributes().getFloat(ATTR_MARGIN_RIGHT);
-	marginTop_ = getAttributes().getFloat(ATTR_MARGIN_TOP);
-	width_ = getAttributes().getFloat(ATTR_WIDTH);
-	height_ = getAttributes().getFloat(ATTR_HEIGHT);
+	marginLeft_ = getAttributes().getFloat(ATTR_MARGIN_LEFT, marginLeft_);
+	marginBottom_ = getAttributes().getFloat(ATTR_MARGIN_BOTTOM, marginBottom_);
+    marginRight_ = getAttributes().getFloat(ATTR_MARGIN_RIGHT, marginRight_);
+	marginTop_ = getAttributes().getFloat(ATTR_MARGIN_TOP, marginTop_);
+	width_ = getAttributes().getFloat(ATTR_WIDTH, width_);
+	height_ = getAttributes().getFloat(ATTR_HEIGHT, height_);
 	setTransparency(getAttributes().getFloat(ATTR_TRANSPARENCY, 1.0f));
 	posX_ = marginLeft_;
-	posY_ = marginBottom_;
+	posY_ = marginTop_;
 	setBackground(getAttribute(ATTR_BACKGROUND));
 	//string attrWidth = getAttribute(ATTR_WIDTH);
 	//width_ = getSize(
@@ -195,13 +195,13 @@ Texture* GUISurface::getPointerToTexture() {
 	return textureBackground_;
 }
 
-void GUISurface::setMargins(float left, float bottom, float right, float top) {
+void GUISurface::setMargins(float left, float top, float right, float bottom) {
 	marginLeft_ = left;
 	marginBottom_ = bottom;
 	marginRight_ = right;
 	marginTop_ = top;
 	posX_ = left;
-	posY_ = bottom;
+	posY_ = top;
 }
 
 float GUISurface::getMarginLeft() {

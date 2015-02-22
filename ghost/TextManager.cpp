@@ -270,22 +270,24 @@ Symbol* TextManager::getSymbol(char symbol) {
 	s->setOffsetY(glyphSlot->bitmap_top - bitmap.rows);
 	s->setAdvance(glyphSlot->advance.x >> 6);
 	s->setFontSize(fontSize_);
-	Texture* texture = Texture::createAtlasMono(services_, s->getWidth(), s->getHeight());
-	UINT8 color[] = {0};
-	texture->rectangle(0, 0, texture->getWidth(), texture->getHeight(), color);
-	for (int row = 0; row < bitmap.rows; row++) {
-		for (int col = 0; col < bitmap.width; col++) {
-			color[0] = bitmap.buffer[row * bitmap.width + col];
-			if (color[0] > 0) {
-				texture->setPixel(color, bitmap.rows - row - 1, col);
+	if (s->getWidth() > 0 && s->getHeight() > 0) {
+		Texture* texture = Texture::createAtlasMono(services_, s->getWidth(), s->getHeight());
+		UINT8 color[] = {0};
+		texture->rectangle(0, 0, texture->getWidth(), texture->getHeight(), color);
+		for (int row = 0; row < bitmap.rows; row++) {
+			for (int col = 0; col < bitmap.width; col++) {
+				color[0] = bitmap.buffer[row * bitmap.width + col];
+				if (color[0] > 0) {
+					texture->setPixel(color, bitmap.rows - row - 1, col);
+				}
 			}
 		}
+		services_->getRM()->add(name, texture);
+		texture->commit();
+		s->setTexture(texture);
+		services_->getRM()->add(name, s);
 	}
-	services_->getRM()->add(name, texture);
 	FT_Done_Glyph(glyph);
-	texture->commit();
-	s->setTexture(texture);
-	services_->getRM()->add(name, s);
 	if (fontSize_ < SYMBOL_CACHE_SIZE && index < SYMBOL_CACHE_SIZE ) {
 		symbolCache_[fontSize_][index] = s;
 	}

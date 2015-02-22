@@ -144,7 +144,7 @@ public:
 	 * @param right - offset to the right.
 	 * @param top - offset to the top.
 	 */
-	void setMargins(float left, float bottom, float right = 0.0f, float top = 0.0f);
+	void setMargins(float left, float top, float right = 0.0f, float bottom = 0.0f);
 
 	/**
 	 * @return Left surface margin in pixels.

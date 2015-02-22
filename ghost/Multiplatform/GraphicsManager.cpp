@@ -451,24 +451,31 @@ void GraphicsManager::renderNode(
 	if (!ortho) {
 		Matrix::multiply(mat, node->getMatrix(), res);
 	} else if (gui) {
-		Quaternion& q = node->getRot();
-		Vec3 r(q.getX(), q.getY(), q.getZ());
+		//Quaternion& q = node->getRot();
+		//Vec3 r(q.getX(), q.getY(), q.getZ());
+		//GUISurface* surface = dynamic_cast<GUISurface*>(renderable);
+		//float width = surface->getWidth();
+		//float height = surface->getHeight();
+		//float x = surface->getPosX();
+		//float y = surface->getPosY();
+		//Mat4 tmp;
+		//Mat4 pos;
+		//Mat4 rot;
+		//Mat4 scale;
+		//Vec3& camPos = services_->getCamera()->getPos();
+		//Matrix::translate(pos, x - camPos.getX(), y - camPos.getY(), 0.0f);
+		//Matrix::rotateXYZ(rot, r.getX(), r.getY(), r.getZ());
+		//Matrix::scale(scale, width, height, 1.0f);
+		//Matrix::multiply(mat, pos, res);
+		//Matrix::multiply(res, rot, tmp);
+		//Matrix::multiply(tmp, scale, res);
 		GUISurface* surface = dynamic_cast<GUISurface*>(renderable);
-		float width = surface->getWidth();
-		float height = surface->getHeight();
-		float x = surface->getPosX();
-		float y = surface->getPosY();
-		Mat4 tmp;
-		Mat4 pos;
-		Mat4 rot;
-		Mat4 scale;
-		Vec3& camPos = services_->getCamera()->getPos();
-		Matrix::translate(pos, x - camPos.getX(), y - camPos.getY(), 0.0f);
-		Matrix::rotateXYZ(rot, r.getX(), r.getY(), r.getZ());
-		Matrix::scale(scale, width, height, 1.0f);
-		Matrix::multiply(mat, pos, res);
-		Matrix::multiply(res, rot, tmp);
-		Matrix::multiply(tmp, scale, res);
+		Mat4 pos, scale, posScale;
+		float posY = services_->getScreenHeight() - surface->getPosY() - surface->getHeight();
+		Matrix::translate(pos, surface->getPosX(), posY, 0.0f);
+		Matrix::scale(scale, surface->getWidth(), surface->getHeight(), 1.0);
+		Matrix::multiply(pos, scale, posScale);
+		Matrix::multiply(mat, posScale, res);
 	} else {
 		//Vec3 p = node->getPos();
 		//Vec3 s = node->getScale();
