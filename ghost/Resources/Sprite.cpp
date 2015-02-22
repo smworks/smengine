@@ -16,8 +16,7 @@
 #include "../Multiplatform/GraphicsManager.h"
 #include "Texture.h"
 #include "../Node.h"
-#include "../TextureAtlas.h"
-#include "TextureRGBA.h"
+#include "Texture.h"
 
 Sprite::Sprite(ServiceLocator* services) :
 	Resource(services),
@@ -45,13 +44,7 @@ bool Sprite::create() {
     }
     string file = getAttribute(Resource::ATTR_FILE);
     if (file.length() > 0) {
-        Texture* texture = static_cast<Texture*>(getServiceLocator()->getRM()->get(Resource::TEXTURE_2D, file));
-        if (texture == 0) {
-            texture = new TextureRGBA(getServiceLocator());
-            texture->setAttribute(Resource::ATTR_FILE, file);
-            texture->create();
-            getServiceLocator()->getRM()->add(file, texture);
-        }
+		Texture* texture = Texture::load(getServiceLocator(), file);
         image_ = texture;
         if (spriteCount_ == 0) {
             spriteCount_ = 1;

@@ -137,10 +137,16 @@ typedef SIZE* POINTER;
     #define PROFILE(msg)
 #endif
 
+#define RETURN(val, cond, ...) \
+	if (cond) { \
+		LOGW(__VA_ARGS__); \
+		return val; \
+	}
+
 #ifdef SMART_DEBUG
 	#define CHECK_GL_ERROR(msg) checkGLError(msg)
-#define ASSERT(expression, ...) \
-	if (!(expression)) { LOGE(__VA_ARGS__); } assert(expression)
+	#define ASSERT(expression, ...) \
+		if (!(expression)) { LOGE(__VA_ARGS__); } assert(expression)
 #else
 	#define CHECK_GL_ERROR(msg)
 	#define ASSERT(expression, ...) if (!(expression)) { LOGE(__VA_ARGS__); }

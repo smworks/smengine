@@ -20,7 +20,7 @@ public:
 	/**
 	 * @see Texture
 	 */
-	bool create(UINT32 width, UINT32 height);
+	UINT8* createBuffer(UINT32 width, UINT32 height);
 
 	/**
 	 * @see Resource
@@ -110,12 +110,8 @@ protected:
 private:
     /** Id of the texture in atlas. */
     UINT32 atlasId_;
-	/** Width of the texture in pixels. */
-	UINT32 width_;
-	/** Height of the texture in pixels. */
-	UINT32 height_;
 	/** Type of texture. (Texture::Type) */
 	int type_;
 };
 
-#endif /* TextureRGBA_H_ */
+#endif

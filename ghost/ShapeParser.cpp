@@ -7,7 +7,7 @@
 
 #include "ShapeParser.h"
 #include "Vec3.h"
-#include "Resources/TextureRGBA.h"
+#include "Resources/Texture.h"
 
 bool isVertexNecessary(Texture* scheme, UINT32 row, UINT32 col) {
 	UINT8* d = scheme->getRawData();
@@ -89,7 +89,7 @@ bool isVertexNecessary(Texture* scheme, UINT32 row, UINT32 col) {
 }
 
 bool ShapeParser::parse(vector<Vec3>* vertices, vector<float>* uv,
-	vector<UINT16>* indices, TextureRGBA* scheme, float wallHeight)
+	vector<UINT16>* indices, Texture* scheme, float wallHeight)
 {
 	PROFILE("Generating 3D shape. Width=%d, Height=%d, Wall height=%f",
 		scheme->getWidth(), scheme->getHeight(), wallHeight);

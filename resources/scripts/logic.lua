@@ -1,4 +1,4 @@
--- Logic.lua
+-- logic.lua
 
 -- Called when network response is available.
 function eventResponse(response)
@@ -74,16 +74,16 @@ function update()
 --	end
 	local offset = 7.0
 	if input:keyPressed(constants["W"]) then
-		camera:addPosY(offset)
-	end
-	if input:keyPressed(constants["S"]) then
 		camera:addPosY(-offset)
 	end
+	if input:keyPressed(constants["S"]) then
+		camera:addPosY(offset)
+	end
 	if input:keyPressed(constants["A"]) then
-		camera:addPosX(-offset)
+		camera:addPosX(offset)
 	end
 	if input:keyPressed(constants["D"]) then
-		camera:addPosX(offset)
+		camera:addPosX(-offset)
 	end
 end
 

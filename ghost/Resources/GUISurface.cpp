@@ -38,6 +38,78 @@ GUISurface::~GUISurface() {
 	release();
 }
 
+bool GUISurface::create() {
+ //   marginLeft_ = getSize(getAttribute(ATTR_MARGIN_LEFT),
+	//	(float) getServiceLocator()->getScreenWidth());
+	//marginBottom_ = getSize(getAttribute(ATTR_MARGIN_BOTTOM),
+	//	(float) getServiceLocator()->getScreenHeight());
+ //   marginRight_ = getSize(getAttribute(ATTR_MARGIN_RIGHT),
+	//	(float) getServiceLocator()->getScreenWidth());
+	//marginTop_ = getSize(getAttribute(ATTR_MARGIN_TOP),
+	//	(float) getServiceLocator()->getScreenHeight());
+	//width_ = getSize(getAttribute(ATTR_WIDTH),
+	//	(float) getServiceLocator()->getScreenHeight());
+	//height_ = getSize(getAttribute(ATTR_HEIGHT),
+	//	(float) getServiceLocator()->getScreenHeight());
+	// 	if (getAttribute(ATTR_TRANSPARENCY).length() > 0) {
+	//	setTransparency(toFloat(getAttribute(ATTR_TRANSPARENCY).c_str()));
+	//}
+	marginLeft_ = getAttributes().getFloat(ATTR_MARGIN_LEFT);
+	marginBottom_ = getAttributes().getFloat(ATTR_MARGIN_BOTTOM);
+    marginRight_ = getAttributes().getFloat(ATTR_MARGIN_RIGHT);
+	marginTop_ = getAttributes().getFloat(ATTR_MARGIN_TOP);
+	width_ = getAttributes().getFloat(ATTR_WIDTH);
+	height_ = getAttributes().getFloat(ATTR_HEIGHT);
+	setTransparency(getAttributes().getFloat(ATTR_TRANSPARENCY, 1.0f));
+	posX_ = marginLeft_;
+	posY_ = marginBottom_;
+	setBackground(getAttribute(ATTR_BACKGROUND));
+	//string attrWidth = getAttribute(ATTR_WIDTH);
+	//width_ = getSize(
+	//	attrWidth,	getServiceLocator()->getScreenWidth());
+	//if (VAL_FILL == attrWidth) {
+	//	widthSize_ = FILL;
+	//}
+	//string attrHeight = getAttribute(ATTR_HEIGHT);
+	//height_ = getSize(
+	//	attrHeight, getServiceLocator()->getScreenHeight());
+	//if (VAL_FILL == attrHeight) {
+	//	heightSize_ = FILL;
+	//}
+   // if (width_ == 0 ||  height_ == 0) {
+   //     LOGW("Invalid width or height specified for GUI element: %s. "
+			//"Width = %d, height = %d.", getName().c_str(), width_, height_);
+   // }
+			// Genereate separate uv coordinates.
+    vector<VertexPT> vert;
+    VertexPT tmp;
+	float vertices[] = {
+		0.0f, 0.0f, 0.0f,
+		1.0f, 0.0f, 0.0f,
+		1.0f, 1.0f, 0.0f,
+		1.0f, 1.0f, 0.0f,
+		0.0f, 1.0f, 0.0f,
+		0.0f, 0.0f, 0.0f
+	};
+    SIZE vertexCount = sizeof(vertices) / 3;
+    for (SIZE j = 0; j < vertexCount; j++) {
+        tmp.uv[0] = g_planeUV[j * 2 + 0];
+        tmp.uv[1] = g_planeUV[j * 2 + 1];
+		tmp.pos[0] = vertices[j * 3 + 0];
+        tmp.pos[1] = vertices[j * 3 + 1];
+        tmp.pos[2] = vertices[j * 3 + 2];
+        vert.push_back(tmp);
+    }
+    getServiceLocator()->getGraphicsManager()->setVertexBuffer(
+		cbo_, &vert[0], (UINT32) vert.size() * sizeof(VertexPT));
+	if (checkGLError("Creating GUI surface resource.")) {
+		release();
+		return false;
+	}
+	return true;
+}
+
+
 void GUISurface::release() {
 	textureBackground_ = 0;
 	update_ = true;
@@ -171,10 +243,7 @@ void GUISurface::setBackground(string background) {
 			getServiceLocator()->getRM()->get(
 				TEXTURE_2D, background));
 		if (textureBackground_ == 0) {
-			textureBackground_ = NEW TextureRGBA(getServiceLocator());
-			textureBackground_->getAttributes().setString(
-				ATTR_FILE, background);
-			textureBackground_->create();
+			textureBackground_ = Texture::load(getServiceLocator(), background);
 			getServiceLocator()->getRM()->add(background,
 				textureBackground_);
 		}
@@ -240,75 +309,4 @@ float GUISurface::getSize(string size, float maxSize) {
 		return maxSize / 100.0f * rawSize;
 	}
 	return rawSize;
-}
-
-bool GUISurface::create() {
- //   marginLeft_ = getSize(getAttribute(ATTR_MARGIN_LEFT),
-	//	(float) getServiceLocator()->getScreenWidth());
-	//marginBottom_ = getSize(getAttribute(ATTR_MARGIN_BOTTOM),
-	//	(float) getServiceLocator()->getScreenHeight());
- //   marginRight_ = getSize(getAttribute(ATTR_MARGIN_RIGHT),
-	//	(float) getServiceLocator()->getScreenWidth());
-	//marginTop_ = getSize(getAttribute(ATTR_MARGIN_TOP),
-	//	(float) getServiceLocator()->getScreenHeight());
-	//width_ = getSize(getAttribute(ATTR_WIDTH),
-	//	(float) getServiceLocator()->getScreenHeight());
-	//height_ = getSize(getAttribute(ATTR_HEIGHT),
-	//	(float) getServiceLocator()->getScreenHeight());
-	// 	if (getAttribute(ATTR_TRANSPARENCY).length() > 0) {
-	//	setTransparency(toFloat(getAttribute(ATTR_TRANSPARENCY).c_str()));
-	//}
-	marginLeft_ = getAttributes().getFloat(ATTR_MARGIN_LEFT);
-	marginBottom_ = getAttributes().getFloat(ATTR_MARGIN_BOTTOM);
-    marginRight_ = getAttributes().getFloat(ATTR_MARGIN_RIGHT);
-	marginTop_ = getAttributes().getFloat(ATTR_MARGIN_TOP);
-	width_ = getAttributes().getFloat(ATTR_WIDTH);
-	height_ = getAttributes().getFloat(ATTR_HEIGHT);
-	setTransparency(getAttributes().getFloat(ATTR_TRANSPARENCY, 1.0f));
-	posX_ = marginLeft_;
-	posY_ = marginBottom_;
-	setBackground(getAttribute(ATTR_BACKGROUND));
-	//string attrWidth = getAttribute(ATTR_WIDTH);
-	//width_ = getSize(
-	//	attrWidth,	getServiceLocator()->getScreenWidth());
-	//if (VAL_FILL == attrWidth) {
-	//	widthSize_ = FILL;
-	//}
-	//string attrHeight = getAttribute(ATTR_HEIGHT);
-	//height_ = getSize(
-	//	attrHeight, getServiceLocator()->getScreenHeight());
-	//if (VAL_FILL == attrHeight) {
-	//	heightSize_ = FILL;
-	//}
-   // if (width_ == 0 ||  height_ == 0) {
-   //     LOGW("Invalid width or height specified for GUI element: %s. "
-			//"Width = %d, height = %d.", getName().c_str(), width_, height_);
-   // }
-			// Genereate separate uv coordinates.
-    vector<VertexPT> vert;
-    VertexPT tmp;
-	float vertices[] = {
-		0.0f, 0.0f, 0.0f,
-		1.0f, 0.0f, 0.0f,
-		1.0f, 1.0f, 0.0f,
-		1.0f, 1.0f, 0.0f,
-		0.0f, 1.0f, 0.0f,
-		0.0f, 0.0f, 0.0f
-	};
-    SIZE vertexCount = sizeof(vertices) / 3;
-    for (SIZE j = 0; j < vertexCount; j++) {
-        tmp.uv[0] = g_planeUV[j * 2 + 0];
-        tmp.uv[1] = g_planeUV[j * 2 + 1];
-		tmp.pos[0] = vertices[j * 3 + 0];
-        tmp.pos[1] = vertices[j * 3 + 1];
-        tmp.pos[2] = vertices[j * 3 + 2];
-        vert.push_back(tmp);
-    }
-    getServiceLocator()->getGraphicsManager()->setVertexBuffer(
-		cbo_, &vert[0], (UINT32) vert.size() * sizeof(VertexPT));
-	if (checkGLError("Creating GUI surface resource.")) {
-		release();
-		return false;
-	}
-	return true;
 }

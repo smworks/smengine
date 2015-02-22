@@ -11,7 +11,7 @@
 #include "Multiplatform/Ghost.h"
 
 class ServiceLocator;
-class TextureRGBA;
+class Texture;
 class BoundingVolume;
 class ServiceLocator;
 
@@ -40,7 +40,7 @@ public:
 	 * @param heightRatio - height scale modifier between 0.0f and 1.0f.
 	 * @param heightOffset - height offset.
 	 */
-	TerrainParser(ServiceLocator* services, TextureRGBA*, float, float);
+	TerrainParser(ServiceLocator* services, Texture*, float, float);
 	~TerrainParser();
 
 	/**
@@ -98,7 +98,7 @@ public:
 	float getDZ() { return dz_; }
 private:
 	/** Terrain height map. */
-	TextureRGBA* heightMap_;
+	Texture* heightMap_;
 	/** Height ratio. */
 	float heightRatio_;
 	/** Height offset. */

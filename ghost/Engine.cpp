@@ -35,6 +35,7 @@
 #include "ScenarioManager.h"
 #include "SceneManager.h"
 #include "NodeManager.h"
+#include "Console.h"
 
 Engine::operator void*() {
 	return error_ ? 0 : this;
@@ -138,6 +139,7 @@ void Engine::loadScene() {
         debugNode_->setState(Node::RENDERABLE, true);
         services_->getRootNode()->addChild(debugNode_);
     }
+	Console c(services_);
 	//// Texture atlas node creation.
  //   if (g_monoNode == 0) {
  //       g_monoNode = NEW Node;

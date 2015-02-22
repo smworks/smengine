@@ -9,7 +9,7 @@
 #include "BoundingSphere.h"
 #include "Shapes.h"
 #include "Multiplatform/ServiceLocator.h"
-#include "Resources/TextureRGBA.h"
+#include "Resources/Texture.h"
 
 TerrainGeometry::~TerrainGeometry() {
 	for (SIZE i = 0; i < indices_->size(); i++) {
@@ -28,7 +28,7 @@ TerrainGeometry::~TerrainGeometry() {
 }
 
 TerrainParser::TerrainParser(
-	ServiceLocator* services, TextureRGBA* heightMap, float heightRatio, float heightOffset)
+	ServiceLocator* services, Texture* heightMap, float heightRatio, float heightOffset)
 {
 	services_ = services;
 	heightMap_ = heightMap;

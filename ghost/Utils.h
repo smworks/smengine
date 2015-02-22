@@ -10,8 +10,6 @@
 
 #include "Multiplatform/Ghost.h"
 
-class ServiceLocator;
-
 #define DEG_TO_RAD(val) val * 0.0174532925f
 #define RAD_TO_DEG(val) val * 57.2957795f
 
@@ -184,32 +182,5 @@ UINT32 toPowerOfTwo(UINT32 number);
  * @return Pointer to compressed image buffer.
  */
 void* rgba8888ToRgba4444(void* in, int size);
-
-/**
- * Converts PNG image to raw uncompressed image.
- * @param in - pointer to PNG data.
- * @param width - image width in pixels.
- * @param height - image height in pixels.
- * @param alpha - indicator whether image is simple RGB or RGBA.
- * @param upperLeft - optional parameter that specifies from which corner to load image.
- * Default is lower left. Specify true for upper left.
- * @return Pointer to raw image, or 0 if error occurred.
- */
-INT8* pngToRaw(INT8* in, UINT32& width, UINT32& height, bool& alpha, bool upperLeft = false);
-
-/**
- * Loads PNG image from specified path, converts it to raw format and
- * returns pointer to raw image.
- * @param services - pointer to system service locator.
- * @param path - image path.
- * @param width - width of the image.
- * @param height - height of the image.
- * @param alpha - indicator whether image is simple RGB or RGBA.
- * @param upperLeft - optional parameter that specifies from which corner to load image.
- * Default is lower left. Specify true for upper left.
- * @return Pointer to raw image, or 0 if error occurred.
- */
-INT8* loadPng(
-	ServiceLocator* services, const char* path, UINT32& width, UINT32& height, bool& alpha, bool upperLeft = false);
 
 #endif

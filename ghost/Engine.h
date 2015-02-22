@@ -14,7 +14,7 @@ class ServiceLocator;
 class GUIText;
 
 #ifdef SMART_DEBUG
-	//#define SMART_DEBUG_TEXT
+	#define SMART_DEBUG_TEXT
 #endif
 
 class Engine {

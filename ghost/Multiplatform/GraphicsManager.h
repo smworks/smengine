@@ -309,7 +309,7 @@ protected:
 	TextManager* textManager_;
 	vector<Node*> modelArray_;
 	vector<Node*> spriteArray_;
-	vector<Node*> textArray_;
+	vector<Node*> guiArray_;
 	vector<Node*> lights_;
 	Color vertexColor_;
 	vector<float> vertices_;

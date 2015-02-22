@@ -30,6 +30,11 @@ public:
 	/**
 	 * @see Resource
 	 */
+	virtual bool create();
+
+	/**
+	 * @see Resource
+	 */
 	void release();
 
 	/**
@@ -208,6 +213,7 @@ public:
 	 * @return Absolute position on Y axis on screen.
 	 */
 	float getPosY();
+
 protected:
 	/**
 	 * Converts units into appropriate pixel values.
@@ -226,11 +232,6 @@ protected:
 	 * @return Size converted to pixels.
 	 */
 	float getSize(string size, float maxSize = 0);
-
-	/**
-	 * @see Resource
-	 */
-	virtual bool create();
 protected:
     UINT32 surfaceId_;
 	UnitType widthSize_, heightSize_;

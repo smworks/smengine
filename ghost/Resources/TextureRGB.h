@@ -23,16 +23,6 @@ public:
 	~TextureRGB();
 
 	/**
-	 * @see Texture
-	 */
-	bool create(UINT32 width, UINT32 height);
-
-	/**
-	 * @see Resource
-	 */
-	bool create();
-
-	/**
 	 * @see Resource
 	 */
 	void release();
@@ -56,6 +46,11 @@ public:
 	 * @see Resource
 	 */
 	bool isValid();
+
+	/**
+	 * @see Texture
+	 */
+	UINT8* createBuffer(UINT32 width, UINT32 height);
 
 	/**
 	 * @see Texture
@@ -111,16 +106,8 @@ public:
 private:
 	/** Dirty region dimensions. */
 	SIZE left_, top_, right_, bottom_;
-	/** Width of the texture in pixels. */
-	UINT32 width_;
-	/** Height of the texture in pixels. */
-	UINT32 height_;
 	/** Handle to OpenGL resource. */
 	UINT32 id_;
-	/** Texture byte array. */
-	UINT8* buffer_;
-	/** Combined buffer object with vertex positions and UV. */
-	UINT32 cbo_;
 	/** Type of the texture. */
 	Type type_;
 };

@@ -7,7 +7,7 @@
 
 #include "DynamicObject.h"
 #include "Vertex.h"
-#include "TextureRGBA.h"
+#include "Texture.h"
 #include "../ResourceManager.h"
 #include "../MD2Parser.h"
 #include "../Multiplatform/Database.h"
@@ -281,17 +281,7 @@ bool DynamicObject::create() {
 
 	for (int i = 0; i < obj.header_.numSkins; i++) {
 		string text(obj.skins_[i].name);
-		if (!getServiceLocator()->getRM()->has(TEXTURE_2D, text)) {
-			TextureRGBA* texture = NEW TextureRGBA(getServiceLocator());
-			texture->getAttributes().setString(ATTR_FILE, text);
-			texture->create();
-			getServiceLocator()->getRM()->add(text, texture);
-			textures_.push_back(texture);
-		}
-		else {
-			textures_.push_back(static_cast<TextureRGBA*>(
-				getServiceLocator()->getRM()->get(TEXTURE_2D, text)));
-		}
+		textures_.push_back(Texture::load(getServiceLocator(), text));
 	}
 
 	uv_.reserve(obj.header_.numTriangles * 6);

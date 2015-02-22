@@ -10,9 +10,11 @@
 
 #include "Multiplatform/Ghost.h"
 
+class ServiceLocator;
+
 class Console {
 public:
-	Console();
+	Console(ServiceLocator* services);
 	~Console();
 };
 

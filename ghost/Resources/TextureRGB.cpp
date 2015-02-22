@@ -25,59 +25,12 @@ TextureRGB::TextureRGB(ServiceLocator* services) :
 	top_(0),
 	right_(0),
 	bottom_(0),
-	width_(0),
-	height_(0),
 	id_(0),
-	buffer_(0),
-	cbo_(0),
 	type_(RGB)
 {}
 
 TextureRGB::~TextureRGB() {
 	release();
-}
-
-bool TextureRGB::create() {
-	if (getAttribute(ATTR_FILE).length() == 0) {
-		LOGW("No file name specified for texture.");
-		return false;
-	}
-	bool alpha = false;
-	buffer_ = reinterpret_cast<UINT8*>(loadPng(getServiceLocator(),
-		(GHOST_SPRITES + getAttribute(ATTR_FILE)).c_str(), width_, height_, alpha));
-	ASSERT(buffer_ != 0, "Unable to load file \"%s\".", getAttribute(ATTR_FILE).c_str());
-    vector<VertexPT>* cbo = static_cast<vector<VertexPT>*>(
-        Shapes::getShape(Shapes::SHAPE_SCREEN_PLANE,
-			Shapes::VERTEX_POS_TEX));
-    getServiceLocator()->getGraphicsManager()->setVertexBuffer(
-        cbo_, &(*cbo)[0], (UINT32) cbo->size() * sizeof(VertexPT));
-    delete cbo;
-	LOGD("Loaded texture: %s.", getAttribute(ATTR_FILE).c_str());
-	return true;
-}
-
-
-bool TextureRGB::create(UINT32 width, UINT32 height) {
-    if (getServiceLocator() == 0) {
-		LOGE("Service locator not specified for TextureRGB object.");
-		return false;
-	}
-	width_ = width;
-	height_ = height;
-	UINT32 size = width_ * height_ * 3;
-	buffer_ = NEW UINT8[size];
-	for (UINT32 i = 0; i < size; i += 3) {
-		buffer_[i + 0] = 0;
-		buffer_[i + 1] = 0;
-		buffer_[i + 2] = 255;
-	}
-    vector<VertexPT>* cbo = static_cast<vector<VertexPT>*>(
-        Shapes::getShape(
-		Shapes::SHAPE_SCREEN_PLANE, Shapes::VERTEX_POS_TEX));
-    getServiceLocator()->getGraphicsManager()->setVertexBuffer(
-        cbo_, &(*cbo)[0], (UINT32) cbo->size() * sizeof(VertexPT));
-    delete cbo;
-    return true;
 }
 
 void TextureRGB::release() {
@@ -110,6 +63,17 @@ void TextureRGB::resize() {
 
 bool TextureRGB::isValid() {
 	return getId() > 0;
+}
+
+UINT8* TextureRGB::createBuffer(UINT32 width, UINT32 height) {
+	UINT32 size = width * height * 3;
+	UINT8* buffer = NEW UINT8[size];
+	for (UINT32 i = 0; i < size; i += 3) {
+		buffer[i + 0] = 0;
+		buffer[i + 1] = 0;
+		buffer[i + 2] = 255;
+	}
+    return buffer;
 }
 
 UINT32 TextureRGB::getId() {

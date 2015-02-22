@@ -15,7 +15,7 @@
 #include "BoundingSphere.h"
 #include "BoundingBox.h"
 #include "Utils.h"
-#include "Resources/TextureRGBA.h"
+#include "Resources/Texture.h"
 #include "Resources/Renderable.h"
 #include "HashMap.h"
 
@@ -863,14 +863,7 @@ bool ObjParser::parseMaterial(ModelData& model, const string& file, ServiceLocat
 					texture = arr[1];
 				}
 				if (texture.length() > 0) {
-					mat.texture_ = static_cast<Texture*>(
-						services->getRM()->get(Resource::TEXTURE_2D, texture));
-					if (mat.texture_ == 0) {
-						mat.texture_ = NEW TextureRGBA(services);
-						mat.texture_->getAttributes().setString(Resource::ATTR_FILE, texture);
-						mat.texture_->create();
-						services->getRM()->add(texture, mat.texture_);
-					}
+					mat.texture_ = Texture::load(services, texture);
 				}
 			}
 			break;

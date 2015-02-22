@@ -13,6 +13,14 @@
 #include "Resource.h"
 
 class Texture : public Resource  {
+protected:
+	struct PNGData {
+		PNGData() : buffer(0), width(0), height(0), alpha(false) {}
+		UINT8* buffer;
+		UINT32 width;
+		UINT32 height;
+		bool alpha;
+	};
 public:
 	enum Type {MONO, RGB, RGBA};
 	static const string ATTR_WRAP_U;
@@ -24,31 +32,7 @@ public:
 	static const string VAL_RGBA;
 	static const string VAL_RGB;
 public:
-	/**
-	 * Custom constructor used to initialize
-	 * texture object manually.
-	 */
-	Texture(ServiceLocator* services);
 	~Texture();
-
-	/**
-	 * To use this method texture object
-	 * must be created by constructor that
-	 * accepts service locator object as
-	 * parameter.
-	 * Creates empty texture.
-	 * @param width - width of the
-	 * texture, in pixels.
-	 * @param height - height of the
-	 * texture, in pixels.
-	 * @return True on success.
-	 */
-	virtual bool create(UINT32 width, UINT32 height) = 0;
-
-	/**
-	 * @see Resource
-	 */
-	virtual bool create() = 0;
 
 	/**
 	 * @see Resource
@@ -207,12 +191,121 @@ public:
 	virtual bool commit() = 0;
 
 	/**
-	 * Loads image from resources into appropriate texture format.
+	 * Factory method that loads texture from file with specified name.
+	 * If useRM is set to true and texture was already loaded previously
+	 * in resource manager, it will be returned from there.
+	 * Be default useRM is set to true.
 	 * @param sl - service locator.
 	 * @param name - name of image file.
+	 * @param useRM - if set to true, code will attemt to
+	 * get texture from resource manager and if it isn't,
+	 * texture will be created and then added to resource manager.
 	 * @return Texture object.
 	 */
-	static Texture* load(ServiceLocator* sl, string name);
+	static Texture* load(ServiceLocator* sl, string name, bool useRM = true);
+
+	/**
+	 * Factory method that loads texture from raw png image buffer.
+	 * @param sl - service locator.
+	 * @param buffer - pointer to buffer.
+	 * @return Texture object.
+	 */
+	static Texture* load(ServiceLocator* sl, INT8* buffer);
+
+	/**
+	 * Creates new RGBA texture.
+	 * @param sl - service locator.
+	 * @param w - width in pixels.
+	 * @param h - height in pixels.
+	 * @return Texture object.
+	 */
+	static Texture* createRGBA(ServiceLocator* sl, UINT32 w = 1, UINT32 h = 1);
+
+	/**
+	 * Creates new RGB texture.
+	 * @param sl - service locator.
+	 * @param w - width in pixels.
+	 * @param h - height in pixels.
+	 * @return Texture object.
+	 */
+	static Texture* createRGB(ServiceLocator* sl, UINT32 w = 1, UINT32 h = 1);
+
+	/**
+	 * Creates new monochrome texture.
+	 * @param sl - service locator.
+	 * @param w - width in pixels.
+	 * @param h - height in pixels.
+	 * @return Texture object.
+	 */
+	static Texture* createMono(ServiceLocator* sl, UINT32 w = 1, UINT32 h = 1);
+
+	/**
+	 * Creates new texture for texture atlas.
+	 * @param sl - service locator.
+	 * @param w - width in pixels.
+	 * @param h - height in pixels.
+	 * @return Texture object.
+	 */
+	static Texture* createAtlasMono(ServiceLocator* sl, UINT32 w = 1, UINT32 h = 1);
+
+protected:
+
+	/**
+	 * Custom constructor used to initialize
+	 * texture object manually.
+	 */
+	Texture(ServiceLocator* services);
+
+	/**
+	 * Creates empty image buffer of specified dimensions.
+	 * @param width - width of the buffer.
+	 * @param height - height of the buffer.
+	 * @return Pointer to buffer.
+	 */
+	virtual UINT8* createBuffer(UINT32 width, UINT32 height) = 0;
+
+	/**
+	 * Loads PNG image from specified path, converts it to raw format and
+	 * returns pointer to raw image with additional information.
+	 * @param services - pointer to system service locator.
+	 * @param path - image path.
+	 * @param upperLeft - optional parameter that specifies from which corner to load image.
+	 * Default is lower left. Specify true for upper left.
+	 * @return Object containing png buffer and information.
+	 */
+	static PNGData loadPng(ServiceLocator* sl, const char* path, bool upperLeft = false);
+
+	/**
+	 * @see Resource
+	 */
+	virtual bool create();
+
+private:
+	
+	static void addDimensions(Texture* texture, UINT32 w, UINT32 h);
+	static Texture* prepareNewTexture(Texture* texture, UINT32 w, UINT32 h);
+	static Texture* createRGBATexture(ServiceLocator* sl);
+	static Texture* createRGBTexture(ServiceLocator* sl);
+	static Texture* createMonoTexture(ServiceLocator* sl);
+
+	/**
+	 * Converts PNG image to raw uncompressed image.
+	 * @param in - pointer to PNG data.
+	 * @param upperLeft - optional parameter that specifies from which corner to load image.
+	 * Default is lower left. Specify true for upper left.
+	 * @return Pointer to raw image, or 0 if error occurred.
+	 */
+	static PNGData pngToRaw(INT8* in, bool upperLeft = false);
+
+protected:
+	/** Width of the texture in pixels. */
+	UINT32 width_;
+	/** Height of the texture in pixels. */
+	UINT32 height_;
+	/** Texture byte array. */
+	UINT8* buffer_;
+	/** Combined buffer object with vertex positions and UV. */
+	UINT32 cbo_;
 };
 
 #endif

@@ -9,7 +9,7 @@
 #include "../Multiplatform/ServiceLocator.h"
 #include "../Multiplatform/Database.h"
 #include "Vertex.h"
-#include "TextureRGBA.h"
+#include "Texture.h"
 #include "Shader.h"
 #include "../ObjParser.h"
 #include "../TerrainParser.h"
@@ -264,14 +264,7 @@ bool StaticObject::createModel() {
 
 bool StaticObject::createTerrain() {
 	string file = getAttribute(ATTR_FILE);
-	TextureRGBA* map = static_cast<TextureRGBA*>(getServiceLocator()->getRM()->get(
-		Resource::TEXTURE_2D, file));
-	if (map == 0) {
-		map = NEW TextureRGBA(getServiceLocator());
-		map->getAttributes().setString(ATTR_FILE, getAttribute(ATTR_FILE));
-		map->create();
-		getServiceLocator()->getRM()->add(file, map);
-	}
+	Texture* map = Texture::load(getServiceLocator(), getAttribute(ATTR_FILE));
 	if (!map->isValid()) {
 		LOGW("Unable to create terrain, because source image \"%s\" is not valid.",
 			file.c_str());
@@ -429,14 +422,7 @@ bool StaticObject::createShape() {
 		LOGE("No map file specified.");
 		return false;
 	}
-	TextureRGBA* map = static_cast<TextureRGBA*>(
-		getServiceLocator()->getRM()->get(TEXTURE_2D, name));
-	if (map == 0) {
-		map = NEW TextureRGBA(getServiceLocator());
-		map->getAttributes().setString(ATTR_FILE, name);
-		map->create();
-		getServiceLocator()->getRM()->add(name, map);
-	}
+	Texture* map = Texture::load(getServiceLocator(), name);
 	vector<Vec3>* vert = NEW vector<Vec3>();
 	vector<float>* uv = NEW vector<float>();
 	vector<UINT16>* ind = NEW vector<UINT16>();

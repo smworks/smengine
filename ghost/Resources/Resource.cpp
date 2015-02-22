@@ -73,6 +73,7 @@ const string Resource::ATTR_TEXT = "text";
 const string Resource::ATTR_SIZE = "size";
 const string Resource::ATTR_COLOR = "color";
 const string Resource::ATTR_SPRITE_COUNT = "sprite_count";
+const string Resource::ATTR_BUFFER = "buffer";
 
 Resource::Resource(ServiceLocator* services) :
 	name_(""),

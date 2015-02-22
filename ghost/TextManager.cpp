@@ -9,7 +9,7 @@
 #include "Multiplatform/ServiceLocator.h"
 #include "Multiplatform/FileManager.h"
 #include "Resources/Symbol.h"
-#include "Resources/AtlasTexture.h"
+#include "Resources/Texture.h"
 #include "ResourceManager.h"
 #include "Shapes.h"
 #include "../dependencies/includes/freetype/ftglyph.h"
@@ -124,7 +124,6 @@ Texture* TextManager::getText(const string& text, int size) {
 			return texture;
 		}
 	}
-	AtlasTexture* texture = NEW AtlasTexture(services_, Texture::MONO);
 	vector<GlyphObject> glyphs;
 	FT_UInt previous = 0;
 	int width = 0;
@@ -192,7 +191,7 @@ Texture* TextManager::getText(const string& text, int size) {
 	}
 	yOffset = yOffset * -1;
 	SIZE height = heightOffset + fontSize_;
-	texture->create(width, (UINT32) height);
+	Texture* texture = Texture::createAtlasMono(services_, width, (UINT32) height);
 	UINT8 color[] = {0};
 	texture->rectangle(0, 0, width, (UINT32) height, color);
 	for (SIZE i = 0; i < glyphs.size(); i++) {
@@ -247,8 +246,8 @@ Symbol* TextManager::getSymbol(char symbol) {
 	if (cachedSymbol != 0) {
 		return cachedSymbol;
 	}
-	Symbol* symbolObject = NEW Symbol(services_);
-	symbolObject->create();
+	Symbol* s = NEW Symbol(services_);
+	s->create();
 	FT_GlyphSlot glyphSlot = face_->glyph;
 	err_ = FT_Load_Char(face_, symbol,  FT_LOAD_RENDER);
 	if (err_) {
@@ -265,37 +264,32 @@ Symbol* TextManager::getSymbol(char symbol) {
 			" Error code: %d", err_);
 		return 0;
 	}
-	symbolObject->setWidth(bitmap.width);
-	symbolObject->setHeight(bitmap.rows);
-	symbolObject->setOffsetX(glyphSlot->bitmap_left);
-	symbolObject->setOffsetY(glyphSlot->bitmap_top - bitmap.rows);
-	symbolObject->setAdvance(glyphSlot->advance.x >> 6);
-	symbolObject->setFontSize(fontSize_);
-	Texture* texture = dynamic_cast<Texture*>(
-		services_->getRM()->get(Resource::TEXTURE_2D, name));
-	if (texture == 0) {
-		texture = NEW AtlasTexture(services_, Texture::MONO);
-		texture->create(symbolObject->getWidth(), symbolObject->getHeight());
-		UINT8 color[] = {0};
-		texture->rectangle(0, 0, texture->getWidth(), texture->getHeight(), color);
-		for (int row = 0; row < bitmap.rows; row++) {
-			for (int col = 0; col < bitmap.width; col++) {
-				color[0] = bitmap.buffer[row * bitmap.width + col];
-				if (color[0] > 0) {
-					texture->setPixel(color, bitmap.rows - row - 1, col);
-				}
+	s->setWidth(bitmap.width);
+	s->setHeight(bitmap.rows);
+	s->setOffsetX(glyphSlot->bitmap_left);
+	s->setOffsetY(glyphSlot->bitmap_top - bitmap.rows);
+	s->setAdvance(glyphSlot->advance.x >> 6);
+	s->setFontSize(fontSize_);
+	Texture* texture = Texture::createAtlasMono(services_, s->getWidth(), s->getHeight());
+	UINT8 color[] = {0};
+	texture->rectangle(0, 0, texture->getWidth(), texture->getHeight(), color);
+	for (int row = 0; row < bitmap.rows; row++) {
+		for (int col = 0; col < bitmap.width; col++) {
+			color[0] = bitmap.buffer[row * bitmap.width + col];
+			if (color[0] > 0) {
+				texture->setPixel(color, bitmap.rows - row - 1, col);
 			}
 		}
-		services_->getRM()->add(name, texture);
 	}
+	services_->getRM()->add(name, texture);
 	FT_Done_Glyph(glyph);
 	texture->commit();
-	symbolObject->setTexture(texture);
-	services_->getRM()->add(name, symbolObject);
+	s->setTexture(texture);
+	services_->getRM()->add(name, s);
 	if (fontSize_ < SYMBOL_CACHE_SIZE && index < SYMBOL_CACHE_SIZE ) {
-		symbolCache_[fontSize_][index] = symbolObject;
+		symbolCache_[fontSize_][index] = s;
 	}
-	return symbolObject;
+	return s;
 }
 
 INT32 TextManager::getMaxHeight(string text) {

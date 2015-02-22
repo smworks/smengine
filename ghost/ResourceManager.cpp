@@ -78,9 +78,11 @@ void ResourceManager::add(const string& name, Resource* resource) {
 	string key = CREATE_KEY(name, resource->getType());
     unordered_map<string, Resource*>::iterator it = resources_.find(key);
 	if (resources_.end() != it) {
-		LOGW("Resource with name \"%s\" is already in memory.", name.c_str());
-        LOGW("Removing old resource.");
-        remove(resource->getType(), name);
+		LOGD("Resource \"%s\" is already in resource manager.", name.c_str());
+		if (resource != it->second) {
+			LOGW("Resource in resource manager represents different object, so removing it.");
+			remove(resource->getType(), name);
+		}
 	}
 	resource->setName(name);
 	resources_.insert(pair<string, Resource*>(key, resource));

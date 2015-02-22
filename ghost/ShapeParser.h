@@ -10,12 +10,12 @@
 
 #include "Multiplatform/Ghost.h"
 class Vec3;
-class TextureRGBA;
+class Texture;
 
 class ShapeParser {
 public:
 	static bool parse(vector<Vec3>* vertices, vector<float>* uv,
-		vector<UINT16>* indices, TextureRGBA* scheme,
+		vector<UINT16>* indices, Texture* scheme,
 		float wallHeight);
 };
 

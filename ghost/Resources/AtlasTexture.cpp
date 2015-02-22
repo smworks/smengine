@@ -14,7 +14,7 @@
 
 AtlasTexture::AtlasTexture(ServiceLocator* services, int type) :
 	Texture(services),
-	atlasId_(0), width_(0), height_(0), type_(type)
+	atlasId_(0), type_(type)
 {}
 
 AtlasTexture::~AtlasTexture() {
@@ -22,18 +22,14 @@ AtlasTexture::~AtlasTexture() {
 }
 
 bool AtlasTexture::create() {
-	return true;
+ 	width_ = getAttributes().getInt(Texture::ATTR_WIDTH, 0);
+	height_ = getAttributes().getInt(Texture::ATTR_HEIGHT, 0);
+	return getServiceLocator()->getTextureAtlas()->create(
+		atlasId_, width_, height_, type_);
 }
 
-bool AtlasTexture::create(UINT32 width, UINT32 height) {
-	if (getServiceLocator() == 0) {
-		LOGE("Service locator not specified for AtlasTexture object.");
-		return false;
-	}
-	width_ = width;
-	height_ = height;
-    return getServiceLocator()->getTextureAtlas()->create(
-		atlasId_, width, height, type_);
+UINT8* AtlasTexture::createBuffer(UINT32 width, UINT32 height) {
+	return 0;
 }
 
 void AtlasTexture::release() {

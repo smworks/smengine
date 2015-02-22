@@ -1134,54 +1134,31 @@ int newTexture(lua_State* L) {
 	Texture* texture = 0;
 	bool alpha = false;
 	if (argc == 1) {
-		texture = Texture::load(SM_GET_SL(), name);
+		texture = Texture::load(SM_GET_SL(), name, false);
 	} else if (argc == 2) {
 		if (SM_IS_STRING(L, 1)) {
 			string type = SM_GET_STRING(L, 1);
 			if (type == Texture::VAL_MONO) {
-				texture = NEW TextureMono(SM_GET_SL());
-				texture->getAttributes().setString(Resource::ATTR_FILE, name);
-				texture->create();
+				texture = Texture::createMono(SM_GET_SL());
 			} else if (type == Texture::VAL_RGB) {
-				texture = NEW TextureRGB(SM_GET_SL());
-				texture->getAttributes().setString(Resource::ATTR_FILE, name);
-				texture->create();
+				texture = Texture::createRGB(SM_GET_SL());
 			} else {
-				texture = NEW TextureRGBA(SM_GET_SL());
-				texture->getAttributes().setString(Resource::ATTR_FILE, name);
-				texture->create();
+				texture = Texture::createRGBA(SM_GET_SL());
 			}
 		} else {
 			HttpResponse* response = SM_GET_OBJECT(L, 1, HttpResponse);
-			UINT32 width, height;
-			UINT8* raw = reinterpret_cast<UINT8*>(
-				pngToRaw(response->getContent(), width, height, alpha));
-			if (alpha) {
-				texture = NEW TextureRGBA(SM_GET_SL());
-			} else {
-				texture = NEW TextureRGB(SM_GET_SL());
-			}
-			texture->create(width, height);
-			for (UINT32 row = 0; row < height; row++) {
-				for (UINT32 col = 0; col < width; col++) {
-					texture->setPixel(&raw[row * width * 4 + col * 4], row, col);
-				}
-			}
-			delete[] raw;
+			texture = Texture::load(SM_GET_SL(), response->getContent());
 		}
 	} else {
 		string type = SM_GET_STRING(L, 1);
 		int width = SM_GET_INT(L, 2);
 		int height = SM_GET_INT(L, 3);
 		if (type == Texture::VAL_MONO) {
-			texture = NEW TextureMono(SM_GET_SL());
-			texture->create(width, height);
+			texture = Texture::createMono(SM_GET_SL(), width, height);
 		} else if (type == Texture::VAL_RGB) {
-			texture = NEW TextureRGB(SM_GET_SL());
-			texture->create(width, height);
+			texture = Texture::createRGB(SM_GET_SL(), width, height);
 		} else {
-			texture = NEW TextureRGBA(SM_GET_SL());
-			texture->create(width, height);
+			texture = Texture::createRGBA(SM_GET_SL(), width, height);
 		}
 	}
 	if (argc == 7) {

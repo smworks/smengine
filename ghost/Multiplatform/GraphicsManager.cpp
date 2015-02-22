@@ -267,15 +267,11 @@ void GraphicsManager::render() {
 }
 
 void GraphicsManager::renderGuiText(Node* node) {
-	GUIText* text = 0;
-	if (node->hasResource(Resource::GUI_SURFACE)) {
-		text = dynamic_cast<GUIText*>(
-			node->getResource(Resource::GUI_SURFACE));
-	}
+	renderNode(node, camera_->getProjection2D(), true);
+	GUIText* text = dynamic_cast<GUIText*>(node->getResource(Resource::GUI_SURFACE));
 	if (text == 0) {
 		return;
 	}
-	renderNode(node, camera_->getProjection2D(), true);
 	useProgram(textShader_->getId());
 	int texture = glGetUniformLocation(textShader_->getId(), "texture_0");
 	textShader_->setVector4(Shader::FOREGROUND, text->getDiffuse().toArray());
@@ -308,7 +304,7 @@ void GraphicsManager::refreshRenderList() {
 	services_->getRootNode()->toRenderArray(renderArray);
 	spriteArray_.clear();
 	modelArray_.clear();
-	textArray_.clear();
+	guiArray_.clear();
 	lights_.clear();
 	static vector<Node*>::const_iterator it;
 	it = renderArray.begin();
@@ -320,10 +316,8 @@ void GraphicsManager::refreshRenderList() {
 			|| (*it)->hasResource(Resource::DYNAMIC_OBJECT)) {
 			modelArray_.push_back((*it));
 		}
-		if ((*it)->hasResource(Resource::GUI_SURFACE)
-			&& dynamic_cast<GUIText*>((*it)->getResource(Resource::GUI_SURFACE)) != 0)
-		{
-			textArray_.push_back((*it));
+		if ((*it)->hasResource(Resource::GUI_SURFACE)) {
+			guiArray_.push_back((*it));
 		}
 		if ((*it)->hasResource(Resource::LIGHT)) {
 			lights_.push_back((*it));
@@ -373,8 +367,8 @@ void GraphicsManager::renderScene(NodeType type) {
 	if (type == ALL || type == TEXT || type == SPRITE_TEXT) {
 		//glEnable(GL_DEPTH_TEST);
 		glEnable(GL_BLEND);
-		it = textArray_.begin();
-		while (it != textArray_.end()) {
+		it = guiArray_.begin();
+		while (it != guiArray_.end()) {
 			if ((*it)->getState(Node::RENDERABLE)) {
 				renderGuiText(*it);
 			}

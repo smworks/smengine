@@ -14,7 +14,7 @@
 #include "Renderable.h"
 #include "Animatable.h"
 
-class TextureRGBA;
+class Texture;
 
 #define DEFAULT_FRAME_TIME 200.0f // 0.2 second.
 
@@ -157,7 +157,7 @@ private:
 	double time_;
 
 	string textureName_;
-	vector<TextureRGBA*> textures_;
+	vector<Texture*> textures_;
 	vector<float> uv_;
 	
 	UINT32 vertexStride_;

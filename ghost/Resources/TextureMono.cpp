@@ -20,11 +20,7 @@ TextureMono::TextureMono(ServiceLocator* services) :
 	top_(0),
 	right_(0),
 	bottom_(0),
-	width_(0),
-	height_(0),
 	id_(0),
-	buffer_(0),
-	cbo_(0),
 	type_(MONO)
 {}
 
@@ -32,47 +28,13 @@ TextureMono::~TextureMono() {
 	release();
 }
 
-bool TextureMono::create() {
-	if (getAttribute(ATTR_FILE).length() == 0) {
-		LOGW("No file name specified for texture.");
-		return false;
-	}
-	bool alpha = false;
-	buffer_ = reinterpret_cast<UINT8*>(loadPng(getServiceLocator(),
-		(GHOST_SPRITES + getAttribute(ATTR_FILE)).c_str(), width_, height_, alpha));
-	if (buffer_ == 0) {
-		LOGW("Unable to load file \"%s\".", getAttribute(ATTR_FILE).c_str());
-		return false;
-	}
-    vector<VertexPT>* cbo = static_cast<vector<VertexPT>*>(
-        Shapes::getShape(Shapes::SHAPE_SCREEN_PLANE,
-			Shapes::VERTEX_POS_TEX));
-    getServiceLocator()->getGraphicsManager()->setVertexBuffer(
-        cbo_, &(*cbo)[0], (UINT32) cbo->size() * sizeof(VertexPT));
-    delete cbo;
-	return true;
-}
-
-
-bool TextureMono::create(UINT32 width, UINT32 height) {
-    if (getServiceLocator() == 0) {
-		LOGE("Service locator not specified for TextureMono object.");
-		return false;
-	}
-	width_ = width;
-	height_ = height;
-	UINT32 size = width_ * height_;
-	buffer_ = NEW UINT8[size];
+UINT8* TextureMono::createBuffer(UINT32 width, UINT32 height) {
+	UINT32 size = width * height;
+	UINT8* buffer = NEW UINT8[size];
 	for (UINT32 i = 0; i < size; i ++) {
-		buffer_[i + 0] = 255;
+		buffer[i + 0] = 255;
 	}
-    vector<VertexPT>* cbo = static_cast<vector<VertexPT>*>(
-        Shapes::getShape(
-		Shapes::SHAPE_SCREEN_PLANE, Shapes::VERTEX_POS_TEX));
-    getServiceLocator()->getGraphicsManager()->setVertexBuffer(
-        cbo_, &(*cbo)[0], (UINT32) cbo->size() * sizeof(VertexPT));
-    delete cbo;
-    return true;
+	return buffer;
 }
 
 void TextureMono::release() {

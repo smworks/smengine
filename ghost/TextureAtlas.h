@@ -10,8 +10,6 @@
 
 #include "Multiplatform/Ghost.h"
 class Texture;
-class TextureMono;
-class TextureRGBA;
 class ServiceLocator;
 
 /**
@@ -103,9 +101,9 @@ private:
 	/** Texture iterator. */
 	vector<TextureHeader>::iterator it_;
 	/** Texture that contains other RGBA textures. */
-	TextureRGBA* textureRGBA_;
+	Texture* textureRGBA_;
 	/** Texture that contains other monochrome textures. */
-	TextureMono* textureMono_;
+	Texture* textureMono_;
 	/** Byte array used to find free space. */
 	bool* byteMap_;
 	/** RGBA texture skyline. */

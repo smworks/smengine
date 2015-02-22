@@ -101,6 +101,7 @@ public:
 	static const string ATTR_SIZE;
 	static const string ATTR_COLOR;
     static const string ATTR_SPRITE_COUNT;
+	static const string ATTR_BUFFER;
 public:
 	Resource(ServiceLocator* services);
 	virtual ~Resource();

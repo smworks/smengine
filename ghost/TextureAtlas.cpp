@@ -10,8 +10,7 @@
 #include "Multiplatform/GraphicsManager.h"
 #include "Shapes.h"
 #include "Utils.h"
-#include "Resources/TextureRGBA.h"
-#include "Resources/TextureMono.h"
+#include "Resources/Texture.h"
 
 TextureAtlas::TextureAtlas(ServiceLocator* services) :
     idCounter_(0),
@@ -22,10 +21,8 @@ TextureAtlas::TextureAtlas(ServiceLocator* services) :
 	textureMono_(0)
 
 {
-	textureRGBA_ = NEW TextureRGBA(services);
-	textureRGBA_->create(STARTING_WIDTH, STARTING_HEIGHT);
-	textureMono_ = NEW TextureMono(services);
-	textureMono_->create(STARTING_WIDTH, STARTING_HEIGHT);
+	textureRGBA_ = Texture::createRGBA(services, STARTING_WIDTH, STARTING_HEIGHT);
+	textureMono_ = Texture::createMono(services, STARTING_WIDTH, STARTING_HEIGHT);
 	byteMap_ = NEW bool[STARTING_WIDTH * STARTING_HEIGHT];
 	skylineRGBA_.push_back(Skyline(0, 0, STARTING_WIDTH));
 	skylineMono_.push_back(Skyline(0, 0, STARTING_WIDTH));
