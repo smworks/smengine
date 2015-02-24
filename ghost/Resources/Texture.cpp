@@ -155,7 +155,6 @@ Texture* Texture::load(ServiceLocator* sl, string name, bool useRM) {
 
 Texture* Texture::load(ServiceLocator* sl, INT8* buffer) {
 	PNGData data = pngToRaw(buffer);
-	delete[] buffer;
 	Texture* texture = data.alpha ? createRGBATexture(sl) : createRGBTexture(sl);
 	addDimensions(texture, data.width, data.height);
 	texture->getAttributes().setPointer(Resource::ATTR_BUFFER, data.buffer);
@@ -176,7 +175,7 @@ Texture* Texture::createMono(ServiceLocator* sl, UINT32 w, UINT32 h) {
 }
 
 Texture* Texture::createAtlasMono(ServiceLocator* sl, UINT32 w, UINT32 h) {
-	Texture* texture = new AtlasTexture(sl, Texture::MONO);
+	Texture* texture = NEW AtlasTexture(sl, Texture::MONO);
 	addDimensions(texture, w, h);
 	texture->create();
 	return texture;

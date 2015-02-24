@@ -1662,11 +1662,22 @@ int httpResponseGetId(lua_State* L) {
 	return 1;
 }
 
+int httpResponseGetContent(lua_State* L) {
+	HttpResponse* response = SM_GET_OBJECT(L, 0, HttpResponse);
+	if (response != 0 && response->getContentSize() > 0) {
+		SM_RETURN_STRING(L, response->getContent());
+	} else {
+		SM_RETURN_NIL(L);
+	}
+	return 1;
+}
+
 void registerHttpResponse() {
     unordered_map<string, int (*)(lua_State*)> methods;
 	ADD_METHOD(methods, "__gc", deleteHttpResponse);
 	ADD_METHOD(methods, "getHeader", httpResponseGetHeader);
 	ADD_METHOD(methods, "getId", httpResponseGetId);
+	ADD_METHOD(methods, "getContent", httpResponseGetContent);
     ScriptManager::addClass("Response", methods);
 }
 

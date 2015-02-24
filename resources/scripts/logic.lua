@@ -2,12 +2,16 @@
 
 -- Called when network response is available.
 function eventResponse(response)
---	if response:getId() == 0 then
---		picture = Texture.new("picture", response)
---		pictureSprite = Sprite.new("picture", picture)
---		pictureSprite:setPosXYZ(0.0, 0.0, 0.0)
---		pictureSprite:setScaleXYZ(128, 128, 1)
---	end
+	if response:getId() == 0 then
+		local picture = Texture.new("picture", response)
+		local sprite = Sprite.new("picture", picture)
+		sprite:setPosXY(256.0, 256.0)
+	end
+    print("Content: " .. response:getContent())
+    print("Length: " .. string.len(response:getContent()))
+    --print("Got response!")
+    --print("Header: " .. response:getHeader())
+    --print("Id: " .. response:getId())
 end
 
 
@@ -24,7 +28,14 @@ function start()
 	print("Called start()")
 	input = getInput()
 	camera = getCamera()
+    networkManager = getNetworkManager()
 	db = getDB()
+    -- HttpRequest
+    request = Request.new("http://upload.wikimedia.org/wikipedia/en/8/84/Dante_transparent.png")
+    request2 = request.new("http://kentas.lt/index.php")
+    request2:setId(1)
+    networkManager:execute(request)
+    networkManager:execute(request2)
 	-- Dimensions
 	width = getScreenWidth()
 	height = getScreenHeight()
@@ -36,13 +47,13 @@ function start()
 	map = {}
 	local table = db:execute("SELECT * FROM map")
 	for i, t in pairs(table) do
-		local n = t["tile_id"] .. ".png"
+		local n = t["texture"] .. ".png"
 		local text = getTexture(n) == nil and Texture.new(n) or getTexture(n)
 		local tmpSprite = Sprite.new(n, text)
-		tmpSprite:setPosXY(t["x"] * size + offsetX, t["y"] * size + offsetY)
+		tmpSprite:setPosXYZ(t["x"] * size + offsetX, t["y"] * size + offsetY, t["z"])
 		tmpSprite:setScaleXYZ(0.5, 0.5, 0.5)
 		map[t["x"]] = {}
-		map[t["x"]][t["y"]] = t["tile_type"]
+		map[t["x"]][t["y"]] = t["type"]
 	end
 end
 
@@ -72,7 +83,7 @@ function update()
 --	if input:keyReleased(constants["D"]) then
 --		camera:addPosX(size)
 --	end
-	local offset = 7.0
+	local offset = 14.0
 	if input:keyPressed(constants["W"]) then
 		camera:addPosY(-offset)
 	end
@@ -85,6 +96,7 @@ function update()
 	if input:keyPressed(constants["D"]) then
 		camera:addPosX(-offset)
 	end
+
 end
 
 -- Called when program is brought to background.
@@ -95,10 +107,4 @@ end
 -- Called when program is about to quit.
 function quit()
 	print("Called quit()")
-end
-
-function tablelength(T)
-  local count = 0
-  for _ in pairs(T) do count = count + 1 end
-  return count
 end

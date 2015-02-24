@@ -318,7 +318,7 @@ bool StaticObject::createTerrain() {
 				part.bv_ = tg.bounds_->at(i)->copy();
 			}
 		}
-		UINT32* indArray = new UINT32[indices.size()];
+		UINT32* indArray = NEW UINT32[indices.size()];
 		memcpy(indArray, &indices[0], indices.size() * sizeof(UINT32));
 		modelData_->setIndices(Renderable::INDEX_TYPE_UINT,
 			reinterpret_cast<UINT8*>(indArray), indices.size());
@@ -341,7 +341,7 @@ bool StaticObject::createTerrain() {
 				part.bv_ = tg.bounds_->at(i)->copy();
 			}
 		}
-		UINT16* indArray = new UINT16[indices.size()];
+		UINT16* indArray = NEW UINT16[indices.size()];
 		memcpy(indArray, &indices[0], indices.size() * sizeof(UINT16));
 		modelData_->setIndices(Renderable::INDEX_TYPE_USHORT,
 			reinterpret_cast<UINT8*>(indArray), indices.size());

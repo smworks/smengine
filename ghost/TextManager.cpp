@@ -70,9 +70,9 @@ TextManager::TextManager(ServiceLocator* services) :
 		error_ = true;
 		return;
 	}
-	symbolCache_ = new Symbol**[SYMBOL_CACHE_SIZE];
+	symbolCache_ = NEW Symbol**[SYMBOL_CACHE_SIZE];
 	for (SIZE i = 0; i < SYMBOL_CACHE_SIZE; i++) {
-		symbolCache_[i] = new Symbol*[SYMBOL_CACHE_SIZE];
+		symbolCache_[i] = NEW Symbol*[SYMBOL_CACHE_SIZE];
 		for (SIZE j = 0; j < SYMBOL_CACHE_SIZE; j++) {
 			symbolCache_[i][j] = 0;
 		}
@@ -285,8 +285,8 @@ Symbol* TextManager::getSymbol(char symbol) {
 		services_->getRM()->add(name, texture);
 		texture->commit();
 		s->setTexture(texture);
-		services_->getRM()->add(name, s);
 	}
+	services_->getRM()->add(name, s);
 	FT_Done_Glyph(glyph);
 	if (fontSize_ < SYMBOL_CACHE_SIZE && index < SYMBOL_CACHE_SIZE ) {
 		symbolCache_[fontSize_][index] = s;

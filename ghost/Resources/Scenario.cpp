@@ -23,7 +23,7 @@ public:
 			start_.getZ() + dZ * progress);
 		node_->setState(Node::POSITION, true);
 	}
-	Action* clone() const { return new ActionMove(*this); }
+	Action* clone() const { return NEW ActionMove(*this); }
 private:
 	Node* node_;
 	Vec3 start_;
@@ -35,7 +35,7 @@ public:
 	ActionWait(float time) : Action(time)  {}
 	void run(float progress) {
 	}
-	Action* clone() const { return new ActionWait(*this); }
+	Action* clone() const { return NEW ActionWait(*this); }
 };
 
 Scenario::Scenario(ServiceLocator* services) :
@@ -81,11 +81,11 @@ bool Scenario::isValid() {
 }
 
 void Scenario::move(Node* node, Vec3 start, Vec3 end, float time) {
-	actions_.push_back(new ActionMove(node, start, end, time));
+	actions_.push_back(NEW ActionMove(node, start, end, time));
 }
 
 void Scenario::wait(float time) {
-	actions_.push_back(new ActionWait(time));
+	actions_.push_back(NEW ActionWait(time));
 }
 
 vector<Scenario::Action*>& Scenario::getActions() {

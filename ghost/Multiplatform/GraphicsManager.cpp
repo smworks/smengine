@@ -445,30 +445,13 @@ void GraphicsManager::renderNode(
 	if (!shader->isValid()) {
 		LOGW("Shader \"%s\" is not valid.", shader->getName().c_str());
 	}
+
 	// Select shader program to use.
 	useProgram(shader->getId());
 	Mat4 res;
 	if (!ortho) {
 		Matrix::multiply(mat, node->getMatrix(), res);
 	} else if (gui) {
-		//Quaternion& q = node->getRot();
-		//Vec3 r(q.getX(), q.getY(), q.getZ());
-		//GUISurface* surface = dynamic_cast<GUISurface*>(renderable);
-		//float width = surface->getWidth();
-		//float height = surface->getHeight();
-		//float x = surface->getPosX();
-		//float y = surface->getPosY();
-		//Mat4 tmp;
-		//Mat4 pos;
-		//Mat4 rot;
-		//Mat4 scale;
-		//Vec3& camPos = services_->getCamera()->getPos();
-		//Matrix::translate(pos, x - camPos.getX(), y - camPos.getY(), 0.0f);
-		//Matrix::rotateXYZ(rot, r.getX(), r.getY(), r.getZ());
-		//Matrix::scale(scale, width, height, 1.0f);
-		//Matrix::multiply(mat, pos, res);
-		//Matrix::multiply(res, rot, tmp);
-		//Matrix::multiply(tmp, scale, res);
 		GUISurface* surface = dynamic_cast<GUISurface*>(renderable);
 		Mat4 pos, scale, posScale;
 		float posY = services_->getScreenHeight() - surface->getPosY() - surface->getHeight();
@@ -477,36 +460,12 @@ void GraphicsManager::renderNode(
 		Matrix::multiply(pos, scale, posScale);
 		Matrix::multiply(mat, posScale, res);
 	} else {
-		//Vec3 p = node->getPos();
-		//Vec3 s = node->getScale();
-		////node->getPosAbs(p);
-		//Quaternion& q = node->getRot();
-		//Vec3 r(q.getX(), q.getY(), q.getZ());
-		//float width = s.getX();
-		//float height = s.getY();
-		//float x = p.getX();
-		//float y = p.getY();
-		//Mat4 tmp;
-		//Mat4 pos;
-		//Mat4 rot;
-		//Mat4 scale;
-		//Vec3& camPos = services_->getCamera()->getPos();
-		//Matrix::translate(pos, x - camPos.getX(), y - camPos.getY(), p.getZ());
-		//Matrix::rotateXYZ(rot, r.getX(), r.getY(), r.getZ());
-		//Matrix::scale(scale, width, height, 1.0f);
-
-		//
-
-		//Matrix::multiply(mat, pos, res);
-		//Matrix::multiply(res, rot, tmp);
-		//Matrix::multiply(tmp, scale, res);
-
-		//Matrix::multiply(node->getParent()->getMatrix(), res, tmp);
-		//Matrix::copy(tmp, res);
-		Matrix::multiply(mat, node->getMatrix(), matProjPosScale);
 		Matrix::translate(matPos, camera_->getPos().getX(), camera_->getPos().getY(), camera_->getPos().getZ());
-		Matrix::multiply(matProjPosScale, matPos, res);
+		Matrix::multiply(matPos, node->getMatrix(), matPosScale);
+		Matrix::multiply(mat, matPosScale, res);
+		//Matrix::multiply(matProjPosScale, matPos, res);
 	}
+
 	// World * View * Projection matrix.
 	shader->setMatrix4(Shader::WVP, res);
 	// World matrix.
