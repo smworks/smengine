@@ -90,6 +90,7 @@ Engine::Engine(ServiceLocator* services) :
 	PROFILE("Finished creating engine object.");
 	loadScene();
 	time_ = 0;
+	Console c(services_);
 }
 
 Engine::~Engine() {
@@ -139,7 +140,6 @@ void Engine::loadScene() {
         debugNode_->setState(Node::RENDERABLE, true);
         services_->getRootNode()->addChild(debugNode_);
     }
-	Console c(services_);
 	//// Texture atlas node creation.
  //   if (g_monoNode == 0) {
  //       g_monoNode = NEW Node;

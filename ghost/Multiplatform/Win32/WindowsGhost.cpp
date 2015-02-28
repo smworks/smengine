@@ -7,6 +7,11 @@
 
 #include "WindowsGhost.h"
 
+void logToFile(char* msg) {
+	static ofstream ofs("log.txt");
+	ofs << msg;
+}
+
 #ifdef SMART_DEBUG
     void profile(string& msg) {
         static UINT64 lastCheck = getMicroseconds();

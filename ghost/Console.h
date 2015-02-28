@@ -16,6 +16,8 @@ class Console {
 public:
 	Console(ServiceLocator* services);
 	~Console();
+	void show();
+	void hide();
 };
 
 #endif /* CONSOLE_H_ */

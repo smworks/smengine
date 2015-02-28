@@ -11,6 +11,33 @@
 #include "Resources/GUIText.h"
 #include "Node.h"
 #include "ResourceManager.h"
+#include "ThreadManager.h"
+#include "Multiplatform/Thread.h"
+#include <iostream>
+
+class CMDTask : public Task {
+public:
+	CMDTask() {}
+	~CMDTask() {}
+	void run() {
+		AllocConsole();
+		freopen("CONIN$", "r", stdin);
+		freopen("CONOUT$", "w", stdout);
+		string line;
+		while (true) {
+			cout << "Enter command:" << endl;
+			getline(cin, line);
+			cout << "Command entered: " << line << endl;
+			if (line == "exit") {
+				ShowWindow(GetConsoleWindow(), SW_HIDE);
+				FreeConsole();
+				cout << "Exited." << endl;
+				return;
+			}
+		}
+	}
+	void finish() {}
+};
 
 Console::Console(ServiceLocator* services) {
 	//Node* node = new Node();
@@ -46,6 +73,7 @@ Console::Console(ServiceLocator* services) {
  //   debugNode_->addResource(debugText_);
  //   debugNode_->setState(Node::RENDERABLE, true);
  //   services->getRootNode()->addChild(debugNode_);
+	services->getThreadManager()->execute(new CMDTask());
 }
 
 Console::~Console() {

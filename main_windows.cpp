@@ -13,6 +13,9 @@
 #include "ghost/Input.h"
 
 #include <windowsx.h>
+#include <io.h>
+#include <fcntl.h>
+#include <stdio.h>
 
 #define WIDTH 800
 #define HEIGHT 600
@@ -314,7 +317,6 @@ void onInput(LPARAM lParam) {
 	delete[] byBuffer;
 }
 
-// Handle window events and messages
 LONG WINAPI MainWndProc (HWND g_hwnd, UINT uMsg, WPARAM  wParam, LPARAM  lParam)
 {
     switch (uMsg) {
@@ -433,10 +435,7 @@ int WINAPI WinMain (HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLin
 	}
     // Initialize OpenGL
     if (!InitGraphics(width, height)) {
-		LOGD("Deleting engine.");
-		delete GHOST;
-		wglDeleteContext(hRC);
-		ReleaseDC(g_hwnd, hDC);
+		LOGD("Failed to initialize graphics system. Engine will now show only simple CMD window.");
 	}
 	GHOST->resume();
     // Display the window

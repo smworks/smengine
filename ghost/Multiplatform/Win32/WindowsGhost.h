@@ -85,41 +85,45 @@ typedef short INT16;
 #define SIZE size_t
 typedef SIZE* POINTER;
 
+void logToFile(char* msg);
+
+#define OUTPUT(msg) OutputDebugStringA(msg); logToFile(msg);
+
 // LOGGER.
 #define LOGI(...) { char buff[8192];\
 	sprintf_s(buff, __VA_ARGS__); \
-	OutputDebugStringA("INFO: "); \
-	OutputDebugStringA(buff); \
+	OUTPUT("INFO: "); \
+	OUTPUT(buff); \
 	char buffLine[256]; \
 	sprintf_s(buffLine, 256, " (%s, %d)\n", \
 		__FILE__, __LINE__); \
-	OutputDebugStringA(buffLine); }
+	OUTPUT(buffLine); }
 #define LOGW(...) { char buff[8192]; \
 	sprintf_s(buff, __VA_ARGS__); \
-	OutputDebugStringA("WARNING: "); \
-	OutputDebugStringA(buff); \
+	OUTPUT("WARNING: "); \
+	OUTPUT(buff); \
 	char buffLine[256]; \
 	sprintf_s(buffLine, 256, " (%s, %d)\n", \
 		__FILE__, __LINE__); \
-	OutputDebugStringA(buffLine); }
+	OUTPUT(buffLine) }
 #define LOGE(...) { char buff[8192]; \
 	sprintf_s(buff, __VA_ARGS__); \
 	MessageBoxA(0, buff, "Error", MB_ICONERROR | MB_SYSTEMMODAL); \
-	OutputDebugStringA("ERROR: "); \
-	OutputDebugStringA(buff); \
+	OUTPUT("ERROR: "); \
+	OUTPUT(buff); \
 	char buffLine[256]; \
 	sprintf_s(buffLine, 256, " (%s, %d)\n", \
 		__FILE__, __LINE__); \
-	OutputDebugStringA(buffLine); }
+	OUTPUT(buffLine); }
 #ifdef SMART_DEBUG
 	#define LOGD(...) { char buff[8192]; \
 		sprintf_s(buff, __VA_ARGS__); \
-		OutputDebugStringA("DEBUG: "); \
-		OutputDebugStringA(buff); \
+		OUTPUT("DEBUG: "); \
+		OUTPUT(buff); \
 		char buffLine[256]; \
 		sprintf_s(buffLine, 256, " (%s, %d)\n", \
 			__FILE__, __LINE__); \
-		OutputDebugStringA(buffLine); }
+		OUTPUT(buffLine); }
 #else
     #define LOGD(...)
 #endif
