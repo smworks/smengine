@@ -10,7 +10,6 @@
 
 #include "../Multiplatform/Ghost.h"
 
-class Thread;
 class ScenarioManager;
 class Socket;
 class SoundManager;
@@ -42,33 +41,12 @@ public:
 	 */
 	virtual double getFrameTime() = 0;
 
-	/**
-	 * Sets new screen width value.
-	 * @param width - new screen width in pixels.
-	 */
-	virtual void setScreenWidth(int width) = 0;
 
-	/**
-	 * Sets new screen height value.
-	 * @param height - new screen height in pixels.
-	 */
-	virtual void setScreenHeight(int height) = 0;
-
-	/**
-	 * @return Current screen width in pixels.
-	 */
-	virtual int	getScreenWidth() = 0;
-
-	/**
-	 * @return Current screen height in pixels.
-	 */
-	virtual int getScreenHeight() = 0;
-
-	/**
-	 * Sets program quit indicator to true.
-	 * Doesn't quit immedietly.
-	 */
-	virtual void exit() = 0;
+	void setScreenWidth(int width);
+	void setScreenHeight(int height) ;
+	int	getScreenWidth();
+	int getScreenHeight();
+	void exit();
 
 	/**
 	 * Returns true if program was
@@ -76,7 +54,9 @@ public:
 	 * method exit was called.
 	 * @return true if program needs to be closed.
 	 */
-	virtual bool isFinished() = 0;
+	virtual bool isFinished();
+	void disableGui();
+	bool isGuiAvailable();
 
 	/**
 	 * @param sleep - optional parameter,
@@ -89,12 +69,6 @@ public:
 	 * method.
 	 */
 	virtual double updateTimer(float sleep = 0.0f) = 0;
-
-	/**
-	 * Return thread instance.
-	 * @return Pointer to thread.
-	 */
-	virtual Thread* createThread() = 0;
 
 	/**
 	 * Returns unique index for thread calling this method.
@@ -191,6 +165,11 @@ private:
 	ThreadManager* threadManager_;
 	NetworkManager* networkManager_;
 	NodeManager* nodeManager_;
+
+	int screenWidth;
+	int screenHeight;
+	bool programClosed;
+	bool guiAvailable;
 };
 
 #endif

@@ -12,71 +12,63 @@
 #include "Node.h"
 #include "ResourceManager.h"
 #include "ThreadManager.h"
-#include "Multiplatform/Thread.h"
+#include "Thread.h"
 #include <iostream>
+#include "ScriptManager.h"
 
 class CMDTask : public Task {
 public:
-	CMDTask() {}
+	CMDTask(ServiceLocator* services) : services(services), show(false), isShowing(false) {}
 	~CMDTask() {}
 	void run() {
 		AllocConsole();
 		freopen("CONIN$", "r", stdin);
 		freopen("CONOUT$", "w", stdout);
+		ShowWindow(GetConsoleWindow(), SW_HIDE);
 		string line;
 		while (true) {
-			cout << "Enter command:" << endl;
-			getline(cin, line);
-			cout << "Command entered: " << line << endl;
-			if (line == "exit") {
-				ShowWindow(GetConsoleWindow(), SW_HIDE);
+			if (!isShowing && show || isShowing && !show) {
+				ShowWindow(GetConsoleWindow(), show ? SW_SHOW : SW_HIDE);
+				isShowing = show;
+			}
+			if (show) {
+				cout << "Enter command: ";
+				getline(cin, line);
+				if (line == "close") {
+					show = false;
+					continue;
+				} else {
+					string res = services->getScriptManager()->executeCode(line);
+					if (res.length() > 0) {
+						cout << res << endl;
+					}
+				}
+			}
+			if (services->isFinished()) {
 				FreeConsole();
-				cout << "Exited." << endl;
 				return;
 			}
+			this_thread::sleep_for(chrono::milliseconds(100));
 		}
 	}
 	void finish() {}
+	volatile bool show;
+private:
+	bool isShowing;
+	ServiceLocator* services;
 };
 
-Console::Console(ServiceLocator* services) {
-	//Node* node = new Node();
-	//node->setName("Console");
-	//GUIText* image = new GUIText(services);
-	//image->setNode(node);
-	//image->setBackground("#FF00FFFF");
-	//image->setText("YOLO");
-	//image->setWidth(128.0f);
-	//image->setHeight(128.0f);
-	//image->setMargins(100.0f, 100.0f);
-	//image->create();
-	//node->addResource(image);
-	//services->getRM()->add("Console", image);
-	//node->setParent(services->getRootNode());
-	//services->getRootNode()->addChild(node);
-	//LOGI("WIDTH: %f", image->getWidth());
-
-	//Node* debugNode_ = NEW Node;
- //   debugNode_->setName("random");
- //   GUIText* debugText_ = NEW GUIText(services);
- //   debugText_->setNode(debugNode_);
- //   debugText_->getAttributes().setString(GUIText::ATTR_WIDTH, "512px");
- //   debugText_->getAttributes().setString(GUIText::ATTR_HEIGHT, "32px");
- //   debugText_->getAttributes().setString(GUIText::ATTR_TEXT, "RANDOM TEXT");
- //   debugText_->getAttributes().setString(GUIText::ATTR_COLOR, "#FF00FFFF");
- //   debugText_->getAttributes().setString(GUIText::ATTR_BACKGROUND, "#00000088");
- //   debugText_->getAttributes().setString(GUIText::ATTR_SIZE, "12px");
- //   debugText_->getAttributes().setString(GUIText::ATTR_SCREEN_LEFT, "true");
- //   debugText_->getAttributes().setString(GUIText::ATTR_SCREEN_TOP, "true");
- //   debugText_->create();
- //   services->getRM()->add("debug text 2", debugText_);
- //   debugNode_->addResource(debugText_);
- //   debugNode_->setState(Node::RENDERABLE, true);
- //   services->getRootNode()->addChild(debugNode_);
-	services->getThreadManager()->execute(new CMDTask());
-}
+Console::Console(ServiceLocator* services) : services(services), cmdTask(0) {}
 
 Console::~Console() {
-	// TODO Auto-generated destructor stub
 }
 
+bool Console::isShowing() {
+	return cmdTask == 0 ? false : cmdTask->show;
+}
+
+void Console::show() {
+	if (cmdTask == 0)
+		services->getThreadManager()->execute(cmdTask = NEW CMDTask(services));
+	cmdTask->show = true;
+}

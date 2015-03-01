@@ -24,9 +24,6 @@ public:
 		virtual void run(HttpResponse* response) = 0;		
 	};
 public:
-	/**
-	 * @param services - pointer to service locator object.
-	 */
 	NetworkManager(ServiceLocator* services);
 	~NetworkManager();
 
@@ -41,16 +38,8 @@ public:
 	 * handle result.
 	 */
 	void execute(HttpRequest* request, HttpTask* task = 0);
-
-	/**
-	 * This is called after each task execution to check
-	 * if there are any other tasks that need to be launched.
-	 * @NOTE: Do not call this from anywhere else!
-	 */
-	void update();
 private:
-	ServiceLocator* services_;
-	queue<Task*> queue_;
+	ServiceLocator* services;
 };
 
 #endif

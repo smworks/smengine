@@ -8,7 +8,7 @@
 #ifndef THREAD_H_
 #define THREAD_H_
 
-#include "Ghost.h"
+#include "Multiplatform/Ghost.h"
 
 class Task {
 public:
@@ -27,25 +27,22 @@ public:
 
 class Thread {
 public:
-	virtual ~Thread() {};
-
 	/**
-	 * @return Unique thread id.
+	 * Executes single task.
+	 * @param task - task that will be executed in thread.
+	 * @NOTE: task is deleted when thread finishes work.
 	 */
-	virtual UINT64 getId() = 0;
-
-	/**
-	 * Starts running thread.
-	 * @param task - task to be executed.
-	 */
-	virtual void start(Task* task) = 0;
-
-	/**
-	 * Indicates whether thread is running.
-	 * Method is thread safe.
-	 * @return True if thread is alive.
-	 */
-	virtual bool isRunning() = 0;
+	Thread(Task* task);
+	~Thread();
+	UINT64 getId();
+	bool isRunning();
+private:
+	void run();
+private:
+	mutex workerMutex;
+	thread* workerThread;
+	bool running;
+	Task* task;
 };
 
 #endif

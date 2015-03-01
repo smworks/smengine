@@ -7,7 +7,7 @@
 
 #include "NetworkManager.h"
 #include "Multiplatform/ServiceLocator.h"
-#include "Multiplatform/Thread.h"
+#include "Thread.h"
 #include "Multiplatform/Socket.h"
 #include "HttpRequest.h"
 #include "HttpResponse.h"
@@ -15,64 +15,48 @@
 
 class RequestTask : public Task {
 public:
-	void setNetworkManager(NetworkManager* networkManager) { nm_ = networkManager; }
-	void setSocket(Socket* socket) { socket_ = socket; }
-	void setRequest(HttpRequest* request) { request_ = request; }
-	void setTask(NetworkManager::HttpTask* task) { task_ = task; }
+	RequestTask() : socket(0), task(0), request(0), response(0) {}
+	~RequestTask() {
+		delete request;
+		delete task;
+		delete socket;
+		delete response;
+	}
+	void setNetworkManager(NetworkManager* networkManager) { nm = networkManager; }
+	void setSocket(Socket* socket) { this->socket = socket; }
+	void setRequest(HttpRequest* request) { this->request = request; }
+	void setTask(NetworkManager::HttpTask* task) { this->task = task; }
 	void run() {
-		response_ = socket_->send(request_);
-		if (response_ != 0) {
-			response_->setId(request_->getId());
-		}
-		delete socket_;
-		delete request_;
+		if (socket != 0 && request != 0)
+			response = socket->send(request);
+		if (response != 0)
+			response->setId(request->getId());
 	}
 	void finish() {
-		if (task_ != 0) {
-			task_->run(response_);
-			delete task_;
-			task_ = 0;
-		}
-		if (response_ != 0) {
-			delete response_;
-		}
-		nm_->update();
+		if (task != 0)
+			task->run(response);
 	}
-	Socket* socket_;
-	NetworkManager* nm_;
-	NetworkManager::HttpTask* task_;
-	HttpRequest* request_;
-	HttpResponse* response_;
+private:
+	Socket* socket;
+	NetworkManager* nm;
+	NetworkManager::HttpTask* task;
+	HttpRequest* request;
+	HttpResponse* response;
 };
 
-NetworkManager::NetworkManager(ServiceLocator* services) : services_(services) {
+NetworkManager::NetworkManager(ServiceLocator* services) : services(services) {
 	LOGD("Created network manager.");
 }
 
 NetworkManager::~NetworkManager() {
-	while (queue_.size() > 0) {
-		delete queue_.front();
-		queue_.pop();
-	}
 	LOGD("Deleted network manager.");
 }
 
 void NetworkManager::execute(HttpRequest* request, HttpTask* task) {
 	RequestTask* requestTask = NEW RequestTask();
 	requestTask->setNetworkManager(this);
-	requestTask->setSocket(services_->createSocket());
+	requestTask->setSocket(services->createSocket());
 	requestTask->setRequest(request);
 	requestTask->setTask(task);
-	queue_.push(requestTask);
-	if (queue_.size() == 1) {
-		services_->getThreadManager()->execute(requestTask);
-	}
-}
-
-void NetworkManager::update() {
-	queue_.pop();
-	if (queue_.size() > 0) {
-		Task* task = queue_.front();
-		services_->getThreadManager()->execute(task);
-	}
+	services->getThreadManager()->execute(requestTask);
 }

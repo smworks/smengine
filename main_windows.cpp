@@ -91,20 +91,16 @@ bool InitGraphics(UINT32 width, UINT32 height)
 	GLenum err = glewInit();
 	if (err != GLEW_OK) {
 		LOGE("GLEW not initialized.");
+		wglMakeCurrent(NULL, NULL);
+		wglDeleteContext(hRC);
 		return false;
 	}
 	if (!GLEW_VERSION_2_1) {
-		LOGE("GLEW doesn't support OpenGL 2.1");
+		LOGE("This computer or terminal doesn't support OpenGL 2.1");
+		wglMakeCurrent(NULL, NULL);
+		wglDeleteContext(hRC);
 		return false;
 	}
-	WindowsServiceLocator* wsl = new WindowsServiceLocator();
-	wsl->setScreenWidth(width);
-	wsl->setScreenHeight(height);
-	GHOST = new Engine(wsl);
-	if (!*GHOST) {
-		return false;
-	}
-	stopped = false;
 	return true;
 }
 
@@ -119,16 +115,6 @@ void ResizeGraphics()
 	if (GHOST) {
 		GHOST->resizeScreen(width, height);
 	}
-}
-
-// Draw frame
-void DrawGraphics()
-{
-	if (GHOST) GHOST->computeFrame();
-    // Show the new scene
-    SwapBuffers(hDC);
-	// glFlush();
-	// glFinish();
 }
 
 void onInput(LPARAM lParam) {
@@ -154,20 +140,11 @@ void onInput(LPARAM lParam) {
 		bool keyUp = input->data.keyboard.Flags & RI_KEY_BREAK;
 		switch (key)
 		{
-		case VK_UP:
-			key = Input::UP;
-			break;
-		case VK_DOWN:
-			key = Input::DOWN;
-			break;
-		case VK_LEFT:
-			key = Input::LEFT;
-			break;
-		case VK_RIGHT:
-			key = Input::RIGHT;
-			break;
-		case VK_RETURN:
-			key = Input::RETURN;
+		case VK_UP: key = Input::UP; break;
+		case VK_DOWN: key = Input::DOWN; break;
+		case VK_LEFT: key = Input::LEFT; break;
+		case VK_RIGHT: key = Input::RIGHT; break;
+		case VK_RETURN: key = Input::RETURN;
 			if (keyUp && GHOST->getServiceLocator()->getInput()->
 				keyPressed(Input::ALT))
 			{
@@ -181,61 +158,34 @@ void onInput(LPARAM lParam) {
 				}
 			}
 			break;
-		case VK_BACK:
-			key = Input::BACK;
-			break;
-		case VK_SPACE:
-			key = Input::SPACE;
-			break;
-		case VK_CONTROL:
-			key = Input::CTRL;
-			break;
-		case VK_MENU:
-			key = Input::ALT;
-			break;
-		case VK_ESCAPE:
-			key = Input::ESC;
-			break;
-		case VK_SHIFT:
-			key = Input::SHIFT;
-			break;
-		case VK_F1:
-			key = Input::F1;
-			break;
-		case VK_F2:
-			key = Input::F2;
-			break;
-		case VK_F3:
-			key = Input::F3;
-			break;
-		case VK_F4:
-			key = Input::F4;
-			break;
-		case VK_F5:
-			key = Input::F5;
-			break;
-		case VK_F6:
-			key = Input::F6;
-			break;
-		case VK_F7:
-			key = Input::F7;
-			break;
-		case VK_F8:
-			key = Input::F8;
-			break;
-		case VK_F9:
-			key = Input::F9;
-			break;
-		case VK_F10:
-			key = Input::F10;
-			break;
-		case VK_F11:
-			key = Input::F11;
-			break;
-		case VK_F12:
-			key = Input::F12;
-			break;
+		case VK_BACK: key = Input::BACK; break;
+		case VK_SPACE: key = Input::SPACE; break;
+		case VK_CONTROL: key = Input::CTRL; break;
+		case VK_MENU: key = Input::ALT; break;
+		case VK_ESCAPE: key = Input::ESC; break;
+		case VK_SHIFT: key = Input::SHIFT; break;
+		case VK_F1: key = Input::F1; break;
+		case VK_F2: key = Input::F2; break;
+		case VK_F3: key = Input::F3; break;
+		case VK_F4: key = Input::F4; break;
+		case VK_F5: key = Input::F5; break;
+		case VK_F6: key = Input::F6; break;
+		case VK_F7: key = Input::F7; break;
+		case VK_F8: key = Input::F8; break;
+		case VK_F9: key = Input::F9; break;
+		case VK_F10: key = Input::F10; break;
+		case VK_F11: key = Input::F11; break;
+		case VK_F12: key = Input::F12; break;
+		case VK_OEM_1: key = Input::SEMICOLON; break;
+		case VK_OEM_PLUS: key = Input::PLUS; break;
+		case VK_OEM_COMMA: key = Input::COMMA; break;
+		case VK_OEM_MINUS: key = Input::MINUS; break;
+		case VK_OEM_PERIOD: key = Input::PERIOD; break;
+		case VK_OEM_2: key = Input::SLASH; break;
+		case VK_OEM_3: key = Input::TILDE; break;
+
 		default:
+			LOGI("KEY: %d", key);
 			TCHAR ch = (TCHAR) key;
 			key = ch - 54;
 		}
@@ -360,6 +310,18 @@ LONG WINAPI MainWndProc (HWND g_hwnd, UINT uMsg, WPARAM  wParam, LPARAM  lParam)
 		if (*GHOST) GHOST->getServiceLocator()->exit();
         //DestroyWindow(g_hwnd);
         break;
+	case WM_PAINT:
+		{
+			PAINTSTRUCT ps;
+			HDC dc;
+			string message = "OpenGL 2.1 not supported!";
+			dc = BeginPaint(g_hwnd, &ps);
+			if (GHOST && !GHOST->getServiceLocator()->isGuiAvailable()) {
+				TextOutA(dc, 10, 10, (LPCSTR) message.c_str(), message.length());
+			}
+			EndPaint(g_hwnd, &ps);
+		}
+		break;
     case WM_DESTROY:
 		if (*GHOST) GHOST->getServiceLocator()->exit();
         //PostQuitMessage(0);
@@ -433,10 +395,26 @@ int WINAPI WinMain (HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLin
 		LOGE("Failed to initialize window.");
 		return false;
 	}
+	// Create windows service locator instance.
+	WindowsServiceLocator* wsl = new WindowsServiceLocator();
+	wsl->setScreenWidth(width);
+	wsl->setScreenHeight(height);
+	bool gui = true;
     // Initialize OpenGL
     if (!InitGraphics(width, height)) {
-		LOGD("Failed to initialize graphics system. Engine will now show only simple CMD window.");
+		LOGD("Failed to initialize graphics system.");
+		LOGD("Engine will now show only simple CMD window.");
+		wsl->disableGui();
+		gui = false;
 	}
+	// Create engine instance.
+	GHOST = new Engine(wsl);
+	if (!*GHOST) {
+		return false;
+	}
+	// Continue handling user input.
+	stopped = false;
+	// Resume engine.
 	GHOST->resume();
     // Display the window
     ShowWindow(g_hwnd, nCmdShow);
@@ -454,7 +432,9 @@ int WINAPI WinMain (HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLin
 				GHOST->getServiceLocator()->exit();
 			}
         }
-        DrawGraphics();
+        GHOST->computeFrame();
+		if (gui)
+			SwapBuffers(hDC);
     }
 	stopped = true;
 	GHOST->pause();
@@ -464,10 +444,10 @@ int WINAPI WinMain (HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLin
 	glFinish();
 	glFlush();
 	// Release contexts and handles.
-	if (!wglMakeCurrent(NULL, NULL)) {
+	if (gui && !wglMakeCurrent(NULL, NULL)) {
 		LOGE("Unable to release DC and RC.");
 	}
-    if (!wglDeleteContext(hRC)) {
+    if (gui && !wglDeleteContext(hRC)) {
 		LOGE("Unable to delete rendering context.");
 	}
     ReleaseDC(g_hwnd, hDC);

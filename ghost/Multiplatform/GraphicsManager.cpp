@@ -52,6 +52,10 @@ GraphicsManager::~GraphicsManager() {
 }
 
 void GraphicsManager::create() {
+	if (!services_->isGuiAvailable()) {
+		LOGD("Graphics manager not properly created.")
+		return;
+	}
 	LOGD("Max texture units: %u (%u combined).",
 		getMax(MAX_TEXTURE_UNITS), getMax(MAX_COMBINED_TEXTURE_UNITS));
 	LOGD("Max texture width and height: %upx (%upx for cube map).",
@@ -148,6 +152,9 @@ void GraphicsManager::create() {
 }
 
 void GraphicsManager::release() {
+	if (!services_->isGuiAvailable()) {
+		return;
+	}
 	unsetVertexBuffer(planeVBO_);
 	unsetVertexBuffer(planeUVBO_);
 	delete screenPlane_;

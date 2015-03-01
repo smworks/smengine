@@ -63,9 +63,7 @@ bool Sprite::create() {
 void Sprite::release() {
 	image_ = 0;
 	if (uvBO_ != 0) {
-		glDeleteBuffers(spriteCount_, uvBO_);
-		delete [] uvBO_;
-		uvBO_ = 0;
+		getServiceLocator()->getGraphicsManager()->unsetVertexBuffers(spriteCount_, uvBO_);
 	}
 }
 
@@ -160,10 +158,7 @@ void Sprite::setSpriteIndex(SIZE index) {
 
 void Sprite::setSpriteCount(SIZE count) {
 	if (uvBO_ != 0) {
-		getServiceLocator()->getGraphicsManager()->bindBuffer(0);
-		glDeleteBuffers(spriteCount_, uvBO_);
-		delete [] uvBO_;
-		uvBO_ = 0;
+		getServiceLocator()->getGraphicsManager()->unsetVertexBuffers(spriteCount_, uvBO_);
 	}
 	spriteCount_ = count == 0 ? 1 : count;
 	uvBO_ = NEW UINT32[spriteCount_];

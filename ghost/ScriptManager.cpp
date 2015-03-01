@@ -165,6 +165,13 @@ void ScriptManager::initialize(ServiceLocator* locator) {
 	addKeyValue("ESC", Input::ESC);
 	addKeyValue("SHIFT", Input::SHIFT);
 	addKeyValue("TAB", Input::TAB);
+	addKeyValue("SEMICOLON", Input::SEMICOLON);
+	addKeyValue("PLUS", Input::PLUS);
+	addKeyValue("COMMA", Input::COMMA);
+	addKeyValue("MINUS", Input::MINUS);
+	addKeyValue("PERIOD", Input::PERIOD);
+	addKeyValue("SLASH", Input::SLASH);
+	addKeyValue("TILDE", Input::TILDE);
 	addKeyValue("MOUSE_L", Input::MOUSE_L);
 	addKeyValue("MOUSE_M", Input::MOUSE_M);
 	addKeyValue("MOUSE_R", Input::MOUSE_R);
@@ -204,6 +211,12 @@ void ScriptManager::invokeFunction(const string& functionName) {
 	}
 }
 
+string ScriptManager::executeCode(string code) {
+	if (luaL_dostring(state_, code.c_str()) != LUA_OK)
+		return lua_tostring(state_, lua_gettop(state_));
+	return "";
+}
+
 /**
  * Loads script on top of the current Lua stack,
  * then moves it to registry and returns unique id.
@@ -211,10 +224,6 @@ void ScriptManager::invokeFunction(const string& functionName) {
  * (Lua pops out scripts after using them).
  */
 void ScriptManager::add(Node* node) {
-//	if (script_ != 0) {
-//		LOGE("Unable to add script. Script already specified.");
-//		return;
-//	}
 	if (node->hasResource(Resource::SCRIPT)) {
 		script_ = dynamic_cast<Script*>(
 			node->getResource(Resource::SCRIPT));

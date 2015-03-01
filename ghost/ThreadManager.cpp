@@ -7,11 +7,10 @@
 
 #include "ThreadManager.h"
 #include "Multiplatform/ServiceLocator.h"
-#include "Multiplatform/Thread.h"
+#include "Thread.h"
 
 ThreadManager::ThreadManager(ServiceLocator* services) :
 	services_(services),
-	threads_(0),
 	destroy_(false)
 {
 	LOGD("Created thread manager.");
@@ -39,8 +38,7 @@ UINT64 ThreadManager::execute(Task* task) {
 		delete task;
 		return 0;
 	}
-	Thread* thread = services_->createThread();
-	thread->start(task);
+	Thread* thread = NEW Thread(task);
 	threads_.push_back(thread);
 	return thread->getId();
 }
@@ -51,8 +49,7 @@ void ThreadManager::join(UINT64 id) {
 			if (id != services_->getCurrentThreadId()) {
 				delete threads_[i];
 				threads_.erase(threads_.begin() + i);
-			}
-			else {
+			} else {
 				LOGW("Thread with id %llu attempted to join itself.", id);
 			}
 			return;
@@ -61,12 +58,7 @@ void ThreadManager::join(UINT64 id) {
 }
 
 void ThreadManager::joinAll() {
-	vector<Thread*>::iterator it = threads_.begin();
-	LOGD("JOIN ALL Called.");
-	for (; it != threads_.end();) {
-		LOGD("DELETING: %llu", (*it)->getId());
-		delete (*it);
-		threads_.erase(it);
-	}
-	LOGD("FINISHED");
+	for (Thread* t : threads_)
+		delete t;
+	threads_.clear();
 }

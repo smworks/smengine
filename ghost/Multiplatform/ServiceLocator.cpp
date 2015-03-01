@@ -37,7 +37,11 @@ ServiceLocator::ServiceLocator() :
 	textureAtlas_(0),
 	threadManager_(0),
 	networkManager_(0),
-	nodeManager_(0)
+	nodeManager_(0),
+	screenWidth(0),
+	screenHeight(0),
+	programClosed(false),
+	guiAvailable(true)
 {
 	LOGD("Service locator created.");
 }
@@ -49,6 +53,38 @@ ServiceLocator::ServiceLocator(const ServiceLocator& services) {
 const ServiceLocator& ServiceLocator::operator=(const ServiceLocator& services) {
     LOGE("Assignment operation is not supported for ServiceLocator.");
     return services;
+}
+
+void ServiceLocator::setScreenWidth(int width) {
+	screenWidth = width;
+}
+
+void ServiceLocator::setScreenHeight(int height) {
+	screenHeight = height;
+}
+
+int ServiceLocator::getScreenWidth() {
+	return screenWidth;
+}
+
+int ServiceLocator::getScreenHeight() {
+	return screenHeight;
+}
+
+void ServiceLocator::exit() {
+	programClosed = true;
+}
+
+bool ServiceLocator::isFinished() {
+	return programClosed;
+}
+
+void ServiceLocator::disableGui() {
+	guiAvailable = false;
+}
+
+bool ServiceLocator::isGuiAvailable() {
+	return guiAvailable;
 }
 
 ServiceLocator::~ServiceLocator() {

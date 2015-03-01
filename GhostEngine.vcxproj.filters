@@ -665,9 +665,6 @@
     <ClCompile Include="ghost\ThreadManager.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="ghost\Multiplatform\Win32\WindowsThread.cpp">
-      <Filter>Source Files\Multiplatform\Win32</Filter>
-    </ClCompile>
     <ClCompile Include="ghost\FrameBuffer.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -988,6 +985,12 @@
     </ClCompile>
     <ClCompile Include="ghost\Resources\TextureRGB.cpp">
       <Filter>Source Files\Resources</Filter>
+    </ClCompile>
+    <ClCompile Include="ghost\Thread.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="ghost\Multiplatform\NullGraphicsManager.cpp">
+      <Filter>Source Files\Multiplatform</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -1726,12 +1729,6 @@
     <ClInclude Include="ghost\ThreadManager.h">
       <Filter>Source Files</Filter>
     </ClInclude>
-    <ClInclude Include="ghost\Multiplatform\Win32\WindowsThread.h">
-      <Filter>Source Files\Multiplatform\Win32</Filter>
-    </ClInclude>
-    <ClInclude Include="ghost\Multiplatform\Thread.h">
-      <Filter>Source Files\Multiplatform</Filter>
-    </ClInclude>
     <ClInclude Include="ghost\FrameBuffer.h">
       <Filter>Source Files</Filter>
     </ClInclude>
@@ -1896,6 +1893,12 @@
     </ClInclude>
     <ClInclude Include="ghost\Resources\TextureRGB.h">
       <Filter>Source Files\Resources</Filter>
+    </ClInclude>
+    <ClInclude Include="ghost\Thread.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="ghost\Multiplatform\NullGraphicsManager.h">
+      <Filter>Source Files\Multiplatform</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

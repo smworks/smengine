@@ -11,13 +11,17 @@
 #include "Multiplatform/Ghost.h"
 
 class ServiceLocator;
+class CMDTask;
 
 class Console {
 public:
 	Console(ServiceLocator* services);
 	~Console();
+	bool isShowing();
 	void show();
-	void hide();
+private:
+	ServiceLocator* services;
+	CMDTask* cmdTask;
 };
 
 #endif /* CONSOLE_H_ */

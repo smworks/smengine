@@ -8,7 +8,7 @@
 #include "ObjParser.h"
 #include "Multiplatform/Ghost.h"
 #include "Multiplatform/ServiceLocator.h"
-#include "Multiplatform/Thread.h"
+#include "Thread.h"
 #include "Multiplatform/FileManager.h"
 #include "Multiplatform/GraphicsManager.h"
 #include "ResourceManager.h"

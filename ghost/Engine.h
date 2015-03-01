@@ -12,6 +12,7 @@
 class Node;
 class ServiceLocator;
 class GUIText;
+class Console;
 
 #ifdef SMART_DEBUG
 	#define SMART_DEBUG_TEXT
@@ -124,6 +125,7 @@ private:
 	UINT32 debugFpsCount_;
 	double debugTime_;
 #endif
+	Console* console;
 };
 
 #endif /* ENGINE_H_ */

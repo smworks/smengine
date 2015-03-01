@@ -20,14 +20,14 @@
     <ConfigurationType>Application</ConfigurationType>
     <UseDebugLibraries>true</UseDebugLibraries>
     <CharacterSet>Unicode</CharacterSet>
-    <PlatformToolset>v120</PlatformToolset>
+    <PlatformToolset>v110_xp</PlatformToolset>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
     <UseDebugLibraries>false</UseDebugLibraries>
     <WholeProgramOptimization>true</WholeProgramOptimization>
     <CharacterSet>Unicode</CharacterSet>
-    <PlatformToolset>v120</PlatformToolset>
+    <PlatformToolset>v110</PlatformToolset>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
   <ImportGroup Label="ExtensionSettings">
@@ -65,6 +65,9 @@
       <BrowseInformation>true</BrowseInformation>
       <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
       <AdditionalIncludeDirectories>%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalOptions>/Bv %(AdditionalOptions)</AdditionalOptions>
+      <MultiProcessorCompilation>true</MultiProcessorCompilation>
+      <MinimalRebuild>false</MinimalRebuild>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -75,6 +78,7 @@
       <LinkStatus>
       </LinkStatus>
       <SuppressStartupBanner>true</SuppressStartupBanner>
+      <AdditionalOptions>/time %(AdditionalOptions)</AdditionalOptions>
     </Link>
     <Bscmake>
       <PreserveSbr>true</PreserveSbr>
@@ -335,6 +339,7 @@
     <ClCompile Include="ghost\ModelData.cpp" />
     <ClCompile Include="ghost\Multiplatform\Database.cpp" />
     <ClCompile Include="ghost\Multiplatform\GraphicsManager.cpp" />
+    <ClCompile Include="ghost\Multiplatform\NullGraphicsManager.cpp" />
     <ClCompile Include="ghost\Multiplatform\ServiceLocator.cpp" />
     <ClCompile Include="ghost\Multiplatform\Win32\WindowsDatabase.cpp" />
     <ClCompile Include="ghost\Multiplatform\Win32\WindowsSocket.cpp" />
@@ -360,7 +365,6 @@
     <ClCompile Include="ghost\Multiplatform\Win32\WindowsFileManager.cpp" />
     <ClCompile Include="ghost\Multiplatform\Win32\WindowsGraphicsManager.cpp" />
     <ClCompile Include="ghost\Multiplatform\Win32\WindowsServiceLocator.cpp" />
-    <ClCompile Include="ghost\Multiplatform\Win32\WindowsThread.cpp" />
     <ClCompile Include="ghost\PhysicsManager.cpp" />
     <ClCompile Include="ghost\Quaternion.cpp" />
     <ClCompile Include="ghost\RenderPass.cpp" />
@@ -394,6 +398,7 @@
     <ClCompile Include="ghost\TerrainParser.cpp" />
     <ClCompile Include="ghost\TextManager.cpp" />
     <ClCompile Include="ghost\TextureAtlas.cpp" />
+    <ClCompile Include="ghost\Thread.cpp" />
     <ClCompile Include="ghost\ThreadManager.cpp" />
     <ClCompile Include="ghost\Utils.cpp" />
     <ClCompile Include="ghost\Vec3.cpp" />
@@ -630,6 +635,7 @@
     <ClInclude Include="ghost\HttpResponse.h" />
     <ClInclude Include="ghost\ModelData.h" />
     <ClInclude Include="ghost\Multiplatform\Database.h" />
+    <ClInclude Include="ghost\Multiplatform\NullGraphicsManager.h" />
     <ClInclude Include="ghost\Multiplatform\ServiceLocator.h" />
     <ClInclude Include="ghost\Multiplatform\Socket.h" />
     <ClInclude Include="ghost\Multiplatform\SoundManager.h" />
@@ -656,12 +662,10 @@
     <ClInclude Include="ghost\Multiplatform\FileManager.h" />
     <ClInclude Include="ghost\Multiplatform\Ghost.h" />
     <ClInclude Include="ghost\Multiplatform\GraphicsManager.h" />
-    <ClInclude Include="ghost\Multiplatform\Thread.h" />
     <ClInclude Include="ghost\Multiplatform\Win32\WindowsGhost.h" />
     <ClInclude Include="ghost\Multiplatform\Win32\WindowsFileManager.h" />
     <ClInclude Include="ghost\Multiplatform\Win32\WindowsGraphicsManager.h" />
     <ClInclude Include="ghost\Multiplatform\Win32\WindowsServiceLocator.h" />
-    <ClInclude Include="ghost\Multiplatform\Win32\WindowsThread.h" />
     <ClInclude Include="ghost\PhysicsManager.h" />
     <ClInclude Include="ghost\Quaternion.h" />
     <ClInclude Include="ghost\RenderPass.h" />
@@ -698,6 +702,7 @@
     <ClInclude Include="ghost\TerrainParser.h" />
     <ClInclude Include="ghost\TextManager.h" />
     <ClInclude Include="ghost\TextureAtlas.h" />
+    <ClInclude Include="ghost\Thread.h" />
     <ClInclude Include="ghost\ThreadManager.h" />
     <ClInclude Include="ghost\HashMap.h" />
     <ClInclude Include="ghost\Utils.h" />

@@ -8,7 +8,9 @@
 #ifndef WINDOWSGHOST_H_
 #define WINDOWSGHOST_H_
 
-#define _CRT_SECURE_NO_WARNINGS
+#define WIN32_LEAN_AND_MEAN
+#define _CRT_SECURE_NO_WARNINGS // Disable warnings for sscanf_s and such.
+#define NOMINMAX // Disable min and max macros.
 
 #ifdef _DEBUG
 #define SMART_DEBUG
@@ -43,10 +45,6 @@
 	#define NEW new
 #endif
 
-#define WIN32_LEAN_AND_MEAN
-#define _CRT_SECURE_NO_WARNINGS // Disable warnings for sscanf_s and such.
-#define NOMINMAX // Disable min and max macros.
-
 #include <stdio.h>
 #include <unordered_map>
 #include <queue>
@@ -60,7 +58,8 @@
 #include <iomanip>
 #include <limits>
 #include <chrono>
-#include <assert.h>
+#include <thread>
+#include <mutex>
 // GRAPHICS.
 #define GLEW_STATIC
 #include <glew.h>
@@ -148,6 +147,7 @@ void logToFile(char* msg);
 	}
 
 #ifdef SMART_DEBUG
+	#include <assert.h>
 	#define CHECK_GL_ERROR(msg) checkGLError(msg)
 	#define ASSERT(expression, ...) \
 		if (!(expression)) { LOGE(__VA_ARGS__); } assert(expression)

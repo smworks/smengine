@@ -3,8 +3,8 @@
 -- Called when network response is available.
 function eventResponse(response)
 	if response:getId() == 0 then
-		local picture = Texture.new("picture", response)
-		local sprite = Sprite.new("picture", picture)
+		local picture = Texture.new("dante", response)
+		local sprite = Sprite.new("dante", picture)
 		sprite:setPosXY(256.0, 256.0)
 	end
     --print("Content: " .. response:getContent())
@@ -32,7 +32,7 @@ function start()
 	db = getDB()
     -- HttpRequest
     request = Request.new("http://upload.wikimedia.org/wikipedia/en/8/84/Dante_transparent.png")
-    request2 = request.new("http://kentas.lt/index.php")
+    request2 = Request.new("http://kentas.lt/index.php")
     request2:setId(1)
     networkManager:execute(request)
     networkManager:execute(request2)

@@ -7,16 +7,13 @@
 
 #include "WindowsSoundManager.h"
 #include "WindowsServiceLocator.h"
-#include "WindowsThread.h"
 #include "WindowsSocket.h"
 #include "WindowsGraphicsManager.h"
 #include "WindowsFileManager.h"
 #include "WindowsDatabase.h"
+#include "../NullGraphicsManager.h"
 
 WindowsServiceLocator::WindowsServiceLocator() :
-		exit_(false),
-		nScreenWidth_(0),
-		nScreenHeight_(0),
 		graphicsManager_(0),
 		fileManager_(0),
 		soundManager_(0),
@@ -27,7 +24,6 @@ WindowsServiceLocator::WindowsServiceLocator() :
 	QueryPerformanceFrequency(&pf);
 	cpms_ = 1000.0f / pf.QuadPart;
 	QueryPerformanceCounter(&timeBefore_);
-	graphicsManager_ = NEW WindowsGraphicsManager(this);
 	// Reset timer.
 	updateTimer(0.0f);
 	LOGD("Created Windows service locator.");
@@ -56,30 +52,6 @@ double WindowsServiceLocator::getFrameTime() {
 	return frameDuration_;
 }
 
-void WindowsServiceLocator::setScreenWidth(int width) {
-	nScreenWidth_ = width;
-}
-
-void WindowsServiceLocator::setScreenHeight(int height) {
-	nScreenHeight_ = height;
-}
-
-int WindowsServiceLocator::getScreenWidth() {
-	return nScreenWidth_;
-}
-
-int WindowsServiceLocator::getScreenHeight() {
-	return nScreenHeight_;
-}
-
-void WindowsServiceLocator::exit() {
-	exit_ = true;
-}
-
-bool WindowsServiceLocator::isFinished() {
-	return exit_;
-}
-
 double WindowsServiceLocator::updateTimer(float sleep) {
 	QueryPerformanceCounter(&timeAfter_);
 	double timeElapsed =
@@ -92,10 +64,6 @@ double WindowsServiceLocator::updateTimer(float sleep) {
 	return frameDuration_ = timeElapsed;
 }
 
-Thread* WindowsServiceLocator::createThread() {
-	return NEW WindowsThread();
-}
-
 UINT32 WindowsServiceLocator::getCurrentThreadId() {
 	return GetCurrentThreadId();
 }
@@ -105,6 +73,12 @@ Socket* WindowsServiceLocator::createSocket() {
 }
 
 GraphicsManager* WindowsServiceLocator::getGraphicsManager() {
+	if (graphicsManager_ == 0) {
+		if (isGuiAvailable())
+			graphicsManager_ = NEW WindowsGraphicsManager(this);
+		else
+			graphicsManager_ = NEW NullGraphicsManager(this);
+	}
 	return graphicsManager_;
 }
 

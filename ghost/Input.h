@@ -41,15 +41,18 @@ public:
 		UP, DOWN, LEFT, RIGHT, RETURN,
 		PAGE_UP, PAGE_DOWN, HOME, END, INSERT, DELETE,
 		BACK, SPACE, ALT, CTRL, ESC, SHIFT, TAB,
+		SEMICOLON, PLUS, COMMA, MINUS, PERIOD, SLASH, TILDE,
 		MOUSE_L, MOUSE_M, MOUSE_R, MOUSE_4, MOUSE_5, // Mouse buttons.
 		TOUCH, // Touch screen press.
 		KEY_COUNT};
 	enum InputState {IDLE, PRESSED, RELEASED};
+
     struct InputEvent {
 		InputType type;
 		int x, y;
 		InputState state;
 		InputKey key;
+
 		/**
          * Empty input event.
          */
@@ -57,6 +60,7 @@ public:
 			type(UNSPECIFIED), x(0), y(0),
 			state(IDLE),
 			key(NONE) {}
+
         /**
          * Input event used to handel touch screen input.
          */
@@ -71,6 +75,7 @@ public:
                 state = RELEASED;
             }
         }
+
         /**
          * Button input event.
          */

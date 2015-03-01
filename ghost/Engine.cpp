@@ -45,7 +45,8 @@ Engine::Engine(ServiceLocator* services) :
 	services_(services),
 	error_(false),
 	time_(0.0f),
-	running_(false)
+	running_(false),
+	console(0)
 #ifdef SMART_DEBUG_TEXT
 	,debugText_(0),
 	debugNode_(0),
@@ -74,7 +75,6 @@ Engine::Engine(ServiceLocator* services) :
 	services_->provide(NEW NodeManager(services_));
 	services_->provide(NEW SceneManager(services_));
 	services_->provide(NEW ScenarioManager(services_));
-	//services_->provide(NEW SoundManager(services_));
 	services_->provide(NEW PhysicsManager(services_));
 	services_->provide(NEW ResourceManager(services_));
 	services_->provide(NEW TextManager(services_));
@@ -90,10 +90,11 @@ Engine::Engine(ServiceLocator* services) :
 	PROFILE("Finished creating engine object.");
 	loadScene();
 	time_ = 0;
-	Console c(services_);
+	console = new Console(services_);
 }
 
 Engine::~Engine() {
+	delete console;
 	services_->getScriptManager()->quit();
 	services_->release();
 	delete services_;
@@ -319,6 +320,9 @@ void Engine::computeFrame() {
 	}
 #endif
 	services_->getInput()->update();
+	if (services_->getInput()->keyReleased(Input::TILDE)) {
+		console->show();
+	}
 	services_->getSoundManager()->update();
 	services_->getPhysicsManager()->update(time_);
 	services_->getThreadManager()->update();
@@ -326,7 +330,8 @@ void Engine::computeFrame() {
 	services_->getCamera()->update(time_);
 	updateNodes(services_->getRootNode());
     services_->getGUIManager()->update();
-	services_->getGraphicsManager()->render();
+	if (getServiceLocator()->isGuiAvailable())
+		services_->getGraphicsManager()->render();
 }
 void Engine::resume() {
 	running_ = true;
@@ -398,7 +403,8 @@ void Engine::resizeScreen(UINT32 width, UINT32 height) {
 		services_->getDB()->getFloat(Database::FIELD_OF_VIEW),
 		services_->getDB()->getFloat(Database::NEAR_PLANE_DISTANCE),
 		services_->getDB()->getFloat(Database::FAR_PLANE_DISTANCE));
-	services_->getGraphicsManager()->resize(width, height);
+	if (services_->isGuiAvailable())
+		services_->getGraphicsManager()->resize(width, height);
 	resizeResources(services_->getRootNode());
 	services_->getScriptManager()->resize();
 #ifdef SMART_DEBUG_TEXT

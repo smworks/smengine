@@ -173,6 +173,13 @@ public:
 	 * @param id - id of the vertex buffer.
 	 */
 	virtual void unsetVertexBuffer(UINT32& id) = 0;
+
+	/**
+	 * Remove array of vertex buffers from graphics memory.
+	 * @param count - buffer count.
+	 * @param buffers - array of buffer ids.
+	 */
+	virtual void unsetVertexBuffers(UINT32 count, UINT32*& buffers) = 0; 
 protected:
 	/**
 	 * Checks support for specified extension or attribute.

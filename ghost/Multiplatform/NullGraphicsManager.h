@@ -1,23 +1,16 @@
-﻿/*
- * WindowsGraphicsManager.h
- *
- *  Created on: 2012.06.19
- *      Author: Martynas Šustavičius
- */
+#ifndef NULLGRAPHICSMANAGER_H_
+#define NULLGRAPHICSMANAGER_H_
 
-#ifndef WINDOWSGRAPHICSMANAGER_H_
-#define WINDOWSGRAPHICSMANAGER_H_
-
-#include "../Ghost.h"
-#include "../GraphicsManager.h"
+#include "Ghost.h"
+#include "GraphicsManager.h"
 class ServiceLocator;
 class Shader;
 class TextureRGBA;
 
-class WindowsGraphicsManager : public GraphicsManager {
+class NullGraphicsManager : public GraphicsManager {
 public:
-	WindowsGraphicsManager(ServiceLocator* services);
-	~WindowsGraphicsManager();
+	NullGraphicsManager(ServiceLocator* services);
+	~NullGraphicsManager();
 
 	bool isGraphicsContextAvailable();
 	bool setTexture(

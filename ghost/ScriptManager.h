@@ -59,6 +59,8 @@ public:
 	 */
 	inline void invokeFunction(const string& functionName);
 
+	string executeCode(string code);
+
 	/**
 	 * @param node - node that contains script resource.
 	 */

@@ -30,24 +30,25 @@ INT64 getMicroseconds() {
 }
 
 bool checkGLError(string name) {
-	bool hasErrors = false;
-    for (GLint error = glGetError(); error != 0; error = glGetError()) {
-		hasErrors = true;
-    	if (error == GL_INVALID_ENUM) {
-			LOGE("%s: glError (GL_INVALID_ENUM)", name.c_str());
-    	}
-    	else if (error == GL_INVALID_VALUE) {
-    		LOGE("%s: glError (GL_INVALID_VALUE)", name.c_str());
-    	}
-    	else if (error == GL_INVALID_OPERATION) {
-    		LOGE("%s: glError (GL_INVALID_OPERATION)", name.c_str());
-    	}
-    	else if (error == GL_OUT_OF_MEMORY) {
-    		LOGE("%s: glError (GL_OUT_OF_MEMORY)", name.c_str());
-    	}
-    	else {
-    		LOGE("%s: glError (0x%x).", name.c_str(), error);
-    	}
-    }
-	return hasErrors;
+	//bool hasErrors = false;
+ //   for (GLint error = glGetError(); error != 0; error = glGetError()) {
+	//	hasErrors = true;
+ //   	if (error == GL_INVALID_ENUM) {
+	//		LOGE("%s: glError (GL_INVALID_ENUM)", name.c_str());
+ //   	}
+ //   	else if (error == GL_INVALID_VALUE) {
+ //   		LOGE("%s: glError (GL_INVALID_VALUE)", name.c_str());
+ //   	}
+ //   	else if (error == GL_INVALID_OPERATION) {
+ //   		LOGE("%s: glError (GL_INVALID_OPERATION)", name.c_str());
+ //   	}
+ //   	else if (error == GL_OUT_OF_MEMORY) {
+ //   		LOGE("%s: glError (GL_OUT_OF_MEMORY)", name.c_str());
+ //   	}
+ //   	else {
+ //   		LOGE("%s: glError (0x%x).", name.c_str(), error);
+ //   	}
+ //   }
+	//return hasErrors;
+	return false;
 }

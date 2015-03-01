@@ -12,7 +12,8 @@
 #include "../../Resources/Texture.h"
 
 bool isExtensionSupported(string extension) {
-	string extensions((const char*) glGetString(GL_EXTENSIONS));
+	const char* ext = (const char*) glGetString(GL_EXTENSIONS);
+	string extensions(ext == 0 ? "" : ext);
 	if (extensions.find(extension) != string::npos) {
 		return true;
 	}
@@ -405,6 +406,14 @@ void WindowsGraphicsManager::unsetVertexBuffer(UINT32& id) {
 		id = 0;
 	}
 }
+
+void WindowsGraphicsManager::unsetVertexBuffers(UINT32 count, UINT32*& buffers) {
+	bindBuffer(0);
+	glDeleteBuffers(count, buffers);
+	delete [] buffers;
+	buffers = 0;
+}
+
 
 bool WindowsGraphicsManager::checkSupport(Support key) {
 	switch (key) {
