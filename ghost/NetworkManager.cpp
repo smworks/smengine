@@ -27,8 +27,10 @@ public:
 	void setRequest(HttpRequest* request) { this->request = request; }
 	void setTask(NetworkManager::HttpTask* task) { this->task = task; }
 	void run() {
-		if (socket != 0 && request != 0)
-			response = socket->send(request);
+		if (socket != 0 && request != 0) {
+			socket->send(request);
+			response = socket->receive();
+		}
 		if (response != 0)
 			response->setId(request->getId());
 	}
@@ -55,7 +57,7 @@ NetworkManager::~NetworkManager() {
 void NetworkManager::execute(HttpRequest* request, HttpTask* task) {
 	RequestTask* requestTask = NEW RequestTask();
 	requestTask->setNetworkManager(this);
-	requestTask->setSocket(services->createSocket());
+	requestTask->setSocket(services->createSocket(Socket::TCP));
 	requestTask->setRequest(request);
 	requestTask->setTask(task);
 	services->getThreadManager()->execute(requestTask);

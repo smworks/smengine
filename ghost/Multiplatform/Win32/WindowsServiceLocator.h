@@ -18,7 +18,7 @@ public:
 	double getFrameTime();
 	double updateTimer(float sleep = 0.0f);
 	UINT32 getCurrentThreadId();
-	Socket* createSocket();
+	Socket* createSocket(int type);
 	GraphicsManager* getGraphicsManager();
 	FileManager* getFileManager();
 	SoundManager* getSoundManager();

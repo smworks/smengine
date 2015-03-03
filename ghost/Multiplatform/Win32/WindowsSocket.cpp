@@ -13,100 +13,182 @@
 #define TEMP_BUFFER_SIZE 512 // Size of buffer used to download result.
 typedef unsigned long IPNumber; // IP number typedef for IPv4.
 
-WindowsSocket::WindowsSocket() : socket_(INVALID_SOCKET) {
+WindowsSocket::WindowsSocket(Type socketType) :
+	type(socketType),
+	socket(INVALID_SOCKET)
+{
 	PROFILE("Creating socket.");
+
+	if (startWinsock() && isWinsockVersionValid()) {
+		socket = createSocket();
+	}
 }
 
+
+
 WindowsSocket::~WindowsSocket() {
+	if (socket != INVALID_SOCKET) {
+		closesocket(socket);
+		socket = INVALID_SOCKET;
+	}
+	if (WSACleanup() != 0)
+		LOGW("Failed to cleanup winsock.");
 	PROFILE("Deleted socket.");
 }
 
-HttpResponse* WindowsSocket::send(HttpRequest* request) {
-    if (WSAStartup(MAKEWORD(REQ_WINSOCK_VER,0), &wsaData_) != 0) {
-		LOGE("Failed to start WSA.");
-		return 0;
-	}
-    // Check if major version is at least REQ_WINSOCK_VER
-    if (LOBYTE(wsaData_.wVersion) < REQ_WINSOCK_VER) {
-		LOGE("Winsocks version is lower than required. Required: %d, current: %d.",
-			REQ_WINSOCK_VER, LOBYTE(wsaData_.wVersion));
-		return 0;
-	}
-	char tempBuffer[TEMP_BUFFER_SIZE];
-	sockaddr_in	sockAddr = {0};
-	sockAddr.sin_family = AF_INET;
-	sockAddr.sin_port = htons(request->getPort());
+void WindowsSocket::send(HttpRequest* request) {
+	address = {0};
+	address.sin_family = type == BTH ? AF_BTH : AF_INET;
+	address.sin_port = htons(request->getPort());
 	HOSTENT* hostent;
 	if (!(hostent = gethostbyname(request->getHost().c_str()))) {
-		LOGW("Could not find IP for hostname: %s.", request->getHost().c_str());
-		return 0;
+		LOGW("Could not find IP for hostname: %s.",
+			request->getHost().c_str());
+		return;
 	}
 	if (hostent->h_addr_list && hostent->h_addr_list[0]) {
-		sockAddr.sin_addr.S_un.S_addr = *reinterpret_cast<IPNumber*>(hostent->h_addr_list[0]);
+		address.sin_addr.S_un.S_addr = *reinterpret_cast<IPNumber*>(hostent->h_addr_list[0]);
 	}
 	else {
-		sockAddr.sin_addr.S_un.S_addr = 0;
+		address.sin_addr.S_un.S_addr = 0;
 	}
-	if ((socket_ = socket(AF_INET, SOCK_STREAM, IPPROTO_TCP)) == INVALID_SOCKET) {
-		LOGW("Could not create socket.");
-		return 0;
-	}
-	LOGD("Connecting to %s:%d", inet_ntoa(sockAddr.sin_addr), request->getPort());
-	if (connect(socket_, reinterpret_cast<sockaddr*>(&sockAddr), sizeof(sockAddr)) != 0) {
+	LOGD("Connecting to %s:%d", inet_ntoa(address.sin_addr), request->getPort());
+	if (connect(socket, reinterpret_cast<sockaddr*>(&address), sizeof(address)) != 0) {
 		LOGW("Could not connect using socket.");
-		if (WSACleanup() != 0) {
-			LOGW("Failed to cleanup WSA.");
-		}
-		if (socket_ != INVALID_SOCKET) {
-			closesocket(socket_);
-		}
-		return 0;
+		return;
 	}
 	vector<INT8>& requestBuffer = request->getRequestBuffer();
-	if (::send(socket_, &requestBuffer[0], requestBuffer.size(), 0) == SOCKET_ERROR) {
+	if (::send(socket, &requestBuffer[0], requestBuffer.size(), 0) == SOCKET_ERROR) {
 		LOGE("Unable to send data.");
-		if (WSACleanup() != 0) {
-			LOGW("Failed to cleanup WSA.");
-		}
-		if (socket_ != INVALID_SOCKET) {
-			closesocket(socket_);
-		}
-		return 0;
+		return;
 	}
+}
+
+HttpResponse* WindowsSocket::receive() {
+	char tempBuffer[TEMP_BUFFER_SIZE];
 	vector<INT8> bytes;
 	while (true) {
+		LOGD("TEST");
 		int retval;
-		retval = recv(socket_, tempBuffer, sizeof(tempBuffer) - 1, 0);
-		if (retval == 0) { 
+		retval = recv(socket, tempBuffer, sizeof(tempBuffer) - 1, 0);
+		if (retval == 0) {
 			break; // Connection has been closed
-		}
-		else if (retval == SOCKET_ERROR) {
+		} else if (retval == SOCKET_ERROR) {
 			LOGW("Socket error while receiving data.");
-			if (WSACleanup() != 0) {
-				LOGW("Failed to cleanup WSA.");
-			}
-			if (socket_ != INVALID_SOCKET) {
-				closesocket(socket_);
-			}
 			return 0;
-		}
-		else {
+		} else {
 			// retval is number of bytes read.
 			tempBuffer[retval] = 0;
 			for (int i = 0; i < retval; i++) {
 				bytes.push_back(tempBuffer[i]);
 			}
+			if (type == UDP) {
+				break;
+			}
 		}
-	}
-	if (WSACleanup() != 0) {
-		LOGW("Failed to cleanup WSA.");
-	}
-	if (socket_ != INVALID_SOCKET) {
-		closesocket(socket_);
 	}
 	bytes.push_back(0);
 	SIZE size = bytes.size();
 	INT8* data = NEW INT8[size];
-	memcpy(data, &bytes[0], size);
+	::memcpy(data, &bytes[0], size);
 	return NEW HttpResponse(data, size);
+}
+
+bool WindowsSocket::startWinsock() {
+	int res = WSAStartup(MAKEWORD(REQ_WINSOCK_VER, 0), &wsaData);
+	switch (res) {
+	case WSASYSNOTREADY:
+		LOGE("The underlying network subsystem is not ready for network communication.");
+		break;
+	case WSAVERNOTSUPPORTED:
+		LOGE("The version of Windows Sockets support requested is not provided by this particular Windows Sockets implementation.");
+		break;
+	case WSAEINPROGRESS:
+		LOGE("A blocking Windows Sockets 1.1 operation is in progress.");
+		break;
+	case WSAEPROCLIM:
+		LOGE("A limit on the number of tasks supported by the Windows Sockets implementation has been reached.");
+		break;
+	case WSAEFAULT:
+		LOGE("The lpWSAData parameter is not a valid pointer.");
+		break;
+	}
+	return res == 0;
+}
+
+bool WindowsSocket::isWinsockVersionValid() {
+	if (LOBYTE(wsaData.wVersion) < REQ_WINSOCK_VER) {
+		LOGE("Winsock version is lower than required. "
+			"Required: %d, current: %d.",
+			REQ_WINSOCK_VER, LOBYTE(wsaData.wVersion));
+		return false;
+	}
+	return true;
+}
+
+SOCKET WindowsSocket::createSocket() {
+	SOCKET s = ::socket(getAddressFamily(), getSocketType(), getProtocol());
+	switch (s) {
+	case WSANOTINITIALISED:
+		LOGE("A successful WSAStartup call must occur before using this function.");
+		break;
+	case WSAENETDOWN:
+		LOGE("The network subsystem or the associated service provider has failed.");
+		break;
+	case WSAEAFNOSUPPORT:
+		LOGE("The specified address family is not supported. For example, an application tried to create a socket for the AF_IRDA address family but an infrared adapter and device driver is not installed on the local computer.");
+		break;
+	case WSAEINPROGRESS:
+		LOGE("A blocking Windows Sockets 1.1 call is in progress, or the service provider is still processing a callback function.");
+		break;
+	case WSAEMFILE:
+		LOGE("No more socket descriptors are available.");
+		break;
+	case WSAEINVAL:
+		LOGE("An invalid argument was supplied. This error is returned if the af parameter is set to AF_UNSPEC and the type and protocol parameter are unspecified.");
+		break;
+	case WSAEINVALIDPROVIDER:
+		LOGE("The service provider returned a version other than 2.2.");
+		break;
+	case WSAEINVALIDPROCTABLE:
+		LOGE("The service provider returned an invalid or incomplete procedure table to the WSPStartup.");
+		break;
+	case WSAENOBUFS:
+		LOGE("No buffer space is available. The socket cannot be created.");
+		break;
+	case WSAEPROTONOSUPPORT:
+		LOGE("The specified protocol is not supported.");
+		break;
+	case WSAEPROTOTYPE:
+		LOGE("The specified protocol is the wrong type for this socket.");
+		break;
+	case WSAEPROVIDERFAILEDINIT:
+		LOGE("The service provider failed to initialize. This error is returned if a layered service provider (LSP) or namespace provider was improperly installed or the provider fails to operate correctly.");
+		break;
+	case WSAESOCKTNOSUPPORT:
+		LOGE("The specified socket type is not supported in this address family.");
+		break;
+	}
+	return s;
+}
+
+int WindowsSocket::getAddressFamily() {
+	return type == BTH ? AF_BTH : AF_INET;
+}
+
+int WindowsSocket::getSocketType() {
+	return type == UDP ? SOCK_DGRAM : SOCK_STREAM;
+}
+
+int WindowsSocket::getProtocol() {
+	switch (type) {
+	case TCP:
+		return IPPROTO_TCP;
+	case UDP:
+		return IPPROTO_UDP;
+	case BTH:
+		return IPPROTO_CBT;
+	}
+	ASSERT(false, "Unknown socket type");
+	return IPPROTO_TCP;
 }

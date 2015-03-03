@@ -15,6 +15,9 @@
 #include "Thread.h"
 #include <iostream>
 #include "ScriptManager.h"
+#include "Multiplatform/Socket.h"
+#include "HttpRequest.h"
+#include "HttpResponse.h"
 
 class CMDTask : public Task {
 public:
@@ -37,6 +40,19 @@ public:
 				if (line == "close") {
 					show = false;
 					continue;
+				} else if (line == "test") {
+					Socket* s = services->createSocket(Socket::Type::UDP);
+					HttpRequest r("127.0.0.1");
+					r.setPort(8888);
+					string entity = "Hello socket. It's ghost :)";
+					INT8* bytes = NEW INT8[entity.size()];
+					memcpy(bytes, entity.c_str(), entity.size());
+					r.setEntity(bytes, entity.size());
+					s->send(&r);
+					HttpResponse* rs = s->receive();
+					LOGD("TEST finished. Result: %s", rs->getContent());
+					delete rs;
+					delete s;
 				} else {
 					string res = services->getScriptManager()->executeCode(line);
 					if (res.length() > 0) {

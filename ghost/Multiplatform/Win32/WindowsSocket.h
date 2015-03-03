@@ -13,12 +13,22 @@
 
 class WindowsSocket : public Socket {
 public:
-	WindowsSocket();
+	WindowsSocket(Type socketType);
 	~WindowsSocket();
-	HttpResponse* send(HttpRequest* request);
+	void send(HttpRequest* request);
+	HttpResponse* receive();
 private:
-	SOCKET socket_;
-	WSADATA wsaData_;
+	bool startWinsock();
+	bool isWinsockVersionValid();
+	SOCKET createSocket();
+	int getAddressFamily();
+	int getSocketType();
+	int getProtocol();
+private:
+	Type type;
+	SOCKET socket;
+	WSADATA wsaData;
+	sockaddr_in address;
 };
 
 #endif

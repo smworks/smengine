@@ -21,11 +21,10 @@ HttpRequest::HttpRequest(string uri, Method method, MimeType mimeType) :
 	}
 	vector<string> parts;
 	stringSplit(uri, parts, '/');
-	if (parts.size() > 0) {
+	if (parts.size() > 0 && uri.find('/') != string::npos) {
 		host_ = parts[0];
 		path_ = uri.substr(uri.find('/'));
-	}
-	else {
+	} else {
 		host_ = uri;
 		path_ = "/";
 	}
@@ -40,6 +39,10 @@ string HttpRequest::getHost() {
 
 int HttpRequest::getPort() {
 	return port_;
+}
+
+void HttpRequest::setPort(int port) {
+	port_ = port;
 }
 
 string HttpRequest::getMethod() {

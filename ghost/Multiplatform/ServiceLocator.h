@@ -69,41 +69,11 @@ public:
 	 * method.
 	 */
 	virtual double updateTimer(float sleep = 0.0f) = 0;
-
-	/**
-	 * Returns unique index for thread calling this method.
-	 * @return Unique index.
-	 */
 	virtual UINT32 getCurrentThreadId() = 0;
-
-	/**
-	 * Return socket instance.
-	 * @return Pointer to socket object.
-	 */
-	virtual Socket* createSocket() = 0;
-
-	/**
-	 * Return graphics manager instance.
-	 * @return Pointer to graphics manager.
-	 */
+	virtual Socket* createSocket(int type) = 0;
 	virtual GraphicsManager* getGraphicsManager() = 0;
-
-	/**
-	 * Return file manager instance.
-	 * @return Pointer to file manager.
-	 */
 	virtual FileManager* getFileManager() = 0;
-
-	/**
-	 * Return sound manager instance.
-	 * @return Pointer to sound manager.
-	 */
 	virtual SoundManager* getSoundManager() = 0;
-
-	/**
-	 * Return database instance.
-	 * @return Pointer to database.
-	 */
 	virtual Database* getDB() = 0;
 public:
 	ServiceLocator();

@@ -38,45 +38,13 @@ public:
 	 */
 	string getHost();
 
-	/**
-	 * @return Used port.
-	 */
 	int getPort();
-
-	/**
-	 * @return Request method.
-	 */
+	void setPort(int port);
 	string getMethod();
-
-	/**
-	 * @return Requset content MIME type.
-	 */
 	MimeType getMimeType();
-
-	/**
-	 * Adds header to request.
-	 * @param name - header name.
-	 * @param value - header value.
-	 */
 	void addHeader(string name, string value);
-
-	/**
-	 * When called, generates and returns
-	 * all headers in one string.
-	 * @return All headers in one string.
-	 */
 	vector<Header>& getHeaders();
-
-	/**
-	 * Adds entity to request.
-	 * @param entity - pointer to entity array.
-	 * @param size - size of the entity in bytes.
-	 */
 	void setEntity(INT8* entity, SIZE size);
-
-	/**
-	 * @return Entity data or 0 if no entity is provided.
-	 */
 	vector<INT8>& getEntity();
 
 	/**
