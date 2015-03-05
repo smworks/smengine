@@ -42,5 +42,6 @@ void registerScenario();
 void registerScenarioManager();
 void registerSceneManager();
 void registerDatabase();
+void registerServer();
 
 #endif

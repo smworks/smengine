@@ -6,7 +6,7 @@
  */
 
 #include "HttpRequest.h"
-#include "Utils.h"
+#include "../Utils.h"
 
 HttpRequest::HttpRequest(string uri, Method method, MimeType mimeType) :
 	method_(method),

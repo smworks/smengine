@@ -6,8 +6,8 @@
  */
 
 #include "WindowsSocket.h"
-#include "../../HttpRequest.h"
-#include "../../HttpResponse.h"
+#include "../../Network/HttpRequest.h"
+#include "../../Network/HttpResponse.h"
 
 #define REQ_WINSOCK_VER 2 // Minimum winsock version required.
 #define TEMP_BUFFER_SIZE 512 // Size of buffer used to download result.
@@ -18,9 +18,9 @@ WindowsSocket::WindowsSocket(Type socketType) :
 	socket(INVALID_SOCKET)
 {
 	PROFILE("Creating socket.");
-
 	if (startWinsock() && isWinsockVersionValid()) {
 		socket = createSocket();
+		setSocketTimeout(socket, 1000);
 	}
 }
 
@@ -37,7 +37,7 @@ WindowsSocket::~WindowsSocket() {
 }
 
 void WindowsSocket::send(HttpRequest* request) {
-	address = {0};
+	sockaddr_in address = {0};
 	address.sin_family = type == BTH ? AF_BTH : AF_INET;
 	address.sin_port = htons(request->getPort());
 	HOSTENT* hostent;
@@ -68,9 +68,7 @@ HttpResponse* WindowsSocket::receive() {
 	char tempBuffer[TEMP_BUFFER_SIZE];
 	vector<INT8> bytes;
 	while (true) {
-		LOGD("TEST");
-		int retval;
-		retval = recv(socket, tempBuffer, sizeof(tempBuffer) - 1, 0);
+		int retval = recv(socket, tempBuffer, sizeof(tempBuffer) - 1, 0);
 		if (retval == 0) {
 			break; // Connection has been closed
 		} else if (retval == SOCKET_ERROR) {
@@ -170,6 +168,42 @@ SOCKET WindowsSocket::createSocket() {
 		break;
 	}
 	return s;
+}
+
+void WindowsSocket::setSocketTimeout(SOCKET socket, long timeoutInMs) {
+	struct timeval tv;
+	tv.tv_sec = 0;
+	tv.tv_usec = timeoutInMs * 1000;
+	int res = setsockopt(socket, SOL_SOCKET, SO_RCVTIMEO, (const char*) &tv, sizeof(tv));
+	switch (res) {
+	case WSANOTINITIALISED:
+		LOGW("A successful WSAStartup call must occur before using this function.");
+		break;
+	case WSAENETDOWN:
+		LOGW("The network subsystem has failed.");
+		break;
+	case WSAEFAULT:
+		LOGW("The buffer pointed to by the optval parameter is not in a valid part of the process address space or the optlen parameter is too small.");
+		break;
+	case WSAEINPROGRESS:
+		LOGW("A blocking Windows Sockets 1.1 call is in progress, or the service provider is still processing a callback function.");
+		break;
+	case WSAEINVAL:
+		LOGW("The level parameter is not valid, or the information in the buffer pointed to by the optval parameter is not valid.");
+		break;
+	case WSAENETRESET:
+		LOGW("The connection has timed out when SO_KEEPALIVE is set.");
+		break;
+	case WSAENOPROTOOPT:
+		LOGW("The option is unknown or unsupported for the specified provider or socket (see SO_GROUP_PRIORITY limitations).");
+		break;
+	case WSAENOTCONN:
+		LOGW("The connection has been reset when SO_KEEPALIVE is set.");
+		break;
+	case WSAENOTSOCK:
+		LOGW("The descriptor is not a socket.");
+		break;
+	}
 }
 
 int WindowsSocket::getAddressFamily() {

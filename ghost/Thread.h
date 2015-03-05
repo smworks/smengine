@@ -19,10 +19,6 @@ public:
 	 */
 	virtual void run() = 0;
 
-	/**
-	 * This method will be executed on main thread.
-	 */
-	virtual void finish() {}
 };
 
 class Thread {

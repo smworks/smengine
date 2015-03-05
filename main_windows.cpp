@@ -96,7 +96,7 @@ bool InitGraphics(UINT32 width, UINT32 height)
 		return false;
 	}
 	if (!GLEW_VERSION_2_1) {
-		LOGE("This computer or terminal doesn't support OpenGL 2.1");
+		LOGW("This computer or terminal doesn't support OpenGL 2.1");
 		wglMakeCurrent(NULL, NULL);
 		wglDeleteContext(hRC);
 		return false;
@@ -234,9 +234,10 @@ void onInput(LPARAM lParam) {
 		if (mX != 0 || mY != 0) {
 			if ((input->data.mouse.usFlags & MOUSE_MOVE_ABSOLUTE) > 0) {
 				LOGI("LALALA");
-				// This part of code seems to be only executed
-				// in virtual machine with windows XP or
-				// laptops with touchpad.
+				// This part of code seems to be executed
+				// in virtual machine with windows XP,
+				// laptops with touchpad and using remote desktop
+				// connection.
 				static long lastX = 0;
 				static long lastY = 0;
 				long tX = mX;
@@ -246,14 +247,12 @@ void onInput(LPARAM lParam) {
 				static int maxSize = 2;
 				if (mX > maxSize) {
 					mX = maxSize;
-				}
-				else if (mX < -maxSize) {
+				} else if (mX < -maxSize) {
 					mX = -maxSize;
 				}
 				if (mY > maxSize) {
 					mY = maxSize;
-				}
-				else if (mY < -maxSize) {
+				} else if (mY < -maxSize) {
 					mY = -maxSize;
 				}
 				lastX = tX;
@@ -267,7 +266,7 @@ void onInput(LPARAM lParam) {
 	delete[] byBuffer;
 }
 
-LONG WINAPI MainWndProc (HWND g_hwnd, UINT uMsg, WPARAM  wParam, LPARAM  lParam)
+LONG WINAPI MainWndProc(HWND g_hwnd, UINT uMsg, WPARAM  wParam, LPARAM  lParam)
 {
     switch (uMsg) {
 	case WM_INPUT:

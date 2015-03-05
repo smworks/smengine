@@ -8,7 +8,7 @@
 #ifndef HTTPRESPONSE_H_
 #define HTTPRESPONSE_H_
 
-#include "Multiplatform/Ghost.h"
+#include "../Multiplatform/Ghost.h"
 
 class HttpResponse {
 public:

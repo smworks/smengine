@@ -16,8 +16,8 @@
 #include <iostream>
 #include "ScriptManager.h"
 #include "Multiplatform/Socket.h"
-#include "HttpRequest.h"
-#include "HttpResponse.h"
+#include "Network/HttpRequest.h"
+#include "Network/HttpResponse.h"
 
 class CMDTask : public Task {
 public:
@@ -50,8 +50,10 @@ public:
 					r.setEntity(bytes, entity.size());
 					s->send(&r);
 					HttpResponse* rs = s->receive();
-					LOGD("TEST finished. Result: %s", rs->getContent());
-					delete rs;
+					if (rs != 0) {
+						LOGD("TEST finished. Result: %s", rs->getContent());
+						delete rs;
+					}
 					delete s;
 				} else {
 					string res = services->getScriptManager()->executeCode(line);
@@ -67,7 +69,6 @@ public:
 			this_thread::sleep_for(chrono::milliseconds(100));
 		}
 	}
-	void finish() {}
 	volatile bool show;
 private:
 	bool isShowing;

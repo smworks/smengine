@@ -8,7 +8,7 @@
 #ifndef HTTPREQUEST_H_
 #define HTTPREQUEST_H_
 
-#include "Multiplatform/Ghost.h"
+#include "../Multiplatform/Ghost.h"
 
 class HttpRequest {
 public:

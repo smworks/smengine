@@ -21,6 +21,7 @@ private:
 	bool startWinsock();
 	bool isWinsockVersionValid();
 	SOCKET createSocket();
+	void setSocketTimeout(SOCKET socket, long timeoutInMs);
 	int getAddressFamily();
 	int getSocketType();
 	int getProtocol();
@@ -28,7 +29,6 @@ private:
 	Type type;
 	SOCKET socket;
 	WSADATA wsaData;
-	sockaddr_in address;
 };
 
 #endif

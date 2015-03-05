@@ -15,9 +15,10 @@
 #include "Camera.h"
 #include "PhysicsManager.h"
 #include "ResourceManager.h"
-#include "NetworkManager.h"
-#include "HttpRequest.h"
-#include "HttpResponse.h"
+#include "Network/NetworkManager.h"
+#include "Network/HttpRequest.h"
+#include "Network/HttpResponse.h"
+#include "Network/Server.h"
 #include "ScenarioManager.h"
 #include "SceneManager.h"
 #include "GUIManager.h"
@@ -53,7 +54,7 @@
 #define SM_RETURN_FLOAT(state, val) lua_pushnumber(state, val);
 #define SM_IS_STRING(state, index) lua_isstring(state, SM_INDEX(index))
 #define SM_GET_STRING(state, index) lua_tostring(state, SM_INDEX(index))
-#define SM_RETURN_STRING(state, val) lua_pushstring(state, val);
+#define SM_RETURN_STRING(state, val) lua_pushstring(state, val)
 #define SM_IS_OBJECT(state, index) lua_isuserdata(state, SM_INDEX(index))
 #define SM_GET_OBJECT(state, index, type) \
 	*(static_cast<type**>(lua_touserdata(state, SM_INDEX(index))))
@@ -352,6 +353,7 @@ void registerClasses() {
 	registerScenarioManager();
 	registerSceneManager();
 	registerDatabase();
+	registerServer();
 }
 
 int getNode(lua_State* L) {
@@ -1909,4 +1911,34 @@ void registerDatabase() {
 	ADD_METHOD(methods, "execute", databaseExecute);
 	ScriptManager::addFunction("getDB", getDB);
     ScriptManager::addClass("Database", methods);
+}
+
+int getServer(lua_State* L) {
+	Server* server = SM_GET_SL()->getNetworkManager()->getServer();
+	SM_RETURN_OBJECT(L, "Server", Server, server);
+    return 1;
+}
+
+int serverReceive(lua_State* L) {
+	Server* server = SM_GET_OBJECT(L, 0, Server);
+	string s = server->receive();
+	s.length() > 0 ? SM_RETURN_STRING(L, s.c_str()) : SM_RETURN_NIL(L);
+	return 1;
+}
+
+int serverSend(lua_State* L) {
+	Server* server = SM_GET_OBJECT(L, 0, Server);
+	ASSERT(SM_GET_ARGUMENT_COUNT(L) != 1,
+		"Function send() takes string as parameter.");
+	string data = SM_GET_STRING(L, 1);
+	server->send(data);
+	return 0;
+}
+
+void registerServer() {
+    unordered_map<string, int (*)(lua_State*)> methods;
+	ADD_METHOD(methods, "receive", serverReceive);
+	ADD_METHOD(methods, "send", serverSend);
+	ScriptManager::addFunction("getServer", getDB);
+    ScriptManager::addClass("Server", methods);
 }

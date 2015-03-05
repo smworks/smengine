@@ -1,20 +1,14 @@
-﻿/*
- * NetworkManager.h
- *
- *  Created on: 2013.12.24
- *      Author: Martynas Šustavičius
- */
-
-#ifndef NETWORKMANAGER_H_
+﻿#ifndef NETWORKMANAGER_H_
 #define NETWORKMANAGER_H_
 
-#include "Multiplatform/Ghost.h"
+#include "../Multiplatform/Ghost.h"
 
 class ServiceLocator;
 class Socket;
 class HttpRequest;
 class HttpResponse;
 class Task;
+class Server;
 
 class NetworkManager {
 public:
@@ -38,8 +32,11 @@ public:
 	 * handle result.
 	 */
 	void execute(HttpRequest* request, HttpTask* task = 0);
+
+	Server* getServer();
 private:
 	ServiceLocator* services;
+	Server* server;
 };
 
 #endif

@@ -6,17 +6,20 @@
  */
 
 #include "NetworkManager.h"
-#include "Multiplatform/ServiceLocator.h"
-#include "Thread.h"
-#include "Multiplatform/Socket.h"
+#include "../Multiplatform/ServiceLocator.h"
+#include "../Thread.h"
+#include "../Multiplatform/Socket.h"
 #include "HttpRequest.h"
 #include "HttpResponse.h"
-#include "ThreadManager.h"
+#include "../ThreadManager.h"
+#include "Server.h"
 
 class RequestTask : public Task {
 public:
 	RequestTask() : socket(0), task(0), request(0), response(0) {}
 	~RequestTask() {
+		if (task != 0)
+			task->run(response);
 		delete request;
 		delete task;
 		delete socket;
@@ -34,10 +37,6 @@ public:
 		if (response != 0)
 			response->setId(request->getId());
 	}
-	void finish() {
-		if (task != 0)
-			task->run(response);
-	}
 private:
 	Socket* socket;
 	NetworkManager* nm;
@@ -46,11 +45,17 @@ private:
 	HttpResponse* response;
 };
 
-NetworkManager::NetworkManager(ServiceLocator* services) : services(services) {
+NetworkManager::NetworkManager(ServiceLocator* services) :
+	services(services),
+	server(0)
+{
 	LOGD("Created network manager.");
 }
 
 NetworkManager::~NetworkManager() {
+	if (server != 0) {
+		delete server;
+	}
 	LOGD("Deleted network manager.");
 }
 
@@ -61,4 +66,11 @@ void NetworkManager::execute(HttpRequest* request, HttpTask* task) {
 	requestTask->setRequest(request);
 	requestTask->setTask(task);
 	services->getThreadManager()->execute(requestTask);
+}
+
+Server* NetworkManager::getServer() {
+	if (server == 0) {
+		server = new Server(services);
+	}
+	return server;
 }

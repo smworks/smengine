@@ -15,7 +15,6 @@ Thread::Thread(Task* task) : running(true), task(task) {
 Thread::~Thread() {
 	workerThread->join();
 	delete workerThread;
-	task->finish();
 	delete task;
 }
 

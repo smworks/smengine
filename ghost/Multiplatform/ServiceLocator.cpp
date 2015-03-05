@@ -19,7 +19,7 @@
 #include "../TextManager.h"
 #include "../TextureAtlas.h"
 #include "../ThreadManager.h"
-#include "../NetworkManager.h"
+#include "../Network/NetworkManager.h"
 #include "../NodeManager.h"
 
 ServiceLocator::ServiceLocator() :

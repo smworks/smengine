@@ -20,7 +20,7 @@
     <ConfigurationType>Application</ConfigurationType>
     <UseDebugLibraries>true</UseDebugLibraries>
     <CharacterSet>Unicode</CharacterSet>
-    <PlatformToolset>v120</PlatformToolset>
+    <PlatformToolset>v110</PlatformToolset>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
@@ -334,8 +334,6 @@
     <ClCompile Include="ghost\BoundingBox.cpp" />
     <ClCompile Include="ghost\BoundingSphere.cpp" />
     <ClCompile Include="ghost\Extensions\Vehicle.cpp" />
-    <ClCompile Include="ghost\HttpRequest.cpp" />
-    <ClCompile Include="ghost\HttpResponse.cpp" />
     <ClCompile Include="ghost\ModelData.cpp" />
     <ClCompile Include="ghost\Multiplatform\Database.cpp" />
     <ClCompile Include="ghost\Multiplatform\GraphicsManager.cpp" />
@@ -344,7 +342,11 @@
     <ClCompile Include="ghost\Multiplatform\Win32\WindowsDatabase.cpp" />
     <ClCompile Include="ghost\Multiplatform\Win32\WindowsSocket.cpp" />
     <ClCompile Include="ghost\Multiplatform\Win32\WindowsSoundManager.cpp" />
-    <ClCompile Include="ghost\NetworkManager.cpp" />
+    <ClCompile Include="ghost\Network\HttpRequest.cpp" />
+    <ClCompile Include="ghost\Network\HttpResponse.cpp" />
+    <ClCompile Include="ghost\Network\NetworkManager.cpp" />
+    <ClCompile Include="ghost\Network\Request.cpp" />
+    <ClCompile Include="ghost\Network\Server.cpp" />
     <ClCompile Include="ghost\NodeManager.cpp" />
     <ClCompile Include="ghost\Resources\Scenario.cpp" />
     <ClCompile Include="ghost\Resources\Symbol.cpp" />
@@ -631,8 +633,6 @@
     <ClInclude Include="ghost\BoundingSphere.h" />
     <ClInclude Include="ghost\BoundingVolume.h" />
     <ClInclude Include="ghost\Extensions\Vehicle.h" />
-    <ClInclude Include="ghost\HttpRequest.h" />
-    <ClInclude Include="ghost\HttpResponse.h" />
     <ClInclude Include="ghost\ModelData.h" />
     <ClInclude Include="ghost\Multiplatform\Database.h" />
     <ClInclude Include="ghost\Multiplatform\NullGraphicsManager.h" />
@@ -642,7 +642,11 @@
     <ClInclude Include="ghost\Multiplatform\Win32\WindowsDatabase.h" />
     <ClInclude Include="ghost\Multiplatform\Win32\WindowsSocket.h" />
     <ClInclude Include="ghost\Multiplatform\Win32\WindowsSoundManager.h" />
-    <ClInclude Include="ghost\NetworkManager.h" />
+    <ClInclude Include="ghost\Network\HttpRequest.h" />
+    <ClInclude Include="ghost\Network\HttpResponse.h" />
+    <ClInclude Include="ghost\Network\NetworkManager.h" />
+    <ClInclude Include="ghost\Network\Request.h" />
+    <ClInclude Include="ghost\Network\Server.h" />
     <ClInclude Include="ghost\NodeManager.h" />
     <ClInclude Include="ghost\Resources\Scenario.h" />
     <ClInclude Include="ghost\Resources\Symbol.h" />
