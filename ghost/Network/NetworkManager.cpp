@@ -53,16 +53,15 @@ NetworkManager::NetworkManager(ServiceLocator* services) :
 }
 
 NetworkManager::~NetworkManager() {
-	if (server != 0) {
-		delete server;
-	}
 	LOGD("Deleted network manager.");
 }
 
 void NetworkManager::execute(HttpRequest* request, HttpTask* task) {
 	RequestTask* requestTask = NEW RequestTask();
 	requestTask->setNetworkManager(this);
-	requestTask->setSocket(services->createSocket(Socket::TCP));
+	SocketParams sp(request->getHost(), request->getPort());
+	sp.setSocketType(SocketParams::TCP);
+	requestTask->setSocket(services->createSocket(sp));
 	requestTask->setRequest(request);
 	requestTask->setTask(task);
 	services->getThreadManager()->execute(requestTask);
@@ -71,6 +70,7 @@ void NetworkManager::execute(HttpRequest* request, HttpTask* task) {
 Server* NetworkManager::getServer() {
 	if (server == 0) {
 		server = new Server(services);
+		services->getThreadManager()->execute(server);
 	}
 	return server;
 }

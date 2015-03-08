@@ -9,6 +9,7 @@
 #define WINDOWSGHOST_H_
 
 #define WIN32_LEAN_AND_MEAN
+#define _CRT_SECURE_CPP_OVERLOAD_STANDARD_NAMES 1
 #define _CRT_SECURE_NO_WARNINGS // Disable warnings for sscanf_s and such.
 #define NOMINMAX // Disable min and max macros.
 

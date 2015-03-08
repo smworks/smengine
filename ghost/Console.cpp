@@ -41,18 +41,24 @@ public:
 					show = false;
 					continue;
 				} else if (line == "test") {
-					Socket* s = services->createSocket(Socket::Type::UDP);
-					HttpRequest r("127.0.0.1");
-					r.setPort(8888);
+					SocketParams sp("127.0.0.2", 8888);
+					sp.setSocketType(SocketParams::UDP);
+					sp.setConnectionType(SocketParams::CLIENT);
+					Socket* s = services->createSocket(sp);
+					HttpRequest r("127.0.0.2");
 					string entity = "Hello socket. It's ghost :)";
 					INT8* bytes = NEW INT8[entity.size()];
 					memcpy(bytes, entity.c_str(), entity.size());
 					r.setEntity(bytes, entity.size());
+					LOGI("Sending to server");
 					s->send(&r);
+					LOGI("Preparing to receive.");
 					HttpResponse* rs = s->receive();
 					if (rs != 0) {
 						LOGD("TEST finished. Result: %s", rs->getContent());
 						delete rs;
+					} else {
+						LOGD("Response is null.");
 					}
 					delete s;
 				} else {

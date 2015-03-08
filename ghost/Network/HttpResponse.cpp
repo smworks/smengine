@@ -7,7 +7,12 @@
 
 #include "HttpResponse.h"
 
-HttpResponse::HttpResponse(INT8* data, SIZE size) : header_(""), content_(0), size_(0), id_(0) {
+HttpResponse::HttpResponse(INT8* data, SIZE size) :
+	header_(""),
+	content_(0),
+	size_(0),
+	id_(0)
+{
 	for (SIZE i = 0; i < size; i++) {
 		if (data[i] == '\r') {
 			if (i < size - 3 && data[i + 1] == '\n' && data[i + 2] == '\r') {
@@ -18,6 +23,11 @@ HttpResponse::HttpResponse(INT8* data, SIZE size) : header_(""), content_(0), si
 				break;
 			}
 		}
+	}
+	if (content_ == 0) {
+		size_ = size;
+		content_ = NEW INT8[size];
+		memcpy(content_, data, size);
 	}
 	//LOGD("Header: %s", header_.c_str());
 	//LOGD("Content: %s", string(reinterpret_cast<const char*>(content_), size_).c_str());

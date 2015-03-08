@@ -2,20 +2,20 @@
 #define SERVER_H_
 
 #include "../Multiplatform/Ghost.h"
+#include "../Thread.h"
 
 class ServiceLocator;
-class ServerTask;
+class Socket;
 
-class Server {
+class Server : public Task {
 public:
 	Server(ServiceLocator* services);
 	~Server();
-	string receive();
-	void send(string send);
+	void run();
 private:
 	ServiceLocator* services;
-	vector<string> packets;
-	ServerTask* serverTask;
+	Socket* socket;
+	mutex mut;
 };
 
 #endif

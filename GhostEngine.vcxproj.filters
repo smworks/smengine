@@ -1001,6 +1001,9 @@
     <ClCompile Include="ghost\Network\NetworkManager.cpp">
       <Filter>Source Files\Network</Filter>
     </ClCompile>
+    <ClCompile Include="ghost\Network\SocketParams.cpp">
+      <Filter>Source Files\Network</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="ghost\Camera.h">
@@ -1913,6 +1916,9 @@
       <Filter>Source Files\Network</Filter>
     </ClInclude>
     <ClInclude Include="ghost\Network\NetworkManager.h">
+      <Filter>Source Files\Network</Filter>
+    </ClInclude>
+    <ClInclude Include="ghost\Network\SocketParams.h">
       <Filter>Source Files\Network</Filter>
     </ClInclude>
   </ItemGroup>

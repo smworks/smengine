@@ -347,6 +347,7 @@
     <ClCompile Include="ghost\Network\NetworkManager.cpp" />
     <ClCompile Include="ghost\Network\Request.cpp" />
     <ClCompile Include="ghost\Network\Server.cpp" />
+    <ClCompile Include="ghost\Network\SocketParams.cpp" />
     <ClCompile Include="ghost\NodeManager.cpp" />
     <ClCompile Include="ghost\Resources\Scenario.cpp" />
     <ClCompile Include="ghost\Resources\Symbol.cpp" />
@@ -647,6 +648,7 @@
     <ClInclude Include="ghost\Network\NetworkManager.h" />
     <ClInclude Include="ghost\Network\Request.h" />
     <ClInclude Include="ghost\Network\Server.h" />
+    <ClInclude Include="ghost\Network\SocketParams.h" />
     <ClInclude Include="ghost\NodeManager.h" />
     <ClInclude Include="ghost\Resources\Scenario.h" />
     <ClInclude Include="ghost\Resources\Symbol.h" />

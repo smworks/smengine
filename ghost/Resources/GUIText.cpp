@@ -37,7 +37,7 @@ GUIText::~GUIText() {
 }
 
 bool GUIText::create() {
-    size_ = GUISurface::getSize(getAttribute(ATTR_SIZE));
+    size_ = (SIZE) GUISurface::getSize(getAttribute(ATTR_SIZE));
 	if (size_ == 0) {
 		size_ = DEFAULT_TEXT_SIZE;
 	}

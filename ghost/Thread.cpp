@@ -13,9 +13,9 @@ Thread::Thread(Task* task) : running(true), task(task) {
 }
 
 Thread::~Thread() {
+	delete task;
 	workerThread->join();
 	delete workerThread;
-	delete task;
 }
 
 UINT64 Thread::getId() {

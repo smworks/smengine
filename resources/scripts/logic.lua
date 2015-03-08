@@ -14,6 +14,12 @@ function eventResponse(response)
     --print("Id: " .. response:getId())
 end
 
+-- If server is created, this function will have to handle server requests.
+function eventServerResponse(response)
+    print("Received in lua: " .. response:getContent())
+    return "This is lua response."
+end
+
 
 -- Called when GUI component listeners are activated.
 function eventGUI(guiNode, eventType)
@@ -31,11 +37,11 @@ function start()
     networkManager = getNetworkManager()
 	db = getDB()
     -- HttpRequest
-    request = Request.new("http://upload.wikimedia.org/wikipedia/en/8/84/Dante_transparent.png")
-    request2 = Request.new("http://kentas.lt/index.php")
-    request2:setId(1)
-    networkManager:execute(request)
-    networkManager:execute(request2)
+    --request = Request.new("http://upload.wikimedia.org/wikipedia/en/8/84/Dante_transparent.png")
+    --request2 = Request.new("http://kentas.lt/index.php")
+    --request2:setId(1)
+    --networkManager:execute(request)
+    --networkManager:execute(request2)
 	-- Dimensions
 	width = getScreenWidth()
 	height = getScreenHeight()
@@ -55,6 +61,7 @@ function start()
 		map[t["x"]] = {}
 		map[t["x"]][t["y"]] = t["type"]
 	end
+    server = getServer()
 end
 
 -- Called when program is brought to foreground.

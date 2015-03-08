@@ -68,8 +68,10 @@ UINT32 WindowsServiceLocator::getCurrentThreadId() {
 	return GetCurrentThreadId();
 }
 
-Socket* WindowsServiceLocator::createSocket(int type) {
-	return NEW WindowsSocket((Socket::Type) type);
+Socket* WindowsServiceLocator::createSocket(SocketParams params)
+{
+
+	return NEW WindowsSocket(params);
 }
 
 GraphicsManager* WindowsServiceLocator::getGraphicsManager() {

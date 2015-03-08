@@ -18,6 +18,7 @@ class HttpResponse;
 class ScriptManager {
 public:
 	static const string FUNCTION_EVENT_RESPONSE;
+	static const string FUNCTION_EVENT_SERVER_RESPONSE;
 	static const string FUNCTION_EVENT_GUI;
 	static const string FUNCTION_START;
 	static const string FUNCTION_RESIZE;
@@ -72,6 +73,13 @@ public:
 	 * @param response - pointer to network response.
 	 */
 	void provideResponse(HttpResponse* response);
+
+	/**
+	 * Sends server response to be handled
+	 * on lua side.
+	 * @param response - pointer to network response.
+	 */
+	string provideServerResponse(HttpResponse* response);
 
 	/**
 	 * Sends event notification to script side.

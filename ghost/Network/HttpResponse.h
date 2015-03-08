@@ -35,10 +35,6 @@ public:
 	 * @param id - request id.
 	 */
 	void setId(int id);
-
-	/**
-	 * @return Request id.
-	 */
 	int getId();
 private:
 	string header_;

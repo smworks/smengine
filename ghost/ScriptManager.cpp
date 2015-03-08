@@ -15,6 +15,7 @@
 #include "GUIManager.h"
 
 const string ScriptManager::FUNCTION_EVENT_RESPONSE = "eventResponse";
+const string ScriptManager::FUNCTION_EVENT_SERVER_RESPONSE = "eventServerResponse";
 const string ScriptManager::FUNCTION_EVENT_GUI = "eventGUI";
 const string ScriptManager::FUNCTION_START = "start";
 const string ScriptManager::FUNCTION_RESIZE = "resize";
@@ -240,8 +241,7 @@ void ScriptManager::add(Node* node) {
 						lua_tostring(ScriptManager::state_,
                         lua_gettop(ScriptManager::state_)));
 					script_ = 0;
-				}
-				else {
+				} else {
 					script_->setId(luaL_ref(state_, LUA_REGISTRYINDEX));
 					lua_rawgeti(
 						state_, LUA_REGISTRYINDEX, script_->getId());
@@ -252,23 +252,20 @@ void ScriptManager::add(Node* node) {
                     }
 					if (!isFunctionAvailable(FUNCTION_EVENT_RESPONSE)) {
 						LOGE("Function \"%s\" not defined.", FUNCTION_EVENT_RESPONSE.c_str());
-					}
-					else if (!isFunctionAvailable(FUNCTION_EVENT_GUI)) {
+					} else if (!isFunctionAvailable(FUNCTION_EVENT_SERVER_RESPONSE)) {
+						LOGE("Function \"%s\" not defined.",
+							FUNCTION_EVENT_SERVER_RESPONSE.c_str());
+					} else if (!isFunctionAvailable(FUNCTION_EVENT_GUI)) {
 						LOGE("Function \"%s\" not defined.", FUNCTION_EVENT_GUI.c_str());
-					}
-					else if (!isFunctionAvailable(FUNCTION_START)) {
+					} else if (!isFunctionAvailable(FUNCTION_START)) {
 						LOGE("Function \"%s\" not defined.", FUNCTION_START.c_str());
-					}
-					else if (!isFunctionAvailable(FUNCTION_RESIZE)) {
+					} else if (!isFunctionAvailable(FUNCTION_RESIZE)) {
 						LOGE("Function \"%s\" not defined.", FUNCTION_RESIZE.c_str());
-					}
-					else if (!isFunctionAvailable(FUNCTION_PAUSE)) {
+					} else if (!isFunctionAvailable(FUNCTION_PAUSE)) {
 						LOGE("Function \"%s\" not defined.", FUNCTION_PAUSE.c_str());
-					}
-					else if (!isFunctionAvailable(FUNCTION_RESUME)) {
+					} else if (!isFunctionAvailable(FUNCTION_RESUME)) {
 						LOGE("Function \"%s\" not defined.", FUNCTION_RESUME.c_str());
-					}
-					else if (!isFunctionAvailable(FUNCTION_QUIT)) {
+					} else if (!isFunctionAvailable(FUNCTION_QUIT)) {
 						LOGE("Function \"%s\" not defined.", FUNCTION_QUIT.c_str());
 					}
 					break;
@@ -290,6 +287,21 @@ void ScriptManager::provideResponse(HttpResponse* response) {
 			FUNCTION_EVENT_RESPONSE.c_str(),
 			lua_tostring(state_, lua_gettop(state_)));
 	}
+}
+
+string ScriptManager::provideServerResponse(HttpResponse* response) {
+	lua_getglobal(state_, FUNCTION_EVENT_SERVER_RESPONSE.c_str());
+	HttpResponse** udata = (HttpResponse**) lua_newuserdata(state_, sizeof(HttpResponse*));
+	*udata = response;
+	luaL_getmetatable(state_, "Response");
+	lua_setmetatable(state_, -2);
+	int result = lua_pcall(state_, 1, 1, 0);
+	if (result != LUA_OK) {
+		LOGE("Unable to call function \"%s\". Error: %s.",
+			FUNCTION_EVENT_SERVER_RESPONSE.c_str(),
+			lua_tostring(state_, -1));
+	}
+	return lua_tostring(state_, -1);
 }
 
 void ScriptManager::provideEventGUI(Node* node, int type) {

@@ -15,11 +15,11 @@ class HttpResponse;
 
 class Socket {
 public:
-	enum Type {TCP, UDP, BTH};
-public:
 	virtual ~Socket() {};
 	virtual void send(HttpRequest* request) = 0;
 	virtual HttpResponse* receive() = 0;
+	virtual void shutdown() = 0;
+	virtual bool isAvailable() = 0;
 };
 
 #endif

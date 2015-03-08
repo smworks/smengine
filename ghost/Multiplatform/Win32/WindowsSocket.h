@@ -10,25 +10,35 @@
 
 #include "../Ghost.h"
 #include "../Socket.h"
+#include "../../Network/SocketParams.h"
 
 class WindowsSocket : public Socket {
 public:
-	WindowsSocket(Type socketType);
+	WindowsSocket(SocketParams params);
 	~WindowsSocket();
 	void send(HttpRequest* request);
 	HttpResponse* receive();
+	void shutdown();
+	bool isAvailable();
 private:
 	bool startWinsock();
 	bool isWinsockVersionValid();
 	SOCKET createSocket();
+	void estabilishConnection(SOCKET socket);
+	void connectToServer(sockaddr_in address);
+	void bindAsServer(sockaddr_in address);
 	void setSocketTimeout(SOCKET socket, long timeoutInMs);
 	int getAddressFamily();
 	int getSocketType();
 	int getProtocol();
+	void logError(int error);
 private:
-	Type type;
+	sockaddr_in client;
+	int length;
 	SOCKET socket;
 	WSADATA wsaData;
+	SocketParams params;
+	bool available;
 };
 
 #endif
