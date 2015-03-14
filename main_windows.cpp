@@ -95,7 +95,7 @@ bool InitGraphics(UINT32 width, UINT32 height)
 		wglDeleteContext(hRC);
 		return false;
 	}
-	if (true || !GLEW_VERSION_2_1) {
+	if (!GLEW_VERSION_2_1) {
 		LOGW("This computer or terminal doesn't support OpenGL 2.1");
 		wglMakeCurrent(NULL, NULL);
 		wglDeleteContext(hRC);

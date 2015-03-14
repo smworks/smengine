@@ -118,6 +118,8 @@ public:
 	 */
 	void quit();
 
+	static void dumpStack(lua_State* state);
+
 	/**
 	 * Adds function to script side.
 	 * @param name - function name as it would be used in script side.

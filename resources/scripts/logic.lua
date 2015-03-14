@@ -17,7 +17,7 @@ end
 -- If server is created, this function will have to handle server requests.
 function eventServerResponse(response)
     print("Received in lua: " .. response:getContent())
-    return "This is lua response."
+    return "This is lua response for request: " .. response:getContent()
 end
 
 

@@ -209,7 +209,9 @@ void ScriptManager::invokeFunction(const string& functionName) {
 		LOGE("Unable to call function \"%s\". Error: %s.",
 			functionName.c_str(),
 			lua_tostring(state_, lua_gettop(state_)));
+		dumpStack(state_);
 	}
+	lua_pop(state_, lua_gettop(state_));
 }
 
 string ScriptManager::executeCode(string code) {
@@ -286,6 +288,7 @@ void ScriptManager::provideResponse(HttpResponse* response) {
 		LOGE("Unable to call function \"%s\". Error: %s.",
 			FUNCTION_EVENT_RESPONSE.c_str(),
 			lua_tostring(state_, lua_gettop(state_)));
+		dumpStack(state_);
 	}
 }
 
@@ -300,6 +303,7 @@ string ScriptManager::provideServerResponse(HttpResponse* response) {
 		LOGE("Unable to call function \"%s\". Error: %s.",
 			FUNCTION_EVENT_SERVER_RESPONSE.c_str(),
 			lua_tostring(state_, -1));
+		dumpStack(state_);
 	}
 	return lua_tostring(state_, -1);
 }
@@ -316,6 +320,7 @@ void ScriptManager::provideEventGUI(Node* node, int type) {
 		LOGE("Unable to call function \"%s\". Error: %s.",
 			FUNCTION_EVENT_GUI.c_str(),
 			lua_tostring(state_, lua_gettop(state_)));
+		dumpStack(state_);
 	}
 }
 
@@ -362,6 +367,30 @@ void ScriptManager::quit() {
 	if (isReady()) {
 		invokeFunction(FUNCTION_QUIT);
 	}
+}
+
+void ScriptManager::dumpStack(lua_State* state) {
+	int i = lua_gettop(state);
+	LOGI("---Lua stack dump begin--------------------------------" );
+	while (i) {
+		int t = lua_type(state, i);
+		switch (t) {
+		case LUA_TSTRING:
+			LOGI("%d:`%s'", i, lua_tostring(state, i));
+			break;
+		case LUA_TBOOLEAN:
+			LOGI("%d: %s", i, lua_toboolean(state, i) ? "true" : "false");
+			break;
+		case LUA_TNUMBER:
+			LOGI("%d: %g", i, lua_tonumber(state, i));
+			break;
+		default:
+			LOGI("%d: %s", i, lua_typename(state, t));
+			break;
+		}
+		i--;
+	}
+	LOGI("---Lua stack dump complete-----------------------------" );
 }
 
 void ScriptManager::addFunction(string name, int (*functionPtr)(lua_State*)) {
