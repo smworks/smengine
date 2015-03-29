@@ -206,12 +206,12 @@ void ScriptManager::invokeFunction(const string& functionName) {
 	lua_getglobal(state_, functionName.c_str());
 	int result = lua_pcall(state_, 0, 0, 0);
 	if (result != LUA_OK) {
+		dumpStack(state_);
 		LOGE("Unable to call function \"%s\". Error: %s.",
 			functionName.c_str(),
-			lua_tostring(state_, lua_gettop(state_)));
-		dumpStack(state_);
+			lua_tostring(state_, -1));
 	}
-	lua_pop(state_, lua_gettop(state_));
+	lua_settop(state_, 0);
 }
 
 string ScriptManager::executeCode(string code) {
@@ -285,14 +285,16 @@ void ScriptManager::provideResponse(HttpResponse* response) {
 	lua_setmetatable(state_, -2);
 	int result = lua_pcall(state_, 1, 0, 0);
 	if (result != LUA_OK) {
+		dumpStack(state_);
 		LOGE("Unable to call function \"%s\". Error: %s.",
 			FUNCTION_EVENT_RESPONSE.c_str(),
 			lua_tostring(state_, lua_gettop(state_)));
-		dumpStack(state_);
 	}
+	lua_settop(state_, 0);
 }
 
 string ScriptManager::provideServerResponse(HttpResponse* response) {
+	ASSERT(response != 0, "Response from server is null.");
 	lua_getglobal(state_, FUNCTION_EVENT_SERVER_RESPONSE.c_str());
 	HttpResponse** udata = (HttpResponse**) lua_newuserdata(state_, sizeof(HttpResponse*));
 	*udata = response;
@@ -300,12 +302,20 @@ string ScriptManager::provideServerResponse(HttpResponse* response) {
 	lua_setmetatable(state_, -2);
 	int result = lua_pcall(state_, 1, 1, 0);
 	if (result != LUA_OK) {
-		LOGE("Unable to call function \"%s\". Error: %s.",
+		dumpStack(state_);
+		LOGE("Unable to call function \"%s\". Error: %s",
 			FUNCTION_EVENT_SERVER_RESPONSE.c_str(),
 			lua_tostring(state_, -1));
-		dumpStack(state_);
+		return "Error occurred while handling response.";
 	}
-	return lua_tostring(state_, -1);
+	if (!lua_isstring(state_, -1)) {
+		dumpStack(state_);
+		return "Error, no lua response is returned.";
+	}
+	string res = lua_tostring(state_, -1);
+	LOGI("Provided response: %s. Lua top: %d. Thread: %u", res.c_str(), lua_gettop(state_), this_thread::get_id().hash());
+	lua_settop(state_, 0);
+	return res;
 }
 
 void ScriptManager::provideEventGUI(Node* node, int type) {
@@ -317,10 +327,10 @@ void ScriptManager::provideEventGUI(Node* node, int type) {
 	lua_pushnumber(state_, type);
 	int result = lua_pcall(state_, 2, 0, 0);
 	if (result != LUA_OK) {
+		dumpStack(state_);
 		LOGE("Unable to call function \"%s\". Error: %s.",
 			FUNCTION_EVENT_GUI.c_str(),
 			lua_tostring(state_, lua_gettop(state_)));
-		dumpStack(state_);
 	}
 }
 
@@ -345,10 +355,10 @@ void ScriptManager::update() {
 	if (!isReady()) {
 		return;
 	}
-	lua_rawgeti(state_, LUA_REGISTRYINDEX, script_->getId());
+	//lua_rawgeti(state_, LUA_REGISTRYINDEX, script_->getId());
 	invokeFunction(FUNCTION_UPDATE);
-	// Force garbage collection.
-	lua_gc(state_, LUA_GCCOLLECT, 0);
+//	// Force garbage collection.
+//	lua_gc(state_, LUA_GCCOLLECT, 0);
 }
 
 void ScriptManager::pause() {

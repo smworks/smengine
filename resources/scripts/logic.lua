@@ -90,19 +90,21 @@ function update()
 --	if input:keyReleased(constants["D"]) then
 --		camera:addPosX(size)
 --	end
-	local offset = 14.0
-	if input:keyPressed(constants["W"]) then
-		camera:addPosY(-offset)
-	end
-	if input:keyPressed(constants["S"]) then
-		camera:addPosY(offset)
-	end
-	if input:keyPressed(constants["A"]) then
-		camera:addPosX(offset)
-	end
-	if input:keyPressed(constants["D"]) then
-		camera:addPosX(-offset)
-	end
+
+
+--	local offset = 14.0
+--	if input:keyPressed(constants["W"]) then
+--		camera:addPosY(-offset)
+--	end
+--	if input:keyPressed(constants["S"]) then
+--		camera:addPosY(offset)
+--	end
+--	if input:keyPressed(constants["A"]) then
+--		camera:addPosX(offset)
+--	end
+--	if input:keyPressed(constants["D"]) then
+--		camera:addPosX(-offset)
+--	end
 
 end
 

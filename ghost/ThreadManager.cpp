@@ -25,7 +25,7 @@ ThreadManager::~ThreadManager() {
 }
 
 void ThreadManager::update() {
-    for (SIZE i = 0; i < threads_.size(); i++) {
+    for (INT32 i = threads_.size() - 1; i >= 0; i--) {
 		if (!threads_[i]->isRunning()) {
 			delete threads_[i];
 			threads_.erase(threads_.begin() + i);
@@ -44,21 +44,20 @@ UINT64 ThreadManager::execute(Task* task) {
 }
 
 void ThreadManager::join(UINT64 id) {
+	if (id == this_thread::get_id().hash()) {
+		LOGW("Thread with id %llu attempted to join itself.", id);
+		return;
+	}
 	for (UINT32 i = 0; i < threads_.size(); i++) {
 		if (threads_[i]->getId() == id) {
-			if (id != services_->getCurrentThreadId()) {
-				delete threads_[i];
-				threads_.erase(threads_.begin() + i);
-			} else {
-				LOGW("Thread with id %llu attempted to join itself.", id);
-			}
+			delete threads_[i];
+			threads_.erase(threads_.begin() + i);
 			return;
 		}
 	}
 }
 
 void ThreadManager::joinAll() {
-	for (Thread* t : threads_)
-		delete t;
+	for (Thread* t : threads_) delete t;
 	threads_.clear();
 }

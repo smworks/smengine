@@ -95,7 +95,7 @@ bool InitGraphics(UINT32 width, UINT32 height)
 		wglDeleteContext(hRC);
 		return false;
 	}
-	if (!GLEW_VERSION_2_1) {
+	if (true || !GLEW_VERSION_2_1) {
 		LOGW("This computer or terminal doesn't support OpenGL 2.1");
 		wglMakeCurrent(NULL, NULL);
 		wglDeleteContext(hRC);
@@ -309,18 +309,18 @@ LONG WINAPI MainWndProc(HWND g_hwnd, UINT uMsg, WPARAM  wParam, LPARAM  lParam)
 		if (*GHOST) GHOST->getServiceLocator()->exit();
         //DestroyWindow(g_hwnd);
         break;
-	//case WM_PAINT:
-	//	{
-	//		PAINTSTRUCT ps;
-	//		HDC dc;
-	//		string message = "OpenGL 2.1 not supported!";
-	//		dc = BeginPaint(g_hwnd, &ps);
-	//		if (GHOST && !GHOST->getServiceLocator()->isGuiAvailable()) {
-	//			TextOutA(dc, 10, 10, (LPCSTR) message.c_str(), message.length());
-	//		}
-	//		EndPaint(g_hwnd, &ps);
-	//	}
-	//	break;
+	case WM_PAINT:
+		{
+			PAINTSTRUCT ps;
+			HDC dc;
+			string message = "OpenGL 2.1 not supported!";
+			dc = BeginPaint(g_hwnd, &ps);
+			if (GHOST && !GHOST->getServiceLocator()->isGuiAvailable()) {
+				TextOutA(dc, 10, 10, (LPCSTR) message.c_str(), message.length());
+			}
+			EndPaint(g_hwnd, &ps);
+		}
+		break;
     case WM_DESTROY:
 		if (*GHOST) GHOST->getServiceLocator()->exit();
         //PostQuitMessage(0);
@@ -363,6 +363,7 @@ int WINAPI WinMain (HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLin
 		_CrtSetDbgFlag (_CRTDBG_ALLOC_MEM_DF | _CRTDBG_LEAK_CHECK_DF);
 		_CrtSetReportMode(_CRT_ERROR, _CRTDBG_MODE_DEBUG);
 	#endif
+	LOGI("Main thread id: %u", this_thread::get_id().hash());
     LPCWSTR appname = TEXT("SMEngine");
 	// Define the window class.
 	WNDCLASSEX w;

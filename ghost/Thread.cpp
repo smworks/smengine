@@ -31,6 +31,7 @@ bool Thread::isRunning() {
 }
 
 void Thread::run() {
+	LOGD("CREATED AND STARTED running thread with id: %u.", this_thread::get_id().hash());
 	task->run();
 	workerMutex.lock();
 	running = false;

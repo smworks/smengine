@@ -64,10 +64,6 @@ double WindowsServiceLocator::updateTimer(float sleep) {
 	return frameDuration_ = timeElapsed;
 }
 
-UINT32 WindowsServiceLocator::getCurrentThreadId() {
-	return GetCurrentThreadId();
-}
-
 Socket* WindowsServiceLocator::createSocket(SocketParams params)
 {
 

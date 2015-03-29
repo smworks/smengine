@@ -7,7 +7,31 @@
 #include "HttpResponse.h"
 #include "../ThreadManager.h"
 #include "../ScriptManager.h"
-#include <future>
+#include "../Engine.h"
+
+class ServerTask : public Task {
+public:
+	ServerTask(ServiceLocator* services, HttpResponse* response, Socket* socket) :
+		services(services), response(response), socket(socket)
+	{
+		HttpRequest* request = new HttpRequest("");
+		string entity = services->getScriptManager()->provideServerResponse(response);
+		INT8* bytes = NEW INT8[entity.size()];
+		memcpy(bytes, entity.c_str(), entity.size());
+		request->setEntity(bytes, entity.size());
+		socket->send(request);
+		delete request;
+		delete response;
+	}
+
+	void run() {
+		
+	}
+private:
+	ServiceLocator* services;
+	HttpResponse* response;
+	Socket* socket;
+};
 
 Server::Server(ServiceLocator* services) :
 	services(services)
@@ -33,17 +57,9 @@ void Server::run() {
 		HttpResponse* r = socket->receive();
 		string packet = r == 0 ? "" : r->getContent();
 		if (packet.length() > 0) {
-			HttpRequest* request = new HttpRequest("");
-			future<string> fut = async(launch::async,
-				&ScriptManager::provideServerResponse, services->getScriptManager(), r);
-			string entity = fut.get();
-			INT8* bytes = NEW INT8[entity.size()];
-			memcpy(bytes, entity.c_str(), entity.size());
-			request->setEntity(bytes, entity.size());
-			socket->send(request);
-			delete request;
+			Engine::executeOnMainThread(new ServerTask(
+				services, r, socket));
 		}
-		delete r;
 	}
 	mut.unlock();
 }

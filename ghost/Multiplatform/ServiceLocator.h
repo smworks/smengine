@@ -70,7 +70,6 @@ public:
 	 * method.
 	 */
 	virtual double updateTimer(float sleep = 0.0f) = 0;
-	virtual UINT32 getCurrentThreadId() = 0;
 	virtual Socket* createSocket(SocketParams sp) = 0;
 	virtual GraphicsManager* getGraphicsManager() = 0;
 	virtual FileManager* getFileManager() = 0;

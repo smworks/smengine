@@ -36,6 +36,10 @@
 #include "SceneManager.h"
 #include "NodeManager.h"
 #include "Console.h"
+#include "Thread.h"
+
+mutex* Engine::mut = 0;
+queue<Task*>* Engine::tasks = 0;
 
 Engine::operator void*() {
 	return error_ ? 0 : this;
@@ -55,6 +59,8 @@ Engine::Engine(ServiceLocator* services) :
 #endif
 
 {
+	mut = new mutex();
+	tasks = new queue<Task*>();
 //    LOGD("Size of integer: %u", (UINT32) sizeof(int));
 //    LOGD("Size of long: %u", (UINT32) sizeof(long));
 //    LOGD("Size of float: %u", (UINT32) sizeof(float));
@@ -101,6 +107,8 @@ Engine::~Engine() {
 #ifdef SMART_DEBUG_TEXT
     debugNode_ = 0;
 #endif
+	delete tasks;
+	delete mut;
 }
 
 void Engine::loadScene() {
@@ -141,36 +149,6 @@ void Engine::loadScene() {
         debugNode_->setState(Node::RENDERABLE, true);
         services_->getRootNode()->addChild(debugNode_);
     }
-	//// Texture atlas node creation.
- //   if (g_monoNode == 0) {
- //       g_monoNode = NEW Node;
- //       g_monoNode->setName("monoAtlasNode");
- //       g_monoAtlas = NEW Sprite(services_);
- //       g_monoAtlas->setNode(g_monoNode);
- //       g_monoAtlas->create();
- //       Texture* monoText = services_->getTextureAtlas()->getTexture(Texture::MONO);
- //       g_monoAtlas->addTexture(monoText);
- //       services_->getRM()->add("monoAtlasSprite", g_monoAtlas);
- //       g_monoNode->addResource(g_monoAtlas);
- //       g_monoNode->setState(Node::RENDERABLE, false);
- //       services_->getRootNode()->addChild(g_monoNode);
- //       g_monoNode->getScale().setXYZ((float) monoText->getWidth(), (float) monoText->getHeight(), 1.0f);
- //   }
- //   if (g_rgbaNode == 0) {
- //       g_rgbaNode = NEW Node;
- //       g_rgbaNode->setName("rgbaAtlasNode");
- //       g_rgbaAtlas = NEW Sprite(services_);
- //       g_rgbaAtlas->setNode(g_rgbaNode);
- //       g_rgbaAtlas->create();
- //       Texture* rgbaText = services_->getTextureAtlas()->getTexture(Texture::RGBA);
- //       g_rgbaAtlas->addTexture(rgbaText);
- //       services_->getRM()->add("rgbaAtlasSprite", g_rgbaAtlas);
- //       g_rgbaNode->addResource(g_rgbaAtlas);
- //       g_rgbaNode->setState(Node::RENDERABLE, false);
- //       services_->getRootNode()->addChild(g_rgbaNode);
- //       g_rgbaNode->getScale().setXYZ(
- //           (float) rgbaText->getWidth(), (float) rgbaText->getHeight(), 1.0f);
- //   }
 #endif
 	// Other data creation.
 	services_->getGUIManager()->refreshNodes(services_->getRootNode());
@@ -184,139 +162,24 @@ void Engine::computeFrame() {
 	if (!running_) {
 		return;
 	}
-//#ifdef SMART_DEBUG
-//	MEASURE_BEFORE_TIMER(Frame)
-//#endif
+	getMutex().lock();
     services_->updateTimer(
 		services_->getDB()->getFloat(Database::FRAME_DURATION));
     time_ = services_->getFrameTime();
-//#ifdef SMART_DEBUG
-//    if (services_->getInput()->keyReleased(Input::F)) {
-//        g_debugNode->setState(Node::RENDERABLE,
-//			!g_debugNode->getState(Node::RENDERABLE));
-//    }
-//#endif
 	if (error_) {
 		return;
 	}
 #ifdef SMART_DEBUG_TEXT
-	//// Rezerve area for 128x128 texture in monochrome texture atlas.
-	//if (services_->getInput()->keyReleased(Input::B)) {
-	//	UINT32 id;
-	//	services_->getTextureAtlas()->create(id, 128, 128, Texture::MONO);
-	//}
-	//// Turn on/off physics debug draw.
-	//static bool useDebugDraw = true;
-	//if (services_->getInput()->keyReleased(Input::P)) {
-	//	if (useDebugDraw) {
-	//		services_->getPhysicsManager()->setDebug(true);
-	//		LOGD("Enabling physics debug draw.");
-	//	}
-	//	else {
-	//		services_->getPhysicsManager()->setDebug(false);
-	//		LOGD("Disabling physics debug draw.");
-	//	}
-	//	useDebugDraw = !useDebugDraw;
-	//}
-	//// Show/hide monochrome texture atlas.
-	//static bool showMonoAtlas = true;
-	//if (services_->getInput()->keyReleased(Input::F2)) {
-	//	if (showMonoAtlas) {
-	//		g_monoNode->setState(Node::RENDERABLE, true);
-	//		LOGD("Enabling mono texture atlas.");
-	//	}
-	//	else {
-	//		g_monoNode->setState(Node::RENDERABLE, false);
-	//		LOGD("Disabling mono texture atlas.");
-	//	}
-	//	showMonoAtlas = !showMonoAtlas;
-	//}
-	//// Show/hide rgba texture atlas.
-	//static bool showRgbaAtlas = true;
-	//if (services_->getInput()->keyReleased(Input::F3)) {
-	//	if (showRgbaAtlas) {
-	//		g_rgbaNode->setState(Node::RENDERABLE, true);
-	//		LOGD("Enabling rgba texture atlas.");
-	//	}
-	//	else {
-	//		g_rgbaNode->setState(Node::RENDERABLE, false);
-	//		LOGD("Disabling rgba texture atlas.");
-	//	}
-	//	showRgbaAtlas = !showRgbaAtlas;
-	//}
-	//// Test socket.
-	//if (services_->getInput()->keyReleased(Input::F4)) {
-	//	PROFILE("Sending data.");
-	//	services_->getNetworkManager()->execute(NEW HttpRequest("http://i2.kym-cdn.com/photos/images/original/000/370/259/7a9.png", HttpRequest::GET));
-	//	PROFILE("Function returned.");
-	//}
-	//MEASURE_BEFORE_TIMER(Input)
-	//services_->getInput()->update();
-	//MEASURE_AFTER_TIMER(Input)
-	//MEASURE_BEFORE_TIMER(Sounds)
-	//services_->getSoundManager()->update();
-	//MEASURE_AFTER_TIMER(Sounds)
-	//MEASURE_BEFORE_TIMER(Physics)
-	//services_->getPhysicsManager()->update(time_);
-	//MEASURE_AFTER_TIMER(Physics)
-	//services_->getThreadManager()->update();
-	//MEASURE_BEFORE_TIMER(Scripts)
-	//services_->getScenarioManager()->update(time_);
-	//services_->getSceneManager()->update(time_);
-	//services_->getScriptManager()->update();
-	//MEASURE_AFTER_TIMER(Scripts)
-	//MEASURE_BEFORE_TIMER(Camera)
-	//services_->getCamera()->update(time_);
-	//MEASURE_AFTER_TIMER(Camera)
-	//MEASURE_BEFORE_TIMER(Nodes)
-	//updateNodes(services_->getRootNode());
-	//MEASURE_AFTER_TIMER(Nodes)
-	//MEASURE_BEFORE_TIMER(GUI)
- //   services_->getGUIManager()->update();
-	//MEASURE_AFTER_TIMER(GUI)
-	//MEASURE_BEFORE_TIMER(Render)
-	//services_->getGraphicsManager()->render();
-	//MEASURE_AFTER_TIMER(Render)
-	//// Output debug message.
-	//MEASURE_AFTER_TIMER(Frame)
 	debugFpsCount_++;
 	debugTime_ += time_;
 	if (debugTime_ >= 1000.0f) {
 		stringstream ss;
-		//double renderModelTime = (double) g_renderModelTime / (double) g_fpsCount * 0.001;
-		//double renderSpriteTime = (double) g_renderSpriteTime / (double) g_fpsCount * 0.001;
-		//double renderTextTime = (double) g_renderTextTime / (double) g_fpsCount * 0.001;
 		ss << "FPS: " << debugFpsCount_ << fixed << setprecision(3) << "\n"
-			//<< DISPLAY_TIMER(Frame)
-			//<< DISPLAY_TIMER(Input)
-			//<< DISPLAY_TIMER(Sounds)
-			//<< DISPLAY_TIMER(Scripts)
-			//<< DISPLAY_TIMER(Camera)
-			//<< DISPLAY_TIMER(Nodes)
-			//<< DISPLAY_TIMER(GUI)
-			//<< DISPLAY_TIMER(Physics)
-			//<< DISPLAY_TIMER(Render)
-			//<< "  Models: " << renderModelTime
-			//<< "ms\n  Sprites: " << renderSpriteTime
-			//<< "ms\n  Text: " << renderTextTime << "ms\n"
 			<< "Resolution: " << services_->getScreenWidth()
 			<< "x" << services_->getScreenHeight() << "px\n";
         debugText_->setText(ss.str());
 		debugFpsCount_ = 0;
 		debugTime_ = 0.0f;
-		//RESET_TIMER(Frame)
-		//RESET_TIMER(Physics)
-		//RESET_TIMER(Render)
-		//g_renderModelTime = 0;
-		//g_renderSpriteTime = 0;
-		//g_renderTextTime = 0;
-		//RESET_TIMER(Input)
-		//RESET_TIMER(Sounds)
-		//g_tmTime = 0;
-		//RESET_TIMER(Scripts)
-		//RESET_TIMER(Camera)
-		//RESET_TIMER(Nodes)
-		//RESET_TIMER(GUI)
 	}
 #endif
 	services_->getInput()->update();
@@ -332,6 +195,8 @@ void Engine::computeFrame() {
     services_->getGUIManager()->update();
 	if (getServiceLocator()->isGuiAvailable())
 		services_->getGraphicsManager()->render();
+	executeTasks();
+	getMutex().unlock();
 }
 void Engine::resume() {
 	running_ = true;
@@ -431,4 +296,26 @@ void Engine::resizeResources(Node* node) {
 
 ServiceLocator* Engine::getServiceLocator() {
 	return services_;
+}
+
+mutex& Engine::getMutex() {
+	static mutex mut;
+	return mut;
+}
+
+void Engine::executeOnMainThread(Task* task) {
+	mut->lock();
+	tasks->push(task);
+	mut->unlock();
+}
+
+void Engine::executeTasks() {
+	mut->lock();
+	while (!tasks->empty()) {
+		Task* task = tasks->front();
+		task->run();
+		delete task;
+		tasks->pop();
+	}
+	mut->unlock();
 }
