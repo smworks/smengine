@@ -548,25 +548,25 @@ void GraphicsManager::renderNode(
 	}
 	int hTextures[8];
 	hTextures[0] = glGetUniformLocation(shader->getId(), SHADER_MAIN_TEXTURE);
-	// Bind the texture.
-	vector<Resource*> textures = node->getResources(Resource::TEXTURE_2D);
-	UINT32 size = textures.size() < 8 ? static_cast<UINT32>(textures.size()) : 7;
-	UINT32 texture = 0;
-	for (UINT32 i = 0; i < size; i++) {
-		texture = i + 1;
-		const string& name = textures[i]->getName();
-		TextureRGBA* tex = static_cast<TextureRGBA*>(textures[i]);
-		SIZE offset = node->getName().length() + 1;
-		string textName = name.substr(offset, name.length() - 4 - offset);
-		hTextures[texture] = glGetUniformLocation(shader->getId(), textName.c_str());
-		if (hTextures[texture] == -1) {
-			LOGW("Handle to texture \"%s\" not found in \"%s\" shader.",
-				textName.c_str(), shader->getName().c_str());
-			continue;
-		}
-		bindTexture(tex->getId(), i + 1);
-		glUniform1i(hTextures[texture], texture);
-	}
+	//// Bind the texture.
+	//vector<Resource*> textures = node->getResources(Resource::TEXTURE_2D);
+	//UINT32 size = textures.size() < 8 ? textures.size() : 7;
+	//UINT32 texture = 0;
+	//for (UINT32 i = 0; i < size; i++) {
+	//	texture = i + 1;
+	//	const string& name = textures[i]->getName();
+	//	TextureRGBA* tex = static_cast<TextureRGBA*>(textures[i]);
+	//	SIZE offset = node->getName().length() + 1;
+	//	string textName = name.substr(offset, name.length() - 4 - offset);
+	//	hTextures[texture] = glGetUniformLocation(shader->getId(), textName.c_str());
+	//	if (hTextures[texture] == -1) {
+	//		LOGW("Handle to texture \"%s\" not found in \"%s\" shader.",
+	//			textName.c_str(), shader->getName().c_str());
+	//		continue;
+	//	}
+	//	bindTexture(tex->getId(), i + 1);
+	//	glUniform1i(hTextures[texture], texture);
+	//}
 	int renderType;
 	switch (renderable->getRenderType()) {
 		case Renderable::RENDER_TYPE_POINTS:
@@ -615,28 +615,12 @@ void GraphicsManager::renderNode(
 		//		continue;
 		//	}
 		//}
-		//Screen width.
 		shader->setFloat(Shader::SCREEN_WIDTH, (float) services_->getScreenWidth());
-		// Screen height.
 		shader->setFloat(Shader::SCREEN_HEIGHT, (float) services_->getScreenHeight());
-		// Ambient material color.
-		if (shader->hasHandle(Shader::AMBIENT)) {
-			float farr[] = {0.0f, 0.0f, 0.0f};
-			shader->setVector4(Shader::AMBIENT, renderable->getAmbient().toArray());
-		}
-		// Diffuse material color.
-		if (shader->hasHandle(Shader::DIFFUSE)) {
-			shader->setVector3(Shader::DIFFUSE,
-				renderable->getDiffuse().toArray());
-		}
-		// Specular material color.
-		if (shader->hasHandle(Shader::SPECULAR)) {
-			shader->setVector3(Shader::SPECULAR,
-				renderable->getSpecular().toArray());
-		}
-		// Specular material color intensity.
+		shader->setVector3(Shader::AMBIENT, renderable->getAmbient().toArray());
+		shader->setVector3(Shader::DIFFUSE, renderable->getDiffuse().toArray());
+		shader->setVector3(Shader::SPECULAR, renderable->getSpecular().toArray());
 		shader->setFloat(Shader::SPECULARITY, renderable->getSpecularity());
-		// Model transparency.
 		shader->setFloat(Shader::TRANSPARENCY, renderable->getTransparency());
 		// Bind main texture.
 		if (renderable->getTexture() != lastTexture

@@ -28,95 +28,27 @@ public:
 	 * @see Resource
 	 */
 	bool create();
-
-	/**
-	 * @see Resource
-	 */
 	void release();
-
-	/**
-	 * @see Resource
-	 */
 	SIZE getSize();
-
-	/**
-	 * @see Resource
-	 */
 	Resource::Type getType();
-
-	/**
-	 * @see Resource
-	 */
 	bool isValid();
 
 	/**
 	 * @see Renderable
 	 */
 	SIZE getVertexCount();
-
-	/**
-	 * @see Renderable
-	 */
 	SIZE getTexture();
-
-	/**
-	 * @see Renderable
-	 */
 	SIZE getIBO();
-
-	/**
-	 * @see Renderable
-	 */
 	SIZE getIndexOffset();
-
-	/**
-	 * @see Renderable.
-	 */
 	BoundingVolume* getBV();
-
-	/**
-	 * @see Renderable
-	 */
 	SIZE getCBO();
-
-	/**
-	 * @see Renderable
-	 */
 	SIZE getIndexCount();
-
-	/**
-	 * @see Renderable
-	 */
 	SIZE getRenderCount();
-
-	/**
-	 * @see Renderable
-	 */
 	void setRenderable(SIZE i);
-
-	/**
-	 * @see Renderable
-	 */
 	SIZE getVertexStride();
-
-	/**
-	 * @see Renderable
-	 */
 	int getPosOffset();
-
-	/**
-	 * @see Renderable
-	 */
 	int getNormalOffset();
-
-	/**
-	 * @see Renderable
-	 */
 	int getUVOffset();
-
-	/**
-	 * @see Renderable
-	 */
 	Shader* getDefaultShader();
 
 	/**

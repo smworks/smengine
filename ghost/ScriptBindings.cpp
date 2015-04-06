@@ -33,6 +33,7 @@
 #include "Resources/GUIButton.h"
 #include "Resources/Scenario.h"
 #include "Extensions/Vehicle.h"
+#include "ModelData.h"
 
 #define SM_INDEX(index) index + 1
 #define SM_GET_ARGUMENT_COUNT(state) lua_gettop(state)
@@ -489,11 +490,9 @@ int nodeGetShader(lua_State* L) {
 	if (node->hasResource(Resource::STATIC_OBJECT)) {
 		StaticObject* obj = static_cast<StaticObject*>(
 			node->getResource(Resource::STATIC_OBJECT));
-		SM_POP_ARGS(L, SM_GET_ARGUMENT_COUNT(L));
 		SM_RETURN_OBJECT(L, "Shader", Shader, obj->getShader());
 	} else if (node->hasResource(Resource::SPRITE)) {
 		Sprite* spr = static_cast<Sprite*>(node->getResource(Resource::SPRITE));
-		SM_POP_ARGS(L, SM_GET_ARGUMENT_COUNT(L));
 		SM_RETURN_OBJECT(L, "Shader", Shader, spr->getShader());
 	}
 	return 0;
@@ -501,13 +500,28 @@ int nodeGetShader(lua_State* L) {
 
 int nodeAddTexture(lua_State* L) {
 	Node* node = SM_GET_OBJECT(L, 0, Node);
+	ASSERT(SM_GET_ARGUMENT_COUNT(L) == 2, "addTexture method expects argument of type Texture.");
 	Texture* texture = SM_GET_OBJECT(L, 1, Texture);
-	Sprite* obj = static_cast<Sprite*>(
+	if (node->hasResource(Resource::SPRITE)) {
+		Sprite* obj = static_cast<Sprite*>(
 		node->getResource(Resource::SPRITE));
-	if (obj != 0) {
-		obj->addTexture(texture);
+		if (obj != 0) {
+			obj->addTexture(texture);
+		}
+	} else if (node->hasResource(Resource::STATIC_OBJECT)) {
+		//StaticObject* obj = static_cast<StaticObject*>(
+		//node->getResource(Resource::STATIC_OBJECT));
+		//if (obj != 0) {
+		//	vector<ModelData::Part>& parts = obj->getModel()->getParts();
+		//	if (parts.size() > 0) {
+		//		ModelData::Material m;
+		//		m.ambient_ = obj->getAmbient();
+		//		m.texture_ = texture;
+		//		obj->getModel()->getMaterials().push_back(m);
+		//		parts[0].material_ = obj->getModel()->getMaterials().size() - 1;
+		//	}
+		//}
 	}
-	SM_POP_ARGS(L, SM_GET_ARGUMENT_COUNT(L));
 	return 0;
 }
 
@@ -788,6 +802,28 @@ int nodeGetMarginBottom(lua_State* L) {
 	return 1;
 }
 
+int nodeSetAmbient(lua_State* L) {
+	Node* node = SM_GET_OBJECT(L, 0, Node);
+	StaticObject* model = dynamic_cast<StaticObject*>(node->getResource(Resource::STATIC_OBJECT));
+	ASSERT(model != 0, "Node does not contain model resource.");
+	ASSERT(SM_GET_ARGUMENT_COUNT(L) == 2, "Method setAmbient expects 1 parameter of type string.");
+	string ambient = SM_GET_STRING(L, 1);
+	model->setAmbient(Color(ambient));
+	return 0;
+}
+
+int nodeSetType(lua_State* L) {
+	Node* node = SM_GET_OBJECT(L, 0, Node);
+	StaticObject* model = dynamic_cast<StaticObject*>(node->getResource(Resource::STATIC_OBJECT));
+	ASSERT(model != 0, "Node does not contain model resource.");
+	ASSERT(SM_GET_ARGUMENT_COUNT(L) == 2, "Method setType expects 1 parameter of type string.");
+	string type = SM_GET_STRING(L, 1);
+	model->getAttributes().setString(StaticObject::ATTR_TYPE, type);
+	model->release();
+	model->create();
+	return 0;
+}
+
 #define NODE_ADD_SET(method_name, method_call, state) \
 	METHOD_ADD_SET_STATE(Node, method_name, method_call, state)
 #define NODE_GET(method_name, method_call) \
@@ -901,9 +937,11 @@ void registerNode() {
 	ADD_METHOD(methods, "getMarginLeft", nodeGetMarginLeft);
 	ADD_METHOD(methods, "setMarginBottom", nodeSetMarginBottom);
 	ADD_METHOD(methods, "getMarginBottom", nodeGetMarginBottom);
-    ADD_METHOD(methods, "moveX", setName);
-    ADD_METHOD(methods, "moveY", setName);
-    ADD_METHOD(methods, "moveZ", setName);
+	ADD_METHOD(methods, "setAmbient", nodeSetAmbient);
+	ADD_METHOD(methods, "setType", nodeSetType);
+    ADD_METHOD(methods, "moveX", moveX);
+    ADD_METHOD(methods, "moveY", moveY);
+    ADD_METHOD(methods, "moveZ", moveZ);
     ADD_METHOD(methods, "addPosX", addPosX);
     ADD_METHOD(methods, "setPosX", setPosX);
     ADD_METHOD(methods, "getPosX", getPosX);
@@ -1039,30 +1077,34 @@ void registerInput() {
 
 int newModel(lua_State* L) {
 	int argc = SM_GET_ARGUMENT_COUNT(L);
+	ASSERT(argc == 1, "Model constructor expects name as parameter.");
 	string name = SM_GET_STRING(L, 0);
 	StaticObject* model = static_cast<StaticObject*>(SM_GET_RM()->get(
 		Resource::STATIC_OBJECT, name));
 	if (model == 0) {
 		model = NEW StaticObject(ScriptManager::getServiceLocator());
-		model->getAttributes().setString(Resource::ATTR_FILE, name);
-		if (argc > 1) {
-			string type = SM_GET_STRING(L, 1);
-			model->getAttributes().setString(
-				StaticObject::ATTR_TYPE, type);
-			if (type == StaticObject::VAL_SHAPE) {
-				model->getAttributes().setFloat(
-					StaticObject::ATTR_HEIGHT, SM_GET_FLOAT(L, 2));
-			}
-			else if (type == StaticObject::VAL_SPHERE) {
-				model->getAttributes().setInt(
-					StaticObject::ATTR_VERTICAL_LOD, SM_GET_INT(L, 2));
-				model->getAttributes().setInt(
-					StaticObject::ATTR_HORIZONTAL_LOD, SM_GET_INT(L, 3));
-			}
-		}
 		SM_GET_RM()->add(name, model);
-		model->create();
 	}
+	//if (model == 0) {
+	//	model = NEW StaticObject(ScriptManager::getServiceLocator());
+	//	model->getAttributes().setString(Resource::ATTR_FILE, name);
+	//	if (argc > 1) {
+	//		string type = SM_GET_STRING(L, 1);
+	//		model->getAttributes().setString(
+	//			StaticObject::ATTR_TYPE, type);
+	//		if (type == StaticObject::VAL_SHAPE) {
+	//			model->getAttributes().setFloat(
+	//				StaticObject::ATTR_HEIGHT, SM_GET_FLOAT(L, 2));
+	//		} else if (type == StaticObject::VAL_SPHERE) {
+	//			model->getAttributes().setInt(
+	//				StaticObject::ATTR_VERTICAL_LOD, SM_GET_INT(L, 2));
+	//			model->getAttributes().setInt(
+	//				StaticObject::ATTR_HORIZONTAL_LOD, SM_GET_INT(L, 3));
+	//		}
+	//	}
+	//	SM_GET_RM()->add(name, model);
+	//	model->create();
+	//}
 	Node* node = NEW Node();
 	node->setName(name + "_ModelResource");
 	SM_GET_SL()->getRootNode()->addChild(node);

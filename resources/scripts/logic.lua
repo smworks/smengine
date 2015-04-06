@@ -30,30 +30,39 @@ function start()
     networkManager = getNetworkManager()
 	db = getDB()
     -- HttpRequest
-    request = Request.new("http://upload.wikimedia.org/wikipedia/en/8/84/Dante_transparent.png")
-    request2 = Request.new("http://kentas.lt/index.php")
-    request2:setId(1)
-    networkManager:execute(request)
-    networkManager:execute(request2)
+--    request = Request.new("http://upload.wikimedia.org/wikipedia/en/8/84/Dante_transparent.png")
+--    request2 = Request.new("http://kentas.lt/index.php")
+--    request2:setId(1)
+--    networkManager:execute(request)
+--    networkManager:execute(request2)
 	-- Dimensions
-	width = getScreenWidth()
-	height = getScreenHeight()
-	local offsetX = width * 0.5
-	local offsetY = height * 0.5
-	size = 128.0 * 0.5
+--	width = getScreenWidth()
+--	height = getScreenHeight()
+--	local offsetX = width * 0.5
+--	local offsetY = height * 0.5
+--	size = 128.0 * 0.5
 	-- Load tiles from database into textures and
 	-- create multidimensional array to represent map.
-	map = {}
-	local table = db:execute("SELECT * FROM map")
-	for i, t in pairs(table) do
-		local n = t["texture"] .. ".png"
-		local text = getTexture(n) == nil and Texture.new(n) or getTexture(n)
-		local tmpSprite = Sprite.new(n, text)
-		tmpSprite:setPosXYZ(t["x"] * size + offsetX, t["y"] * size + offsetY, t["z"])
-		tmpSprite:setScaleXYZ(0.5, 0.5, 0.5)
-		map[t["x"]] = {}
-		map[t["x"]][t["y"]] = t["type"]
-	end
+--	map = {}
+--	local table = db:execute("SELECT * FROM map")
+--	for i, t in pairs(table) do
+--		local n = t["texture"] .. ".png"
+--		local text = getTexture(n) == nil and Texture.new(n) or getTexture(n)
+--		local tmpSprite = Sprite.new(n, text)
+--		tmpSprite:setPosXYZ(t["x"] * size + offsetX, t["y"] * size + offsetY, t["z"])
+--		tmpSprite:setScaleXYZ(0.5, 0.5, 0.5)
+--		map[t["x"]] = {}
+--		map[t["x"]][t["y"]] = t["type"]
+--	end
+
+    plane = Model.new("floor")
+    plane:setType("plane")
+    plane:setAmbient("#FFFFFFFF")
+    plane:setShader(Shader.new("temp_model"))
+    plane:addTexture(Texture.new("lab_floor.png"))
+    plane:setPosY(-2.0)
+    plane:setScaleXYZ(100.0, 100.0, 100.0)
+
 end
 
 -- Called when program is brought to foreground.
@@ -83,18 +92,36 @@ function update()
 --		camera:addPosX(size)
 --	end
 
+    camera:addRotX(input:getPointerDeltaY());
+    camera:addRotY(input:getPointerDeltaX());
 
-	local offset = 14.0
-	if input:keyPressed(constants["W"]) then
-		camera:addPosY(-offset)
+	local offset = 1.0
+
+    if input:keyPressed(constants["W"]) then
+		camera:moveZ(-offset)
 	end
 	if input:keyPressed(constants["S"]) then
-		camera:addPosY(offset)
+		camera:moveZ(offset)
 	end
 	if input:keyPressed(constants["A"]) then
-		camera:addPosX(offset)
+		camera:moveX(-offset)
 	end
 	if input:keyPressed(constants["D"]) then
+		camera:moveX(offset)
+	end
+
+    offset = 14.0
+
+	if input:keyPressed(constants["I"]) then
+		camera:addPosY(-offset)
+	end
+	if input:keyPressed(constants["K"]) then
+		camera:addPosY(offset)
+	end
+	if input:keyPressed(constants["J"]) then
+		camera:addPosX(offset)
+	end
+	if input:keyPressed(constants["L"]) then
 		camera:addPosX(-offset)
 	end
 

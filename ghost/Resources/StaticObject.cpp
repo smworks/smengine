@@ -25,7 +25,7 @@
 
 StaticObject::StaticObject(ServiceLocator* services) :
 	Resource(services),
-	modelData_(NEW ModelData()),
+	modelData_(0),
 	cbo_(0),
 	ibo_(0),
 	currentPart_(0)
@@ -36,31 +36,25 @@ StaticObject::~StaticObject() {
 }
 
 bool StaticObject::create() {
+	modelData_ = NEW ModelData();
 	string model = getAttribute(ATTR_TYPE);
 	bool ret = false;
 	if (model == VAL_TERRAIN) {
 		ret = createTerrain();
-	}
-	else if (model == VAL_PLANE) {
+	} else if (model == VAL_PLANE) {
 		ret = createPlane();
-	}
-	else if (model == VAL_SHAPE) {
+	} else if (model == VAL_SHAPE) {
 		ret = createShape();
-	}
-	else if (model == VAL_SPHERE) {
+	} else if (model == VAL_SPHERE) {
 		ret = createSphere();
-	}
-	else if (model == VAL_WATER) {
+	} else if (model == VAL_WATER) {
 		ret = createWater();
-	}
-	else if (model == VAL_MESH) {
+	} else if (model == VAL_MESH) {
 		ret = createModel();
-	}
-	else {
+	} else {
         if (model.length() > 0) {
             LOGW("Unknown model type: %s.", model.c_str());
-        }
-        else {
+        } else {
             LOGD("No model type specified. Attempting to load as model type.");
         }
 		ret = createModel();
@@ -84,15 +78,13 @@ bool StaticObject::create() {
 			setIndexType(INDEX_TYPE_USHORT);
 			glBufferData(GL_ELEMENT_ARRAY_BUFFER, modelData_->getIndexCount() * sizeof(UINT16),
 				modelData_->getIndicesShort(), GL_STATIC_DRAW);
-		}
-		else if (modelData_->getIndexType() == Renderable::INDEX_TYPE_UINT) {
+		} else if (modelData_->getIndexType() == Renderable::INDEX_TYPE_UINT) {
 			setIndexType(INDEX_TYPE_UINT);
 			glBufferData(GL_ELEMENT_ARRAY_BUFFER, modelData_->getIndexCount() * sizeof(UINT32),
 				modelData_->getIndicesInt(), GL_STATIC_DRAW);
 		}
 		glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
-	}
-	else {
+	} else {
 		LOGD("Model \"%s\" does not contain indices.", getAttribute(ATTR_FILE).c_str());
 	}
 	if (getAttribute(ATTR_AMBIENT).length() > 0) {
@@ -142,11 +134,13 @@ void StaticObject::release() {
 		glDeleteBuffers(1, &ibo_);
 		ibo_ = 0;
 	}
-	for (UINT32 i = 0; i < modelData_->getParts().size(); i++) {
-		delete modelData_->getParts()[i].bv_;
+	if (modelData_ != 0) {
+		for (UINT32 i = 0; i < modelData_->getParts().size(); i++) {
+			delete modelData_->getParts()[i].bv_;
+		}
+		delete modelData_;
+		modelData_ = 0;
 	}
-	delete modelData_;
-	modelData_ = 0;
 }
 
 SIZE StaticObject::getSize() {
