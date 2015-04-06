@@ -12,7 +12,6 @@
 #include "HttpRequest.h"
 #include "HttpResponse.h"
 #include "../ThreadManager.h"
-#include "Server.h"
 
 class RequestTask : public Task {
 public:
@@ -46,8 +45,7 @@ private:
 };
 
 NetworkManager::NetworkManager(ServiceLocator* services) :
-	services(services),
-	server(0)
+	services(services)
 {
 	LOGD("Created network manager.");
 }
@@ -65,12 +63,4 @@ void NetworkManager::execute(HttpRequest* request, HttpTask* task) {
 	requestTask->setRequest(request);
 	requestTask->setTask(task);
 	services->getThreadManager()->execute(requestTask);
-}
-
-Server* NetworkManager::getServer() {
-	if (server == 0) {
-		server = new Server(services);
-		services->getThreadManager()->execute(server);
-	}
-	return server;
 }

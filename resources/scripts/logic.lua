@@ -14,13 +14,6 @@ function eventResponse(response)
     --print("Id: " .. response:getId())
 end
 
--- If server is created, this function will have to handle server requests.
-function eventServerResponse(response)
-    print("Received in lua: " .. response:getContent())
-    return "This is lua response for request: " .. response:getContent()
-end
-
-
 -- Called when GUI component listeners are activated.
 function eventGUI(guiNode, eventType)
 	name = guiNode:getName()
@@ -37,11 +30,11 @@ function start()
     networkManager = getNetworkManager()
 	db = getDB()
     -- HttpRequest
-    --request = Request.new("http://upload.wikimedia.org/wikipedia/en/8/84/Dante_transparent.png")
-    --request2 = Request.new("http://kentas.lt/index.php")
-    --request2:setId(1)
-    --networkManager:execute(request)
-    --networkManager:execute(request2)
+    request = Request.new("http://upload.wikimedia.org/wikipedia/en/8/84/Dante_transparent.png")
+    request2 = Request.new("http://kentas.lt/index.php")
+    request2:setId(1)
+    networkManager:execute(request)
+    networkManager:execute(request2)
 	-- Dimensions
 	width = getScreenWidth()
 	height = getScreenHeight()
@@ -61,7 +54,6 @@ function start()
 		map[t["x"]] = {}
 		map[t["x"]][t["y"]] = t["type"]
 	end
-    server = getServer()
 end
 
 -- Called when program is brought to foreground.
@@ -92,19 +84,19 @@ function update()
 --	end
 
 
---	local offset = 14.0
---	if input:keyPressed(constants["W"]) then
---		camera:addPosY(-offset)
---	end
---	if input:keyPressed(constants["S"]) then
---		camera:addPosY(offset)
---	end
---	if input:keyPressed(constants["A"]) then
---		camera:addPosX(offset)
---	end
---	if input:keyPressed(constants["D"]) then
---		camera:addPosX(-offset)
---	end
+	local offset = 14.0
+	if input:keyPressed(constants["W"]) then
+		camera:addPosY(-offset)
+	end
+	if input:keyPressed(constants["S"]) then
+		camera:addPosY(offset)
+	end
+	if input:keyPressed(constants["A"]) then
+		camera:addPosX(offset)
+	end
+	if input:keyPressed(constants["D"]) then
+		camera:addPosX(-offset)
+	end
 
 end
 

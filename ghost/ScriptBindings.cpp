@@ -18,7 +18,6 @@
 #include "Network/NetworkManager.h"
 #include "Network/HttpRequest.h"
 #include "Network/HttpResponse.h"
-#include "Network/Server.h"
 #include "ScenarioManager.h"
 #include "SceneManager.h"
 #include "GUIManager.h"
@@ -353,7 +352,6 @@ void registerClasses() {
 	registerScenarioManager();
 	registerSceneManager();
 	registerDatabase();
-	registerServer();
 }
 
 int getNode(lua_State* L) {
@@ -1911,18 +1909,4 @@ void registerDatabase() {
 	ADD_METHOD(methods, "execute", databaseExecute);
 	ScriptManager::addFunction("getDB", getDB);
     ScriptManager::addClass("Database", methods);
-}
-
-int getServer(lua_State* L) {
-	Server* server = SM_GET_SL()->getNetworkManager()->getServer();
-	SM_RETURN_OBJECT(L, "Server", Server, server);
-    return 1;
-}
-
-void registerServer() {
-    unordered_map<string, int (*)(lua_State*)> methods;
-	//ADD_METHOD(methods, "receive", serverReceive);
-	//ADD_METHOD(methods, "send", serverSend);
-	ScriptManager::addFunction("getServer", getServer);
-    ScriptManager::addClass("Server", methods);
 }

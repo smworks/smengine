@@ -995,9 +995,6 @@
     <ClCompile Include="ghost\Network\Request.cpp">
       <Filter>Source Files\Network</Filter>
     </ClCompile>
-    <ClCompile Include="ghost\Network\Server.cpp">
-      <Filter>Source Files\Network</Filter>
-    </ClCompile>
     <ClCompile Include="ghost\Network\NetworkManager.cpp">
       <Filter>Source Files\Network</Filter>
     </ClCompile>
@@ -1910,9 +1907,6 @@
       <Filter>Source Files\Network</Filter>
     </ClInclude>
     <ClInclude Include="ghost\Network\Request.h">
-      <Filter>Source Files\Network</Filter>
-    </ClInclude>
-    <ClInclude Include="ghost\Network\Server.h">
       <Filter>Source Files\Network</Filter>
     </ClInclude>
     <ClInclude Include="ghost\Network\NetworkManager.h">

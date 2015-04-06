@@ -15,7 +15,6 @@
 #include "GUIManager.h"
 
 const string ScriptManager::FUNCTION_EVENT_RESPONSE = "eventResponse";
-const string ScriptManager::FUNCTION_EVENT_SERVER_RESPONSE = "eventServerResponse";
 const string ScriptManager::FUNCTION_EVENT_GUI = "eventGUI";
 const string ScriptManager::FUNCTION_START = "start";
 const string ScriptManager::FUNCTION_RESIZE = "resize";
@@ -254,9 +253,6 @@ void ScriptManager::add(Node* node) {
                     }
 					if (!isFunctionAvailable(FUNCTION_EVENT_RESPONSE)) {
 						LOGE("Function \"%s\" not defined.", FUNCTION_EVENT_RESPONSE.c_str());
-					} else if (!isFunctionAvailable(FUNCTION_EVENT_SERVER_RESPONSE)) {
-						LOGE("Function \"%s\" not defined.",
-							FUNCTION_EVENT_SERVER_RESPONSE.c_str());
 					} else if (!isFunctionAvailable(FUNCTION_EVENT_GUI)) {
 						LOGE("Function \"%s\" not defined.", FUNCTION_EVENT_GUI.c_str());
 					} else if (!isFunctionAvailable(FUNCTION_START)) {
@@ -291,31 +287,6 @@ void ScriptManager::provideResponse(HttpResponse* response) {
 			lua_tostring(state_, lua_gettop(state_)));
 	}
 	lua_settop(state_, 0);
-}
-
-string ScriptManager::provideServerResponse(HttpResponse* response) {
-	ASSERT(response != 0, "Response from server is null.");
-	lua_getglobal(state_, FUNCTION_EVENT_SERVER_RESPONSE.c_str());
-	HttpResponse** udata = (HttpResponse**) lua_newuserdata(state_, sizeof(HttpResponse*));
-	*udata = response;
-	luaL_getmetatable(state_, "Response");
-	lua_setmetatable(state_, -2);
-	int result = lua_pcall(state_, 1, 1, 0);
-	if (result != LUA_OK) {
-		dumpStack(state_);
-		LOGE("Unable to call function \"%s\". Error: %s",
-			FUNCTION_EVENT_SERVER_RESPONSE.c_str(),
-			lua_tostring(state_, -1));
-		return "Error occurred while handling response.";
-	}
-	if (!lua_isstring(state_, -1)) {
-		dumpStack(state_);
-		return "Error, no lua response is returned.";
-	}
-	string res = lua_tostring(state_, -1);
-	LOGI("Provided response: %s. Lua top: %d. Thread: %u", res.c_str(), lua_gettop(state_), this_thread::get_id().hash());
-	lua_settop(state_, 0);
-	return res;
 }
 
 void ScriptManager::provideEventGUI(Node* node, int type) {

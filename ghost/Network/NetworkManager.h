@@ -32,11 +32,8 @@ public:
 	 * handle result.
 	 */
 	void execute(HttpRequest* request, HttpTask* task = 0);
-
-	Server* getServer();
 private:
 	ServiceLocator* services;
-	Server* server;
 };
 
 #endif
