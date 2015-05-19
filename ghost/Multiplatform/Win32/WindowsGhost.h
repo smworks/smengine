@@ -152,9 +152,11 @@ void logToFile(char* msg);
 	#define CHECK_GL_ERROR(msg) checkGLError(msg)
 	#define ASSERT(expression, ...) \
 		if (!(expression)) { LOGE(__VA_ARGS__); } assert(expression)
+	#define THROWEX(msg) throw runtime_error(msg)
 #else
 	#define CHECK_GL_ERROR(msg)
 	#define ASSERT(expression, ...) if (!(expression)) { LOGE(__VA_ARGS__); }
+	#define THROWEX(msg) throw runtime_error(msg)
 #endif
 
 

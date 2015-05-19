@@ -769,6 +769,8 @@
     <None Include="resources\shaders\surface_bckg_color.vert" />
     <None Include="resources\shaders\surface_bckg_image.frag" />
     <None Include="resources\shaders\surface_bckg_image.vert" />
+    <None Include="resources\shaders\temp_model.frag" />
+    <None Include="resources\shaders\temp_model.vert" />
     <None Include="resources\shaders\terrain.frag" />
     <None Include="resources\shaders\terrain.vert" />
     <None Include="resources\shaders\vertical_blur.frag" />

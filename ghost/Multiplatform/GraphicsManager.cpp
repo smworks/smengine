@@ -601,6 +601,7 @@ void GraphicsManager::renderNode(
 	if (renderable->getBlending()) {
 		glEnable(GL_BLEND);
 	}
+
 	SIZE renderCount = renderable->getRenderCount();
 	SIZE lastTexture = 0;
 	for (SIZE i = 0; i < renderCount; i++) {

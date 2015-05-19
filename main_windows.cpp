@@ -28,6 +28,14 @@ bool g_input = true;
 bool g_fullscreen = false;
 bool stopped = true;
 
+void enableInput() {
+	stopped = false;
+}
+
+void disableInput() {
+	stopped = true;
+}
+
 void enableFullScreen() {
 	int maxWidth = GetSystemMetrics(SM_CXSCREEN);
 	int maxHeight = GetSystemMetrics(SM_CYSCREEN);
@@ -81,27 +89,18 @@ void SetupPixelFormat() {
     SetPixelFormat(hDC, pixelformat, ppfd);
 }
 
-// Initialize OpenGL graphics
-bool InitGraphics(UINT32 width, UINT32 height)
-{
+void setupOpenGL(UINT32 width, UINT32 height) {
     hDC = GetDC(g_hwnd);
     SetupPixelFormat();
     hRC = wglCreateContext(hDC);
     wglMakeCurrent(hDC, hRC);
 	GLenum err = glewInit();
 	if (err != GLEW_OK) {
-		LOGE("GLEW not initialized.");
-		wglMakeCurrent(NULL, NULL);
-		wglDeleteContext(hRC);
-		return false;
+		THROWEX("GLEW not initialized");
 	}
 	if (!GLEW_VERSION_2_1) {
-		LOGW("This computer or terminal doesn't support OpenGL 2.1");
-		wglMakeCurrent(NULL, NULL);
-		wglDeleteContext(hRC);
-		return false;
+		THROWEX("This computer or terminal doesn't support OpenGL 2.1");
 	}
-	return true;
 }
 
 // Resize graphics to fit window
@@ -357,14 +356,8 @@ bool initializeRawInput(HWND& g_hwnd) {
 	return true;
 }
 
-int WINAPI WinMain (HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine, int nCmdShow)
-{
-	#ifdef _DEBUG
-		_CrtSetDbgFlag (_CRTDBG_ALLOC_MEM_DF | _CRTDBG_LEAK_CHECK_DF);
-		_CrtSetReportMode(_CRT_ERROR, _CRTDBG_MODE_DEBUG);
-	#endif
-	LOGI("Main thread id: %u", this_thread::get_id().hash());
-    LPCWSTR appname = TEXT("SMEngine");
+void createWindow(HINSTANCE hInstance) {
+	LPCWSTR appname = TEXT("SMEngine");
 	// Define the window class.
 	WNDCLASSEX w;
 	ZeroMemory(&w, sizeof(WNDCLASSEX));
@@ -380,49 +373,44 @@ int WINAPI WinMain (HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLin
 	w.hIconSm = NULL;
     // Register the window class.
     if (!RegisterClassEx(&w)) {
-		LOGE("Failed to register window struct.");
-		return FALSE;
+		THROWEX("Failed to register window struct");
 	}
 	// Window style.
 	DWORD exStyle = 0;
 	DWORD style = WS_OVERLAPPEDWINDOW; //WS_POPUP | WS_VISIBLE;
     // Create fullscreen window.
-	int width = WIDTH; //GetSystemMetrics(SM_CXSCREEN);
-	int height = HEIGHT; //GetSystemMetrics(SM_CYSCREEN);
+	//int width = WIDTH; //GetSystemMetrics(SM_CXSCREEN);
+	//int height = HEIGHT; //GetSystemMetrics(SM_CYSCREEN);
     g_hwnd = CreateWindowEx(exStyle, appname, appname, style,
-		CW_USEDEFAULT, CW_USEDEFAULT, width, height, 0, 0, hInstance, 0);
+		CW_USEDEFAULT, CW_USEDEFAULT, WIDTH, HEIGHT, 0, 0, hInstance, 0);
     if (!g_hwnd) {
-		LOGE("Failed to initialize window.");
-		return false;
+		THROWEX("Failed to initialize window");
 	}
-	// Create windows service locator instance.
+}
+
+void createEngineInstance() {
 	WindowsServiceLocator* wsl = new WindowsServiceLocator();
-	wsl->setScreenWidth(width);
-	wsl->setScreenHeight(height);
-	bool gui = true;
-    // Initialize OpenGL
-    if (!InitGraphics(width, height)) {
-		LOGD("Failed to initialize graphics system.");
-		LOGD("Engine will now show only simple CMD window.");
-		wsl->disableGui();
-		gui = false;
-	}
-	// Create engine instance.
+	wsl->setScreenWidth(WIDTH);
+	wsl->setScreenHeight(HEIGHT);
 	GHOST = new Engine(wsl);
 	if (!*GHOST) {
-		return false;
+		THROWEX("Engine instance not created");
 	}
-	// Continue handling user input.
-	stopped = false;
-	// Resume engine.
 	GHOST->resume();
-    // Display the window
-    ShowWindow(g_hwnd, nCmdShow);
+}
+
+void showWindow(int cmdShow) {
+    ShowWindow(g_hwnd, cmdShow);
     UpdateWindow(g_hwnd);
+}
+
+void setupMouse() {
 	// Init mouse.
 	initializeRawInput(g_hwnd);
 	//ShowCursor(false);
-    // Event loop
+}
+
+void runMainLoop() {
 	MSG msg;
     while (GHOST && !GHOST->getServiceLocator()->isFinished())  {
         while (PeekMessage(&msg, NULL, 0, 0, PM_REMOVE)) {
@@ -433,9 +421,11 @@ int WINAPI WinMain (HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLin
 			}
         }
         GHOST->computeFrame();
-		if (gui) SwapBuffers(hDC);
+		SwapBuffers(hDC);
     }
-	stopped = true;
+}
+
+void releaseResources() {
 	GHOST->pause();
 	delete GHOST;
 	LOGD("Engine deleted.");
@@ -443,13 +433,37 @@ int WINAPI WinMain (HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLin
 	glFinish();
 	glFlush();
 	// Release contexts and handles.
-	if (gui && !wglMakeCurrent(NULL, NULL)) {
+	if (!wglMakeCurrent(NULL, NULL)) {
 		LOGE("Unable to release DC and RC.");
 	}
-    if (gui && !wglDeleteContext(hRC)) {
+    if (!wglDeleteContext(hRC)) {
 		LOGE("Unable to delete rendering context.");
 	}
     ReleaseDC(g_hwnd, hDC);
+}
+
+int WINAPI WinMain (HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine, int cmdShow)
+{
+	#ifdef _DEBUG
+		_CrtSetDbgFlag (_CRTDBG_ALLOC_MEM_DF | _CRTDBG_LEAK_CHECK_DF);
+		_CrtSetReportMode(_CRT_ERROR, _CRTDBG_MODE_DEBUG);
+	#endif
+	LOGI("Main thread id: %u", this_thread::get_id().hash());
+    
+	try {
+		createWindow(hInstance);
+		setupOpenGL(WIDTH, HEIGHT);
+		createEngineInstance();
+		enableInput();
+		setupMouse();
+		showWindow(cmdShow);
+		runMainLoop();
+		disableInput();
+		releaseResources();
+	} catch (exception e) {
+		LOGE(e.what());
+	}
+	
 	return 777;
 }
 

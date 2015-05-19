@@ -63,6 +63,13 @@ function start()
     plane:setPosY(-2.0)
     plane:setScaleXYZ(100.0, 100.0, 100.0)
 
+    wall = Model.new("wall")
+    wall:setType("plane")
+    wall:setAmbient("#00000000")
+    wall:setShader(Shader.new("temp_model"))
+    wall:setRotY(-90.0)
+    wall:setScaleXYZ(100.0, 100.0, 100.0)
+
 end
 
 -- Called when program is brought to foreground.

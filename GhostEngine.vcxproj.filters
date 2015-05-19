@@ -2034,6 +2034,12 @@
     <None Include="resources\scripts\logic.lua">
       <Filter>Resource Files\scripts</Filter>
     </None>
+    <None Include="resources\shaders\temp_model.frag">
+      <Filter>Resource Files\shaders</Filter>
+    </None>
+    <None Include="resources\shaders\temp_model.vert">
+      <Filter>Resource Files\shaders</Filter>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <Xml Include="resources\scenes\start.xml">
