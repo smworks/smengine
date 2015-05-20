@@ -23,6 +23,7 @@ class Node;
 class Resource {
 public:
 	enum Type {
+		NULL_RESOURCE,
 		UNKNOWN,
 		SHADER,
 		SCRIPT,

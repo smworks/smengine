@@ -226,9 +226,8 @@ string ScriptManager::executeCode(string code) {
  * (Lua pops out scripts after using them).
  */
 void ScriptManager::add(Node* node) {
-	if (node->hasResource(Resource::SCRIPT)) {
-		script_ = dynamic_cast<Script*>(
-			node->getResource(Resource::SCRIPT));
+	if (node->getResource()->getType() == Resource::SCRIPT) {
+		script_ = dynamic_cast<Script*>(node->getResource());
 		if (script_ == 0) {
 			LOGE("Unable to cast resource to script object.");
 			return;

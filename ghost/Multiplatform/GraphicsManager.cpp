@@ -276,7 +276,7 @@ void GraphicsManager::render() {
 
 void GraphicsManager::renderGuiText(Node* node) {
 	renderNode(node, camera_->getProjection2D(), true);
-	GUIText* text = dynamic_cast<GUIText*>(node->getResource(Resource::GUI_SURFACE));
+	GUIText* text = dynamic_cast<GUIText*>(node->getResource());
 	if (text == 0) {
 		return;
 	}
@@ -317,17 +317,17 @@ void GraphicsManager::refreshRenderList() {
 	static vector<Node*>::const_iterator it;
 	it = renderArray.begin();
 	while (it != renderArray.end()) {
-		if ((*it)->hasResource(Resource::SPRITE)) {
+		if ((*it)->getResource()->getType() == Resource::SPRITE) {
 			spriteArray_.push_back((*it));
 		}
-		if ((*it)->hasResource(Resource::MODEL)
-			|| (*it)->hasResource(Resource::DYNAMIC_OBJECT)) {
+		if ((*it)->getResource()->getType() == Resource::MODEL
+			|| (*it)->getResource()->getType() == Resource::DYNAMIC_OBJECT) {
 			modelArray_.push_back((*it));
 		}
-		if ((*it)->hasResource(Resource::GUI_SURFACE)) {
+		if ((*it)->getResource()->getType() == Resource::GUI_SURFACE) {
 			guiArray_.push_back((*it));
 		}
-		if ((*it)->hasResource(Resource::LIGHT)) {
+		if ((*it)->getResource()->getType() == Resource::LIGHT) {
 			lights_.push_back((*it));
 		}
 		it++;
@@ -408,58 +408,33 @@ void GraphicsManager::renderVertices(Mat4 mat) {
     CHECK_GL_ERROR("Rendering vertices");
 }
 
-void GraphicsManager::renderNode(
-	Node* node, Mat4 mat, bool ortho)
-{
-	if (!node->getState(Node::RENDERABLE)) {
-		return;
-	}
-	// Retrieve model data.
-	Renderable* renderable = 0;
-	bool gui = false;
-	if (node->hasResource(Resource::SPRITE)) {
-		renderable = dynamic_cast<Renderable*>(node->getResource(Resource::SPRITE));
-	} else if (node->hasResource(Resource::GUI_SURFACE)) {
-		renderable = dynamic_cast<Renderable*>(node->getResource(Resource::GUI_SURFACE));
-		gui = true;
-	} else if (node->hasResource(Resource::MODEL)) {
-		Model* so = dynamic_cast<Model*>(node->getResource(Resource::MODEL));
-		renderable = dynamic_cast<Renderable*>(so);
-		// Check for frustum culling.
+void GraphicsManager::renderNode(Node* node, Mat4 mat, bool ortho) {
+	if (!node->getState(Node::RENDERABLE)) return;
+	Renderable* renderable = dynamic_cast<Renderable*>(node->getResource());
+	ASSERT(renderable != 0, "Node %s does not contain renderable resource",
+		node->getName().c_str());
+	Model* model = dynamic_cast<Model*>(node->getResource());
+	if (model != 0) { // Check for frustum culling.
 		Vec3 posAbs;
 		node->getPosAbs(posAbs);
-		if (so->getData()->getBoundingVolume() != 0
-			&& so->getData()->getBoundingVolume()->isInFrustum(
+		if (model->getData()->getBoundingVolume() != 0
+			&& model->getData()->getBoundingVolume()->isInFrustum(
 			camera_, posAbs, node->getScale())
 			== BoundingVolume::OUTSIDE)
 		{
 			return;
 		}
-	} else if (node->hasResource(Resource::DYNAMIC_OBJECT)) {
-		renderable = dynamic_cast<Renderable*>(node->getResource(Resource::DYNAMIC_OBJECT));
-	}
-
-	if (renderable == 0) {
-		LOGW("Renderable with name \"%s\" is null.",
-			node->getName().c_str());
-		return;
 	}
 	Shader* shader = renderable->getShader();
-	if (shader == 0) {
-		LOGW("Unable to retrieve shader for node: %s.",
+	ASSERT(shader != 0, "Node %s does not contain shader in renderable resource",
 			node->getName().c_str());
-		return;
-	}
-	if (!shader->isValid()) {
-		LOGW("Shader \"%s\" is not valid.", shader->getName().c_str());
-	}
+	ASSERT(shader->isValid(), "Shader \"%s\" is not valid.", shader->getName().c_str());
 
-	// Select shader program to use.
 	useProgram(shader->getId());
 	Mat4 res;
 	if (!ortho) {
 		Matrix::multiply(mat, node->getMatrix(), res);
-	} else if (gui) {
+	} else if (node->getResource()->getType() == Resource::GUI_SURFACE) {
 		GUISurface* surface = dynamic_cast<GUISurface*>(renderable);
 		Mat4 pos, scale, posScale;
 		float posY = services_->getScreenHeight() - surface->getPosY() - surface->getHeight();
@@ -539,14 +514,14 @@ void GraphicsManager::renderNode(
 	} else {
 		return;
 	}
-	// Bind cube map.
-	if (node->hasResource(Resource::CUBE_MAP)
-		&& shader->hasHandle(Shader::CUBE_MAP)) {
-		CubeMap* t = static_cast<CubeMap*>(
-			node->getResource(Resource::CUBE_MAP));
-		bindTexture(t->getId(), 0, CUBE_MAP);
-		glUniform1i(shader->getHandle(Shader::CUBE_MAP), 0);
-	}
+	//// Bind cube map.
+	//if (node->hasResource(Resource::CUBE_MAP)
+	//	&& shader->hasHandle(Shader::CUBE_MAP)) {
+	//	CubeMap* t = static_cast<CubeMap*>(
+	//		node->getResource(Resource::CUBE_MAP));
+	//	bindTexture(t->getId(), 0, CUBE_MAP);
+	//	glUniform1i(shader->getHandle(Shader::CUBE_MAP), 0);
+	//}
 	int hTextures[8];
 	hTextures[0] = glGetUniformLocation(shader->getId(), SHADER_MAIN_TEXTURE);
 	//// Bind the texture.
@@ -568,41 +543,10 @@ void GraphicsManager::renderNode(
 	//	bindTexture(tex->getId(), i + 1);
 	//	glUniform1i(hTextures[texture], texture);
 	//}
-	int renderType;
-	switch (renderable->getRenderType()) {
-		case Renderable::RENDER_TYPE_POINTS:
-			renderType = GL_POINTS;
-			//glPointSize(renderable->getPointSize());
-		break;
-		case Renderable::RENDER_TYPE_LINES:
-			renderType = GL_LINES;
-			glLineWidth(renderable->getLineWidth());
-		break;
-		case Renderable::RENDER_TYPE_TRIANGLE_FAN:
-			renderType = GL_TRIANGLE_FAN;
-		break;
-		case Renderable::RENDER_TYPE_TRIANGLE_STRIP:
-			renderType = GL_TRIANGLE_STRIP;
-		break;
-		case Renderable::RENDER_TYPE_QUADS:
-			renderType = GL_TRIANGLES;
-			// TODO: renderType = GL_QUADS;
-		break;
-		default:
-			renderType = GL_TRIANGLES;
-		break;
-	}
-	setWindingOrder(renderable->getWindingType());
-	if (renderable->getCullFace()) {
-		glEnable(GL_CULL_FACE);
-	}
-	else {
-		glDisable(GL_CULL_FACE);
-	}
-	if (renderable->getBlending()) {
-		glEnable(GL_BLEND);
-	}
 
+	setWindingOrder(renderable->getWindingType());
+	renderable->getCullFace() ? glEnable(GL_CULL_FACE) : glDisable(GL_CULL_FACE);
+	if (renderable->getBlending()) glEnable(GL_BLEND);
 	SIZE renderCount = renderable->getRenderCount();
 	SIZE lastTexture = 0;
 	for (SIZE i = 0; i < renderCount; i++) {
@@ -641,30 +585,11 @@ void GraphicsManager::renderNode(
 		} else if (lastTexture == 0) {
 			shader->setFloat(Shader::MAIN_TEXTURE, 0.0f);
 		}
-		if (renderable->getIBO() > 0) {
-			glBindBuffer(GL_ELEMENT_ARRAY_BUFFER,
-				renderable->getIBO());
-			if (renderable->getIndexType() == Renderable::INDEX_TYPE_USHORT) {
-				glDrawElements(renderType,
-					(GLint) renderable->getIndexCount(),
-					GL_UNSIGNED_SHORT, ((char*) 0) + renderable->getIndexOffset() * sizeof(short));
-				CHECK_GL_ERROR("glDrawElements with short indices");
-			} else {
-				glDrawElements(renderType,
-					(GLint) renderable->getIndexCount(),
-					GL_UNSIGNED_INT, ((char*) 0) + renderable->getIndexOffset() * sizeof(int));
-				CHECK_GL_ERROR("glDrawElements with int indices in renderNode()");
-			}
-			glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
-		}
-		else {
-			glDrawArrays(renderType, 0, (GLint) renderable->getVertexCount());
-			CHECK_GL_ERROR("glDrawArrays in renderNode()");
-		}
+		renderable->getIBO() == 0 ? drawViaVertices(renderable) : drawViaIndices(renderable);
 	}
-	if (renderable->getBlending()) {
-		glDisable(GL_BLEND);
-	}
+
+	if (renderable->getBlending()) glDisable(GL_BLEND);
+
 	if (renderable->getUVOffset() != -1 && shader->hasHandle(Shader::UV)) {
 		glDisableVertexAttribArray(shader->getHandle(Shader::UV));
 	}
@@ -673,6 +598,48 @@ void GraphicsManager::renderNode(
 		glDisableVertexAttribArray(shader->getHandle(Shader::NORMAL));
 	}
 	glDisableVertexAttribArray(shader->getHandle(Shader::POS));
+}
+
+int GraphicsManager::getRenderType(Renderable* renderable) {
+	switch (renderable->getRenderType()) {
+		case Renderable::RENDER_TYPE_POINTS:
+			return GL_POINTS;
+			//glPointSize(renderable->getPointSize());
+		case Renderable::RENDER_TYPE_LINES:
+			glLineWidth(renderable->getLineWidth());
+			return GL_LINES;
+		case Renderable::RENDER_TYPE_TRIANGLES:
+			return GL_TRIANGLES;
+		case Renderable::RENDER_TYPE_TRIANGLE_FAN:
+			return GL_TRIANGLE_FAN;
+		case Renderable::RENDER_TYPE_TRIANGLE_STRIP:
+			return GL_TRIANGLE_STRIP;
+		case Renderable::RENDER_TYPE_QUADS:
+			return GL_TRIANGLES;
+			// TODO: renderType = GL_QUADS;
+		default:
+			THROWEXEXT("Unknown render type: %d.", renderable->getRenderType());
+	}
+}
+
+void GraphicsManager::drawViaVertices(Renderable* renderable) {
+	glDrawArrays(getRenderType(renderable), 0, (GLint) renderable->getVertexCount());
+	CHECK_GL_ERROR("glDrawArrays in renderNode()");
+}
+
+void GraphicsManager::drawViaIndices(Renderable* renderable) {
+	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER,
+	renderable->getIBO());
+	if (renderable->getIndexType() == Renderable::INDEX_TYPE_USHORT) {
+		glDrawElements(getRenderType(renderable), (GLint) renderable->getIndexCount(),
+			GL_UNSIGNED_SHORT, ((char*) 0) + renderable->getIndexOffset() * sizeof(short));
+		CHECK_GL_ERROR("glDrawElements with short indices");
+	} else {
+		glDrawElements(getRenderType(renderable), (GLint) renderable->getIndexCount(),
+			GL_UNSIGNED_INT, ((char*) 0) + renderable->getIndexOffset() * sizeof(int));
+		CHECK_GL_ERROR("glDrawElements with int indices in renderNode()");
+	}
+	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
 }
 
 void GraphicsManager::renderQuad(

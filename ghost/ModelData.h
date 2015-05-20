@@ -63,7 +63,7 @@ public:
 	vector<Material>& getMaterials();
 	vector<Part>& getParts();
 	void setCullFace(bool state);
-	bool isFacesCulled();
+	bool areFacesCulled();
 private:
 	VertexType vertexType_;
 	UINT32 vertexStride_, posOffset_, normalOffset_, uvOffset_;

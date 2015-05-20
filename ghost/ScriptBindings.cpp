@@ -31,6 +31,7 @@
 #include "Resources/TextureRGB.h"
 #include "Resources/AtlasTexture.h"
 #include "Resources/GUIButton.h"
+#include "Resources/NullResource.h"
 #include "Resources/Scenario.h"
 #include "Extensions/Vehicle.h"
 #include "ModelData.h"
@@ -244,7 +245,7 @@ int pointerIsOver(lua_State* L) {
 	Input* input = ScriptManager::getServiceLocator()->getInput();
 	float x = (float) input->getPointerX();
 	float y = (float) input->getPointerY();
-	if (node->hasResource(Resource::SPRITE)) {
+	if (node->getResource()->getType() == Resource::SPRITE) {
 		if (x > node->getPos().getX()
 			&& x < node->getPos().getX() + node->getScale().getX()
 			&& y > node->getPos().getY()
@@ -253,9 +254,8 @@ int pointerIsOver(lua_State* L) {
 			lua_pushboolean(L, true);
 			return 1;
 		}
-	}
-	else if (node->hasResource(Resource::GUI_SURFACE)) {
-		GUISurface* surface = dynamic_cast<GUIText*>(node->getResource(Resource::GUI_SURFACE));
+	} else if (node->getResource()->getType() == Resource::GUI_SURFACE) {
+		GUISurface* surface = dynamic_cast<GUIText*>(node->getResource());
 		if (x > surface->getMarginLeft()
 			&& x < surface->getMarginLeft() + surface->getWidth()
 			&& y > surface->getMarginBottom()
@@ -366,16 +366,6 @@ int getNode(lua_State* L) {
     return 1;
 }
 
-int newNode(lua_State* L) {
-    string val = SM_GET_STRING(L, 0);
-	Node* node = NEW Node();
-	node->setName(val);
-	SM_GET_SL()->getRootNode()->addChild(node);
-	node->setParent(SM_GET_SL()->getRootNode());
-	SM_RETURN_OBJECT(L, "Node", Node, node);
-    return 1;
-}
-
 int deleteNode(lua_State* L) {
     //LOGI("Deleting node.");
 	//Node* node = *(Node**) luaL_checkudata(L, 1, "node");
@@ -417,7 +407,7 @@ int nodeDisablePhysics(lua_State* L) {
 
 int nodeSetMass(lua_State* L) {
 	Node* node = SM_GET_OBJECT(L, 0, Node);
-	Resource* model = node->getResource(Resource::MODEL);
+	Resource* model = node->getResource();
 	if (model == 0) {
 		LOGW("Unable to set mass for node \"%s\", because there is no model attached to it.",
 			node->getName().c_str());
@@ -473,12 +463,12 @@ int nodeSetShader(lua_State* L) {
 	}
 	Shader* shader = SM_GET_OBJECT(L, 1, Shader);
 	ASSERT(shader != 0, "No shader specified for setShader method.");
-	if (node->hasResource(Resource::MODEL)) {
-		Model* obj = static_cast<Model*>(
-			node->getResource(Resource::MODEL));
+	Resource* resource = node->getResource();
+	if (resource->getType() == Resource::MODEL) {
+		Model* obj = static_cast<Model*>(resource);
 		obj->setShader(shader);
-	} else if (node->hasResource(Resource::SPRITE)) {
-		Sprite* spr = static_cast<Sprite*>(node->getResource(Resource::SPRITE));
+	} else if (resource->getType() == Resource::SPRITE) {
+		Sprite* spr = static_cast<Sprite*>(resource);
 		spr->setShader(shader);
 	}
 	SM_POP_ARGS(L, SM_GET_ARGUMENT_COUNT(L));
@@ -487,12 +477,12 @@ int nodeSetShader(lua_State* L) {
 
 int nodeGetShader(lua_State* L) {
 	Node* node = SM_GET_OBJECT(L, 0, Node);
-	if (node->hasResource(Resource::MODEL)) {
-		Model* obj = static_cast<Model*>(
-			node->getResource(Resource::MODEL));
+	Resource* resource = node->getResource();
+	if (resource->getType() == Resource::MODEL) {
+		Model* obj = static_cast<Model*>(resource);
 		SM_RETURN_OBJECT(L, "Shader", Shader, obj->getShader());
-	} else if (node->hasResource(Resource::SPRITE)) {
-		Sprite* spr = static_cast<Sprite*>(node->getResource(Resource::SPRITE));
+	} else if (resource->getType() == Resource::SPRITE) {
+		Sprite* spr = static_cast<Sprite*>(resource);
 		SM_RETURN_OBJECT(L, "Shader", Shader, spr->getShader());
 	}
 	return 0;
@@ -502,15 +492,14 @@ int nodeAddTexture(lua_State* L) {
 	Node* node = SM_GET_OBJECT(L, 0, Node);
 	ASSERT(SM_GET_ARGUMENT_COUNT(L) == 2, "addTexture method expects argument of type Texture.");
 	Texture* texture = SM_GET_OBJECT(L, 1, Texture);
-	if (node->hasResource(Resource::SPRITE)) {
-		Sprite* obj = static_cast<Sprite*>(
-		node->getResource(Resource::SPRITE));
+	if (node->getResource()->getType() == Resource::SPRITE) {
+		Sprite* obj = static_cast<Sprite*>(node->getResource());
 		if (obj != 0) {
 			obj->addTexture(texture);
 		}
-	} else if (node->hasResource(Resource::MODEL)) {
+	} else if (node->getResource()->getType() == Resource::MODEL) {
 		Model* obj = static_cast<Model*>(
-		node->getResource(Resource::MODEL));
+		node->getResource());
 		if (obj != 0) {
 			obj->addTexture(texture);
 		}
@@ -521,7 +510,7 @@ int nodeAddTexture(lua_State* L) {
 int nodeSetSprite(lua_State* L) {
 	Node* node = SM_GET_OBJECT(L, 0, Node);
 	INT32 index = SM_GET_INT(L, 1);
-	Sprite* obj = static_cast<Sprite*>(node->getResource(Resource::SPRITE));
+	Sprite* obj = static_cast<Sprite*>(node->getResource());
 	if (obj != 0) {
 		obj->setSpriteIndex(index);
 	}
@@ -530,20 +519,13 @@ int nodeSetSprite(lua_State* L) {
 
 int nodeGetSpriteCount(lua_State* L) {
 	Node* node = SM_GET_OBJECT(L, 0, Node);
-	Sprite* obj = static_cast<Sprite*>(node->getResource(Resource::SPRITE));
+	Sprite* obj = static_cast<Sprite*>(node->getResource());
     SIZE indexCount = 0;
 	if (obj != 0) {
 		indexCount = obj->getIndexCount();
 	}
 	SM_POP_ARGS(L, SM_GET_ARGUMENT_COUNT(L));
 	return 1;
-}
-
-int setName(lua_State* L) {
-	Node* node = SM_GET_OBJECT(L, 0, Node);
-	string name = SM_GET_STRING(L, 1);
-	node->setName(name);
-	return 0;
 }
 
 int getName(lua_State* L) {
@@ -634,7 +616,7 @@ int moveZ(lua_State* L) {
 
 int nodeGuiTextSetSize(lua_State* L) {
 	Node* node = SM_GET_OBJECT(L, 0, Node);
-	GUIText* text = dynamic_cast<GUIText*>(node->getResource(Resource::GUI_SURFACE));
+	GUIText* text = dynamic_cast<GUIText*>(node->getResource());
 	if (text == 0) {
 		LOGW("Node does not contain GUIText or its children resource.");
 		return 0;
@@ -646,7 +628,7 @@ int nodeGuiTextSetSize(lua_State* L) {
 
 int nodeGuiTextSetText(lua_State* L) {
     Node* node = SM_GET_OBJECT(L, 0, Node);
-	GUIText* text = dynamic_cast<GUIText*>(node->getResource(Resource::GUI_SURFACE));
+	GUIText* text = dynamic_cast<GUIText*>(node->getResource());
 	if (text == 0) {
 		LOGW("Node does not contain GUIText or its children resource.");
 		return 0;
@@ -658,7 +640,7 @@ int nodeGuiTextSetText(lua_State* L) {
 
 int nodeGuiTextSetColor(lua_State* L) {
     Node* node = SM_GET_OBJECT(L, 0, Node);
-	GUIText* text = dynamic_cast<GUIText*>(node->getResource(Resource::GUI_SURFACE));
+	GUIText* text = dynamic_cast<GUIText*>(node->getResource());
 	if (text == 0) {
 		LOGW("Node does not contain GUIText or its children resource.");
 		return 0;
@@ -672,7 +654,7 @@ int nodeGuiSetBackground(lua_State* L) {
     Node* node = SM_GET_OBJECT(L, 0, Node);
 	ASSERT(SM_IS_STRING(L, 1) || SM_IS_OBJECT(L, 1),
 		"Argument type for setBackground() must be string or texture object.");
-	GUISurface* surface = dynamic_cast<GUISurface*>(node->getResource(Resource::GUI_SURFACE));
+	GUISurface* surface = dynamic_cast<GUISurface*>(node->getResource());
 	if (surface == 0) {
 		LOGW("Node does not contain GUISurface or its children resource.");
 		return 0;
@@ -692,7 +674,7 @@ int nodeGuiSetBackground(lua_State* L) {
 
 int nodeGuiGetBackground(lua_State* L) {
 	Node* node = SM_GET_OBJECT(L, 0, Node);
-	GUISurface* surface = dynamic_cast<GUISurface*>(node->getResource(Resource::GUI_SURFACE));
+	GUISurface* surface = dynamic_cast<GUISurface*>(node->getResource());
 	if (surface == 0) {
 		LOGW("Node does not contain GUISurface resource.");
 		return 0;
@@ -703,7 +685,7 @@ int nodeGuiGetBackground(lua_State* L) {
 
 int nodeGetWidth(lua_State* L) {
 	Node* node = SM_GET_OBJECT(L, 0, Node);
-	GUISurface* surface = dynamic_cast<GUISurface*>(node->getResource(Resource::GUI_SURFACE));
+	GUISurface* surface = dynamic_cast<GUISurface*>(node->getResource());
 	if (surface == 0) {
 		LOGW("Node does not contain GUISurface resource.");
 		return 0;
@@ -714,7 +696,7 @@ int nodeGetWidth(lua_State* L) {
 
 int nodeGetHeight(lua_State* L) {
 	Node* node = SM_GET_OBJECT(L, 0, Node);
-	GUISurface* surface = dynamic_cast<GUISurface*>(node->getResource(Resource::GUI_SURFACE));
+	GUISurface* surface = dynamic_cast<GUISurface*>(node->getResource());
 	if (surface == 0) {
 		LOGW("Node does not contain GUISurface resource.");
 		return 0;
@@ -725,7 +707,7 @@ int nodeGetHeight(lua_State* L) {
 
 int nodeSetWidth(lua_State* L) {
     Node* node = SM_GET_OBJECT(L, 0, Node);
-	GUISurface* surface = dynamic_cast<GUISurface*>(node->getResource(Resource::GUI_SURFACE));
+	GUISurface* surface = dynamic_cast<GUISurface*>(node->getResource());
 	if (surface == 0) {
 		LOGW("Node does not contain GUISurface resource.");
 		return 0;
@@ -737,7 +719,7 @@ int nodeSetWidth(lua_State* L) {
 
 int nodeSetHeight(lua_State* L) {
     Node* node = SM_GET_OBJECT(L, 0, Node);
-	GUISurface* surface = dynamic_cast<GUIText*>(node->getResource(Resource::GUI_SURFACE));
+	GUISurface* surface = dynamic_cast<GUIText*>(node->getResource());
 	if (surface == 0) {
 		LOGW("Node does not contain GUISurface resource.");
 		return 0;
@@ -749,7 +731,7 @@ int nodeSetHeight(lua_State* L) {
 
 int nodeSetMarginLeft(lua_State* L) {
     Node* node = SM_GET_OBJECT(L, 0, Node);
-	GUISurface* surface = dynamic_cast<GUISurface*>(node->getResource(Resource::GUI_SURFACE));
+	GUISurface* surface = dynamic_cast<GUISurface*>(node->getResource());
 	if (surface == 0) {
 		LOGW("Node does not contain GUISurface resource.");
 		return 0;
@@ -762,7 +744,7 @@ int nodeSetMarginLeft(lua_State* L) {
 
 int nodeGetMarginLeft(lua_State* L) {
 	Node* node = SM_GET_OBJECT(L, 0, Node);
-	GUISurface* surface = dynamic_cast<GUISurface*>(node->getResource(Resource::GUI_SURFACE));
+	GUISurface* surface = dynamic_cast<GUISurface*>(node->getResource());
 	if (surface == 0) {
 		LOGW("Node does not contain GUISurface resource.");
 		return 0;
@@ -773,7 +755,7 @@ int nodeGetMarginLeft(lua_State* L) {
 
 int nodeSetMarginBottom(lua_State* L) {
     Node* node = SM_GET_OBJECT(L, 0, Node);
-	GUISurface* surface = dynamic_cast<GUISurface*>(node->getResource(Resource::GUI_SURFACE));
+	GUISurface* surface = dynamic_cast<GUISurface*>(node->getResource());
 	if (surface == 0) {
 		LOGW("Node does not contain GUISurface resource.");
 		return 0;
@@ -786,7 +768,7 @@ int nodeSetMarginBottom(lua_State* L) {
 
 int nodeGetMarginBottom(lua_State* L) {
 	Node* node = SM_GET_OBJECT(L, 0, Node);
-	GUISurface* surface = dynamic_cast<GUISurface*>(node->getResource(Resource::GUI_SURFACE));
+	GUISurface* surface = dynamic_cast<GUISurface*>(node->getResource());
 	if (surface == 0) {
 		LOGW("Node does not contain GUISurface resource.");
 		return 0;
@@ -797,7 +779,7 @@ int nodeGetMarginBottom(lua_State* L) {
 
 int nodeSetAmbient(lua_State* L) {
 	Node* node = SM_GET_OBJECT(L, 0, Node);
-	Model* model = dynamic_cast<Model*>(node->getResource(Resource::MODEL));
+	Model* model = dynamic_cast<Model*>(node->getResource());
 	ASSERT(model != 0, "Node does not contain model resource.");
 	ASSERT(SM_GET_ARGUMENT_COUNT(L) == 2, "Method setAmbient expects 1 parameter of type string.");
 	string ambient = SM_GET_STRING(L, 1);
@@ -807,7 +789,7 @@ int nodeSetAmbient(lua_State* L) {
 
 int nodeSetType(lua_State* L) {
 	Node* node = SM_GET_OBJECT(L, 0, Node);
-	Model* model = dynamic_cast<Model*>(node->getResource(Resource::MODEL));
+	Model* model = dynamic_cast<Model*>(node->getResource());
 	ASSERT(model != 0, "Node does not contain model resource.");
 	ASSERT(SM_GET_ARGUMENT_COUNT(L) == 2, "Method setType expects 1 parameter of type string.");
 	string type = SM_GET_STRING(L, 1);
@@ -899,7 +881,6 @@ NODE_GET_THREE(getScaleXYZ, getScale().getPointer())
 void registerNode() {
     unordered_map<string, int (*)(lua_State*)> methods;
 	ADD_METHOD(methods, "getNode", getNode);
-    ADD_METHOD(methods, "new", newNode);
     ADD_METHOD(methods, "__gc", deleteNode);
 	ADD_METHOD(methods, "setParent", nodeSetParent);
 	ADD_METHOD(methods, "addChild", nodeAddChild);
@@ -912,7 +893,6 @@ void registerNode() {
 	ADD_METHOD(methods, "addTexture", nodeAddTexture);
     ADD_METHOD(methods, "setIndex", nodeSetSprite);
     ADD_METHOD(methods, "getCount", nodeGetSpriteCount);
-    ADD_METHOD(methods, "setName", setName);
     ADD_METHOD(methods, "getName", getName);
     ADD_METHOD(methods, "setVisibility", setVisibility);
     ADD_METHOD(methods, "getVisibility", getVisibility);
@@ -1078,31 +1058,9 @@ int newModel(lua_State* L) {
 		model = NEW Model(ScriptManager::getServiceLocator());
 		SM_GET_RM()->add(name, model);
 	}
-	//if (model == 0) {
-	//	model = NEW Model(ScriptManager::getServiceLocator());
-	//	model->getAttributes().setString(Resource::ATTR_FILE, name);
-	//	if (argc > 1) {
-	//		string type = SM_GET_STRING(L, 1);
-	//		model->getAttributes().setString(
-	//			Model::ATTR_TYPE, type);
-	//		if (type == Model::VAL_SHAPE) {
-	//			model->getAttributes().setFloat(
-	//				Model::ATTR_HEIGHT, SM_GET_FLOAT(L, 2));
-	//		} else if (type == Model::VAL_SPHERE) {
-	//			model->getAttributes().setInt(
-	//				Model::ATTR_VERTICAL_LOD, SM_GET_INT(L, 2));
-	//			model->getAttributes().setInt(
-	//				Model::ATTR_HORIZONTAL_LOD, SM_GET_INT(L, 3));
-	//		}
-	//	}
-	//	SM_GET_RM()->add(name, model);
-	//	model->create();
-	//}
-	Node* node = NEW Node();
-	node->setName(name + "_ModelResource");
+	Node* node = NEW Node(name + "_ModelResource", model);
 	SM_GET_SL()->getRootNode()->addChild(node);
 	node->setParent(SM_GET_SL()->getRootNode());
-	node->addResource(model);
 	SM_RETURN_OBJECT(L, "Node", Node, node);
     return 1;
 }
@@ -1144,11 +1102,9 @@ int newSprite(lua_State* L) {
 			sprite->addTexture(texture);
 		}
 	}
-	Node* node = NEW Node();
-	node->setName(val);
+	Node* node = NEW Node(val, sprite);
 	ScriptManager::getServiceLocator()->getRootNode()->addChild(node);
 	node->setParent(ScriptManager::getServiceLocator()->getRootNode());
-	node->addResource(sprite);
 	SM_RETURN_OBJECT(L, "Node", Node, node);
     return 1;
 }
@@ -1349,11 +1305,9 @@ int newGUIText(lua_State* L) {
 		text->create();
 		SM_GET_RM()->add(name, text);
 	}
-	Node* node = NEW Node();
-	node->setName(name + "_TextResource");
+	Node* node = NEW Node(name + "_TextResource", text);
 	ScriptManager::getServiceLocator()->getRootNode()->addChild(node);
 	node->setParent(ScriptManager::getServiceLocator()->getRootNode());
-	node->addResource(text);
 	SM_RETURN_OBJECT(L, "Node", Node, node);
     return 1;
 }
@@ -1388,11 +1342,9 @@ int newGUIButton(lua_State* L) {
 	}
 	button->create();
 	SM_GET_RM()->add(name, button);
-	Node* node = NEW Node();
-	node->setName(name);
+	Node* node = NEW Node(name, button);
 	ScriptManager::getServiceLocator()->getRootNode()->addChild(node);
 	node->setParent(ScriptManager::getServiceLocator()->getRootNode());
-	node->addResource(button);
 	SM_GET_SL()->getGUIManager()->refreshNodes(SM_GET_SL()->getRootNode());
 	SM_RETURN_OBJECT(L, "Node", Node, node);
     return 1;

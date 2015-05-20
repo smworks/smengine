@@ -30,6 +30,7 @@
 #include "Resources/GUIButton.h"
 #include "Resources/GUIInput.h"
 #include "Resources/Renderable.h"
+#include "Resources/NullResource.h"
 
 const string ResourceManager::ROOT_NODE = "root_node";
 const string ResourceManager::NODE = "node";
@@ -148,8 +149,9 @@ Node* ResourceManager::loadScene(const string& path) {
 	if (xmlNode == 0) {
 		return 0;
 	}
-	rootNode_ = NEW Node();
-	rootNode_->setName(services_->getDB()->getString(ROOT_NODE));
+	Resource* resource = NEW NullResource(services_);
+	add("rootNode", resource);
+	rootNode_ = NEW Node(services_->getDB()->getString(ROOT_NODE), resource);
 	loadNodes(xmlNode, rootNode_);
 	return rootNode_;
 }
@@ -162,18 +164,7 @@ void ResourceManager::loadNodes(
 	XmlNode* xmlNode = 0;
 	for (SIZE k = 0; k < nodeCount; k++) {
 		xmlNode = xmlNodes[k];
-		// Node name.
-		GET_VALUE(name, xmlNode, NAME);
-		if (name == 0) {
-			LOGW("Node name was not specified.");
-			LOGW("This might indicate error in XML file.");
-			LOGW("Parent node name is \"%s\".", parent->getName().c_str());
-			continue;
-		}
-		LOGD("Parsing node: %s.", name->c_str());
-		Node* node = NEW Node();
-		node->setName(*name);
-		node->setParent(parent);
+		Node* node = createNode(xmlNode, parent);
 		// Is node renderable.
 		GET_VALUE(renderable, xmlNode, RENDERABLE);
 		if (renderable != 0) {
@@ -183,7 +174,6 @@ void ResourceManager::loadNodes(
 			node->setState(Node::RENDERABLE,
 				parent->getState(Node::RENDERABLE));
 		}
-		loadResources(xmlNode, node);
 		// Load children nodes for current node.
 		if (xmlNode->countNodes(NODE) != 0) {
 			loadNodes(xmlNode, node);
@@ -193,54 +183,55 @@ void ResourceManager::loadNodes(
 	}
 }
 
-void ResourceManager::loadResources(XmlNode* xmlNode, Node* node) {
-	// Load additional resources that are
-	// required by node.
-	vector<XmlNode*> res = xmlNode->getNodes(RESOURCE);
-	SIZE size = res.size();
-	for (UINT32 i = 0; i < size; i++)	{
-		XmlNode* r = res[i];
-		string* type = r->getAttr(TYPE);
-		string* file = r->getAttr(FILE);
-		if (type == 0) {
-			LOGE("Type attribute not specified for node %s.",
-				node->getName().c_str());
-			continue;
-		}
-		Resource::Type resType = Resource::stringToType(*type);
-		Resource* tmp = create(resType);
-		if (tmp == 0) {
-			LOGW("Node \"%s\" contains unknown resource type: %s.",
-				node->getName().c_str(), type->c_str());
-			continue;
-		}
-		Attributes& attr = tmp->getAttributes();
-		if (file != 0) {
-			attr.setString(Resource::ATTR_FILE, *file);
-		}
-		vector<XmlNode*> attrib = r->getNodes(ATTRIBUTE);
-		for (UINT32 j = 0; j < attrib.size(); j++) {
-			XmlNode* a = attrib[j];
-			GET_VALUE(rn, a, TYPE);
-			GET_VALUE(rv, a, VALUE);
-			if (rn == 0 || rv == 0) {
-				continue;
-			}
-			attr.setString(*rn, *rv);
-		}
-        string name = node->getName() + "_" + attr.getString(FILE);
-        if (has(resType, name)) {
-            delete tmp;
-            tmp = get(resType, name);
-        }
-        else {
-            add(node->getName() + "_" + attr.getString(FILE), tmp);
-            tmp->create();
-        }
-		tmp->setNode(node);
-        node->addResource(tmp);
-		
+Node* ResourceManager::createNode(XmlNode* xmlNode, Node* parent) {
+	GET_VALUE(name, xmlNode, NAME);
+	if (name == 0) {
+		THROWEXEXT("Node name was not specified. This might indicate error in XML file. Parent node name is \"%s\".",
+			parent->getName().c_str());
 	}
+	LOGD("Parsing node: %s.", name->c_str());
+	vector<XmlNode*> res = xmlNode->getNodes(RESOURCE);
+	if (res.size() != 1) {
+		THROWEXEXT("Node %s must contain one resource.", name->c_str());
+	}
+	XmlNode* r = res[0];
+	string* type = r->getAttr(TYPE);
+	string* file = r->getAttr(FILE);
+	if (type == 0) {
+		THROWEXEXT("Type attribute not specified for node %s.", name->c_str());
+	}
+	Resource::Type resType = Resource::stringToType(*type);
+	Resource* resource = create(resType);
+	if (resource == 0) {
+		THROWEXEXT("Node \"%s\" contains unknown resource type: %s.",
+			name->c_str(), type->c_str());
+	}
+	Attributes& attr = resource->getAttributes();
+	if (file != 0) {
+		attr.setString(Resource::ATTR_FILE, *file);
+	}
+	vector<XmlNode*> attrib = r->getNodes(ATTRIBUTE);
+	for (UINT32 j = 0; j < attrib.size(); j++) {
+		XmlNode* a = attrib[j];
+		GET_VALUE(rn, a, TYPE);
+		GET_VALUE(rv, a, VALUE);
+		if (rn == 0 || rv == 0) {
+			continue;
+		}
+		attr.setString(*rn, *rv);
+	}
+    string resName = *name + "_" + attr.getString(FILE);
+    if (has(resType, resName)) {
+        delete resource;
+        resource = get(resType, resName);
+    } else {
+        add(resName, resource);
+        resource->create();
+    }
+	Node* node = NEW Node(*name, resource);
+	resource->setNode(node);
+	node->setParent(parent);
+	return node;
 }
 
 void ResourceManager::validateNode(
@@ -251,11 +242,11 @@ void ResourceManager::validateNode(
 
 	// If node has sprite resource and unspecified scale,
 	// set scale to original image dimensions.
-	if (node->hasResource(Resource::SPRITE)) {
+	if (node->getResource()->getType() == Resource::SPRITE) {
 		if (node->getScale().getX() - 1.0f < GHOST_DELTA
 			|| node->getScale().getY() - 1.0f < GHOST_DELTA)
 		{
-			Resource* res = node->getResource(Resource::SPRITE);
+			Resource* res = node->getResource();
 			if (res != 0) {
 				Sprite* spr = dynamic_cast<Sprite*>(res);
 				TextureRGBA* tex = (TextureRGBA*) spr->getPointerToTexture();
@@ -267,12 +258,12 @@ void ResourceManager::validateNode(
 	}
 	// If node contains physics resource, add node to physics manager.
 	// Also make sure the bounding box is available.
-	Resource* model = node->getResource(Resource::MODEL);
+	Resource* model = node->getResource();
 	if (model != 0 && model->getAttribute(Resource::ATTR_PHYSICS) == Resource::VAL_TRUE) {
 		services_->getPhysicsManager()->add(node);
 	}
 	// If node contains script resource, add node to script manager.
-	if (node->hasResource(Resource::SCRIPT)) {
+	if (node->getResource()->getType() == Resource::SCRIPT) {
 		services_->getScriptManager()->add(node);
 	}
 }

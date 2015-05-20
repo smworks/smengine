@@ -46,7 +46,7 @@ void SceneManager::update(double delta) {
 		if (sprite != 0) {
 			if (sceneHeight_ > 0) {
 				float heightRatio = (float) services_->getScreenHeight() / (float) sceneHeight_;
-				Sprite* spriteRes = static_cast<Sprite*>(sprite->getResource(Resource::SPRITE));
+				Sprite* spriteRes = static_cast<Sprite*>(sprite->getResource());
 				Texture* texture = spriteRes->getPointerToTexture();
 				sprite->getScale().setX(texture->getWidth() * heightRatio);
 				sprite->getScale().setY(texture->getHeight() * heightRatio);

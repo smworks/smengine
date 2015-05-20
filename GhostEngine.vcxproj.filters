@@ -1921,6 +1921,9 @@
     <ClInclude Include="ghost\Resources\ModelFactory.h">
       <Filter>Source Files\Resources</Filter>
     </ClInclude>
+    <ClInclude Include="ghost\Resources\NullResource.h">
+      <Filter>Source Files\Resources</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="resources\scenes\level.cfg">

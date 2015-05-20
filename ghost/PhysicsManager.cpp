@@ -126,12 +126,12 @@ void PhysicsManager::update(double time) {
 }
 
 void PhysicsManager::add(Node* node) {
-	if (!node->hasResource(Resource::MODEL)) {
+	if (node->getResource()->getType() != Resource::MODEL) {
 		LOGW("Unable to add node \"%s\" to physics manager, becaus model is missing.",
 			node->getName().c_str());
 		return;
 	}
-	Model* model = static_cast<Model*>(node->getResource(Resource::MODEL));
+	Model* model = static_cast<Model*>(node->getResource());
 	string modelType = model->getAttribute(Model::ATTR_TYPE);
 	if (model->getAttribute("physics_object") == "vehicle") {
 		PROFILE("Adding vehicle to physics manager.");
@@ -260,7 +260,7 @@ void PhysicsManager::setGraphicsManager(GraphicsManager* gm) {
 }
 
 void PhysicsManager::addBox(Node* node) {
-	Model* model = static_cast<Model*>(node->getResource(Resource::MODEL));
+	Model* model = static_cast<Model*>(node->getResource());
 	btVector3 dimensions = btVector3(
 		toFloat(model->getAttribute(Resource::ATTR_WIDTH).c_str()) * 0.5f * node->getScale().getX(),
 		toFloat(model->getAttribute(Resource::ATTR_HEIGHT).c_str()) * 0.5f * node->getScale().getY(),
@@ -308,7 +308,7 @@ void PhysicsManager::addBox(Node* node) {
 }
 
 void PhysicsManager::addSphere(Node* node) {
-	Model* model = static_cast<Model*>(node->getResource(Resource::MODEL));
+	Model* model = static_cast<Model*>(node->getResource());
 	float mass = toFloat(model->getAttribute(Resource::ATTR_MASS).c_str());
 	float scale = node->getScale().getMaxVal();
 	float radius = toFloat(model->getAttribute(Resource::ATTR_RADIUS).c_str()) * scale;
@@ -342,7 +342,7 @@ void PhysicsManager::addSphere(Node* node) {
 }
 
 void PhysicsManager::addMesh(Node* node) {
-	Model* model = static_cast<Model*>(node->getResource(Resource::MODEL));
+	Model* model = static_cast<Model*>(node->getResource());
 	if (model->getData() == 0 || model->getData()->getVertexCount() == 0) {
 		LOGW("Adding mesh from node \"%s\", that has no vertex data.",
 			node->getName().c_str());
@@ -494,7 +494,7 @@ void PhysicsManager::addVehicle(Node* node) {
 }
 
 void PhysicsManager::addTerrain(Node* node) {
-	Model* model = static_cast<Model*>(node->getResource(Resource::MODEL));
+	Model* model = static_cast<Model*>(node->getResource());
 	if (model->getData() == 0 || model->getData()->getVertexCount() == 0) {
 		LOGW("Adding mesh from node \"%s\", that has no vertex data.",
 			node->getName().c_str());

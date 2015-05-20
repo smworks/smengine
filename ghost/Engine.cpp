@@ -131,8 +131,6 @@ void Engine::loadScene() {
 #ifdef SMART_DEBUG_TEXT
 	// FPS message creation.
     if (debugNode_ == 0) {
-        debugNode_ = NEW Node;
-        debugNode_->setName("fps");
         debugText_ = NEW GUIText(services_);
         debugText_->setNode(debugNode_);
         debugText_->getAttributes().setString(GUIText::ATTR_WIDTH, "512px");
@@ -145,7 +143,7 @@ void Engine::loadScene() {
         debugText_->getAttributes().setString(GUIText::ATTR_SCREEN_TOP, "true");
         debugText_->create();
         services_->getRM()->add("debug text", debugText_);
-        debugNode_->addResource(debugText_);
+		debugNode_ = NEW Node("fps", debugText_);
         debugNode_->setState(Node::RENDERABLE, true);
         services_->getRootNode()->addChild(debugNode_);
     }
@@ -213,8 +211,8 @@ void Engine::updateNodes(Node* node, bool force) {
 		return;
 	}
 	static Mat4 tempMatrix;
-	if (node->hasResource(Resource::DYNAMIC_OBJECT)) {
-		Resource* res = node->getResource(Resource::DYNAMIC_OBJECT);
+	if (node->getResource()->getType() == Resource::DYNAMIC_OBJECT) {
+		Resource* res = node->getResource();
 		Animatable* anim = dynamic_cast<Animatable*>(res);
 		anim->nextFrame(time_);
 	}
@@ -282,10 +280,7 @@ void Engine::resizeResources(Node* node) {
 	if (node == 0) {
 		return;
 	}
-	const vector<Resource*>& res = node->getResources();
-	for (UINT32 i = 0; i < res.size(); i++) {
-		res[i]->resize();
-	}
+	node->getResource()->resize();
 	const vector<Node*>& children = node->getChildren();
 	vector<Node*>::const_iterator it = children.begin();
 	while (it != children.end()) {

@@ -158,6 +158,6 @@ void ModelData::setCullFace(bool state) {
 	facesCulled = state;
 }
 
-bool ModelData::isFacesCulled() {
+bool ModelData::areFacesCulled() {
 	return facesCulled;
 }

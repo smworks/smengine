@@ -24,18 +24,11 @@ public:
 		SCALING = 0x20 // Scaling update.
 	};
 public:
-	Node();
+	Node(string name, Resource* resource);
 	~Node();
 
-	/**
-	 * @param name - name of the node.
-	 */
-	void setName(const string &name);
-
-	/**
-	 * @return Name of the node.
-	 */
 	const string& getName();
+	Resource* getResource();
 
 	/**
 	 * @param state - one of the possible States enum
@@ -87,25 +80,9 @@ public:
 	 * @return Combined transformation matrix.
 	 */
 	float* getMatrix();
-
-	/**
-	 * @return Position matrix.
-	 */
 	float* getMatPos();
-
-	/**
-	 * @return Rotation matrix.
-	 */
 	float* getMatRot();
-
-	/**
-	 * @return Scaling matrix.
-	 */
 	float* getMatScale();
-
-	/**
-	 * @parent - parent node.
-	 */
 	void setParent(Node* parent);
 
 	/**
@@ -114,10 +91,6 @@ public:
 	 * was specified.
 	 */
 	Node* getParent();
-
-	/**
-	 * @param child - child node.
-	 */
 	void addChild(Node* child);
 
 	/**
@@ -173,66 +146,17 @@ public:
 	 * @param arr - vector containing node array.
 	 */
 	void toGUIArray(vector<Node*>& arr);
-
-	/**
-	 * @param resource - pointer to resource.
-	 */
-	void addResource(Resource* resource);
-
-	/**
-	 * @param type - resource type.
-	 * @return Pointer to resource, or 0 if resource not found.
-	 */
-	Resource* getResource(int type);
-
-	/**
-	 * @param type - resource type.
-	 * @return Number of specified type resources.
-	 */
-	SIZE getResourceCount(int type);
-
-	/**
-	 * @return Number of all resources.
-	 */
-	SIZE getResourceCount();
-
-	/**
-	 * Returns node resources of specified type.
-	 * If no type is specified, all resources will be returned.
-	 * @param type - resource type.
-	 * @return Vector containing pointers to resources
-	 * of specified type.
-	 */
-	vector<Resource*> getResources(int type = -1);
-
-	/**
-	 * @param type - resource type.
-	 * @return True if resource with
-	 * specified type was found.
-	 */
-	bool hasResource(int type);
-
-	/**
-	 * Prints basic information about node.
-	 * @param space - identation string.
-	 */
-	void print(string space = "");
-
-	/**
-	 * Prints brief current and children node
-	 * hierarchy with basic information.
-	 * @param space - identation string.
-	 */
-	void printNodes(const string& space);
+	void print(string ident = "");
+	void printNodes(string ident = "");
 
 private:
-	string name_;
-	vector<Node*> children_;
+	string name;
+	Resource* resource;
+	vector<Node*> children;
 	Node* parent_;
 	Vec3 pos_, scale_, center_;
 	Quaternion rot_;
 	Mat4 matPos_, matRot_, matScale_, matCombined_;
-	vector<Resource*> resources_;
 	int states_;
 };
 

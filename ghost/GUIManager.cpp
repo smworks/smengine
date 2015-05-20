@@ -38,26 +38,23 @@ void GUIManager::update() {
 		if (!node->getState(Node::RENDERABLE)) {
 			continue;
 		}
-        vector<Resource*> resources = node->getResources();
-        for (SIZE j = 0; j < resources.size(); j++) {
-            GUISurface* surface = dynamic_cast<GUISurface*>(resources[j]);
-            if (surface == 0) {
-                continue;
-            }
-			if (surface->getPosX() < x
-				&& surface->getWidth() + surface->getPosX() > x
-				&& surface->getPosY() < y
-				&& surface->getHeight() + surface->getPosY() > y)
+		GUISurface* surface = dynamic_cast<GUISurface*>(node->getResource());
+        if (surface == 0) continue;
+		if (surface->getPosX() < x
+			&& surface->getWidth() + surface->getPosX() > x
+			&& surface->getPosY() < y
+			&& surface->getHeight() + surface->getPosY() > y)
+		{
+			surface->hasFocus();
+			if (services_->getInput()->keyReleased(
+				Input::MOUSE_L) || services_->getInput()->keyReleased(Input::TOUCH))
 			{
-				surface->hasFocus();
-				if (services_->getInput()->keyReleased(Input::MOUSE_L) || services_->getInput()->keyReleased(Input::TOUCH)) {
-					selectedSurface_ = surface;
-					services_->getScriptManager()->provideEventGUI(
-						node, CLICK);
-					return;
-				}
+				selectedSurface_ = surface;
+				services_->getScriptManager()->provideEventGUI(
+					node, CLICK);
+				return;
 			}
-        }
+		}
     }
 }
 

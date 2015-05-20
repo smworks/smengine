@@ -650,6 +650,7 @@
     <ClInclude Include="ghost\Network\SocketParams.h" />
     <ClInclude Include="ghost\NodeManager.h" />
     <ClInclude Include="ghost\Resources\ModelFactory.h" />
+    <ClInclude Include="ghost\Resources\NullResource.h" />
     <ClInclude Include="ghost\Resources\Scenario.h" />
     <ClInclude Include="ghost\Resources\Symbol.h" />
     <ClInclude Include="ghost\Resources\TextureRGB.h" />

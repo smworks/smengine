@@ -111,14 +111,7 @@ private:
 	 * @param node - pointer to parent node.
 	 */
 	void loadNodes(XmlNode* xmlNode, Node* node);
-
-	/**
-	 * Reads node resources and loads them.
-	 * @param xmlNode - pointer to XML node
-	 * that contains node tag.
-	 * @param node - pointer to parent node.
-	 */
-	void loadResources(XmlNode* xmlNode, Node* node);
+	Node* createNode(XmlNode* xmlNode, Node* parent);
 
 	/**
 	 * Loads node transformations if
@@ -157,4 +150,4 @@ public:
 	unordered_map<string, Resource*>::iterator it_;
 };
 
-#endif /* SCENELOADER_H_ */
+#endif

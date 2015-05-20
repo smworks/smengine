@@ -58,11 +58,11 @@ Vehicle::Vehicle(Node* node, btDynamicsWorld* dynamicsWorld, vector<btRigidBody*
 	rollInfluence_(0.0f)
 {
 	// Read vehicle attributes.
-	if (!node->hasResource(Resource::MODEL)) {
+	if (node->getResource()->getType() != Resource::MODEL) {
 		LOGW("Vehicle does not contain model.");
 		return;
 	}
-	Model* model = static_cast<Model*>(node->getResource(Resource::MODEL));
+	Model* model = static_cast<Model*>(node->getResource());
 	mass_ = toFloat(model->getAttribute(MASS).c_str());
 	suspensionRestLength_ = toFloat(model->getAttribute(SUSPENSION_REST_LENGTH).c_str());
 	suspensionStiffness_ = toFloat(model->getAttribute(SUSPENSION_STIFFNESS).c_str());

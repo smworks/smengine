@@ -275,6 +275,10 @@ public:
 	 */
 	void renderNode(Node* node, Mat4 mat, bool ortho = false);
 
+	int getRenderType(Renderable* renderable);
+	void drawViaVertices(Renderable* renderable);
+	void drawViaIndices(Renderable* renderable);
+
 	/**
 	 * Render quad all over the screen.
 	 * @param shader - shader to be used for quad rendering.

@@ -39,6 +39,7 @@ Model::~Model() {
 bool Model::create() {
 	string model = getAttribute(ATTR_TYPE);
 	modelData_ = ModelFactory::create(model, getAttributes(), getServiceLocator());
+	setCullFace(modelData_->areFacesCulled());
 	// Move data to GPU.
 	// Create combined position, normal and uv buffer object.
 	glGenBuffers(1, &cbo_);
