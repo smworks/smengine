@@ -62,7 +62,7 @@ bool Model::create() {
 		}
 		glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
 	} else {
-		LOGD("Model \"%s\" does not contain indices.", getAttribute(ATTR_FILE).c_str());
+		LOGD("Model \"%s\" does not contain indices.", model.c_str());
 	}
 	if (getAttribute(ATTR_AMBIENT).length() > 0) {
 		setAmbient(Color(getAttribute(ATTR_AMBIENT)));

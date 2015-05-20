@@ -307,40 +307,40 @@ Texture::PNGData Texture::pngToRaw(INT8* in, bool upperLeft) {
 	// Read all the info up to the image data.
 	png_read_info(png_ptr, info_ptr);
 	// Variables to pass to get info.
-	int bit_depth, color_type;
+	int bit_depth, colorType;
 	png_uint_32 pngW, pngH;
 	// Get info about PNG.
-	png_get_IHDR(png_ptr, info_ptr, &pngW, &pngH, &bit_depth, &color_type,
+	png_get_IHDR(png_ptr, info_ptr, &pngW, &pngH, &bit_depth, &colorType,
 	NULL, NULL, NULL);
 	// Log image info.
 	string col = "Unknown";
-	switch (color_type) {
-	case PNG_COLOR_TYPE_GRAY:
+
+	if (colorType == PNG_COLOR_TYPE_GRAY) {
 		col = "PNG_COLOR_TYPE_GRAY";
-		break;
-	case PNG_COLOR_TYPE_GRAY_ALPHA:
-		col = "PNG_COLOR_TYPE_GRAY_ALPHA";
-		png.alpha = true;
-		break;
-	case PNG_COLOR_TYPE_PALETTE:
+	} else if (colorType == PNG_COLOR_TYPE_PALETTE) {
 		col = "PNG_COLOR_TYPE_PALETTE";
-		break;
-	case PNG_COLOR_TYPE_RGB:
+	} else if (colorType == PNG_COLOR_TYPE_RGB) {
 		col = "PNG_COLOR_TYPE_RGB";
-		break;
-	case PNG_COLOR_TYPE_RGB_ALPHA:
+	} else if (colorType == PNG_COLOR_TYPE_RGB_ALPHA) {
 		col = "PNG_COLOR_TYPE_RGB_ALPHA";
 		png.alpha = true;
-		break;
+	} else if (colorType == PNG_COLOR_TYPE_GRAY_ALPHA) {
+		col = "PNG_COLOR_TYPE_GRAY_ALPHA";
+		png.alpha = true;
 	}
+
 	if (bit_depth == 16) {
 		LOGD("Image channel size is 16 bit, so striping it to 8.");
         png_set_strip_16(png_ptr);
 	}
-	if (color_type == PNG_COLOR_TYPE_PALETTE) {
+	if (colorType == PNG_COLOR_TYPE_PALETTE) {
 		LOGD("Converting png from 8 bit to 24.");
 		png.alpha = false;
         png_set_palette_to_rgb(png_ptr);
+	}
+	if (colorType == PNG_COLOR_TYPE_GRAY || colorType == PNG_COLOR_TYPE_GRAY_ALPHA) {
+		LOGD("Converting png from grey to rgb.");
+		png_set_gray_to_rgb(png_ptr);
 	}
     if (png_get_valid(png_ptr, info_ptr, PNG_INFO_tRNS)) {
 		LOGD("Adding alpha channel to RGB image.");

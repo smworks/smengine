@@ -498,8 +498,7 @@ int nodeAddTexture(lua_State* L) {
 			obj->addTexture(texture);
 		}
 	} else if (node->getResource()->getType() == Resource::MODEL) {
-		Model* obj = static_cast<Model*>(
-		node->getResource());
+		Model* obj = static_cast<Model*>(node->getResource());
 		if (obj != 0) {
 			obj->addTexture(texture);
 		}

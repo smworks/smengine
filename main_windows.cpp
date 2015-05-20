@@ -184,7 +184,7 @@ void onInput(LPARAM lParam) {
 		case VK_OEM_3: key = Input::TILDE; break;
 
 		default:
-			LOGI("KEY: %d", key);
+			//LOGI("KEY: %d", key);
 			TCHAR ch = (TCHAR) key;
 			key = ch - 54;
 		}

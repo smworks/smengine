@@ -169,6 +169,7 @@ void ModelFactory::createPlane(ModelData* md, Attributes& attr, ServiceLocator* 
 		v.uv[1] = g_planeUV[i * 2 + 1];
 		vertices[i] = v;
 	}
+	md->getParts().resize(1);
 	md->setVertices(ModelData::PNT, reinterpret_cast<UINT8*>(vertices), vertexCount);
 	md->setBoundingVolume(NEW BoundingBox(Vec3(1.0f, 0.0f, 1.0f)));
 	attr.setString(Resource::ATTR_WIDTH, "1.0f");
