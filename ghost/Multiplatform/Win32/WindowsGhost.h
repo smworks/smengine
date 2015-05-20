@@ -152,11 +152,27 @@ void logToFile(char* msg);
 	#define CHECK_GL_ERROR(msg) checkGLError(msg)
 	#define ASSERT(expression, ...) \
 		if (!(expression)) { LOGE(__VA_ARGS__); } assert(expression)
-	#define THROWEX(msg) throw runtime_error(msg)
+	#define THROWEXEXT(msg, ...) {\
+		char buff[8592];\
+		char buffMsg[8192];\
+		sprintf_s(buffMsg, msg, __VA_ARGS__);\
+		sprintf_s(buff, "File: %s\nLine: %d\nError: %s\n", __FILE__, __LINE__, buffMsg);\
+		OUTPUT(buff);\
+		throw runtime_error(buff);\
+	}
+	#define THROWEX(msg) THROWEXEXT(msg, "")
 #else
 	#define CHECK_GL_ERROR(msg)
 	#define ASSERT(expression, ...) if (!(expression)) { LOGE(__VA_ARGS__); }
-	#define THROWEX(msg) throw runtime_error(msg)
+	#define THROWEXEXT(msg, ...) {\
+		char buff[8592];\
+		char buffMsg[8192];\
+		sprintf_s(buffMsg, msg, __VA_ARGS__);\
+		sprintf_s(buff, "File: %s\nLine: %d\nError: %s\n", __FILE__, __LINE__, buffMsg);\
+		OUTPUT(buff);\
+		throw runtime_error(buff);\
+	}
+	#define THROWEX(msg) THROWEXEXT(msg, "")
 #endif
 
 

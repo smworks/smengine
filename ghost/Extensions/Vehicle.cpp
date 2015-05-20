@@ -15,7 +15,7 @@
 #include "../../dependencies/includes/bullet/BulletDynamics/Dynamics/btDynamicsWorld.h"
 #include "../Node.h"
 #include "../Resources/Resource.h"
-#include "../Resources/StaticObject.h"
+#include "../Resources/Model.h"
 #include "../ModelData.h"
 #include "../BoundingVolume.h"
 #include "../ScriptManager.h"
@@ -58,11 +58,11 @@ Vehicle::Vehicle(Node* node, btDynamicsWorld* dynamicsWorld, vector<btRigidBody*
 	rollInfluence_(0.0f)
 {
 	// Read vehicle attributes.
-	if (!node->hasResource(Resource::STATIC_OBJECT)) {
+	if (!node->hasResource(Resource::MODEL)) {
 		LOGW("Vehicle does not contain model.");
 		return;
 	}
-	StaticObject* model = static_cast<StaticObject*>(node->getResource(Resource::STATIC_OBJECT));
+	Model* model = static_cast<Model*>(node->getResource(Resource::MODEL));
 	mass_ = toFloat(model->getAttribute(MASS).c_str());
 	suspensionRestLength_ = toFloat(model->getAttribute(SUSPENSION_REST_LENGTH).c_str());
 	suspensionStiffness_ = toFloat(model->getAttribute(SUSPENSION_STIFFNESS).c_str());
@@ -74,7 +74,7 @@ Vehicle::Vehicle(Node* node, btDynamicsWorld* dynamicsWorld, vector<btRigidBody*
 	rollInfluence_ = toFloat(model->getAttribute(ROLL_INFLUENCE).c_str());
 	// Create compound shape to contain vehicle body shape.
 	vehicleCompoundShape_ = new btCompoundShape();
-	ModelData* modelData = model->getModel();
+	ModelData* modelData = model->getData();
 	SIZE vertexCount = modelData->getVertexCount();
 	float* data = reinterpret_cast<float*>(modelData->getVertices());
 	btConvexHullShape* hullShape = new btConvexHullShape(data, vertexCount, modelData->getVertexStride());

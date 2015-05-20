@@ -348,6 +348,7 @@
     <ClCompile Include="ghost\Network\Request.cpp" />
     <ClCompile Include="ghost\Network\SocketParams.cpp" />
     <ClCompile Include="ghost\NodeManager.cpp" />
+    <ClCompile Include="ghost\Resources\ModelFactory.cpp" />
     <ClCompile Include="ghost\Resources\Scenario.cpp" />
     <ClCompile Include="ghost\Resources\Symbol.cpp" />
     <ClCompile Include="ghost\Resources\TextureRGB.cpp" />
@@ -385,7 +386,7 @@
     <ClCompile Include="ghost\Resources\Sprite.cpp" />
     <ClCompile Include="ghost\Resources\Resource.cpp" />
     <ClCompile Include="ghost\Resources\Shader.cpp" />
-    <ClCompile Include="ghost\Resources\StaticObject.cpp" />
+    <ClCompile Include="ghost\Resources\Model.cpp" />
     <ClCompile Include="ghost\Resources\Texture.cpp" />
     <ClCompile Include="ghost\Resources\TextureMono.cpp" />
     <ClCompile Include="ghost\Resources\TextureRGBA.cpp" />
@@ -648,6 +649,7 @@
     <ClInclude Include="ghost\Network\Request.h" />
     <ClInclude Include="ghost\Network\SocketParams.h" />
     <ClInclude Include="ghost\NodeManager.h" />
+    <ClInclude Include="ghost\Resources\ModelFactory.h" />
     <ClInclude Include="ghost\Resources\Scenario.h" />
     <ClInclude Include="ghost\Resources\Symbol.h" />
     <ClInclude Include="ghost\Resources\TextureRGB.h" />
@@ -690,7 +692,7 @@
     <ClInclude Include="ghost\Resources\Sprite.h" />
     <ClInclude Include="ghost\Resources\Resource.h" />
     <ClInclude Include="ghost\Resources\Shader.h" />
-    <ClInclude Include="ghost\Resources\StaticObject.h" />
+    <ClInclude Include="ghost\Resources\Model.h" />
     <ClInclude Include="ghost\Resources\Texture.h" />
     <ClInclude Include="ghost\Resources\TextureMono.h" />
     <ClInclude Include="ghost\Resources\TextureRGBA.h" />

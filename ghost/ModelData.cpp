@@ -19,7 +19,8 @@ ModelData::ModelData() :
 	vertices_(0),
 	indexType_(Renderable::INDEX_TYPE_COUNT),
 	indexCount_(0),
-	boundingVolume_(0)
+	boundingVolume_(0),
+	facesCulled(true)
 {}
 
 ModelData::~ModelData() {
@@ -151,4 +152,12 @@ vector<ModelData::Material>& ModelData::getMaterials() {
 }
 vector<ModelData::Part>& ModelData::getParts() {
 	return parts_;
+}
+
+void ModelData::setCullFace(bool state) {
+	facesCulled = state;
+}
+
+bool ModelData::isFacesCulled() {
+	return facesCulled;
 }

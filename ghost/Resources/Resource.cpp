@@ -150,7 +150,7 @@ Resource::Type Resource::stringToType(
 		return Resource::SHADER;
 	}
 	if ("static_object" == type) {
-		return Resource::STATIC_OBJECT;
+		return Resource::MODEL;
 	}
 	if ("dynamic_object" == type) {
 		return Resource::DYNAMIC_OBJECT;
@@ -193,7 +193,7 @@ string Resource::typeToString(Type type) {
     case SHADER:
         return "shader";
         break;
-    case STATIC_OBJECT:
+    case MODEL:
         return "static_object";
         break;
     case DYNAMIC_OBJECT:

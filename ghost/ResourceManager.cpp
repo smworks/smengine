@@ -20,7 +20,7 @@
 #include "Resources/CubeMap.h"
 #include "Resources/Shader.h"
 #include "Resources/Sprite.h"
-#include "Resources/StaticObject.h"
+#include "Resources/Model.h"
 #include "Resources/DynamicObject.h"
 #include "Resources/Script.h"
 #include "Resources/Sound.h"
@@ -107,7 +107,7 @@ Resource* ResourceManager::create(Resource::Type type) {
 	switch (type) {
 	case Resource::TEXTURE_2D: return NEW TextureRGBA(services_);
 	case Resource::SHADER: return NEW Shader(services_);
-	case Resource::STATIC_OBJECT: return NEW StaticObject(services_);
+	case Resource::MODEL: return NEW Model(services_);
 	case Resource::DYNAMIC_OBJECT: return NEW DynamicObject(services_);
 	case Resource::SPRITE: return NEW Sprite(services_);
 	case Resource::SCRIPT: return NEW Script(services_);
@@ -267,7 +267,7 @@ void ResourceManager::validateNode(
 	}
 	// If node contains physics resource, add node to physics manager.
 	// Also make sure the bounding box is available.
-	Resource* model = node->getResource(Resource::STATIC_OBJECT);
+	Resource* model = node->getResource(Resource::MODEL);
 	if (model != 0 && model->getAttribute(Resource::ATTR_PHYSICS) == Resource::VAL_TRUE) {
 		services_->getPhysicsManager()->add(node);
 	}

@@ -1,12 +1,12 @@
 ﻿/*
- * StaticObject.h
+ * Model.h
  *
  *  Created on: 2012.12.23
  *      Author: Martynas Šustavičius
  */
 
-#ifndef STATICOBJECT_H_
-#define STATICOBJECT_H_
+#ifndef Model_H_
+#define Model_H_
 
 #include "Resource.h"
 #include "Renderable.h"
@@ -14,15 +14,16 @@ class BoundingVolume;
 class TextureRGBA;
 class Vec3;
 class ModelData;
+class Texture;
 
 #define GHOST_TERRAIN_HEIGHT_MAP "heightMap"
 
-class StaticObject :
+class Model :
 	public Resource,
 	public Renderable {
 public:
-	StaticObject(ServiceLocator* services);
-	~StaticObject();
+	Model(ServiceLocator* services);
+	~Model();
 
 	/**
 	 * @see Resource
@@ -52,22 +53,12 @@ public:
 	Shader* getDefaultShader();
 
 	/**
-	 * @return Pointer to bounding volume.
-	 */
-	BoundingVolume* getBoundingVolume();
-
-	/**
 	 * @return Model object that contains geometry,
 	 * bounding volume and materials.
 	 */
-	ModelData* getModel();
-private:
-	bool createModel();
-	bool createTerrain();
-	bool createPlane();
-	bool createSphere();
-	bool createShape();
-	bool createWater();
+	ModelData* getData();
+
+	void addTexture(Texture* texture);
 private:
 	ModelData* modelData_;
 	UINT32 cbo_; // Combined buffer object.

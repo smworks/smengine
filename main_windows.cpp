@@ -265,8 +265,7 @@ void onInput(LPARAM lParam) {
 	delete[] byBuffer;
 }
 
-LONG WINAPI MainWndProc(HWND g_hwnd, UINT uMsg, WPARAM  wParam, LPARAM  lParam)
-{
+LONG WINAPI MainWndProc(HWND g_hwnd, UINT uMsg, WPARAM  wParam, LPARAM  lParam) {
     switch (uMsg) {
 	case WM_INPUT:
 		onInput(lParam);
@@ -442,8 +441,7 @@ void releaseResources() {
     ReleaseDC(g_hwnd, hDC);
 }
 
-int WINAPI WinMain (HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine, int cmdShow)
-{
+int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine, int cmdShow) {
 	#ifdef _DEBUG
 		_CrtSetDbgFlag (_CRTDBG_ALLOC_MEM_DF | _CRTDBG_LEAK_CHECK_DF);
 		_CrtSetReportMode(_CRT_ERROR, _CRTDBG_MODE_DEBUG);
@@ -454,14 +452,15 @@ int WINAPI WinMain (HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLin
 		createWindow(hInstance);
 		setupOpenGL(WIDTH, HEIGHT);
 		createEngineInstance();
-		enableInput();
 		setupMouse();
+		enableInput();
 		showWindow(cmdShow);
 		runMainLoop();
 		disableInput();
 		releaseResources();
 	} catch (exception e) {
 		LOGE(e.what());
+		return -1;
 	}
 	
 	return 777;

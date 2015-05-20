@@ -14,7 +14,7 @@
 #include "../ResourceManager.h"
 #include "../Resources/Resource.h"
 #include "../Resources/Renderable.h"
-#include "../Resources/StaticObject.h"
+#include "../Resources/Model.h"
 #include "../Resources/CubeMap.h"
 #include "../Resources/TextureRGBA.h"
 #include "../Resources/Symbol.h"
@@ -25,6 +25,7 @@
 #include "../RenderPass.h"
 #include "../FrameBuffer.h"
 #include "../Shapes.h"
+#include "../ModelData.h"
 
 #define MAX_ACTIVE_TEXTURES 32
 
@@ -100,11 +101,11 @@ void GraphicsManager::create() {
 	// Specify blending function.
 	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 	// Load screen plane.
-	StaticObject* obj = NEW StaticObject(services_);
+	Model* obj = NEW Model(services_);
 	obj->getAttributes().setString(
 		Resource::ATTR_FILE, PLANE);
 	obj->getAttributes().setString(
-		StaticObject::ATTR_TYPE, StaticObject::VAL_PLANE);
+		Model::ATTR_TYPE, Model::VAL_PLANE);
 	obj->create();
 	screenPlane_ = obj;
 	// Load immediate mode shader.
@@ -319,7 +320,7 @@ void GraphicsManager::refreshRenderList() {
 		if ((*it)->hasResource(Resource::SPRITE)) {
 			spriteArray_.push_back((*it));
 		}
-		if ((*it)->hasResource(Resource::STATIC_OBJECT)
+		if ((*it)->hasResource(Resource::MODEL)
 			|| (*it)->hasResource(Resource::DYNAMIC_OBJECT)) {
 			modelArray_.push_back((*it));
 		}
@@ -421,14 +422,14 @@ void GraphicsManager::renderNode(
 	} else if (node->hasResource(Resource::GUI_SURFACE)) {
 		renderable = dynamic_cast<Renderable*>(node->getResource(Resource::GUI_SURFACE));
 		gui = true;
-	} else if (node->hasResource(Resource::STATIC_OBJECT)) {
-		StaticObject* so = dynamic_cast<StaticObject*>(node->getResource(Resource::STATIC_OBJECT));
+	} else if (node->hasResource(Resource::MODEL)) {
+		Model* so = dynamic_cast<Model*>(node->getResource(Resource::MODEL));
 		renderable = dynamic_cast<Renderable*>(so);
 		// Check for frustum culling.
 		Vec3 posAbs;
 		node->getPosAbs(posAbs);
-		if (so->getBoundingVolume() != 0
-			&& so->getBoundingVolume()->isInFrustum(
+		if (so->getData()->getBoundingVolume() != 0
+			&& so->getData()->getBoundingVolume()->isInFrustum(
 			camera_, posAbs, node->getScale())
 			== BoundingVolume::OUTSIDE)
 		{

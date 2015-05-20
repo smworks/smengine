@@ -158,9 +158,6 @@
     <ClCompile Include="ghost\Resources\Sprite.cpp">
       <Filter>Source Files\Resources</Filter>
     </ClCompile>
-    <ClCompile Include="ghost\Resources\StaticObject.cpp">
-      <Filter>Source Files\Resources</Filter>
-    </ClCompile>
     <ClCompile Include="ghost\TerrainParser.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -1001,6 +998,12 @@
     <ClCompile Include="ghost\Network\SocketParams.cpp">
       <Filter>Source Files\Network</Filter>
     </ClCompile>
+    <ClCompile Include="ghost\Resources\Model.cpp">
+      <Filter>Source Files\Resources</Filter>
+    </ClCompile>
+    <ClCompile Include="ghost\Resources\ModelFactory.cpp">
+      <Filter>Source Files\Resources</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="ghost\Camera.h">
@@ -1055,9 +1058,6 @@
       <Filter>Source Files\Resources</Filter>
     </ClInclude>
     <ClInclude Include="ghost\Resources\Renderable.h">
-      <Filter>Source Files\Resources</Filter>
-    </ClInclude>
-    <ClInclude Include="ghost\Resources\StaticObject.h">
       <Filter>Source Files\Resources</Filter>
     </ClInclude>
     <ClInclude Include="ghost\TerrainParser.h">
@@ -1914,6 +1914,12 @@
     </ClInclude>
     <ClInclude Include="ghost\Network\SocketParams.h">
       <Filter>Source Files\Network</Filter>
+    </ClInclude>
+    <ClInclude Include="ghost\Resources\Model.h">
+      <Filter>Source Files\Resources</Filter>
+    </ClInclude>
+    <ClInclude Include="ghost\Resources\ModelFactory.h">
+      <Filter>Source Files\Resources</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

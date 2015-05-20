@@ -62,6 +62,8 @@ public:
 	BoundingVolume* getBoundingVolume();
 	vector<Material>& getMaterials();
 	vector<Part>& getParts();
+	void setCullFace(bool state);
+	bool isFacesCulled();
 private:
 	VertexType vertexType_;
 	UINT32 vertexStride_, posOffset_, normalOffset_, uvOffset_;
@@ -76,6 +78,7 @@ private:
 	BoundingVolume* boundingVolume_;
 	vector<Material> materials_;
 	vector<Part> parts_;
+	bool facesCulled;
 };
 
 #endif

@@ -17,7 +17,7 @@
 #include "ScriptManager.h"
 #include "ResourceManager.h"
 #include "Resources/Shader.h"
-#include "Resources/StaticObject.h"
+#include "Resources/Model.h"
 #include "Resources/TextureRGBA.h"
 #include "Extensions/Vehicle.h"
 #include "Resources/Attributes.h"
@@ -126,27 +126,27 @@ void PhysicsManager::update(double time) {
 }
 
 void PhysicsManager::add(Node* node) {
-	if (!node->hasResource(Resource::STATIC_OBJECT)) {
+	if (!node->hasResource(Resource::MODEL)) {
 		LOGW("Unable to add node \"%s\" to physics manager, becaus model is missing.",
 			node->getName().c_str());
 		return;
 	}
-	StaticObject* model = static_cast<StaticObject*>(node->getResource(Resource::STATIC_OBJECT));
-	string modelType = model->getAttribute(StaticObject::ATTR_TYPE);
+	Model* model = static_cast<Model*>(node->getResource(Resource::MODEL));
+	string modelType = model->getAttribute(Model::ATTR_TYPE);
 	if (model->getAttribute("physics_object") == "vehicle") {
 		PROFILE("Adding vehicle to physics manager.");
 		addVehicle(node);
 		return;
 	}
-	else if (modelType == StaticObject::VAL_TERRAIN) {
+	else if (modelType == Model::VAL_TERRAIN) {
 		PROFILE("Adding terrain to physics manager.");
 		addTerrain(node);
 	}
-	else if (modelType == StaticObject::VAL_PLANE) {
+	else if (modelType == Model::VAL_PLANE) {
 		PROFILE("Adding box to physics manager.");
 		addBox(node);
 	}
-	else if (modelType == StaticObject::VAL_SPHERE) {
+	else if (modelType == Model::VAL_SPHERE) {
 		PROFILE("Adding sphere to physics manager.");
 		addSphere(node);
 	}
@@ -260,7 +260,7 @@ void PhysicsManager::setGraphicsManager(GraphicsManager* gm) {
 }
 
 void PhysicsManager::addBox(Node* node) {
-	StaticObject* model = static_cast<StaticObject*>(node->getResource(Resource::STATIC_OBJECT));
+	Model* model = static_cast<Model*>(node->getResource(Resource::MODEL));
 	btVector3 dimensions = btVector3(
 		toFloat(model->getAttribute(Resource::ATTR_WIDTH).c_str()) * 0.5f * node->getScale().getX(),
 		toFloat(model->getAttribute(Resource::ATTR_HEIGHT).c_str()) * 0.5f * node->getScale().getY(),
@@ -308,7 +308,7 @@ void PhysicsManager::addBox(Node* node) {
 }
 
 void PhysicsManager::addSphere(Node* node) {
-	StaticObject* model = static_cast<StaticObject*>(node->getResource(Resource::STATIC_OBJECT));
+	Model* model = static_cast<Model*>(node->getResource(Resource::MODEL));
 	float mass = toFloat(model->getAttribute(Resource::ATTR_MASS).c_str());
 	float scale = node->getScale().getMaxVal();
 	float radius = toFloat(model->getAttribute(Resource::ATTR_RADIUS).c_str()) * scale;
@@ -342,14 +342,14 @@ void PhysicsManager::addSphere(Node* node) {
 }
 
 void PhysicsManager::addMesh(Node* node) {
-	StaticObject* model = static_cast<StaticObject*>(node->getResource(Resource::STATIC_OBJECT));
-	if (model->getModel() == 0 || model->getModel()->getVertexCount() == 0) {
+	Model* model = static_cast<Model*>(node->getResource(Resource::MODEL));
+	if (model->getData() == 0 || model->getData()->getVertexCount() == 0) {
 		LOGW("Adding mesh from node \"%s\", that has no vertex data.",
 			node->getName().c_str());
 		return;
 	}
 	btCollisionShape* colShape = 0;
-	ModelData* modelData = model->getModel();
+	ModelData* modelData = model->getData();
 	SIZE vertexCount = modelData->getVertexCount();
 	float* data = reinterpret_cast<float*>(modelData->getVertices());
 	float mass = toFloat(model->getAttribute(Resource::ATTR_MASS).c_str());
@@ -365,7 +365,7 @@ void PhysicsManager::addMesh(Node* node) {
 		delete hullShape;
 	}
 	else {
-		if (model->getModel()->getIndexCount() == 0) {
+		if (model->getData()->getIndexCount() == 0) {
 			LOGD("Loading triangle mesh with no indices.");
 			btTriangleMesh* mesh = new btTriangleMesh;
 			meshInterfaces_.push_back(mesh);
@@ -494,8 +494,8 @@ void PhysicsManager::addVehicle(Node* node) {
 }
 
 void PhysicsManager::addTerrain(Node* node) {
-	StaticObject* model = static_cast<StaticObject*>(node->getResource(Resource::STATIC_OBJECT));
-	if (model->getModel() == 0 || model->getModel()->getVertexCount() == 0) {
+	Model* model = static_cast<Model*>(node->getResource(Resource::MODEL));
+	if (model->getData() == 0 || model->getData()->getVertexCount() == 0) {
 		LOGW("Adding mesh from node \"%s\", that has no vertex data.",
 			node->getName().c_str());
 		return;
@@ -503,7 +503,7 @@ void PhysicsManager::addTerrain(Node* node) {
 	float minHeight = FLT_MAX, maxHeight = -FLT_MAX;
 	SIZE vertexCount = model->getVertexCount();
 	SIZE floatStride = model->getVertexStride() / sizeof(float);
-	float* data = reinterpret_cast<float*>(model->getModel()->getVertices());
+	float* data = reinterpret_cast<float*>(model->getData()->getVertices());
 	heightMaps_.push_back(vector<float>());
 	vector<float>& vert = heightMaps_[heightMaps_.size() - 1];
 	for (SIZE i = 0; i < vertexCount; i++) {
