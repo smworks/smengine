@@ -270,14 +270,19 @@ public:
 	 * @param node - pointer to node, to be rendered.
 	 * @param mat - 3D projection matrix for models,
 	 * and 2D projection matrix for sprites.
-	 * @param orhto - indicates whether specified matrix
-	 * is 2D or 3D.
 	 */
-	void renderNode(Node* node, Mat4 mat, bool ortho = false);
-
-	int getRenderType(Renderable* renderable);
+	void renderNode(Node* node, Mat4 mat);
+	bool isOutsideCameraView(Node* node);
+	void prepareShader(Shader* shader, Node* node, Mat4 in);
+	void prepareMatrix(Node* node, Mat4 in, Mat4 out);
+	void bindCombinedBufferObject(Renderable* renderable);
+	void bindCubeMap();
+	void bindTextures(Shader* shader, int textures[]);
+	void renderParts(Renderable* renderable, int textures[]);
 	void drawViaVertices(Renderable* renderable);
 	void drawViaIndices(Renderable* renderable);
+	int getRenderType(Renderable* renderable);
+	void releaseResources(Renderable* renderable);
 
 	/**
 	 * Render quad all over the screen.
