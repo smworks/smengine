@@ -63,9 +63,11 @@ plane:setPosY(-2.0)
 plane:setScaleXYZ(100.0, 100.0, 100.0)
 ```
 ## Enabling physics ##
-Physics only work for nodes with already specified **Model** resource!
+Physics only work for nodes with **Model** resource.
+Call **enablePhysics()** after setting model type and other attributes.
 ```
 #!Lua
 node:setType("plane")
+node:setScaleXYZ(10.0, 1.0, 3.0)
 node:enablePhysics()
 ```
