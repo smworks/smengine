@@ -48,7 +48,7 @@ function quit()
 end
 ```
 
-## Loading models ##
+## Working with 3D models ##
 
 ### Loading simple plane with texture ###
 ```
