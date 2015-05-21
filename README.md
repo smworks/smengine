@@ -62,3 +62,10 @@ plane:setTexture(Texture.new("texture_file.png"))
 plane:setPosY(-2.0)
 plane:setScaleXYZ(100.0, 100.0, 100.0)
 ```
+## Enabling physics ##
+Physics only work for nodes with already specified **Model** resource!
+```
+#!Lua
+node:setType("plane")
+node:enablePhysics()
+```
