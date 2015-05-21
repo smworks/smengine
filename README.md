@@ -50,14 +50,15 @@ end
 
 ## Loading models ##
 
+### Loading simple plane with texture ###
 ```
 #!Lua
 
-    plane = Model.new("floor")
-    plane:setType("plane")
-    plane:setAmbient("#FFFFFFFF")
-    plane:setShader(Shader.new("temp_model"))
-    plane:setTexture(Texture.new("lab_floor.png"))
-    plane:setPosY(-2.0)
-    plane:setScaleXYZ(100.0, 100.0, 100.0)
+plane = Model.new("model_name")
+plane:setType("plane")
+plane:setAmbient("#FFFFFFFF")
+plane:setShader(Shader.new("shader_file_name"))
+plane:setTexture(Texture.new("texture_file.png"))
+plane:setPosY(-2.0)
+plane:setScaleXYZ(100.0, 100.0, 100.0)
 ```
