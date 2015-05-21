@@ -399,6 +399,22 @@ int nodeAddChild(lua_State* L) {
 	return 0;
 }
 
+int nodeEnablePhysics(lua_State* L) {
+	Node* node = SM_GET_OBJECT(L, 0, Node);
+	int argc = SM_GET_ARGUMENT_COUNT(L);
+	Model* model = dynamic_cast<Model*>(node->getResource());
+	if (model == 0) {
+		LOGW("No model resource available for node %s. Physics not enabled",
+			node->getName().c_str());
+		return 0;
+	}
+	if (argc == 2) {
+		model->setAttribute(Resource::ATTR_MASS, SM_GET_STRING(L, 1));
+	}
+	SM_GET_PM()->add(node);
+	return 0;
+}
+
 int nodeDisablePhysics(lua_State* L) {
 	Node* node = SM_GET_OBJECT(L, 0, Node);
 	SM_GET_PM()->remove(node);
@@ -488,19 +504,20 @@ int nodeGetShader(lua_State* L) {
 	return 0;
 }
 
-int nodeAddTexture(lua_State* L) {
+int nodeSetTexture(lua_State* L) {
 	Node* node = SM_GET_OBJECT(L, 0, Node);
-	ASSERT(SM_GET_ARGUMENT_COUNT(L) == 2, "addTexture method expects argument of type Texture.");
+	int argc = SM_GET_ARGUMENT_COUNT(L);
+	ASSERT(argc == 2 || argc == 3, "addTexture method expects argument of type Texture.");
 	Texture* texture = SM_GET_OBJECT(L, 1, Texture);
 	if (node->getResource()->getType() == Resource::SPRITE) {
 		Sprite* obj = static_cast<Sprite*>(node->getResource());
 		if (obj != 0) {
-			obj->addTexture(texture);
+			obj->setTexture(texture);
 		}
 	} else if (node->getResource()->getType() == Resource::MODEL) {
 		Model* obj = static_cast<Model*>(node->getResource());
 		if (obj != 0) {
-			obj->addTexture(texture);
+			obj->setTexture(texture, argc == 3 ? SM_GET_INT(L, 2) : 0);
 		}
 	}
 	return 0;
@@ -883,13 +900,14 @@ void registerNode() {
     ADD_METHOD(methods, "__gc", deleteNode);
 	ADD_METHOD(methods, "setParent", nodeSetParent);
 	ADD_METHOD(methods, "addChild", nodeAddChild);
+	ADD_METHOD(methods, "enablePhysics", nodeEnablePhysics);
 	ADD_METHOD(methods, "disablePhysics", nodeDisablePhysics);
 	ADD_METHOD(methods, "setMass", nodeSetMass);
 	ADD_METHOD(methods, "accelerate", nodeAccelerate);
 	ADD_METHOD(methods, "turn", nodeTurn);
     ADD_METHOD(methods, "setShader", nodeSetShader);
     ADD_METHOD(methods, "getShader", nodeGetShader);
-	ADD_METHOD(methods, "addTexture", nodeAddTexture);
+	ADD_METHOD(methods, "setTexture", nodeSetTexture);
     ADD_METHOD(methods, "setIndex", nodeSetSprite);
     ADD_METHOD(methods, "getCount", nodeGetSpriteCount);
     ADD_METHOD(methods, "getName", getName);
@@ -1098,7 +1116,7 @@ int newSprite(lua_State* L) {
 		int index = argc == 2 ? 1 : 3;
 		Texture* texture = SM_GET_OBJECT(L, index, Texture);
 		if (texture != 0) {
-			sprite->addTexture(texture);
+			sprite->setTexture(texture);
 		}
 	}
 	Node* node = NEW Node(val, sprite);

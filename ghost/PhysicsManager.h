@@ -143,12 +143,8 @@ public:
 	 */
 	Node* rayCast(Vec3& start, Vec3& end);
 
-	/**
-	 * Enable or disable rendering of
-	 * bounding volume shapes and some additional information.
-	 * @param state - true for enabling, false for disabling.
-	 */
-	void setDebug(bool state);
+	void setDebugRendering(bool state);
+	bool isDebugRenderingEnabled();
 
     /**
      * While debuging, graphics manager is needed to draw

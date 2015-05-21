@@ -247,8 +247,12 @@ Node* PhysicsManager::rayCast(Vec3& start, Vec3& end) {
 	return 0;
 }
 
-void PhysicsManager::setDebug(bool state) {
+void PhysicsManager::setDebugRendering(bool state) {
 	debug_ = state;
+}
+
+bool PhysicsManager::isDebugRenderingEnabled() {
+	return debug_;
 }
 
 void PhysicsManager::setGraphicsManager(GraphicsManager* gm) {

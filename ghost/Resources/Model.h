@@ -52,18 +52,13 @@ public:
 	int getUVOffset();
 	Shader* getDefaultShader();
 
-	/**
-	 * @return Model object that contains geometry,
-	 * bounding volume and materials.
-	 */
 	ModelData* getData();
-
-	void addTexture(Texture* texture);
+	void setTexture(Texture* texture, UINT32 index);
 private:
-	ModelData* modelData_;
-	UINT32 cbo_; // Combined buffer object.
-	UINT32 ibo_; // Index buffer object.
-	SIZE currentPart_;
+	ModelData* modelData;
+	UINT32 cbo;
+	UINT32 ibo;
+	SIZE currentPart;
 };
 
 #endif

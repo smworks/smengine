@@ -183,6 +183,9 @@ void Engine::computeFrame() {
 	services_->getInput()->update();
 	if (services_->getInput()->keyReleased(Input::TILDE)) {
 		console->show();
+	} else if (services_->getInput()->keyReleased(Input::P)) {
+		services_->getPhysicsManager()->setDebugRendering(
+			!services_->getPhysicsManager()->isDebugRenderingEnabled());
 	}
 	services_->getSoundManager()->update();
 	services_->getPhysicsManager()->update(time_);

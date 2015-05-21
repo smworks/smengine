@@ -55,21 +55,70 @@ function start()
 --		map[t["x"]][t["y"]] = t["type"]
 --	end
 
+    camera:setPosXYZ(0.0, 0.1, 3.0)
+
+    grassTexture = Texture.new("grass_1.png");
+
     plane = Model.new("floor")
     plane:setType("plane")
     plane:setAmbient("#FFFFFFFF")
     plane:setShader(Shader.new("temp_model"))
-    plane:addTexture(Texture.new("lab_floor.png"))
-    plane:setPosY(-2.0)
-    plane:setScaleXYZ(100.0, 100.0, 100.0)
+    plane:setTexture(Texture.new("lab_floor.png"))
+    plane:setPosY(0.0)
+    plane:setScaleXYZ(10.0, 1.0, 10.0)
+    plane:enablePhysics()
 
-    wall = Model.new("wall")
+    wall = Model.new("wall1")
     wall:setType("plane")
-    wall:setAmbient("#00000000")
+    wall:setAmbient("#ffffffff")
     wall:setShader(Shader.new("temp_model"))
-    wall:setRotY(-90.0)
-    wall:setScaleXYZ(100.0, 100.0, 100.0)
+    wall:setTexture(grassTexture)
+    wall:setRotX(90.0)
+    wall:setPosXYZ(0.0, 1.5, -5.0)
+    wall:setScaleXYZ(10.0, 1.0, 3.0)
 
+    wall = Model.new("wall2")
+    wall:setType("plane")
+    wall:setAmbient("#ffffffff")
+    wall:setShader(Shader.new("temp_model"))
+    wall:setTexture(grassTexture)
+    wall:setRotX(90.0)
+    wall:setPosXYZ(0.0, 1.5, 5.0)
+    wall:setScaleXYZ(10.0, 1.0, 3.0)
+
+    wall = Model.new("wall3")
+    wall:setType("plane")
+    wall:setAmbient("#ffffffff")
+    wall:setShader(Shader.new("temp_model"))
+    wall:setTexture(grassTexture)
+    wall:setRotZ(90.0)
+    wall:setRotY(-90.0)
+    wall:setPosXYZ(-5.0, 1.5, 0.0)
+    wall:setScaleXYZ(10.0, 1.0, 3.0)
+
+    wall = Model.new("wall4")
+    wall:setType("plane")
+    wall:setAmbient("#ffffffff")
+    wall:setShader(Shader.new("temp_model"))
+    wall:setTexture(grassTexture)
+    wall:setRotZ(90.0)
+    wall:setRotY(-90.0)
+    wall:setPosXYZ(5.0, 1.5, 0.0)
+    wall:setScaleXYZ(10.0, 1.0, 3.0)
+
+    plane = Model.new("ceiling")
+    plane:setType("plane")
+    plane:setAmbient("#FFFFFFFF")
+    plane:setShader(Shader.new("temp_model"))
+    plane:setTexture(getTexture("lab_floor.png"))
+    plane:setPosY(3.0)
+    plane:setScaleXYZ(10.0, 1.0, 10.0)
+
+    ball = Model.new("ball")
+    ball:setShader(Shader.new("temp_model"))
+    ball:setType("sphere")
+    ball:setAmbient("#FF0000FF")
+    ball:enablePhysics("1.0")
 end
 
 -- Called when program is brought to foreground.
@@ -102,7 +151,7 @@ function update()
     camera:addRotX(input:getPointerDeltaY());
     camera:addRotY(input:getPointerDeltaX());
 
-	local offset = 1.0
+	local offset = 0.1
 
     if input:keyPressed(constants["W"]) then
 		camera:moveZ(-offset)

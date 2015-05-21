@@ -141,7 +141,7 @@ Shader* Sprite::getDefaultShader() {
 	return Shader::getDefaultSpriteShader(getServiceLocator());
 }
 
-void Sprite::addTexture(Texture* texture) {
+void Sprite::setTexture(Texture* texture) {
 	image_ = texture;
 	setSpriteCount(1);
 }

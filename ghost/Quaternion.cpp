@@ -157,12 +157,12 @@ void Quaternion::addZ(float val, bool global) {
 	memcpy(data_, res.data_, sizeof(data_));
 }
 
-void Quaternion::setX(float val) {
+void Quaternion::setY(float val) {
 	addX(val - getX());
 	//setXYZ(val, getY(), getZ());
 }
 
-void Quaternion::setY(float val) {
+void Quaternion::setX(float val) {
 	addY(val - getY());
 	//setXYZ(getX(), val, getZ());
 }
@@ -172,14 +172,14 @@ void Quaternion::setZ(float val) {
 	//setXYZ(getX(), getY(), val);
 }
 
-float Quaternion::getX() {
+float Quaternion::getY() {
 	return (float) atan2(
 		2.0f *  data_[0] * data_[3]
 		+ 2.0f * data_[1] * data_[2], 1.0f - 2.0f
 		* (data_[2] * data_[2]  +  data_[0] *  data_[0])) * 57.2957795f;
 }
 
-float Quaternion::getY() {
+float Quaternion::getX() {
 	return (float) atan2(
 		2.0f * data_[3] * data_[1]
 		+ 2.0f * data_[2] * data_[0], 1.0f - 2.0f

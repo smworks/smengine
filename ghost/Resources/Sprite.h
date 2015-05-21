@@ -121,8 +121,7 @@ public:
 	 */
 	Shader* getDefaultShader();
 
-	void addTexture(Texture* texture);
-
+	void setTexture(Texture* texture);
 	Texture* getPointerToTexture();
 
 	/**
