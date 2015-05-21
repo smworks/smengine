@@ -1,4 +1,4 @@
-# Lua side documentation #
+# Lua documentation #
 
 ## Basics ##
 
@@ -46,4 +46,18 @@ end
 function quit()
 
 end
+```
+
+## Loading models ##
+
+```
+#!Lua
+
+    plane = Model.new("floor")
+    plane:setType("plane")
+    plane:setAmbient("#FFFFFFFF")
+    plane:setShader(Shader.new("temp_model"))
+    plane:setTexture(Texture.new("lab_floor.png"))
+    plane:setPosY(-2.0)
+    plane:setScaleXYZ(100.0, 100.0, 100.0)
 ```
