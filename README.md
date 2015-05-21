@@ -1,32 +1,49 @@
 # Lua side documentation #
 
-## Handling models ##
+## Basics ##
 
+Everytime engine is launched, it will load **logic.lua** file in scripts folder.
+This is how **logic.lua** should look like at its simplest form:
+```
+#!Lua
 
-This README would normally document whatever steps are necessary to get your application up and running.
+-- Called when network response is available.
+function eventResponse(response)
 
-### What is this repository for? ###
+end
 
-* Quick summary
-* Version
-* [Learn Markdown](https://bitbucket.org/tutorials/markdowndemo)
+-- Called when GUI component listeners are activated.
+function eventGUI(guiNode, eventType)
 
-### How do I get set up? ###
+end
 
-* Summary of set up
-* Configuration
-* Dependencies
-* Database configuration
-* How to run tests
-* Deployment instructions
+-- Handle initialization.
+function start()
 
-### Contribution guidelines ###
+end
 
-* Writing tests
-* Code review
-* Other guidelines
+-- Called when program is brought to foreground.
+function resume()
 
-### Who do I talk to? ###
+end
 
-* Repo owner or admin
-* Other community or team contact
+-- Called when program screen resolution is changed.
+function resize()
+
+end
+
+-- Called every frame.
+function update()
+
+end
+
+-- Called when program is brought to background.
+function pause()
+
+end
+
+-- Called when program is about to quit.
+function quit()
+
+end
+```
