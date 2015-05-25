@@ -421,6 +421,46 @@ int nodeDisablePhysics(lua_State* L) {
 	return 0;
 }
 
+int nodeSetBoolAttribute(lua_State* L) {
+	Node* node = SM_GET_OBJECT(L, 0, Node);
+	if (SM_GET_ARGUMENT_COUNT(L) != 3 || !SM_IS_STRING(L, 1) || !SM_IS_BOOL(L, 2)) {
+		THROWEXEXT("Node: %s. Wrong parameters for setBool", node->getName().c_str());
+	}
+	Resource* resource = node->getResource();
+	resource->getAttributes().setBool(SM_GET_STRING(L, 1), SM_GET_BOOL(L, 2));
+	return 0;
+}
+
+int nodeSetIntAttribute(lua_State* L) {
+	Node* node = SM_GET_OBJECT(L, 0, Node);
+	if (SM_GET_ARGUMENT_COUNT(L) != 3 || !SM_IS_STRING(L, 1) || !SM_IS_NUMBER(L, 2)) {
+		THROWEXEXT("Node: %s. Wrong parameters for setInt", node->getName().c_str());
+	}
+	Resource* resource = node->getResource();
+	resource->getAttributes().setInt(SM_GET_STRING(L, 1), SM_GET_INT(L, 2));
+	return 0;
+}
+
+int nodeSetFloatAttribute(lua_State* L) {
+	Node* node = SM_GET_OBJECT(L, 0, Node);
+	if (SM_GET_ARGUMENT_COUNT(L) != 3 || !SM_IS_STRING(L, 1) || !SM_IS_NUMBER(L, 2)) {
+		THROWEXEXT("Node: %s. Wrong parameters for setFloat", node->getName().c_str());
+	}
+	Resource* resource = node->getResource();
+	resource->getAttributes().setFloat(SM_GET_STRING(L, 1), SM_GET_FLOAT(L, 2));
+	return 0;
+}
+
+int nodeSetStringAttribute(lua_State* L) {
+	Node* node = SM_GET_OBJECT(L, 0, Node);
+	if (SM_GET_ARGUMENT_COUNT(L) != 3 || !SM_IS_STRING(L, 1) || !SM_IS_STRING(L, 2)) {
+		THROWEXEXT("Node: %s. Wrong parameters for setString", node->getName().c_str());
+	}
+	Resource* resource = node->getResource();
+	resource->getAttributes().setString(SM_GET_STRING(L, 1), SM_GET_STRING(L, 2));
+	return 0;
+}
+
 int nodeSetMass(lua_State* L) {
 	Node* node = SM_GET_OBJECT(L, 0, Node);
 	Resource* model = node->getResource();
@@ -902,6 +942,10 @@ void registerNode() {
 	ADD_METHOD(methods, "addChild", nodeAddChild);
 	ADD_METHOD(methods, "enablePhysics", nodeEnablePhysics);
 	ADD_METHOD(methods, "disablePhysics", nodeDisablePhysics);
+	ADD_METHOD(methods, "setBool", nodeSetBoolAttribute);
+	ADD_METHOD(methods, "setInt", nodeSetIntAttribute);
+	ADD_METHOD(methods, "setFloat", nodeSetFloatAttribute);
+	ADD_METHOD(methods, "setString", nodeSetStringAttribute);
 	ADD_METHOD(methods, "setMass", nodeSetMass);
 	ADD_METHOD(methods, "accelerate", nodeAccelerate);
 	ADD_METHOD(methods, "turn", nodeTurn);
