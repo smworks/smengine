@@ -610,11 +610,8 @@ int getVisibility(lua_State* L) {
 	return 1;
 }*/
 
-int moveX(lua_State* L) {
+int nodeMoveX(lua_State* L) {
 	Node* node = SM_GET_OBJECT(L, 0, Node);
-	if (node == 0) {
-		return 0;
-	}
 	float distance = SM_GET_FLOAT(L, 1);
 	Vec3 move(distance, 0.0f, 0.0f);
 	Mat4 inv;
@@ -630,11 +627,8 @@ int moveX(lua_State* L) {
 	return 0;
 }
 
-int moveY(lua_State* L) {
+int nodeMoveY(lua_State* L) {
 	Node* node = SM_GET_OBJECT(L, 0, Node);
-	if (node == 0) {
-		return 0;
-	}
 	float distance = SM_GET_FLOAT(L, 1);
 	Vec3 move(0.0f, distance, 0.0f);
 	Mat4 inv;
@@ -650,11 +644,8 @@ int moveY(lua_State* L) {
 	return 0;
 }
 
-int moveZ(lua_State* L) {
+int nodeMoveZ(lua_State* L) {
 	Node* node = SM_GET_OBJECT(L, 0, Node);
-	if (node == 0) {
-		return 0;
-	}
 	float distance = SM_GET_FLOAT(L, 1);
 	Vec3 move(0.0f, 0.0f, distance);
 	Mat4 inv;
@@ -667,6 +658,24 @@ int moveZ(lua_State* L) {
 	Matrix::multiply(move, inv);
 	node->getPos().addXYZ(move.getX(), move.getY(), move.getZ());
 	node->setState(Node::POSITION, true);
+	return 0;
+}
+
+int nodeMoveViaCameraDirection(lua_State* L) {
+	Node* node = SM_GET_OBJECT(L, 0, Node);
+	Camera* camera = SM_GET_SL()->getCamera();
+    float distance = SM_GET_FLOAT(L, 1);
+	Vec3 move(0.0f, 0.0f, -distance);
+	Mat4 inv;
+	Vec3 pos = camera->getPos();
+	Vec3 rot = camera->getRot();
+	Matrix::transformInv(inv, pos, rot);
+	Matrix::multiply(move, inv);
+	if (SM_GET_PM()->has(node)) {
+		SM_GET_PM()->move(node, move);
+	} else {
+		node->getPos().addXYZ(move);
+	}
 	return 0;
 }
 
@@ -973,9 +982,10 @@ void registerNode() {
 	ADD_METHOD(methods, "getMarginBottom", nodeGetMarginBottom);
 	ADD_METHOD(methods, "setAmbient", nodeSetAmbient);
 	ADD_METHOD(methods, "setType", nodeSetType);
-    ADD_METHOD(methods, "moveX", moveX);
-    ADD_METHOD(methods, "moveY", moveY);
-    ADD_METHOD(methods, "moveZ", moveZ);
+    ADD_METHOD(methods, "moveX", nodeMoveX);
+    ADD_METHOD(methods, "moveY", nodeMoveY);
+    ADD_METHOD(methods, "moveZ", nodeMoveZ);
+	ADD_METHOD(methods, "moveViaCameraDirection", nodeMoveViaCameraDirection);
     ADD_METHOD(methods, "addPosX", addPosX);
     ADD_METHOD(methods, "setPosX", setPosX);
     ADD_METHOD(methods, "getPosX", getPosX);
@@ -1418,7 +1428,7 @@ void registerGUIButton() {
 }
 
 int getCamera(lua_State* L) {
-    Camera* camera = ScriptManager::getServiceLocator()->getCamera();
+    Camera* camera = SM_GET_SL()->getCamera();
 	SM_RETURN_OBJECT(L, "Camera", Camera, camera);
     return 1;
 }

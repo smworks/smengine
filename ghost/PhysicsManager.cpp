@@ -157,6 +157,36 @@ void PhysicsManager::add(Node* node) {
 	PROFILE("Finished adding.");
 }
 
+void PhysicsManager::remove(Node* node) {
+	btCollisionObjectArray arr = dynamicsWorld_->
+		getCollisionObjectArray();
+	int size = arr.size();
+	for (int i = 0; i < size; i++) {
+		if (arr[i]->getUserPointer() == node) {
+			btRigidBody* body = btRigidBody::upcast(arr[i]);
+			dynamicsWorld_->removeCollisionObject(body);
+			btMotionState* motionState = body->getMotionState();
+			btCollisionShape* shape = body->getCollisionShape();
+			delete body;
+			delete shape;
+			delete motionState;
+			return;
+		}
+	}
+}
+
+bool PhysicsManager::has(Node* node) {
+	btCollisionObjectArray arr = dynamicsWorld_->
+		getCollisionObjectArray();
+	int size = arr.size();
+	for (int i = 0; i < size; i++) {
+		if (arr[i]->getUserPointer() == node) {
+			return true;
+		}
+	}
+	return false;
+}
+
 void PhysicsManager::move(Node* node, Vec3& force, bool linear) {
 	btCollisionObjectArray arr = dynamicsWorld_->getCollisionObjectArray();
 	int size = arr.size();
@@ -200,24 +230,6 @@ void PhysicsManager::rotate(
 	//	}
 	//	return;
 	//}
-}
-
-void PhysicsManager::remove(Node* node) {
-	btCollisionObjectArray arr = dynamicsWorld_->
-		getCollisionObjectArray();
-	int size = arr.size();
-	for (int i = 0; i < size; i++) {
-		if (arr[i]->getUserPointer() == node) {
-			btRigidBody* body = btRigidBody::upcast(arr[i]);
-			dynamicsWorld_->removeCollisionObject(body);
-			btMotionState* motionState = body->getMotionState();
-			btCollisionShape* shape = body->getCollisionShape();
-			delete body;
-			delete shape;
-			delete motionState;
-			return;
-		}
-	}
 }
 
 void PhysicsManager::updateNode(Node* node) {
@@ -333,12 +345,12 @@ void PhysicsManager::addSphere(Node* node) {
 	btRigidBody* body = new btRigidBody(rbInfo);
 	body->setUserPointer(static_cast<void*>(node));
 	setupAttributes(body, model->getAttributes());
-	//if (pa->getDisableRotation()) {
-	//	//body->setInvInertiaDiagLocal(btVector3(0.0f, 0.0f, 0.0f));
-	//	//body->updateInertiaTensor();
-	//	body->setSleepingThresholds(0.0f, 0.0f);
-	//	body->setAngularFactor(0.0);
-	//}
+	if (model->getAttributes().getBool(Resource::ATTR_DISABLE_ROTATION, false)) {
+		//body->setInvInertiaDiagLocal(btVector3(0.0f, 0.0f, 0.0f));
+		//body->updateInertiaTensor();
+		body->setSleepingThresholds(0.0f, 0.0f);
+		body->setAngularFactor(0.0);
+	}
 	//body->setCcdMotionThreshold(radius);
 	//body->setCcdSweptSphereRadius(0.9f * radius);
 	dynamicsWorld_->addRigidBody(body);
