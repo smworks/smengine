@@ -97,10 +97,9 @@ public:
 	 */
 	void update(double time);
 
-	/**
-	 * @param node - node that contains physics resource.
-	 */
 	void add(Node* node);
+	void remove(Node* node);
+	bool has(Node* node);
 
 	/**
 	 * Force is measured in newtons.
@@ -124,10 +123,7 @@ public:
 	void rotate(
 		Node* node, Vec3& angularMomentum, bool linear = false);
 
-	/**
-	 * @param node - node that contains physics resource.
-	 */
-	void remove(Node* node);
+
 
 	/**
 	 * Removes node from world if it exists.

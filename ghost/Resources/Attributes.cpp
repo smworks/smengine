@@ -9,90 +9,89 @@
 #include "Attributes.h"
 
 Attributes::Attributes() {}
-
 Attributes::~Attributes() {}
 
-void Attributes::setInt(const string& name, INT32 val) {
-	mapIntIt_ = mapInt_.find(name);
-	if (mapInt_.end() != mapIntIt_) {
-		mapIntIt_->second = val;
+void Attributes::setBool(const string& name, bool val) {
+	mapBoolIt = mapBool.find(name);
+	if (mapBool.end() != mapBoolIt) {
+		mapBoolIt->second = val;
 		return;
 	}
-	mapInt_.insert(pair<string, INT32>(name, val));
+	mapBool.insert(pair<string, bool>(name, val));
 }
 
-INT32 Attributes::getInt(const string& name, INT32 val) {
-	mapIntIt_ = mapInt_.find(name);
-	if (mapInt_.end() != mapIntIt_) {
-		return mapIntIt_->second;
+bool Attributes::getBool(const string& name, bool val) {
+	mapBoolIt = mapBool.find(name);
+	if (mapBool.end() != mapBoolIt) {
+		return mapBoolIt->second;
 	}
 	return val;
 }
 
-void Attributes::setLong(const string& name, INT64 val) {
-	mapLongIt_ = mapLong_.find(name);
-	if (mapLong_.end() != mapLongIt_) {
-		mapLongIt_->second = val;
+void Attributes::setInt(const string& name, INT32 val) {
+	mapIntIt = mapInt.find(name);
+	if (mapInt.end() != mapIntIt) {
+		mapIntIt->second = val;
 		return;
 	}
-	mapInt_.insert(pair<string, INT64>(name, val));
+	mapInt.insert(pair<string, INT32>(name, val));
 }
 
-INT64 Attributes::getLong(const string& name, INT64 val) {
-	mapLongIt_ = mapLong_.find(name);
-	if (mapLong_.end() != mapLongIt_) {
-		return mapLongIt_->second;
+INT32 Attributes::getInt(const string& name, INT32 val) {
+	mapIntIt = mapInt.find(name);
+	if (mapInt.end() != mapIntIt) {
+		return mapIntIt->second;
 	}
 	return val;
 }
 
 void Attributes::setFloat(const string& name, float val) {
-	mapFloatIt_ = mapFloat_.find(name);
-	if (mapFloat_.end() != mapFloatIt_) {
-		mapFloatIt_->second = val;
+	mapFloatIt = mapFloat.find(name);
+	if (mapFloat.end() != mapFloatIt) {
+		mapFloatIt->second = val;
 		return;
 	}
-	mapFloat_.insert(pair<string, float>(name, val));
+	mapFloat.insert(pair<string, float>(name, val));
 }
 
 float Attributes::getFloat(const string& name, float val) {
-	mapFloatIt_ = mapFloat_.find(name);
-	if (mapFloat_.end() != mapFloatIt_) {
-		return mapFloatIt_->second;
+	mapFloatIt = mapFloat.find(name);
+	if (mapFloat.end() != mapFloatIt) {
+		return mapFloatIt->second;
 	}
 	return val;
 }
 
 void Attributes::setString(const string& name, string val) {
-	mapStringIt_ = mapString_.find(name);
-	if (mapString_.end() != mapStringIt_) {
-		mapStringIt_->second = val;
+	mapStringIt = mapString.find(name);
+	if (mapString.end() != mapStringIt) {
+		mapStringIt->second = val;
 		return;
 	}
-	mapString_.insert(pair<string, string>(name, val));
+	mapString.insert(pair<string, string>(name, val));
 }
 
 string Attributes::getString(const string& name, string val) {
-	mapStringIt_ = mapString_.find(name);
-	if (mapString_.end() != mapStringIt_) {
-		return mapStringIt_->second;
+	mapStringIt = mapString.find(name);
+	if (mapString.end() != mapStringIt) {
+		return mapStringIt->second;
 	}
 	return val;
 }
 
 void Attributes::setPointer(const string& name, void* val) {
-	mapPointerIt_ = mapPointer_.find(name);
-	if (mapPointer_.end() != mapPointerIt_) {
-		mapPointerIt_->second = val;
+	mapPointerIt = mapPointer.find(name);
+	if (mapPointer.end() != mapPointerIt) {
+		mapPointerIt->second = val;
 		return;
 	}
-	mapPointer_.insert(pair<string, void*>(name, val));
+	mapPointer.insert(pair<string, void*>(name, val));
 }
 
 void* Attributes::getPointer(const string& name) {
-	mapPointerIt_ = mapPointer_.find(name);
-	if (mapPointer_.end() != mapPointerIt_) {
-		return mapPointerIt_->second;
+	mapPointerIt = mapPointer.find(name);
+	if (mapPointer.end() != mapPointerIt) {
+		return mapPointerIt->second;
 	}
 	return 0;
 }

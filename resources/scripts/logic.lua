@@ -55,7 +55,6 @@ function start()
 --		map[t["x"]][t["y"]] = t["type"]
 --	end
 
-    camera:setPosXYZ(0.0, 0.1, 3.0)
 
     grassTexture = Texture.new("grass_1.png");
 
@@ -76,6 +75,7 @@ function start()
     wall:setRotX(90.0)
     wall:setPosXYZ(0.0, 1.5, -5.0)
     wall:setScaleXYZ(10.0, 1.0, 3.0)
+    wall:enablePhysics()
 
     wall = Model.new("wall2")
     wall:setType("plane")
@@ -85,6 +85,7 @@ function start()
     wall:setRotX(90.0)
     wall:setPosXYZ(0.0, 1.5, 5.0)
     wall:setScaleXYZ(10.0, 1.0, 3.0)
+    wall:enablePhysics()
 
     wall = Model.new("wall3")
     wall:setType("plane")
@@ -95,6 +96,7 @@ function start()
     wall:setRotY(-90.0)
     wall:setPosXYZ(-5.0, 1.5, 0.0)
     wall:setScaleXYZ(10.0, 1.0, 3.0)
+    wall:enablePhysics()
 
     wall = Model.new("wall4")
     wall:setType("plane")
@@ -105,6 +107,7 @@ function start()
     wall:setRotY(-90.0)
     wall:setPosXYZ(5.0, 1.5, 0.0)
     wall:setScaleXYZ(10.0, 1.0, 3.0)
+    wall:enablePhysics()
 
     plane = Model.new("ceiling")
     plane:setType("plane")
@@ -113,12 +116,28 @@ function start()
     plane:setTexture(getTexture("lab_floor.png"))
     plane:setPosY(3.0)
     plane:setScaleXYZ(10.0, 1.0, 10.0)
+    --plane:enablePhysics()
 
     ball = Model.new("ball")
     ball:setShader(Shader.new("temp_model"))
-    ball:setType("sphere")
     ball:setAmbient("#FF0000FF")
+    ball:setPosY(20.0)
+    ball:setType("sphere")
     ball:enablePhysics("1.0")
+
+    ball = Model.new("ball2")
+    ball:setShader(Shader.new("object"))
+    ball:setAmbient("#FF0000FF")
+    ball:setPosY(30.0)
+    ball:addPosX(0.1)
+    ball:setVisibility(false)
+    ball:setInt("vertical_lod", 128)
+    ball:setInt("horizontal_lod", 128)
+    ball:setBool("disable_rotation", true)
+    ball:setType("sphere")
+    ball:enablePhysics("1.0")
+
+    camera:follow(ball)
 end
 
 -- Called when program is brought to foreground.
@@ -151,36 +170,41 @@ function update()
     camera:addRotX(input:getPointerDeltaY());
     camera:addRotY(input:getPointerDeltaX());
 
-	local offset = 0.1
+--	local offset = 0.1
 
-    if input:keyPressed(constants["W"]) then
-		camera:moveZ(-offset)
-	end
-	if input:keyPressed(constants["S"]) then
-		camera:moveZ(offset)
-	end
-	if input:keyPressed(constants["A"]) then
-		camera:moveX(-offset)
-	end
-	if input:keyPressed(constants["D"]) then
-		camera:moveX(offset)
-	end
+--    if input:keyPressed(constants["W"]) then
+--		camera:moveZ(-offset)
+--	end
+--	if input:keyPressed(constants["S"]) then
+--		camera:moveZ(offset)
+--	end
+--	if input:keyPressed(constants["A"]) then
+--		camera:moveX(-offset)
+--	end
+--	if input:keyPressed(constants["D"]) then
+--		camera:moveX(offset)
+--	end
 
-    offset = 14.0
-
+    offset = 5.0
 	if input:keyPressed(constants["I"]) then
-		camera:addPosY(-offset)
+		--ball:addPosY(-offset)
+        --ball:accelerate(0.0, 0.0, -1.0)
+        ball:moveViaCameraDirection(offset)
 	end
 	if input:keyPressed(constants["K"]) then
-		camera:addPosY(offset)
+		--ball:addPosY(offset)
+        ball:moveViaCameraDirection(-offset)
 	end
-	if input:keyPressed(constants["J"]) then
-		camera:addPosX(offset)
-	end
-	if input:keyPressed(constants["L"]) then
-		camera:addPosX(-offset)
-	end
+--	if input:keyPressed(constants["J"]) then
+--		--ball:addPosX(offset)
+--        ball:accelerate(-1.0, 0.0, 0.0)
+--	end
+--	if input:keyPressed(constants["L"]) then
+--		--ball:addPosX(-offset)
+--        ball:accelerate(1.0, 0.0, 0.0)
+--	end
 
+    
 end
 
 -- Called when program is brought to background.

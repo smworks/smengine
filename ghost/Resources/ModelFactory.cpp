@@ -181,8 +181,11 @@ void ModelFactory::createSphere(ModelData* md, Attributes& attr) {
 	md->setCullFace(false);
 	vector<Vec3> vert;
 	vector<UINT16> indices;
-	INT32 vLod = attr.getInt(Resource::ATTR_VERTICAL_LOD, 2);
-	INT32 hLod = attr.getInt(Resource::ATTR_HORIZONTAL_LOD, 2);
+	INT32 vLod = attr.getInt(Resource::ATTR_VERTICAL_LOD, 12);
+	INT32 hLod = attr.getInt(Resource::ATTR_HORIZONTAL_LOD, 12);
+	if (vLod < 12 || hLod < 12) {
+		THROWEX("Sphere vetical and horizontal LOD levels must be atleast 12.");
+	}
 	Shapes::getSphere(vLod, hLod, &vert, 0, 0, &indices);
 	SIZE vertexCount = vert.size();
 	VertexPNT* vertices = NEW VertexPNT[vertexCount];
