@@ -234,7 +234,7 @@ int print(lua_State* L) {
 		lua_pop(L, 1);
 	};
 	// Print the message.
-	LOGI("%s", ret.c_str());    
+	LOGI("%s", ret.c_str());
 	return 0;
 }
 
@@ -1669,7 +1669,7 @@ int httpResponseGetId(lua_State* L) {
 int httpResponseGetContent(lua_State* L) {
 	HttpResponse* response = SM_GET_OBJECT(L, 0, HttpResponse);
 	if (response != 0 && response->getContentSize() > 0) {
-		SM_RETURN_STRING(L, response->getContent());
+		SM_RETURN_STRING(L, (const char*) response->getContent());
 	} else {
 		SM_RETURN_NIL(L);
 	}

@@ -24,56 +24,56 @@ public:
 	CMDTask(ServiceLocator* services) : services(services), show(false), isShowing(false) {}
 	~CMDTask() {}
 	void run() {
-		AllocConsole();
-		freopen("CONIN$", "r", stdin);
-		freopen("CONOUT$", "w", stdout);
-		ShowWindow(GetConsoleWindow(), SW_HIDE);
-		string line;
-		while (true) {
-			if (!isShowing && show || isShowing && !show) {
-				ShowWindow(GetConsoleWindow(), show ? SW_SHOW : SW_HIDE);
-				isShowing = show;
-			}
-			if (show) {
-				cout << "Enter command: ";
-				getline(cin, line);
-				if (line == "close") {
-					show = false;
-					continue;
-				} else if (line == "test") {
-					SocketParams sp("127.0.0.2", 8888);
-					sp.setSocketType(SocketParams::UDP);
-					sp.setConnectionType(SocketParams::CLIENT);
-					Socket* s = services->createSocket(sp);
-					HttpRequest r("127.0.0.2");
-					string entity = "Hello socket. It's ghost :)";
-					INT8* bytes = NEW INT8[entity.size()];
-					memcpy(bytes, entity.c_str(), entity.size());
-					r.setEntity(bytes, entity.size());
-					LOGI("Sending to server");
-					s->send(&r);
-					LOGI("Preparing to receive.");
-					HttpResponse* rs = s->receive();
-					if (rs != 0) {
-						LOGD("TEST finished. Result: %s", rs->getContent());
-						delete rs;
-					} else {
-						LOGD("Response is null.");
-					}
-					delete s;
-				} else {
-					string res = services->getScriptManager()->executeCode(line);
-					if (res.length() > 0) {
-						cout << res << endl;
-					}
-				}
-			}
-			if (services->isFinished()) {
-				FreeConsole();
-				return;
-			}
-			this_thread::sleep_for(chrono::milliseconds(100));
-		}
+//		AllocConsole();
+//		freopen("CONIN$", "r", stdin);
+//		freopen("CONOUT$", "w", stdout);
+//		ShowWindow(GetConsoleWindow(), SW_HIDE);
+//		string line;
+//		while (true) {
+//			if (!isShowing && show || isShowing && !show) {
+//				ShowWindow(GetConsoleWindow(), show ? SW_SHOW : SW_HIDE);
+//				isShowing = show;
+//			}
+//			if (show) {
+//				cout << "Enter command: ";
+//				getline(cin, line);
+//				if (line == "close") {
+//					show = false;
+//					continue;
+//				} else if (line == "test") {
+//					SocketParams sp("127.0.0.2", 8888);
+//					sp.setSocketType(SocketParams::UDP);
+//					sp.setConnectionType(SocketParams::CLIENT);
+//					Socket* s = services->createSocket(sp);
+//					HttpRequest r("127.0.0.2");
+//					string entity = "Hello socket. It's ghost :)";
+//					INT8* bytes = NEW INT8[entity.size()];
+//					memcpy(bytes, entity.c_str(), entity.size());
+//					r.setEntity(bytes, entity.size());
+//					LOGI("Sending to server");
+//					s->send(&r);
+//					LOGI("Preparing to receive.");
+//					HttpResponse* rs = s->receive();
+//					if (rs != 0) {
+//						LOGD("TEST finished. Result: %s", rs->getContent());
+//						delete rs;
+//					} else {
+//						LOGD("Response is null.");
+//					}
+//					delete s;
+//				} else {
+//					string res = services->getScriptManager()->executeCode(line);
+//					if (res.length() > 0) {
+//						cout << res << endl;
+//					}
+//				}
+//			}
+//			if (services->isFinished()) {
+//				FreeConsole();
+//				return;
+//			}
+//			this_thread::sleep_for(chrono::milliseconds(100));
+//		}
 	}
 	volatile bool show;
 private:

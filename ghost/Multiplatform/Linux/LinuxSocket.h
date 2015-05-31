@@ -10,14 +10,23 @@
 
 #include "../Ghost.h"
 #include "../Socket.h"
+#include "../../Network/SocketParams.h"
 
 class LinuxSocket : public Socket {
 public:
-	LinuxSocket();
+	LinuxSocket(SocketParams params);
 	~LinuxSocket();
-	HttpResponse* send(HttpRequest* request);
+	void send(HttpRequest* request);
+	HttpResponse* receive();
+	void shutdown();
+	bool isAvailable();
 private:
-	int socket_;
+//    sockaddr_in client;
+//	int length;
+//	SOCKET socket;
+//	WSADATA wsaData;
+//	SocketParams params;
+//	bool available;
 };
 
 #endif

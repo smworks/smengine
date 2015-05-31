@@ -44,7 +44,7 @@ UINT64 ThreadManager::execute(Task* task) {
 }
 
 void ThreadManager::join(UINT64 id) {
-	if (id == this_thread::get_id().hash()) {
+	if (id == hash<thread::id>()(this_thread::get_id())) {
 		LOGW("Thread with id %llu attempted to join itself.", id);
 		return;
 	}

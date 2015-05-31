@@ -397,6 +397,13 @@ void LinuxGraphicsManager::unsetVertexBuffer(UINT32& id) {
 	}
 }
 
+void LinuxGraphicsManager::unsetVertexBuffers(UINT32 count, UINT32*& buffers) {
+	bindBuffer(0);
+	glDeleteBuffers(count, buffers);
+	delete [] buffers;
+	buffers = 0;
+}
+
 bool LinuxGraphicsManager::checkSupport(Support key) {
 	switch (key) {
 	case SUPPORT_NPOT_TEXTURES:

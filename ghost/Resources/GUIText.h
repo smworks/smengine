@@ -46,7 +46,7 @@ public:
 	 * @return String containing text.
 	 */
 	string& getText();
-    
+
     /**
      * @param size - text size in pixels.
      */
@@ -89,7 +89,7 @@ public:
 private:
 	string text_;
 	SIZE size_, textOffsetX_, textOffsetY_;
-	SIZE vbo_, vertexCount_;
+	UINT32 vbo_, vertexCount_;
 	float textWidth_, textHeight_;
 	vector<VertexPT> vertices_;
 };

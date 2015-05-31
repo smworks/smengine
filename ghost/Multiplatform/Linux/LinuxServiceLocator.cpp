@@ -6,10 +6,10 @@
  */
 
 #include "LinuxServiceLocator.h"
-#include "LinuxThread.h"
 #include "LinuxGraphicsManager.h"
 #include "LinuxFileManager.h"
 #include "LinuxSocket.h"
+#include "LinuxDatabase.h"
 #include "../../Resources/TextureRGBA.h"
 
 LinuxServiceLocator::LinuxServiceLocator() :
@@ -83,16 +83,12 @@ double LinuxServiceLocator::updateTimer(float sleep) {
 	return frameDuration_ = timeElapsed;
 }
 
-Thread* LinuxServiceLocator::createThread() {
-	return NEW LinuxThread();
-}
-
 UINT32 LinuxServiceLocator::getCurrentThreadId() {
 	return static_cast<UINT32>(pthread_self());
 }
 
-Socket* LinuxServiceLocator::createSocket() {
-	return NEW LinuxSocket();
+Socket* LinuxServiceLocator::createSocket(SocketParams sp) {
+	return NEW LinuxSocket(sp);
 }
 
 GraphicsManager* LinuxServiceLocator::getGraphicsManager() {
@@ -104,4 +100,20 @@ GraphicsManager* LinuxServiceLocator::getGraphicsManager() {
 
 FileManager* LinuxServiceLocator::getFileManager() {
 	return fileManager_;
+}
+
+SoundManager* LinuxServiceLocator::getSoundManager() {
+	if (soundManager_ == 0) {
+		soundManager_ = 0; //NEW LinuxSoundManager();
+		LOGD("Sound manager initialized.");
+	}
+	return soundManager_;
+}
+
+Database* LinuxServiceLocator::getDB() {
+	if (database_ == 0) {
+		database_ = 0; //NEW LinuxDatabase(getFileManager());
+		LOGD("Database initialized.");
+	}
+	return database_;
 }
