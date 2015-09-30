@@ -59,6 +59,8 @@
 #include <netinet/in.h>
 #include <resolv.h>
 #include <assert.h>
+#include <thread>
+#include <mutex>
 
 using namespace std;
 
@@ -87,6 +89,12 @@ typedef SIZE* POINTER;
     #define LOGD(...)
 #endif
 
+#define RETURN(val, cond, ...) \
+	if (cond) { \
+		LOGW(__VA_ARGS__); \
+		return val; \
+	}
+
 // PROFILER
 #ifdef SMART_DEBUG
     void profile(string& msg);
@@ -102,16 +110,20 @@ typedef SIZE* POINTER;
 
 #ifdef SMART_DEBUG
 	#define CHECK_GL_ERROR(msg) checkGLError(msg)
-#define ASSERT(expression, ...) \
-	if (!(expression)) { LOGE(__VA_ARGS__); } assert(expression)
+    #define ASSERT(expression, ...) \
+        if (!(expression)) { LOGE(__VA_ARGS__); } assert(expression)
+    #define THROWEXEXT(msg, ...) printf(msg, __VA_ARGS__)
+	#define THROWEX(msg) THROWEXEXT(msg, "")
 #else
 	#define CHECK_GL_ERROR(msg)
 	#define ASSERT(expression, ...) if (!(expression)) { LOGE(__VA_ARGS__); }
+    #define THROWEXEXT(msg, ...) printf(msg, __VA_ARGS__)
+	#define THROWEX(msg) THROWEXEXT(msg, "")
 #endif
 
 // GRAPHICS.
 #define GLEW_STATIC
-#include <GL/glew.h>
+#include "../../../dependencies/includes/glew/glew.h"
 
 #ifdef _DEBUG
 	#define CHECK_GL_ERROR(msg) checkGLError(msg)

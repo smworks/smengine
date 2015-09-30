@@ -13970,3 +13970,5640 @@
 	"Camera.h"
 	"Node.h"
 
+1432383127 source:/home/martynas/Desktop/smengine/smart-engine/dependencies/includes/bullet/BulletCollision/BroadphaseCollision/btAxisSweep3.cpp
+	"btAxisSweep3.h"
+
+1432383127 /home/martynas/Desktop/smengine/smart-engine/dependencies/includes/bullet/BulletCollision/BroadphaseCollision/btAxisSweep3.h
+	"../../LinearMath/btVector3.h"
+	"btOverlappingPairCache.h"
+	"btBroadphaseInterface.h"
+	"btBroadphaseProxy.h"
+	"btOverlappingPairCallback.h"
+	"btDbvtBroadphase.h"
+	<stdio.h>
+
+1432383127 /home/martynas/Desktop/smengine/smart-engine/dependencies/includes/bullet/LinearMath/btVector3.h
+	"btScalar.h"
+	"btMinMax.h"
+	"btAlignedAllocator.h"
+
+1432383127 /home/martynas/Desktop/smengine/smart-engine/dependencies/includes/bullet/LinearMath/btScalar.h
+	<math.h>
+	<stdlib.h>
+	<float.h>
+	<ppcintrinsics.h>
+	<emmintrin.h>
+	<stdio.h>
+	<assert.h>
+	<assert.h>
+	<spu_printf.h>
+	<assert.h>
+	<smmintrin.h>
+	<tmmintrin.h>
+	<pmmintrin.h>
+	<emmintrin.h>
+	<arm_neon.h>
+	<assert.h>
+	<stdio.h>
+	<assert.h>
+	<arm_neon.h>
+
+1432383127 /home/martynas/Desktop/smengine/smart-engine/dependencies/includes/bullet/LinearMath/btMinMax.h
+	"btScalar.h"
+
+1432383127 /home/martynas/Desktop/smengine/smart-engine/dependencies/includes/bullet/LinearMath/btAlignedAllocator.h
+	"btScalar.h"
+
+1432383127 /home/martynas/Desktop/smengine/smart-engine/dependencies/includes/bullet/BulletCollision/BroadphaseCollision/btOverlappingPairCache.h
+	"btBroadphaseInterface.h"
+	"btBroadphaseProxy.h"
+	"btOverlappingPairCallback.h"
+	"../../LinearMath/btAlignedObjectArray.h"
+
+1432383127 /home/martynas/Desktop/smengine/smart-engine/dependencies/includes/bullet/BulletCollision/BroadphaseCollision/btBroadphaseInterface.h
+	"btBroadphaseProxy.h"
+	"../../LinearMath/btVector3.h"
+
+1432383127 /home/martynas/Desktop/smengine/smart-engine/dependencies/includes/bullet/BulletCollision/BroadphaseCollision/btBroadphaseProxy.h
+	"../../LinearMath/btScalar.h"
+	"../../LinearMath/btVector3.h"
+	"../../LinearMath/btAlignedAllocator.h"
+
+1432383127 /home/martynas/Desktop/smengine/smart-engine/dependencies/includes/bullet/BulletCollision/BroadphaseCollision/btOverlappingPairCallback.h
+
+1432383127 /home/martynas/Desktop/smengine/smart-engine/dependencies/includes/bullet/LinearMath/btAlignedObjectArray.h
+	"btScalar.h"
+	"btAlignedAllocator.h"
+	<memory.h>
+	<string.h>
+	<new>
+
+1432383127 /home/martynas/Desktop/smengine/smart-engine/dependencies/includes/bullet/BulletCollision/BroadphaseCollision/btDbvtBroadphase.h
+	"../BroadphaseCollision/btDbvt.h"
+	"../BroadphaseCollision/btOverlappingPairCache.h"
+	"../../LinearMath/btQuickprof.h"
+
+1432383127 /home/martynas/Desktop/smengine/smart-engine/dependencies/includes/bullet/BulletCollision/BroadphaseCollision/btDbvt.h
+	"../../LinearMath/btAlignedObjectArray.h"
+	"../../LinearMath/btVector3.h"
+	"../../LinearMath/btTransform.h"
+	"../../LinearMath/btAabbUtil2.h"
+	<emmintrin.h>
+	<memory.h>
+	<string.h>
+
+1432383127 /home/martynas/Desktop/smengine/smart-engine/dependencies/includes/bullet/LinearMath/btTransform.h
+	"btMatrix3x3.h"
+
+1432383127 /home/martynas/Desktop/smengine/smart-engine/dependencies/includes/bullet/LinearMath/btMatrix3x3.h
+	"btVector3.h"
+	"btQuaternion.h"
+	<stdio.h>
+
+1432383127 /home/martynas/Desktop/smengine/smart-engine/dependencies/includes/bullet/LinearMath/btQuaternion.h
+	"btVector3.h"
+	"btQuadWord.h"
+
+1432383127 /home/martynas/Desktop/smengine/smart-engine/dependencies/includes/bullet/LinearMath/btQuadWord.h
+	"btScalar.h"
+	"btMinMax.h"
+	<altivec.h>
+
+1432383127 /home/martynas/Desktop/smengine/smart-engine/dependencies/includes/bullet/LinearMath/btAabbUtil2.h
+	"btTransform.h"
+	"btVector3.h"
+	"btMinMax.h"
+
+1432383127 /home/martynas/Desktop/smengine/smart-engine/dependencies/includes/bullet/LinearMath/btQuickprof.h
+	<stdio.h>
+	"btScalar.h"
+	"btAlignedAllocator.h"
+	<new>
+
+1432383127 source:/home/martynas/Desktop/smengine/smart-engine/dependencies/includes/bullet/BulletCollision/BroadphaseCollision/btBroadphaseProxy.cpp
+	"btBroadphaseProxy.h"
+
+1432383127 source:/home/martynas/Desktop/smengine/smart-engine/dependencies/includes/bullet/BulletCollision/BroadphaseCollision/btCollisionAlgorithm.cpp
+	"btCollisionAlgorithm.h"
+	"btDispatcher.h"
+
+1432383127 /home/martynas/Desktop/smengine/smart-engine/dependencies/includes/bullet/BulletCollision/BroadphaseCollision/btCollisionAlgorithm.h
+	"../../LinearMath/btScalar.h"
+	"../../LinearMath/btAlignedObjectArray.h"
+
+1432383127 /home/martynas/Desktop/smengine/smart-engine/dependencies/includes/bullet/BulletCollision/BroadphaseCollision/btDispatcher.h
+	"../../LinearMath/btScalar.h"
+
+1432383127 source:/home/martynas/Desktop/smengine/smart-engine/dependencies/includes/bullet/BulletCollision/BroadphaseCollision/btDbvt.cpp
+	"btDbvt.h"
+	<stdio.h>
+	<stdlib.h>
+	"../../LinearMath/btQuickProf.h"
+
+1432383127 source:/home/martynas/Desktop/smengine/smart-engine/dependencies/includes/bullet/BulletCollision/BroadphaseCollision/btDbvtBroadphase.cpp
+	"btDbvtBroadphase.h"
+	<stdio.h>
+
+1432383127 source:/home/martynas/Desktop/smengine/smart-engine/dependencies/includes/bullet/BulletCollision/BroadphaseCollision/btDispatcher.cpp
+	"btDispatcher.h"
+
+1432383127 source:/home/martynas/Desktop/smengine/smart-engine/dependencies/includes/bullet/BulletCollision/BroadphaseCollision/btMultiSapBroadphase.cpp
+	"btMultiSapBroadphase.h"
+	"btSimpleBroadphase.h"
+	"../../LinearMath/btAabbUtil2.h"
+	"btQuantizedBvh.h"
+
+1432383127 /home/martynas/Desktop/smengine/smart-engine/dependencies/includes/bullet/BulletCollision/BroadphaseCollision/btMultiSapBroadphase.h
+	"btBroadphaseInterface.h"
+	"../../LinearMath/btAlignedObjectArray.h"
+	"btOverlappingPairCache.h"
+
+1432383127 /home/martynas/Desktop/smengine/smart-engine/dependencies/includes/bullet/BulletCollision/BroadphaseCollision/btSimpleBroadphase.h
+	"btOverlappingPairCache.h"
+
+1432383127 /home/martynas/Desktop/smengine/smart-engine/dependencies/includes/bullet/BulletCollision/BroadphaseCollision/btQuantizedBvh.h
+	<stdio.h>
+	<stdlib.h>
+	"../../LinearMath/btVector3.h"
+	"../../LinearMath/btAlignedAllocator.h"
+	"../../LinearMath/btAlignedAllocator.h"
+	"../../LinearMath/btAlignedObjectArray.h"
+
+1432383127 source:/home/martynas/Desktop/smengine/smart-engine/dependencies/includes/bullet/BulletCollision/BroadphaseCollision/btOverlappingPairCache.cpp
+	"btOverlappingPairCache.h"
+	"btDispatcher.h"
+	"btCollisionAlgorithm.h"
+	"../../LinearMath/btAabbUtil2.h"
+	<stdio.h>
+
+1432383127 source:/home/martynas/Desktop/smengine/smart-engine/dependencies/includes/bullet/BulletCollision/BroadphaseCollision/btQuantizedBvh.cpp
+	"btQuantizedBvh.h"
+	"../../LinearMath/btAabbUtil2.h"
+	"../../LinearMath/btIDebugDraw.h"
+	"../../LinearMath/btSerializer.h"
+	<new>
+
+1432383127 /home/martynas/Desktop/smengine/smart-engine/dependencies/includes/bullet/LinearMath/btIDebugDraw.h
+	"btVector3.h"
+	"btTransform.h"
+
+1432383127 /home/martynas/Desktop/smengine/smart-engine/dependencies/includes/bullet/LinearMath/btSerializer.h
+	"btScalar.h"
+	"btStackAlloc.h"
+	"btHashMap.h"
+	<memory.h>
+	<string.h>
+
+1432383127 /home/martynas/Desktop/smengine/smart-engine/dependencies/includes/bullet/LinearMath/btStackAlloc.h
+	"btScalar.h"
+	"btAlignedAllocator.h"
+
+1432383127 /home/martynas/Desktop/smengine/smart-engine/dependencies/includes/bullet/LinearMath/btHashMap.h
+	"btAlignedObjectArray.h"
+
+1432383127 source:/home/martynas/Desktop/smengine/smart-engine/dependencies/includes/bullet/BulletCollision/BroadphaseCollision/btSimpleBroadphase.cpp
+	"btSimpleBroadphase.h"
+	"../BroadphaseCollision/btDispatcher.h"
+	"../BroadphaseCollision/btCollisionAlgorithm.h"
+	"../../LinearMath/btVector3.h"
+	"../../LinearMath/btTransform.h"
+	"../../LinearMath/btMatrix3x3.h"
+	"../../LinearMath/btAabbUtil2.h"
+	<new>
+
+1432383127 source:/home/martynas/Desktop/smengine/smart-engine/dependencies/includes/bullet/BulletCollision/CollisionDispatch/btActivatingCollisionAlgorithm.cpp
+	"btActivatingCollisionAlgorithm.h"
+	"btCollisionDispatcher.h"
+	"btCollisionObject.h"
+
+1432383127 /home/martynas/Desktop/smengine/smart-engine/dependencies/includes/bullet/BulletCollision/CollisionDispatch/btActivatingCollisionAlgorithm.h
+	"../BroadphaseCollision/btCollisionAlgorithm.h"
+
+1432383127 /home/martynas/Desktop/smengine/smart-engine/dependencies/includes/bullet/BulletCollision/CollisionDispatch/btCollisionDispatcher.h
+	"../BroadphaseCollision/btDispatcher.h"
+	"../NarrowPhaseCollision/btPersistentManifold.h"
+	"btManifoldResult.h"
+	"../BroadphaseCollision/btBroadphaseProxy.h"
+	"../../LinearMath/btAlignedObjectArray.h"
+	"btCollisionCreateFunc.h"
+
+1432383127 /home/martynas/Desktop/smengine/smart-engine/dependencies/includes/bullet/BulletCollision/NarrowPhaseCollision/btPersistentManifold.h
+	"../../LinearMath/btVector3.h"
+	"../../LinearMath/btTransform.h"
+	"btManifoldPoint.h"
+	"../../LinearMath/btAlignedAllocator.h"
+
+1432383127 /home/martynas/Desktop/smengine/smart-engine/dependencies/includes/bullet/BulletCollision/NarrowPhaseCollision/btManifoldPoint.h
+	"../../LinearMath/btVector3.h"
+	"../../LinearMath/btTransformUtil.h"
+	"physics_effects/base_level/solver/pfx_constraint_row.h"
+
+1432383127 /home/martynas/Desktop/smengine/smart-engine/dependencies/includes/bullet/LinearMath/btTransformUtil.h
+	"btTransform.h"
+
+1432383127 /home/martynas/Desktop/smengine/smart-engine/dependencies/includes/bullet/BulletCollision/CollisionDispatch/btManifoldResult.h
+	"../NarrowPhaseCollision/btPersistentManifold.h"
+	"../NarrowPhaseCollision/btDiscreteCollisionDetectorInterface.h"
+	"../../LinearMath/btTransform.h"
+	"../CollisionDispatch/btCollisionObjectWrapper.h"
+	"../CollisionDispatch/btCollisionObject.h"
+
+1432383127 /home/martynas/Desktop/smengine/smart-engine/dependencies/includes/bullet/BulletCollision/NarrowPhaseCollision/btDiscreteCollisionDetectorInterface.h
+	"../../LinearMath/btTransform.h"
+	"../../LinearMath/btVector3.h"
+
+1432383127 /home/martynas/Desktop/smengine/smart-engine/dependencies/includes/bullet/BulletCollision/CollisionDispatch/btCollisionObjectWrapper.h
+	"../../LinearMath/btScalar.h"
+
+1432383127 /home/martynas/Desktop/smengine/smart-engine/dependencies/includes/bullet/BulletCollision/CollisionDispatch/btCollisionObject.h
+	"../../LinearMath/btTransform.h"
+	"../../LinearMath/btMotionState.h"
+	"../../LinearMath/btAlignedAllocator.h"
+	"../../LinearMath/btAlignedObjectArray.h"
+
+1432383127 /home/martynas/Desktop/smengine/smart-engine/dependencies/includes/bullet/LinearMath/btMotionState.h
+	"btTransform.h"
+
+1432383127 /home/martynas/Desktop/smengine/smart-engine/dependencies/includes/bullet/BulletCollision/CollisionDispatch/btCollisionCreateFunc.h
+	"../../LinearMath/btAlignedObjectArray.h"
+
+1432383127 source:/home/martynas/Desktop/smengine/smart-engine/dependencies/includes/bullet/BulletCollision/CollisionDispatch/btBox2dBox2dCollisionAlgorithm.cpp
+	"btBox2dBox2dCollisionAlgorithm.h"
+	"../CollisionDispatch/btCollisionDispatcher.h"
+	"../CollisionShapes/btBoxShape.h"
+	"../CollisionDispatch/btCollisionObject.h"
+	"../CollisionDispatch/btBoxBoxDetector.h"
+	"../CollisionShapes/btBox2dShape.h"
+	"../CollisionDispatch/btCollisionObjectWrapper.h"
+
+1432383127 /home/martynas/Desktop/smengine/smart-engine/dependencies/includes/bullet/BulletCollision/CollisionDispatch/btBox2dBox2dCollisionAlgorithm.h
+	"../CollisionDispatch/btActivatingCollisionAlgorithm.h"
+	"../BroadphaseCollision/btBroadphaseProxy.h"
+	"../BroadphaseCollision/btDispatcher.h"
+	"../CollisionDispatch/btCollisionCreateFunc.h"
+
+1432383127 /home/martynas/Desktop/smengine/smart-engine/dependencies/includes/bullet/BulletCollision/CollisionShapes/btBoxShape.h
+	"btPolyhedralConvexShape.h"
+	"btCollisionMargin.h"
+	"../BroadphaseCollision/btBroadphaseProxy.h"
+	"../../LinearMath/btVector3.h"
+	"../../LinearMath/btMinMax.h"
+
+1432383127 /home/martynas/Desktop/smengine/smart-engine/dependencies/includes/bullet/BulletCollision/CollisionShapes/btPolyhedralConvexShape.h
+	"../../LinearMath/btMatrix3x3.h"
+	"btConvexInternalShape.h"
+
+1432383127 /home/martynas/Desktop/smengine/smart-engine/dependencies/includes/bullet/BulletCollision/CollisionShapes/btConvexInternalShape.h
+	"btConvexShape.h"
+	"../../LinearMath/btAabbUtil2.h"
+
+1432383127 /home/martynas/Desktop/smengine/smart-engine/dependencies/includes/bullet/BulletCollision/CollisionShapes/btConvexShape.h
+	"btCollisionShape.h"
+	"../../LinearMath/btVector3.h"
+	"../../LinearMath/btTransform.h"
+	"../../LinearMath/btMatrix3x3.h"
+	"btCollisionMargin.h"
+	"../../LinearMath/btAlignedAllocator.h"
+
+1432383127 /home/martynas/Desktop/smengine/smart-engine/dependencies/includes/bullet/BulletCollision/CollisionShapes/btCollisionShape.h
+	"../../LinearMath/btTransform.h"
+	"../../LinearMath/btVector3.h"
+	"../../LinearMath/btMatrix3x3.h"
+	"../BroadphaseCollision/btBroadphaseProxy.h"
+
+1432383127 /home/martynas/Desktop/smengine/smart-engine/dependencies/includes/bullet/BulletCollision/CollisionShapes/btCollisionMargin.h
+
+1432383127 /home/martynas/Desktop/smengine/smart-engine/dependencies/includes/bullet/BulletCollision/CollisionDispatch/btBoxBoxDetector.h
+	"../NarrowPhaseCollision/btDiscreteCollisionDetectorInterface.h"
+
+1432383127 /home/martynas/Desktop/smengine/smart-engine/dependencies/includes/bullet/BulletCollision/CollisionShapes/btBox2dShape.h
+	"../CollisionShapes/btPolyhedralConvexShape.h"
+	"../CollisionShapes/btCollisionMargin.h"
+	"../BroadphaseCollision/btBroadphaseProxy.h"
+	"../../LinearMath/btVector3.h"
+	"../../LinearMath/btMinMax.h"
+
+1432383127 source:/home/martynas/Desktop/smengine/smart-engine/dependencies/includes/bullet/BulletCollision/CollisionDispatch/btBoxBoxCollisionAlgorithm.cpp
+	"btBoxBoxCollisionAlgorithm.h"
+	"../CollisionDispatch/btCollisionDispatcher.h"
+	"../CollisionShapes/btBoxShape.h"
+	"../CollisionDispatch/btCollisionObject.h"
+	"btBoxBoxDetector.h"
+	"../CollisionDispatch/btCollisionObjectWrapper.h"
+
+1432383127 /home/martynas/Desktop/smengine/smart-engine/dependencies/includes/bullet/BulletCollision/CollisionDispatch/btBoxBoxCollisionAlgorithm.h
+	"btActivatingCollisionAlgorithm.h"
+	"../BroadphaseCollision/btBroadphaseProxy.h"
+	"../BroadphaseCollision/btDispatcher.h"
+	"../CollisionDispatch/btCollisionCreateFunc.h"
+
+1432383127 source:/home/martynas/Desktop/smengine/smart-engine/dependencies/includes/bullet/BulletCollision/CollisionDispatch/btBoxBoxDetector.cpp
+	"btBoxBoxDetector.h"
+	"../CollisionShapes/btBoxShape.h"
+	<float.h>
+	<string.h>
+
+1432383127 source:/home/martynas/Desktop/smengine/smart-engine/dependencies/includes/bullet/BulletCollision/CollisionDispatch/btCollisionDispatcher.cpp
+	"btCollisionDispatcher.h"
+	"../BroadphaseCollision/btCollisionAlgorithm.h"
+	"../CollisionShapes/btCollisionShape.h"
+	"../CollisionDispatch/btCollisionObject.h"
+	"../BroadphaseCollision/btOverlappingPairCache.h"
+	"../../LinearMath/btPoolAllocator.h"
+	"../CollisionDispatch/btCollisionConfiguration.h"
+	"../CollisionDispatch/btCollisionObjectWrapper.h"
+	<stdio.h>
+
+1432383127 /home/martynas/Desktop/smengine/smart-engine/dependencies/includes/bullet/LinearMath/btPoolAllocator.h
+	"btScalar.h"
+	"btAlignedAllocator.h"
+
+1432383127 /home/martynas/Desktop/smengine/smart-engine/dependencies/includes/bullet/BulletCollision/CollisionDispatch/btCollisionConfiguration.h
+
+1432383127 source:/home/martynas/Desktop/smengine/smart-engine/dependencies/includes/bullet/BulletCollision/CollisionDispatch/btCollisionObject.cpp
+	"btCollisionObject.h"
+	"../../LinearMath/btSerializer.h"
+
+1432383127 source:/home/martynas/Desktop/smengine/smart-engine/dependencies/includes/bullet/BulletCollision/CollisionDispatch/btCollisionWorld.cpp
+	"btCollisionWorld.h"
+	"btCollisionDispatcher.h"
+	"../CollisionDispatch/btCollisionObject.h"
+	"../CollisionShapes/btCollisionShape.h"
+	"../CollisionShapes/btConvexShape.h"
+	"../NarrowPhaseCollision/btGjkEpaPenetrationDepthSolver.h"
+	"../CollisionShapes/btSphereShape.h"
+	"../CollisionShapes/btBvhTriangleMeshShape.h"
+	"../NarrowPhaseCollision/btRaycastCallback.h"
+	"../CollisionShapes/btCompoundShape.h"
+	"../NarrowPhaseCollision/btSubSimplexConvexCast.h"
+	"../NarrowPhaseCollision/btGjkConvexCast.h"
+	"../NarrowPhaseCollision/btContinuousConvexCollision.h"
+	"../BroadphaseCollision/btCollisionAlgorithm.h"
+	"../BroadphaseCollision/btBroadphaseInterface.h"
+	"../BroadphaseCollision/btDbvt.h"
+	"../../LinearMath/btAabbUtil2.h"
+	"../../LinearMath/btQuickprof.h"
+	"../../LinearMath/btStackAlloc.h"
+	"../../LinearMath/btSerializer.h"
+	"../CollisionShapes/btConvexPolyhedron.h"
+	"../CollisionDispatch/btCollisionObjectWrapper.h"
+	"../CollisionDispatch/btCollisionDispatcher.h"
+	"../BroadphaseCollision/btSimpleBroadphase.h"
+	"../CollisionDispatch/btCollisionConfiguration.h"
+	"../CollisionShapes/btBoxShape.h"
+	"../CollisionShapes/btCapsuleShape.h"
+	"../CollisionShapes/btCompoundShape.h"
+	"../CollisionShapes/btConeShape.h"
+	"../CollisionShapes/btConvexTriangleMeshShape.h"
+	"../CollisionShapes/btCylinderShape.h"
+	"../CollisionShapes/btMultiSphereShape.h"
+	"../CollisionShapes/btPolyhedralConvexShape.h"
+	"../CollisionShapes/btSphereShape.h"
+	"../CollisionShapes/btTriangleCallback.h"
+	"../CollisionShapes/btTriangleMeshShape.h"
+	"../CollisionShapes/btStaticPlaneShape.h"
+
+1432383127 /home/martynas/Desktop/smengine/smart-engine/dependencies/includes/bullet/BulletCollision/CollisionDispatch/btCollisionWorld.h
+	"../../LinearMath/btVector3.h"
+	"../../LinearMath/btTransform.h"
+	"btCollisionObject.h"
+	"btCollisionDispatcher.h"
+	"../BroadphaseCollision/btOverlappingPairCache.h"
+	"../../LinearMath/btAlignedObjectArray.h"
+
+1432383127 /home/martynas/Desktop/smengine/smart-engine/dependencies/includes/bullet/BulletCollision/NarrowPhaseCollision/btGjkEpaPenetrationDepthSolver.h
+	"btConvexPenetrationDepthSolver.h"
+
+1432383127 /home/martynas/Desktop/smengine/smart-engine/dependencies/includes/bullet/BulletCollision/NarrowPhaseCollision/btConvexPenetrationDepthSolver.h
+	"btSimplexSolverInterface.h"
+
+1432383127 /home/martynas/Desktop/smengine/smart-engine/dependencies/includes/bullet/BulletCollision/NarrowPhaseCollision/btSimplexSolverInterface.h
+	"../../LinearMath/btVector3.h"
+	"btVoronoiSimplexSolver.h"
+
+1432383127 /home/martynas/Desktop/smengine/smart-engine/dependencies/includes/bullet/BulletCollision/NarrowPhaseCollision/btVoronoiSimplexSolver.h
+	"btSimplexSolverInterface.h"
+
+1432383127 /home/martynas/Desktop/smengine/smart-engine/dependencies/includes/bullet/BulletCollision/CollisionShapes/btSphereShape.h
+	"btConvexInternalShape.h"
+	"../BroadphaseCollision/btBroadphaseProxy.h"
+
+1432383127 /home/martynas/Desktop/smengine/smart-engine/dependencies/includes/bullet/BulletCollision/CollisionShapes/btBvhTriangleMeshShape.h
+	"btTriangleMeshShape.h"
+	"btOptimizedBvh.h"
+	"../../LinearMath/btAlignedAllocator.h"
+	"btTriangleInfoMap.h"
+
+1432383127 /home/martynas/Desktop/smengine/smart-engine/dependencies/includes/bullet/BulletCollision/CollisionShapes/btTriangleMeshShape.h
+	"btConcaveShape.h"
+	"btStridingMeshInterface.h"
+
+1432383127 /home/martynas/Desktop/smengine/smart-engine/dependencies/includes/bullet/BulletCollision/CollisionShapes/btConcaveShape.h
+	"btCollisionShape.h"
+	"../BroadphaseCollision/btBroadphaseProxy.h"
+	"btTriangleCallback.h"
+
+1432383127 /home/martynas/Desktop/smengine/smart-engine/dependencies/includes/bullet/BulletCollision/CollisionShapes/btTriangleCallback.h
+	"../../LinearMath/btVector3.h"
+
+1432383127 /home/martynas/Desktop/smengine/smart-engine/dependencies/includes/bullet/BulletCollision/CollisionShapes/btStridingMeshInterface.h
+	"../../LinearMath/btVector3.h"
+	"btTriangleCallback.h"
+	"btConcaveShape.h"
+
+1432383127 /home/martynas/Desktop/smengine/smart-engine/dependencies/includes/bullet/BulletCollision/CollisionShapes/btOptimizedBvh.h
+	"../BroadphaseCollision/btQuantizedBvh.h"
+
+1432383127 /home/martynas/Desktop/smengine/smart-engine/dependencies/includes/bullet/BulletCollision/CollisionShapes/btTriangleInfoMap.h
+	"../../LinearMath/btHashMap.h"
+	"../../LinearMath/btSerializer.h"
+
+1432383127 /home/martynas/Desktop/smengine/smart-engine/dependencies/includes/bullet/BulletCollision/NarrowPhaseCollision/btRaycastCallback.h
+	"../CollisionShapes/btTriangleCallback.h"
+	"../../LinearMath/btTransform.h"
+
+1432383127 /home/martynas/Desktop/smengine/smart-engine/dependencies/includes/bullet/BulletCollision/CollisionShapes/btCompoundShape.h
+	"btCollisionShape.h"
+	"../../LinearMath/btVector3.h"
+	"../../LinearMath/btTransform.h"
+	"../../LinearMath/btMatrix3x3.h"
+	"btCollisionMargin.h"
+	"../../LinearMath/btAlignedObjectArray.h"
+
+1432383127 /home/martynas/Desktop/smengine/smart-engine/dependencies/includes/bullet/BulletCollision/NarrowPhaseCollision/btSubSimplexConvexCast.h
+	"btConvexCast.h"
+	"btSimplexSolverInterface.h"
+
+1432383127 /home/martynas/Desktop/smengine/smart-engine/dependencies/includes/bullet/BulletCollision/NarrowPhaseCollision/btConvexCast.h
+	"../../LinearMath/btTransform.h"
+	"../../LinearMath/btVector3.h"
+	"../../LinearMath/btScalar.h"
+	"../../LinearMath/btIDebugDraw.h"
+
+1432383127 /home/martynas/Desktop/smengine/smart-engine/dependencies/includes/bullet/BulletCollision/NarrowPhaseCollision/btGjkConvexCast.h
+	"../CollisionShapes/btCollisionMargin.h"
+	"../../LinearMath/btVector3.h"
+	"btConvexCast.h"
+	"btSimplexSolverInterface.h"
+
+1432383127 /home/martynas/Desktop/smengine/smart-engine/dependencies/includes/bullet/BulletCollision/NarrowPhaseCollision/btContinuousConvexCollision.h
+	"btConvexCast.h"
+	"btSimplexSolverInterface.h"
+
+1432383127 /home/martynas/Desktop/smengine/smart-engine/dependencies/includes/bullet/BulletCollision/CollisionShapes/btConvexPolyhedron.h
+	"../../LinearMath/btTransform.h"
+	"../../LinearMath/btAlignedObjectArray.h"
+
+1432383127 /home/martynas/Desktop/smengine/smart-engine/dependencies/includes/bullet/BulletCollision/CollisionShapes/btCapsuleShape.h
+	"btConvexInternalShape.h"
+	"../BroadphaseCollision/btBroadphaseProxy.h"
+
+1432383127 /home/martynas/Desktop/smengine/smart-engine/dependencies/includes/bullet/BulletCollision/CollisionShapes/btConeShape.h
+	"btConvexInternalShape.h"
+	"../BroadphaseCollision/btBroadphaseProxy.h"
+
+1432383127 /home/martynas/Desktop/smengine/smart-engine/dependencies/includes/bullet/BulletCollision/CollisionShapes/btConvexTriangleMeshShape.h
+	"btPolyhedralConvexShape.h"
+	"../BroadphaseCollision/btBroadphaseProxy.h"
+
+1432383127 /home/martynas/Desktop/smengine/smart-engine/dependencies/includes/bullet/BulletCollision/CollisionShapes/btCylinderShape.h
+	"btBoxShape.h"
+	"../BroadphaseCollision/btBroadphaseProxy.h"
+	"../../LinearMath/btVector3.h"
+
+1432383127 /home/martynas/Desktop/smengine/smart-engine/dependencies/includes/bullet/BulletCollision/CollisionShapes/btMultiSphereShape.h
+	"btConvexInternalShape.h"
+	"../BroadphaseCollision/btBroadphaseProxy.h"
+	"../../LinearMath/btAlignedObjectArray.h"
+	"../../LinearMath/btAabbUtil2.h"
+
+1432383127 /home/martynas/Desktop/smengine/smart-engine/dependencies/includes/bullet/BulletCollision/CollisionShapes/btStaticPlaneShape.h
+	"btConcaveShape.h"
+
+1432383127 source:/home/martynas/Desktop/smengine/smart-engine/dependencies/includes/bullet/BulletCollision/CollisionDispatch/btCompoundCollisionAlgorithm.cpp
+	"../CollisionDispatch/btCompoundCollisionAlgorithm.h"
+	"../CollisionDispatch/btCollisionObject.h"
+	"../CollisionShapes/btCompoundShape.h"
+	"../BroadphaseCollision/btDbvt.h"
+	"../../LinearMath/btIDebugDraw.h"
+	"../../LinearMath/btAabbUtil2.h"
+	"btManifoldResult.h"
+	"../CollisionDispatch/btCollisionObjectWrapper.h"
+
+1432383127 /home/martynas/Desktop/smengine/smart-engine/dependencies/includes/bullet/BulletCollision/CollisionDispatch/btCompoundCollisionAlgorithm.h
+	"btActivatingCollisionAlgorithm.h"
+	"../BroadphaseCollision/btDispatcher.h"
+	"../BroadphaseCollision/btBroadphaseInterface.h"
+	"../NarrowPhaseCollision/btPersistentManifold.h"
+	"../BroadphaseCollision/btBroadphaseProxy.h"
+	"btCollisionCreateFunc.h"
+	"../../LinearMath/btAlignedObjectArray.h"
+
+1432383127 source:/home/martynas/Desktop/smengine/smart-engine/dependencies/includes/bullet/BulletCollision/CollisionDispatch/btConvex2dConvex2dAlgorithm.cpp
+	"btConvex2dConvex2dAlgorithm.h"
+	"../NarrowPhaseCollision/btDiscreteCollisionDetectorInterface.h"
+	"../BroadphaseCollision/btBroadphaseInterface.h"
+	"../CollisionDispatch/btCollisionObject.h"
+	"../CollisionShapes/btConvexShape.h"
+	"../CollisionShapes/btCapsuleShape.h"
+	"../NarrowPhaseCollision/btGjkPairDetector.h"
+	"../BroadphaseCollision/btBroadphaseProxy.h"
+	"../CollisionDispatch/btCollisionDispatcher.h"
+	"../CollisionShapes/btBoxShape.h"
+	"../CollisionDispatch/btManifoldResult.h"
+	"../NarrowPhaseCollision/btConvexPenetrationDepthSolver.h"
+	"../NarrowPhaseCollision/btContinuousConvexCollision.h"
+	"../NarrowPhaseCollision/btSubSimplexConvexCast.h"
+	"../NarrowPhaseCollision/btGjkConvexCast.h"
+	"../NarrowPhaseCollision/btVoronoiSimplexSolver.h"
+	"../CollisionShapes/btSphereShape.h"
+	"../NarrowPhaseCollision/btMinkowskiPenetrationDepthSolver.h"
+	"../NarrowPhaseCollision/btGjkEpa2.h"
+	"../NarrowPhaseCollision/btGjkEpaPenetrationDepthSolver.h"
+	"../CollisionDispatch/btCollisionObjectWrapper.h"
+
+1432383127 /home/martynas/Desktop/smengine/smart-engine/dependencies/includes/bullet/BulletCollision/CollisionDispatch/btConvex2dConvex2dAlgorithm.h
+	"../CollisionDispatch/btActivatingCollisionAlgorithm.h"
+	"../NarrowPhaseCollision/btGjkPairDetector.h"
+	"../NarrowPhaseCollision/btPersistentManifold.h"
+	"../BroadphaseCollision/btBroadphaseProxy.h"
+	"../NarrowPhaseCollision/btVoronoiSimplexSolver.h"
+	"../CollisionDispatch/btCollisionCreateFunc.h"
+	"../CollisionDispatch/btCollisionDispatcher.h"
+	"../../LinearMath/btTransformUtil.h"
+
+1432383127 /home/martynas/Desktop/smengine/smart-engine/dependencies/includes/bullet/BulletCollision/NarrowPhaseCollision/btGjkPairDetector.h
+	"btDiscreteCollisionDetectorInterface.h"
+	"../CollisionShapes/btCollisionMargin.h"
+	"btSimplexSolverInterface.h"
+
+1432383127 /home/martynas/Desktop/smengine/smart-engine/dependencies/includes/bullet/BulletCollision/NarrowPhaseCollision/btMinkowskiPenetrationDepthSolver.h
+	"btConvexPenetrationDepthSolver.h"
+
+1432383127 /home/martynas/Desktop/smengine/smart-engine/dependencies/includes/bullet/BulletCollision/NarrowPhaseCollision/btGjkEpa2.h
+	"../CollisionShapes/btConvexShape.h"
+
+1432383127 source:/home/martynas/Desktop/smengine/smart-engine/dependencies/includes/bullet/BulletCollision/CollisionDispatch/btConvexConcaveCollisionAlgorithm.cpp
+	"btConvexConcaveCollisionAlgorithm.h"
+	"../CollisionDispatch/btCollisionObject.h"
+	"../CollisionShapes/btMultiSphereShape.h"
+	"../BroadphaseCollision/btBroadphaseProxy.h"
+	"../CollisionShapes/btConcaveShape.h"
+	"../CollisionDispatch/btManifoldResult.h"
+	"../NarrowPhaseCollision/btRaycastCallback.h"
+	"../CollisionShapes/btTriangleShape.h"
+	"../CollisionShapes/btSphereShape.h"
+	"../../LinearMath/btIDebugDraw.h"
+	"../NarrowPhaseCollision/btSubSimplexConvexCast.h"
+	"../CollisionDispatch/btCollisionObjectWrapper.h"
+
+1432383127 /home/martynas/Desktop/smengine/smart-engine/dependencies/includes/bullet/BulletCollision/CollisionDispatch/btConvexConcaveCollisionAlgorithm.h
+	"btActivatingCollisionAlgorithm.h"
+	"../BroadphaseCollision/btDispatcher.h"
+	"../BroadphaseCollision/btBroadphaseInterface.h"
+	"../CollisionShapes/btTriangleCallback.h"
+	"../NarrowPhaseCollision/btPersistentManifold.h"
+	"../BroadphaseCollision/btBroadphaseProxy.h"
+	"btCollisionCreateFunc.h"
+
+1432383127 /home/martynas/Desktop/smengine/smart-engine/dependencies/includes/bullet/BulletCollision/CollisionShapes/btTriangleShape.h
+	"btConvexShape.h"
+	"btBoxShape.h"
+
+1432383127 source:/home/martynas/Desktop/smengine/smart-engine/dependencies/includes/bullet/BulletCollision/CollisionDispatch/btConvexConvexAlgorithm.cpp
+	"btConvexConvexAlgorithm.h"
+	"../NarrowPhaseCollision/btDiscreteCollisionDetectorInterface.h"
+	"../BroadphaseCollision/btBroadphaseInterface.h"
+	"../CollisionDispatch/btCollisionObject.h"
+	"../CollisionShapes/btConvexShape.h"
+	"../CollisionShapes/btCapsuleShape.h"
+	"../CollisionShapes/btTriangleShape.h"
+	"../NarrowPhaseCollision/btGjkPairDetector.h"
+	"../BroadphaseCollision/btBroadphaseProxy.h"
+	"../CollisionDispatch/btCollisionDispatcher.h"
+	"../CollisionShapes/btBoxShape.h"
+	"../CollisionDispatch/btManifoldResult.h"
+	"../NarrowPhaseCollision/btConvexPenetrationDepthSolver.h"
+	"../NarrowPhaseCollision/btContinuousConvexCollision.h"
+	"../NarrowPhaseCollision/btSubSimplexConvexCast.h"
+	"../NarrowPhaseCollision/btGjkConvexCast.h"
+	"../NarrowPhaseCollision/btVoronoiSimplexSolver.h"
+	"../CollisionShapes/btSphereShape.h"
+	"../NarrowPhaseCollision/btMinkowskiPenetrationDepthSolver.h"
+	"../NarrowPhaseCollision/btGjkEpa2.h"
+	"../NarrowPhaseCollision/btGjkEpaPenetrationDepthSolver.h"
+	"../NarrowPhaseCollision/btPolyhedralContactClipping.h"
+	"../CollisionDispatch/btCollisionObjectWrapper.h"
+
+1432383127 /home/martynas/Desktop/smengine/smart-engine/dependencies/includes/bullet/BulletCollision/CollisionDispatch/btConvexConvexAlgorithm.h
+	"btActivatingCollisionAlgorithm.h"
+	"../NarrowPhaseCollision/btGjkPairDetector.h"
+	"../NarrowPhaseCollision/btPersistentManifold.h"
+	"../BroadphaseCollision/btBroadphaseProxy.h"
+	"../NarrowPhaseCollision/btVoronoiSimplexSolver.h"
+	"btCollisionCreateFunc.h"
+	"btCollisionDispatcher.h"
+	"../../LinearMath/btTransformUtil.h"
+
+1432383127 /home/martynas/Desktop/smengine/smart-engine/dependencies/includes/bullet/BulletCollision/NarrowPhaseCollision/btPolyhedralContactClipping.h
+	"../../LinearMath/btAlignedObjectArray.h"
+	"../../LinearMath/btTransform.h"
+	"btDiscreteCollisionDetectorInterface.h"
+
+1432383127 source:/home/martynas/Desktop/smengine/smart-engine/dependencies/includes/bullet/BulletCollision/CollisionDispatch/btConvexPlaneCollisionAlgorithm.cpp
+	"btConvexPlaneCollisionAlgorithm.h"
+	"../CollisionDispatch/btCollisionDispatcher.h"
+	"../CollisionDispatch/btCollisionObject.h"
+	"../CollisionShapes/btConvexShape.h"
+	"../CollisionShapes/btStaticPlaneShape.h"
+	"../CollisionDispatch/btCollisionObjectWrapper.h"
+
+1432383127 /home/martynas/Desktop/smengine/smart-engine/dependencies/includes/bullet/BulletCollision/CollisionDispatch/btConvexPlaneCollisionAlgorithm.h
+	"../BroadphaseCollision/btCollisionAlgorithm.h"
+	"../BroadphaseCollision/btBroadphaseProxy.h"
+	"../CollisionDispatch/btCollisionCreateFunc.h"
+	"btCollisionDispatcher.h"
+	"../../LinearMath/btVector3.h"
+
+1432383127 source:/home/martynas/Desktop/smengine/smart-engine/dependencies/includes/bullet/BulletCollision/CollisionDispatch/btDefaultCollisionConfiguration.cpp
+	"btDefaultCollisionConfiguration.h"
+	"../CollisionDispatch/btConvexConvexAlgorithm.h"
+	"../CollisionDispatch/btEmptyCollisionAlgorithm.h"
+	"../CollisionDispatch/btConvexConcaveCollisionAlgorithm.h"
+	"../CollisionDispatch/btCompoundCollisionAlgorithm.h"
+	"../CollisionDispatch/btConvexPlaneCollisionAlgorithm.h"
+	"../CollisionDispatch/btBoxBoxCollisionAlgorithm.h"
+	"../CollisionDispatch/btSphereSphereCollisionAlgorithm.h"
+	"../CollisionDispatch/btSphereBoxCollisionAlgorithm.h"
+	"../CollisionDispatch/btSphereTriangleCollisionAlgorithm.h"
+	"../NarrowPhaseCollision/btGjkEpaPenetrationDepthSolver.h"
+	"../NarrowPhaseCollision/btMinkowskiPenetrationDepthSolver.h"
+	"../NarrowPhaseCollision/btVoronoiSimplexSolver.h"
+	"../../LinearMath/btStackAlloc.h"
+	"../../LinearMath/btPoolAllocator.h"
+
+1432383127 /home/martynas/Desktop/smengine/smart-engine/dependencies/includes/bullet/BulletCollision/CollisionDispatch/btDefaultCollisionConfiguration.h
+	"btCollisionConfiguration.h"
+
+1432383127 /home/martynas/Desktop/smengine/smart-engine/dependencies/includes/bullet/BulletCollision/CollisionDispatch/btEmptyCollisionAlgorithm.h
+	"../BroadphaseCollision/btCollisionAlgorithm.h"
+	"btCollisionCreateFunc.h"
+	"btCollisionDispatcher.h"
+
+1432383127 /home/martynas/Desktop/smengine/smart-engine/dependencies/includes/bullet/BulletCollision/CollisionDispatch/btSphereSphereCollisionAlgorithm.h
+	"btActivatingCollisionAlgorithm.h"
+	"../BroadphaseCollision/btBroadphaseProxy.h"
+	"../CollisionDispatch/btCollisionCreateFunc.h"
+	"btCollisionDispatcher.h"
+
+1432383127 /home/martynas/Desktop/smengine/smart-engine/dependencies/includes/bullet/BulletCollision/CollisionDispatch/btSphereBoxCollisionAlgorithm.h
+	"btActivatingCollisionAlgorithm.h"
+	"../BroadphaseCollision/btBroadphaseProxy.h"
+	"../CollisionDispatch/btCollisionCreateFunc.h"
+	"btCollisionDispatcher.h"
+	"../../LinearMath/btVector3.h"
+
+1432383127 /home/martynas/Desktop/smengine/smart-engine/dependencies/includes/bullet/BulletCollision/CollisionDispatch/btSphereTriangleCollisionAlgorithm.h
+	"btActivatingCollisionAlgorithm.h"
+	"../BroadphaseCollision/btBroadphaseProxy.h"
+	"../CollisionDispatch/btCollisionCreateFunc.h"
+	"btCollisionDispatcher.h"
+
+1432383127 source:/home/martynas/Desktop/smengine/smart-engine/dependencies/includes/bullet/BulletCollision/CollisionDispatch/btEmptyCollisionAlgorithm.cpp
+	"btEmptyCollisionAlgorithm.h"
+
+1432383127 source:/home/martynas/Desktop/smengine/smart-engine/dependencies/includes/bullet/BulletCollision/CollisionDispatch/btGhostObject.cpp
+	"btGhostObject.h"
+	"btCollisionWorld.h"
+	"../CollisionShapes/btConvexShape.h"
+	"../../LinearMath/btAabbUtil2.h"
+
+1432383127 /home/martynas/Desktop/smengine/smart-engine/dependencies/includes/bullet/BulletCollision/CollisionDispatch/btGhostObject.h
+	"btCollisionObject.h"
+	"../BroadphaseCollision/btOverlappingPairCallback.h"
+	"../../LinearMath/btAlignedAllocator.h"
+	"../BroadphaseCollision/btOverlappingPairCache.h"
+	"btCollisionWorld.h"
+
+1432383127 source:/home/martynas/Desktop/smengine/smart-engine/dependencies/includes/bullet/BulletCollision/CollisionDispatch/btInternalEdgeUtility.cpp
+	"btInternalEdgeUtility.h"
+	"../CollisionShapes/btBvhTriangleMeshShape.h"
+	"../CollisionShapes/btScaledBvhTriangleMeshShape.h"
+	"../CollisionShapes/btTriangleShape.h"
+	"../CollisionDispatch/btCollisionObject.h"
+	"../NarrowPhaseCollision/btManifoldPoint.h"
+	"../../LinearMath/btIDebugDraw.h"
+	"../CollisionDispatch/btCollisionObjectWrapper.h"
+	<stdio.h>
+
+1432383127 /home/martynas/Desktop/smengine/smart-engine/dependencies/includes/bullet/BulletCollision/CollisionDispatch/btInternalEdgeUtility.h
+	"../../LinearMath/btHashMap.h"
+	"../../LinearMath/btVector3.h"
+	"../CollisionShapes/btTriangleInfoMap.h"
+
+1432383127 /home/martynas/Desktop/smengine/smart-engine/dependencies/includes/bullet/BulletCollision/CollisionShapes/btScaledBvhTriangleMeshShape.h
+	"../CollisionShapes/btBvhTriangleMeshShape.h"
+
+1432383127 source:/home/martynas/Desktop/smengine/smart-engine/dependencies/includes/bullet/BulletCollision/CollisionDispatch/btManifoldResult.cpp
+	"btManifoldResult.h"
+	"../NarrowPhaseCollision/btPersistentManifold.h"
+	"../CollisionDispatch/btCollisionObject.h"
+	"../CollisionDispatch/btCollisionObjectWrapper.h"
+
+1432383127 source:/home/martynas/Desktop/smengine/smart-engine/dependencies/includes/bullet/BulletCollision/CollisionDispatch/btSimulationIslandManager.cpp
+	"../../LinearMath/btScalar.h"
+	"btSimulationIslandManager.h"
+	"../BroadphaseCollision/btDispatcher.h"
+	"../NarrowPhaseCollision/btPersistentManifold.h"
+	"../CollisionDispatch/btCollisionObject.h"
+	"../CollisionDispatch/btCollisionWorld.h"
+	"../../LinearMath/btQuickprof.h"
+
+1432383127 /home/martynas/Desktop/smengine/smart-engine/dependencies/includes/bullet/BulletCollision/CollisionDispatch/btSimulationIslandManager.h
+	"../CollisionDispatch/btUnionFind.h"
+	"btCollisionCreateFunc.h"
+	"../../LinearMath/btAlignedObjectArray.h"
+	"btCollisionObject.h"
+
+1432383127 /home/martynas/Desktop/smengine/smart-engine/dependencies/includes/bullet/BulletCollision/CollisionDispatch/btUnionFind.h
+	"../../LinearMath/btAlignedObjectArray.h"
+
+1432383127 source:/home/martynas/Desktop/smengine/smart-engine/dependencies/includes/bullet/BulletCollision/CollisionDispatch/btSphereBoxCollisionAlgorithm.cpp
+	"btSphereBoxCollisionAlgorithm.h"
+	"../CollisionDispatch/btCollisionDispatcher.h"
+	"../CollisionShapes/btSphereShape.h"
+	"../CollisionShapes/btBoxShape.h"
+	"../CollisionDispatch/btCollisionObject.h"
+	"../CollisionDispatch/btCollisionObjectWrapper.h"
+
+1432383127 source:/home/martynas/Desktop/smengine/smart-engine/dependencies/includes/bullet/BulletCollision/CollisionDispatch/btSphereSphereCollisionAlgorithm.cpp
+	"btSphereSphereCollisionAlgorithm.h"
+	"../CollisionDispatch/btCollisionDispatcher.h"
+	"../CollisionShapes/btSphereShape.h"
+	"../CollisionDispatch/btCollisionObject.h"
+	"../CollisionDispatch/btCollisionObjectWrapper.h"
+
+1432383127 source:/home/martynas/Desktop/smengine/smart-engine/dependencies/includes/bullet/BulletCollision/CollisionDispatch/btSphereTriangleCollisionAlgorithm.cpp
+	"btSphereTriangleCollisionAlgorithm.h"
+	"../CollisionDispatch/btCollisionDispatcher.h"
+	"../CollisionShapes/btSphereShape.h"
+	"../CollisionDispatch/btCollisionObject.h"
+	"SphereTriangleDetector.h"
+	"../CollisionDispatch/btCollisionObjectWrapper.h"
+
+1432383127 /home/martynas/Desktop/smengine/smart-engine/dependencies/includes/bullet/BulletCollision/CollisionDispatch/SphereTriangleDetector.h
+	"../NarrowPhaseCollision/btDiscreteCollisionDetectorInterface.h"
+
+1432383127 source:/home/martynas/Desktop/smengine/smart-engine/dependencies/includes/bullet/BulletCollision/CollisionDispatch/btUnionFind.cpp
+	"btUnionFind.h"
+
+1432383127 source:/home/martynas/Desktop/smengine/smart-engine/dependencies/includes/bullet/BulletCollision/CollisionDispatch/SphereTriangleDetector.cpp
+	"../../LinearMath/btScalar.h"
+	"SphereTriangleDetector.h"
+	"../CollisionShapes/btTriangleShape.h"
+	"../CollisionShapes/btSphereShape.h"
+
+1432383127 source:/home/martynas/Desktop/smengine/smart-engine/dependencies/includes/bullet/BulletCollision/CollisionShapes/btBox2dShape.cpp
+	"btBox2dShape.h"
+
+1432383127 source:/home/martynas/Desktop/smengine/smart-engine/dependencies/includes/bullet/BulletCollision/CollisionShapes/btBoxShape.cpp
+	"btBoxShape.h"
+
+1432383127 source:/home/martynas/Desktop/smengine/smart-engine/dependencies/includes/bullet/BulletCollision/CollisionShapes/btBvhTriangleMeshShape.cpp
+	"../CollisionShapes/btBvhTriangleMeshShape.h"
+	"../CollisionShapes/btOptimizedBvh.h"
+	"../../LinearMath/btSerializer.h"
+
+1432383127 source:/home/martynas/Desktop/smengine/smart-engine/dependencies/includes/bullet/BulletCollision/CollisionShapes/btCapsuleShape.cpp
+	"btCapsuleShape.h"
+	"../CollisionShapes/btCollisionMargin.h"
+	"../../LinearMath/btQuaternion.h"
+
+1432383127 source:/home/martynas/Desktop/smengine/smart-engine/dependencies/includes/bullet/BulletCollision/CollisionShapes/btCollisionShape.cpp
+	"../CollisionShapes/btCollisionShape.h"
+	"../../LinearMath/btSerializer.h"
+
+1432383127 source:/home/martynas/Desktop/smengine/smart-engine/dependencies/includes/bullet/BulletCollision/CollisionShapes/btCompoundShape.cpp
+	"btCompoundShape.h"
+	"btCollisionShape.h"
+	"../BroadphaseCollision/btDbvt.h"
+	"../../LinearMath/btSerializer.h"
+
+1432383127 source:/home/martynas/Desktop/smengine/smart-engine/dependencies/includes/bullet/BulletCollision/CollisionShapes/btConcaveShape.cpp
+	"btConcaveShape.h"
+
+1432383127 source:/home/martynas/Desktop/smengine/smart-engine/dependencies/includes/bullet/BulletCollision/CollisionShapes/btConeShape.cpp
+	"btConeShape.h"
+
+1432383127 source:/home/martynas/Desktop/smengine/smart-engine/dependencies/includes/bullet/BulletCollision/CollisionShapes/btConvex2dShape.cpp
+	"btConvex2dShape.h"
+
+1432383127 /home/martynas/Desktop/smengine/smart-engine/dependencies/includes/bullet/BulletCollision/CollisionShapes/btConvex2dShape.h
+	"../CollisionShapes/btConvexShape.h"
+	"../BroadphaseCollision/btBroadphaseProxy.h"
+
+1432383127 source:/home/martynas/Desktop/smengine/smart-engine/dependencies/includes/bullet/BulletCollision/CollisionShapes/btConvexHullShape.cpp
+	"btConvexHullShape.h"
+	"../CollisionShapes/btCollisionMargin.h"
+	"../../LinearMath/btQuaternion.h"
+	"../../LinearMath/btSerializer.h"
+
+1432383127 /home/martynas/Desktop/smengine/smart-engine/dependencies/includes/bullet/BulletCollision/CollisionShapes/btConvexHullShape.h
+	"btPolyhedralConvexShape.h"
+	"../BroadphaseCollision/btBroadphaseProxy.h"
+	"../../LinearMath/btAlignedObjectArray.h"
+
+1432383127 source:/home/martynas/Desktop/smengine/smart-engine/dependencies/includes/bullet/BulletCollision/CollisionShapes/btConvexInternalShape.cpp
+	"btConvexInternalShape.h"
+
+1432383127 source:/home/martynas/Desktop/smengine/smart-engine/dependencies/includes/bullet/BulletCollision/CollisionShapes/btConvexPointCloudShape.cpp
+	"btConvexPointCloudShape.h"
+	"../CollisionShapes/btCollisionMargin.h"
+	"../../LinearMath/btQuaternion.h"
+
+1432383127 /home/martynas/Desktop/smengine/smart-engine/dependencies/includes/bullet/BulletCollision/CollisionShapes/btConvexPointCloudShape.h
+	"btPolyhedralConvexShape.h"
+	"../BroadphaseCollision/btBroadphaseProxy.h"
+	"../../LinearMath/btAlignedObjectArray.h"
+
+1432383127 source:/home/martynas/Desktop/smengine/smart-engine/dependencies/includes/bullet/BulletCollision/CollisionShapes/btConvexPolyhedron.cpp
+	"btConvexPolyhedron.h"
+	"../../LinearMath/btHashMap.h"
+
+1432383127 source:/home/martynas/Desktop/smengine/smart-engine/dependencies/includes/bullet/BulletCollision/CollisionShapes/btConvexShape.cpp
+	"btConvexShape.h"
+	"btTriangleShape.h"
+	"btSphereShape.h"
+	"btCylinderShape.h"
+	"btCapsuleShape.h"
+	"btConvexHullShape.h"
+	"btConvexPointCloudShape.h"
+	<spu_intrinsics.h>
+
+1432383127 source:/home/martynas/Desktop/smengine/smart-engine/dependencies/includes/bullet/BulletCollision/CollisionShapes/btConvexTriangleMeshShape.cpp
+	"btConvexTriangleMeshShape.h"
+	"../CollisionShapes/btCollisionMargin.h"
+	"../../LinearMath/btQuaternion.h"
+	"../CollisionShapes/btStridingMeshInterface.h"
+
+1432383127 source:/home/martynas/Desktop/smengine/smart-engine/dependencies/includes/bullet/BulletCollision/CollisionShapes/btCylinderShape.cpp
+	"btCylinderShape.h"
+
+1432383127 source:/home/martynas/Desktop/smengine/smart-engine/dependencies/includes/bullet/BulletCollision/CollisionShapes/btEmptyShape.cpp
+	"btEmptyShape.h"
+	"btCollisionShape.h"
+
+1432383127 /home/martynas/Desktop/smengine/smart-engine/dependencies/includes/bullet/BulletCollision/CollisionShapes/btEmptyShape.h
+	"btConcaveShape.h"
+	"../../LinearMath/btVector3.h"
+	"../../LinearMath/btTransform.h"
+	"../../LinearMath/btMatrix3x3.h"
+	"btCollisionMargin.h"
+
+1432383127 source:/home/martynas/Desktop/smengine/smart-engine/dependencies/includes/bullet/BulletCollision/CollisionShapes/btHeightfieldTerrainShape.cpp
+	"btHeightfieldTerrainShape.h"
+	"../../LinearMath/btTransformUtil.h"
+
+1432383127 /home/martynas/Desktop/smengine/smart-engine/dependencies/includes/bullet/BulletCollision/CollisionShapes/btHeightfieldTerrainShape.h
+	"btConcaveShape.h"
+
+1432383127 source:/home/martynas/Desktop/smengine/smart-engine/dependencies/includes/bullet/BulletCollision/CollisionShapes/btMinkowskiSumShape.cpp
+	"btMinkowskiSumShape.h"
+
+1432383127 /home/martynas/Desktop/smengine/smart-engine/dependencies/includes/bullet/BulletCollision/CollisionShapes/btMinkowskiSumShape.h
+	"btConvexInternalShape.h"
+	"../BroadphaseCollision/btBroadphaseProxy.h"
+
+1432383127 source:/home/martynas/Desktop/smengine/smart-engine/dependencies/includes/bullet/BulletCollision/CollisionShapes/btMultimaterialTriangleMeshShape.cpp
+	"../CollisionShapes/btMultimaterialTriangleMeshShape.h"
+	"../CollisionShapes/btTriangleIndexVertexMaterialArray.h"
+
+1432383127 /home/martynas/Desktop/smengine/smart-engine/dependencies/includes/bullet/BulletCollision/CollisionShapes/btMultimaterialTriangleMeshShape.h
+	"btBvhTriangleMeshShape.h"
+	"btMaterial.h"
+
+1432383127 /home/martynas/Desktop/smengine/smart-engine/dependencies/includes/bullet/BulletCollision/CollisionShapes/btMaterial.h
+
+1432383127 /home/martynas/Desktop/smengine/smart-engine/dependencies/includes/bullet/BulletCollision/CollisionShapes/btTriangleIndexVertexMaterialArray.h
+	"btTriangleIndexVertexArray.h"
+
+1432383127 /home/martynas/Desktop/smengine/smart-engine/dependencies/includes/bullet/BulletCollision/CollisionShapes/btTriangleIndexVertexArray.h
+	"btStridingMeshInterface.h"
+	"../../LinearMath/btAlignedObjectArray.h"
+	"../../LinearMath/btScalar.h"
+
+1432383127 source:/home/martynas/Desktop/smengine/smart-engine/dependencies/includes/bullet/BulletCollision/CollisionShapes/btMultiSphereShape.cpp
+	"btMultiSphereShape.h"
+	"../CollisionShapes/btCollisionMargin.h"
+	"../../LinearMath/btQuaternion.h"
+	"../../LinearMath/btSerializer.h"
+
+1432383127 source:/home/martynas/Desktop/smengine/smart-engine/dependencies/includes/bullet/BulletCollision/CollisionShapes/btOptimizedBvh.cpp
+	"btOptimizedBvh.h"
+	"btStridingMeshInterface.h"
+	"../../LinearMath/btAabbUtil2.h"
+	"../../LinearMath/btIDebugDraw.h"
+
+1432383127 source:/home/martynas/Desktop/smengine/smart-engine/dependencies/includes/bullet/BulletCollision/CollisionShapes/btPolyhedralConvexShape.cpp
+	"../CollisionShapes/btPolyhedralConvexShape.h"
+	"btConvexPolyhedron.h"
+	"../../LinearMath/btConvexHullComputer.h"
+	<new>
+	"../../LinearMath/btGeometryUtil.h"
+	"../../LinearMath/btGrahamScan2dConvexHull.h"
+
+1432383127 /home/martynas/Desktop/smengine/smart-engine/dependencies/includes/bullet/LinearMath/btConvexHullComputer.h
+	"btVector3.h"
+	"btAlignedObjectArray.h"
+
+1432383127 /home/martynas/Desktop/smengine/smart-engine/dependencies/includes/bullet/LinearMath/btGeometryUtil.h
+	"btVector3.h"
+	"btAlignedObjectArray.h"
+
+1432383127 /home/martynas/Desktop/smengine/smart-engine/dependencies/includes/bullet/LinearMath/btGrahamScan2dConvexHull.h
+	"btVector3.h"
+	"btAlignedObjectArray.h"
+
+1432383127 source:/home/martynas/Desktop/smengine/smart-engine/dependencies/includes/bullet/BulletCollision/CollisionShapes/btScaledBvhTriangleMeshShape.cpp
+	"btScaledBvhTriangleMeshShape.h"
+
+1432383127 source:/home/martynas/Desktop/smengine/smart-engine/dependencies/includes/bullet/BulletCollision/CollisionShapes/btShapeHull.cpp
+	"btShapeHull.h"
+	"../../LinearMath/btConvexHull.h"
+
+1432383127 /home/martynas/Desktop/smengine/smart-engine/dependencies/includes/bullet/BulletCollision/CollisionShapes/btShapeHull.h
+	"../../LinearMath/btAlignedObjectArray.h"
+	"../CollisionShapes/btConvexShape.h"
+
+1432383127 /home/martynas/Desktop/smengine/smart-engine/dependencies/includes/bullet/LinearMath/btConvexHull.h
+	"btVector3.h"
+	"btAlignedObjectArray.h"
+
+1432383127 source:/home/martynas/Desktop/smengine/smart-engine/dependencies/includes/bullet/BulletCollision/CollisionShapes/btSphereShape.cpp
+	"btSphereShape.h"
+	"../CollisionShapes/btCollisionMargin.h"
+	"../../LinearMath/btQuaternion.h"
+
+1432383127 source:/home/martynas/Desktop/smengine/smart-engine/dependencies/includes/bullet/BulletCollision/CollisionShapes/btStaticPlaneShape.cpp
+	"btStaticPlaneShape.h"
+	"../../LinearMath/btTransformUtil.h"
+
+1432383127 source:/home/martynas/Desktop/smengine/smart-engine/dependencies/includes/bullet/BulletCollision/CollisionShapes/btStridingMeshInterface.cpp
+	"btStridingMeshInterface.h"
+	"../../LinearMath/btSerializer.h"
+
+1432383127 source:/home/martynas/Desktop/smengine/smart-engine/dependencies/includes/bullet/BulletCollision/CollisionShapes/btTetrahedronShape.cpp
+	"btTetrahedronShape.h"
+	"../../LinearMath/btMatrix3x3.h"
+
+1432383127 /home/martynas/Desktop/smengine/smart-engine/dependencies/includes/bullet/BulletCollision/CollisionShapes/btTetrahedronShape.h
+	"btPolyhedralConvexShape.h"
+	"../BroadphaseCollision/btBroadphaseProxy.h"
+
+1432383127 source:/home/martynas/Desktop/smengine/smart-engine/dependencies/includes/bullet/BulletCollision/CollisionShapes/btTriangleBuffer.cpp
+	"btTriangleBuffer.h"
+
+1432383127 /home/martynas/Desktop/smengine/smart-engine/dependencies/includes/bullet/BulletCollision/CollisionShapes/btTriangleBuffer.h
+	"btTriangleCallback.h"
+	"../../LinearMath/btAlignedObjectArray.h"
+
+1432383127 source:/home/martynas/Desktop/smengine/smart-engine/dependencies/includes/bullet/BulletCollision/CollisionShapes/btTriangleCallback.cpp
+	"btTriangleCallback.h"
+
+1432383127 source:/home/martynas/Desktop/smengine/smart-engine/dependencies/includes/bullet/BulletCollision/CollisionShapes/btTriangleIndexVertexArray.cpp
+	"btTriangleIndexVertexArray.h"
+
+1432383127 source:/home/martynas/Desktop/smengine/smart-engine/dependencies/includes/bullet/BulletCollision/CollisionShapes/btTriangleIndexVertexMaterialArray.cpp
+	"btTriangleIndexVertexMaterialArray.h"
+
+1432383127 source:/home/martynas/Desktop/smengine/smart-engine/dependencies/includes/bullet/BulletCollision/CollisionShapes/btTriangleMesh.cpp
+	"btTriangleMesh.h"
+
+1432383127 /home/martynas/Desktop/smengine/smart-engine/dependencies/includes/bullet/BulletCollision/CollisionShapes/btTriangleMesh.h
+	"btTriangleIndexVertexArray.h"
+	"../../LinearMath/btVector3.h"
+	"../../LinearMath/btAlignedObjectArray.h"
+
+1432383127 source:/home/martynas/Desktop/smengine/smart-engine/dependencies/includes/bullet/BulletCollision/CollisionShapes/btTriangleMeshShape.cpp
+	"btTriangleMeshShape.h"
+	"../../LinearMath/btVector3.h"
+	"../../LinearMath/btQuaternion.h"
+	"btStridingMeshInterface.h"
+	"../../LinearMath/btAabbUtil2.h"
+	"../CollisionShapes/btCollisionMargin.h"
+
+1432383127 source:/home/martynas/Desktop/smengine/smart-engine/dependencies/includes/bullet/BulletCollision/CollisionShapes/btUniformScalingShape.cpp
+	"btUniformScalingShape.h"
+
+1432383127 /home/martynas/Desktop/smengine/smart-engine/dependencies/includes/bullet/BulletCollision/CollisionShapes/btUniformScalingShape.h
+	"btConvexShape.h"
+	"../BroadphaseCollision/btBroadphaseProxy.h"
+
+1432383127 source:/home/martynas/Desktop/smengine/smart-engine/dependencies/includes/bullet/BulletCollision/Gimpact/btContactProcessing.cpp
+	"btContactProcessing.h"
+
+1432383127 /home/martynas/Desktop/smengine/smart-engine/dependencies/includes/bullet/BulletCollision/Gimpact/btContactProcessing.h
+	"../../LinearMath/btTransform.h"
+	"../../LinearMath/btAlignedObjectArray.h"
+	"btTriangleShapeEx.h"
+
+1432383127 /home/martynas/Desktop/smengine/smart-engine/dependencies/includes/bullet/BulletCollision/Gimpact/btTriangleShapeEx.h
+	"../CollisionShapes/btCollisionShape.h"
+	"../CollisionShapes/btTriangleShape.h"
+	"btBoxCollision.h"
+	"btClipPolygon.h"
+	"btGeometryOperations.h"
+
+1432383127 /home/martynas/Desktop/smengine/smart-engine/dependencies/includes/bullet/BulletCollision/Gimpact/btBoxCollision.h
+	"../../LinearMath/btTransform.h"
+
+1432383127 /home/martynas/Desktop/smengine/smart-engine/dependencies/includes/bullet/BulletCollision/Gimpact/btClipPolygon.h
+	"../../LinearMath/btTransform.h"
+	"../../LinearMath/btGeometryUtil.h"
+
+1432383127 /home/martynas/Desktop/smengine/smart-engine/dependencies/includes/bullet/BulletCollision/Gimpact/btGeometryOperations.h
+	"btBoxCollision.h"
+
+1432383127 source:/home/martynas/Desktop/smengine/smart-engine/dependencies/includes/bullet/BulletCollision/Gimpact/btGenericPoolAllocator.cpp
+	"btGenericPoolAllocator.h"
+
+1432383127 /home/martynas/Desktop/smengine/smart-engine/dependencies/includes/bullet/BulletCollision/Gimpact/btGenericPoolAllocator.h
+	<limits.h>
+	<stdio.h>
+	<string.h>
+	"../../LinearMath/btAlignedAllocator.h"
+
+1432383127 source:/home/martynas/Desktop/smengine/smart-engine/dependencies/includes/bullet/BulletCollision/Gimpact/btGImpactBvh.cpp
+	"btGImpactBvh.h"
+	"../../LinearMath/btQuickprof.h"
+
+1432383127 /home/martynas/Desktop/smengine/smart-engine/dependencies/includes/bullet/BulletCollision/Gimpact/btGImpactBvh.h
+	"../../LinearMath/btAlignedObjectArray.h"
+	"btBoxCollision.h"
+	"btTriangleShapeEx.h"
+
+1432383127 source:/home/martynas/Desktop/smengine/smart-engine/dependencies/includes/bullet/BulletCollision/Gimpact/btGImpactCollisionAlgorithm.cpp
+	"../CollisionDispatch/btManifoldResult.h"
+	"../../LinearMath/btIDebugDraw.h"
+	"../CollisionDispatch/btCollisionObject.h"
+	"../CollisionShapes/btBoxShape.h"
+	"btGImpactCollisionAlgorithm.h"
+	"btContactProcessing.h"
+	"../../LinearMath/btQuickprof.h"
+
+1432383127 /home/martynas/Desktop/smengine/smart-engine/dependencies/includes/bullet/BulletCollision/Gimpact/btGImpactCollisionAlgorithm.h
+	"../CollisionDispatch/btActivatingCollisionAlgorithm.h"
+	"../BroadphaseCollision/btDispatcher.h"
+	"../BroadphaseCollision/btBroadphaseInterface.h"
+	"../NarrowPhaseCollision/btPersistentManifold.h"
+	"../BroadphaseCollision/btBroadphaseProxy.h"
+	"../CollisionDispatch/btCollisionCreateFunc.h"
+	"../CollisionDispatch/btCollisionDispatcher.h"
+	"../../LinearMath/btAlignedObjectArray.h"
+	"btGImpactShape.h"
+	"../CollisionShapes/btStaticPlaneShape.h"
+	"../CollisionShapes/btCompoundShape.h"
+	"../CollisionDispatch/btConvexConvexAlgorithm.h"
+	"../../LinearMath/btIDebugDraw.h"
+	"../CollisionDispatch/btCollisionObjectWrapper.h"
+
+1432383127 /home/martynas/Desktop/smengine/smart-engine/dependencies/includes/bullet/BulletCollision/Gimpact/btGImpactShape.h
+	"../CollisionShapes/btCollisionShape.h"
+	"../CollisionShapes/btTriangleShape.h"
+	"../CollisionShapes/btStridingMeshInterface.h"
+	"../CollisionShapes/btCollisionMargin.h"
+	"../CollisionDispatch/btCollisionWorld.h"
+	"../CollisionShapes/btConcaveShape.h"
+	"../CollisionShapes/btTetrahedronShape.h"
+	"../../LinearMath/btVector3.h"
+	"../../LinearMath/btTransform.h"
+	"../../LinearMath/btMatrix3x3.h"
+	"../../LinearMath/btAlignedObjectArray.h"
+	"btGImpactQuantizedBvh.h"
+
+1432383127 /home/martynas/Desktop/smengine/smart-engine/dependencies/includes/bullet/BulletCollision/Gimpact/btGImpactQuantizedBvh.h
+	"btGImpactBvh.h"
+	"btQuantization.h"
+
+1432383127 /home/martynas/Desktop/smengine/smart-engine/dependencies/includes/bullet/BulletCollision/Gimpact/btQuantization.h
+	"../../LinearMath/btTransform.h"
+
+1432383127 source:/home/martynas/Desktop/smengine/smart-engine/dependencies/includes/bullet/BulletCollision/Gimpact/btGImpactQuantizedBvh.cpp
+	"btGImpactQuantizedBvh.h"
+	"../../LinearMath/btQuickprof.h"
+
+1432383127 source:/home/martynas/Desktop/smengine/smart-engine/dependencies/includes/bullet/BulletCollision/Gimpact/btGImpactShape.cpp
+	"btGImpactShape.h"
+	"btGImpactMassUtil.h"
+
+1432383127 /home/martynas/Desktop/smengine/smart-engine/dependencies/includes/bullet/BulletCollision/Gimpact/btGImpactMassUtil.h
+	"../../LinearMath/btTransform.h"
+
+1432383127 source:/home/martynas/Desktop/smengine/smart-engine/dependencies/includes/bullet/BulletCollision/Gimpact/btTriangleShapeEx.cpp
+	"btTriangleShapeEx.h"
+
+1432383127 source:/home/martynas/Desktop/smengine/smart-engine/dependencies/includes/bullet/BulletCollision/Gimpact/gim_box_set.cpp
+	"gim_box_set.h"
+
+1432383127 /home/martynas/Desktop/smengine/smart-engine/dependencies/includes/bullet/BulletCollision/Gimpact/gim_box_set.h
+	"gim_array.h"
+	"gim_radixsort.h"
+	"gim_box_collision.h"
+	"gim_tri_collision.h"
+
+1432383127 /home/martynas/Desktop/smengine/smart-engine/dependencies/includes/bullet/BulletCollision/Gimpact/gim_array.h
+	"gim_memory.h"
+
+1432383127 /home/martynas/Desktop/smengine/smart-engine/dependencies/includes/bullet/BulletCollision/Gimpact/gim_memory.h
+	"gim_math.h"
+	<string.h>
+	<xmmintrin.h>
+
+1432383127 /home/martynas/Desktop/smengine/smart-engine/dependencies/includes/bullet/BulletCollision/Gimpact/gim_math.h
+	"../../LinearMath/btScalar.h"
+
+1432383127 /home/martynas/Desktop/smengine/smart-engine/dependencies/includes/bullet/BulletCollision/Gimpact/gim_radixsort.h
+	"gim_memory.h"
+
+1432383127 /home/martynas/Desktop/smengine/smart-engine/dependencies/includes/bullet/BulletCollision/Gimpact/gim_box_collision.h
+	"gim_basic_geometry_operations.h"
+	"../../LinearMath/btTransform.h"
+
+1432383127 /home/martynas/Desktop/smengine/smart-engine/dependencies/includes/bullet/BulletCollision/Gimpact/gim_basic_geometry_operations.h
+	"gim_linear_math.h"
+
+1432383127 /home/martynas/Desktop/smengine/smart-engine/dependencies/includes/bullet/BulletCollision/Gimpact/gim_linear_math.h
+	"gim_math.h"
+	"gim_geom_types.h"
+
+1432383127 /home/martynas/Desktop/smengine/smart-engine/dependencies/includes/bullet/BulletCollision/Gimpact/gim_geom_types.h
+	"gim_math.h"
+
+1432383127 /home/martynas/Desktop/smengine/smart-engine/dependencies/includes/bullet/BulletCollision/Gimpact/gim_tri_collision.h
+	"gim_box_collision.h"
+	"gim_clip_polygon.h"
+
+1432383127 /home/martynas/Desktop/smengine/smart-engine/dependencies/includes/bullet/BulletCollision/Gimpact/gim_clip_polygon.h
+
+1432383127 source:/home/martynas/Desktop/smengine/smart-engine/dependencies/includes/bullet/BulletCollision/Gimpact/gim_contact.cpp
+	"gim_contact.h"
+
+1432383127 /home/martynas/Desktop/smengine/smart-engine/dependencies/includes/bullet/BulletCollision/Gimpact/gim_contact.h
+	"gim_geometry.h"
+	"gim_radixsort.h"
+	"gim_array.h"
+
+1432383127 /home/martynas/Desktop/smengine/smart-engine/dependencies/includes/bullet/BulletCollision/Gimpact/gim_geometry.h
+	"gim_basic_geometry_operations.h"
+	"gim_clip_polygon.h"
+	"gim_box_collision.h"
+	"gim_tri_collision.h"
+
+1432383127 source:/home/martynas/Desktop/smengine/smart-engine/dependencies/includes/bullet/BulletCollision/Gimpact/gim_memory.cpp
+	"gim_memory.h"
+	"stdlib.h"
+	"../../LinearMath/btAlignedAllocator.h"
+
+1432383127 source:/home/martynas/Desktop/smengine/smart-engine/dependencies/includes/bullet/BulletCollision/Gimpact/gim_tri_collision.cpp
+	"gim_tri_collision.h"
+
+1432383127 source:/home/martynas/Desktop/smengine/smart-engine/dependencies/includes/bullet/BulletCollision/NarrowPhaseCollision/btContinuousConvexCollision.cpp
+	"btContinuousConvexCollision.h"
+	"../CollisionShapes/btConvexShape.h"
+	"../NarrowPhaseCollision/btSimplexSolverInterface.h"
+	"../../LinearMath/btTransformUtil.h"
+	"../CollisionShapes/btSphereShape.h"
+	"btGjkPairDetector.h"
+	"btPointCollector.h"
+	"../CollisionShapes/btStaticPlaneShape.h"
+
+1432383127 /home/martynas/Desktop/smengine/smart-engine/dependencies/includes/bullet/BulletCollision/NarrowPhaseCollision/btPointCollector.h
+	"btDiscreteCollisionDetectorInterface.h"
+
+1432383127 source:/home/martynas/Desktop/smengine/smart-engine/dependencies/includes/bullet/BulletCollision/NarrowPhaseCollision/btConvexCast.cpp
+	"btConvexCast.h"
+
+1432383127 source:/home/martynas/Desktop/smengine/smart-engine/dependencies/includes/bullet/BulletCollision/NarrowPhaseCollision/btGjkConvexCast.cpp
+	"btGjkConvexCast.h"
+	"../CollisionShapes/btSphereShape.h"
+	"btGjkPairDetector.h"
+	"btPointCollector.h"
+	"../../LinearMath/btTransformUtil.h"
+
+1432383127 source:/home/martynas/Desktop/smengine/smart-engine/dependencies/includes/bullet/BulletCollision/NarrowPhaseCollision/btGjkEpa2.cpp
+	"../CollisionShapes/btConvexInternalShape.h"
+	"../CollisionShapes/btSphereShape.h"
+	"btGjkEpa2.h"
+	<stdio.h>
+	<spu_printf.h>
+
+1432383127 source:/home/martynas/Desktop/smengine/smart-engine/dependencies/includes/bullet/BulletCollision/NarrowPhaseCollision/btGjkEpaPenetrationDepthSolver.cpp
+	"../CollisionShapes/btConvexShape.h"
+	"btGjkEpaPenetrationDepthSolver.h"
+	"../NarrowPhaseCollision/btGjkEpa2.h"
+
+1432383127 source:/home/martynas/Desktop/smengine/smart-engine/dependencies/includes/bullet/BulletCollision/NarrowPhaseCollision/btGjkPairDetector.cpp
+	"btGjkPairDetector.h"
+	"../CollisionShapes/btConvexShape.h"
+	"../NarrowPhaseCollision/btSimplexSolverInterface.h"
+	"../NarrowPhaseCollision/btConvexPenetrationDepthSolver.h"
+	<stdio.h>
+	<spu_printf.h>
+
+1432383127 source:/home/martynas/Desktop/smengine/smart-engine/dependencies/includes/bullet/BulletCollision/NarrowPhaseCollision/btMinkowskiPenetrationDepthSolver.cpp
+	"btMinkowskiPenetrationDepthSolver.h"
+	"../NarrowPhaseCollision/btSubSimplexConvexCast.h"
+	"../NarrowPhaseCollision/btVoronoiSimplexSolver.h"
+	"../NarrowPhaseCollision/btGjkPairDetector.h"
+	"../CollisionShapes/btConvexShape.h"
+
+1432383127 source:/home/martynas/Desktop/smengine/smart-engine/dependencies/includes/bullet/BulletCollision/NarrowPhaseCollision/btPersistentManifold.cpp
+	"btPersistentManifold.h"
+	"../../LinearMath/btTransform.h"
+	<stdio.h>
+
+1432383127 source:/home/martynas/Desktop/smengine/smart-engine/dependencies/includes/bullet/BulletCollision/NarrowPhaseCollision/btPolyhedralContactClipping.cpp
+	"btPolyhedralContactClipping.h"
+	"../CollisionShapes/btConvexPolyhedron.h"
+	<float.h>
+
+1432383127 source:/home/martynas/Desktop/smengine/smart-engine/dependencies/includes/bullet/BulletCollision/NarrowPhaseCollision/btRaycastCallback.cpp
+	"../CollisionShapes/btConvexShape.h"
+	"../CollisionShapes/btTriangleShape.h"
+	"../NarrowPhaseCollision/btSubSimplexConvexCast.h"
+	"../NarrowPhaseCollision/btGjkConvexCast.h"
+	"../NarrowPhaseCollision/btContinuousConvexCollision.h"
+	"../NarrowPhaseCollision/btGjkEpaPenetrationDepthSolver.h"
+	"btRaycastCallback.h"
+
+1432383127 source:/home/martynas/Desktop/smengine/smart-engine/dependencies/includes/bullet/BulletCollision/NarrowPhaseCollision/btSubSimplexConvexCast.cpp
+	"btSubSimplexConvexCast.h"
+	"../CollisionShapes/btConvexShape.h"
+	"../CollisionShapes/btMinkowskiSumShape.h"
+	"../NarrowPhaseCollision/btSimplexSolverInterface.h"
+	"btPointCollector.h"
+	"../../LinearMath/btTransformUtil.h"
+
+1432383127 source:/home/martynas/Desktop/smengine/smart-engine/dependencies/includes/bullet/BulletCollision/NarrowPhaseCollision/btVoronoiSimplexSolver.cpp
+	"btVoronoiSimplexSolver.h"
+
+1432383127 source:/home/martynas/Desktop/smengine/smart-engine/dependencies/includes/bullet/BulletDynamics/Character/btKinematicCharacterController.cpp
+	"../../LinearMath/btIDebugDraw.h"
+	"../../BulletCollision/CollisionDispatch/btGhostObject.h"
+	"../../BulletCollision/CollisionShapes/btMultiSphereShape.h"
+	"../../BulletCollision/BroadphaseCollision/btOverlappingPairCache.h"
+	"../../BulletCollision/BroadphaseCollision/btCollisionAlgorithm.h"
+	"../../BulletCollision/CollisionDispatch/btCollisionWorld.h"
+	"../../LinearMath/btDefaultMotionState.h"
+	"btKinematicCharacterController.h"
+	<stdio.h>
+
+1432383127 /home/martynas/Desktop/smengine/smart-engine/dependencies/includes/bullet/LinearMath/btDefaultMotionState.h
+	"btMotionState.h"
+
+1432383127 /home/martynas/Desktop/smengine/smart-engine/dependencies/includes/bullet/BulletDynamics/Character/btKinematicCharacterController.h
+	"../../LinearMath/btVector3.h"
+	"btCharacterControllerInterface.h"
+	"../../BulletCollision/BroadphaseCollision/btCollisionAlgorithm.h"
+
+1432383127 /home/martynas/Desktop/smengine/smart-engine/dependencies/includes/bullet/BulletDynamics/Character/btCharacterControllerInterface.h
+	"../../LinearMath/btVector3.h"
+	"../Dynamics/btActionInterface.h"
+
+1432383127 /home/martynas/Desktop/smengine/smart-engine/dependencies/includes/bullet/BulletDynamics/Dynamics/btActionInterface.h
+	"../../LinearMath/btScalar.h"
+	"btRigidBody.h"
+
+1432383127 /home/martynas/Desktop/smengine/smart-engine/dependencies/includes/bullet/BulletDynamics/Dynamics/btRigidBody.h
+	"../../LinearMath/btAlignedObjectArray.h"
+	"../../LinearMath/btTransform.h"
+	"../../BulletCollision/BroadphaseCollision/btBroadphaseProxy.h"
+	"../../BulletCollision/CollisionDispatch/btCollisionObject.h"
+
+1432383127 source:/home/martynas/Desktop/smengine/smart-engine/dependencies/includes/bullet/BulletDynamics/ConstraintSolver/btConeTwistConstraint.cpp
+	"btConeTwistConstraint.h"
+	"../Dynamics/btRigidBody.h"
+	"../../LinearMath/btTransformUtil.h"
+	"../../LinearMath/btMinMax.h"
+	<new>
+
+1432383127 /home/martynas/Desktop/smengine/smart-engine/dependencies/includes/bullet/BulletDynamics/ConstraintSolver/btConeTwistConstraint.h
+	"../../LinearMath/btVector3.h"
+	"btJacobianEntry.h"
+	"btTypedConstraint.h"
+
+1432383127 /home/martynas/Desktop/smengine/smart-engine/dependencies/includes/bullet/BulletDynamics/ConstraintSolver/btJacobianEntry.h
+	"../../LinearMath/btMatrix3x3.h"
+
+1432383127 /home/martynas/Desktop/smengine/smart-engine/dependencies/includes/bullet/BulletDynamics/ConstraintSolver/btTypedConstraint.h
+	"../../LinearMath/btScalar.h"
+	"btSolverConstraint.h"
+	"../Dynamics/btRigidBody.h"
+
+1432383127 /home/martynas/Desktop/smengine/smart-engine/dependencies/includes/bullet/BulletDynamics/ConstraintSolver/btSolverConstraint.h
+	"../../LinearMath/btVector3.h"
+	"../../LinearMath/btMatrix3x3.h"
+	"btJacobianEntry.h"
+	"../../LinearMath/btAlignedObjectArray.h"
+	"btSolverBody.h"
+
+1432383127 /home/martynas/Desktop/smengine/smart-engine/dependencies/includes/bullet/BulletDynamics/ConstraintSolver/btSolverBody.h
+	"../../LinearMath/btVector3.h"
+	"../../LinearMath/btMatrix3x3.h"
+	"../../LinearMath/btAlignedAllocator.h"
+	"../../LinearMath/btTransformUtil.h"
+
+1432383127 source:/home/martynas/Desktop/smengine/smart-engine/dependencies/includes/bullet/BulletDynamics/ConstraintSolver/btContactConstraint.cpp
+	"btContactConstraint.h"
+	"../Dynamics/btRigidBody.h"
+	"../../LinearMath/btVector3.h"
+	"btJacobianEntry.h"
+	"btContactSolverInfo.h"
+	"../../LinearMath/btMinMax.h"
+	"../../BulletCollision/NarrowPhaseCollision/btManifoldPoint.h"
+	"btContactConstraint.h"
+	"../Dynamics/btRigidBody.h"
+	"../../LinearMath/btVector3.h"
+	"btJacobianEntry.h"
+	"btContactSolverInfo.h"
+	"../../LinearMath/btMinMax.h"
+	"../../BulletCollision/NarrowPhaseCollision/btManifoldPoint.h"
+
+1432383127 /home/martynas/Desktop/smengine/smart-engine/dependencies/includes/bullet/BulletDynamics/ConstraintSolver/btContactConstraint.h
+	"../../LinearMath/btVector3.h"
+	"btJacobianEntry.h"
+	"btTypedConstraint.h"
+	"../../BulletCollision/NarrowPhaseCollision/btPersistentManifold.h"
+
+1432383127 /home/martynas/Desktop/smengine/smart-engine/dependencies/includes/bullet/BulletDynamics/ConstraintSolver/btContactSolverInfo.h
+	"../../LinearMath/btScalar.h"
+
+1432383127 source:/home/martynas/Desktop/smengine/smart-engine/dependencies/includes/bullet/BulletDynamics/ConstraintSolver/btGearConstraint.cpp
+	"btGearConstraint.h"
+
+1432383127 /home/martynas/Desktop/smengine/smart-engine/dependencies/includes/bullet/BulletDynamics/ConstraintSolver/btGearConstraint.h
+	"../ConstraintSolver/btTypedConstraint.h"
+
+1432383127 source:/home/martynas/Desktop/smengine/smart-engine/dependencies/includes/bullet/BulletDynamics/ConstraintSolver/btGeneric6DofConstraint.cpp
+	"btGeneric6DofConstraint.h"
+	"../Dynamics/btRigidBody.h"
+	"../../LinearMath/btTransformUtil.h"
+	"../../LinearMath/btTransformUtil.h"
+	<new>
+
+1432383127 /home/martynas/Desktop/smengine/smart-engine/dependencies/includes/bullet/BulletDynamics/ConstraintSolver/btGeneric6DofConstraint.h
+	"../../LinearMath/btVector3.h"
+	"btJacobianEntry.h"
+	"btTypedConstraint.h"
+
+1432383127 source:/home/martynas/Desktop/smengine/smart-engine/dependencies/includes/bullet/BulletDynamics/ConstraintSolver/btGeneric6DofSpringConstraint.cpp
+	"btGeneric6DofSpringConstraint.h"
+	"../Dynamics/btRigidBody.h"
+	"../../LinearMath/btTransformUtil.h"
+
+1432383127 /home/martynas/Desktop/smengine/smart-engine/dependencies/includes/bullet/BulletDynamics/ConstraintSolver/btGeneric6DofSpringConstraint.h
+	"../../LinearMath/btVector3.h"
+	"btTypedConstraint.h"
+	"btGeneric6DofConstraint.h"
+
+1432383127 source:/home/martynas/Desktop/smengine/smart-engine/dependencies/includes/bullet/BulletDynamics/ConstraintSolver/btHinge2Constraint.cpp
+	"btHinge2Constraint.h"
+	"../Dynamics/btRigidBody.h"
+	"../../LinearMath/btTransformUtil.h"
+
+1432383127 /home/martynas/Desktop/smengine/smart-engine/dependencies/includes/bullet/BulletDynamics/ConstraintSolver/btHinge2Constraint.h
+	"../../LinearMath/btVector3.h"
+	"btTypedConstraint.h"
+	"btGeneric6DofSpringConstraint.h"
+
+1432383127 source:/home/martynas/Desktop/smengine/smart-engine/dependencies/includes/bullet/BulletDynamics/ConstraintSolver/btHingeConstraint.cpp
+	"btHingeConstraint.h"
+	"../Dynamics/btRigidBody.h"
+	"../../LinearMath/btTransformUtil.h"
+	"../../LinearMath/btMinMax.h"
+	<new>
+	"btSolverBody.h"
+
+1432383127 /home/martynas/Desktop/smengine/smart-engine/dependencies/includes/bullet/BulletDynamics/ConstraintSolver/btHingeConstraint.h
+	"../../LinearMath/btVector3.h"
+	"btJacobianEntry.h"
+	"btTypedConstraint.h"
+
+1432383127 source:/home/martynas/Desktop/smengine/smart-engine/dependencies/includes/bullet/BulletDynamics/ConstraintSolver/btPoint2PointConstraint.cpp
+	"btPoint2PointConstraint.h"
+	"../Dynamics/btRigidBody.h"
+	<new>
+
+1432383127 /home/martynas/Desktop/smengine/smart-engine/dependencies/includes/bullet/BulletDynamics/ConstraintSolver/btPoint2PointConstraint.h
+	"../../LinearMath/btVector3.h"
+	"btJacobianEntry.h"
+	"btTypedConstraint.h"
+
+1432383127 source:/home/martynas/Desktop/smengine/smart-engine/dependencies/includes/bullet/BulletDynamics/ConstraintSolver/btSequentialImpulseConstraintSolver.cpp
+	"btSequentialImpulseConstraintSolver.h"
+	"../../BulletCollision/NarrowPhaseCollision/btPersistentManifold.h"
+	"../../LinearMath/btIDebugDraw.h"
+	"../../LinearMath/btMinMax.h"
+	"../ConstraintSolver/btTypedConstraint.h"
+	<new>
+	"../../LinearMath/btStackAlloc.h"
+	"../../LinearMath/btQuickprof.h"
+	"../../LinearMath/btAlignedObjectArray.h"
+	<string.h>
+	"../Dynamics/btRigidBody.h"
+	<emmintrin.h>
+	<stdio.h>
+
+1432383127 /home/martynas/Desktop/smengine/smart-engine/dependencies/includes/bullet/BulletDynamics/ConstraintSolver/btSequentialImpulseConstraintSolver.h
+	"../ConstraintSolver/btTypedConstraint.h"
+	"../ConstraintSolver/btContactSolverInfo.h"
+	"../ConstraintSolver/btSolverBody.h"
+	"../ConstraintSolver/btSolverConstraint.h"
+	"../../BulletCollision/NarrowPhaseCollision/btManifoldPoint.h"
+	"../ConstraintSolver/btConstraintSolver.h"
+
+1432383127 /home/martynas/Desktop/smengine/smart-engine/dependencies/includes/bullet/BulletDynamics/ConstraintSolver/btConstraintSolver.h
+	"../../LinearMath/btScalar.h"
+
+1432383127 source:/home/martynas/Desktop/smengine/smart-engine/dependencies/includes/bullet/BulletDynamics/ConstraintSolver/btSliderConstraint.cpp
+	"btSliderConstraint.h"
+	"../Dynamics/btRigidBody.h"
+	"../../LinearMath/btTransformUtil.h"
+	<new>
+
+1432383127 /home/martynas/Desktop/smengine/smart-engine/dependencies/includes/bullet/BulletDynamics/ConstraintSolver/btSliderConstraint.h
+	"../../LinearMath/btVector3.h"
+	"btJacobianEntry.h"
+	"btTypedConstraint.h"
+
+1432383127 source:/home/martynas/Desktop/smengine/smart-engine/dependencies/includes/bullet/BulletDynamics/ConstraintSolver/btSolve2LinearConstraint.cpp
+	"btSolve2LinearConstraint.h"
+	"../Dynamics/btRigidBody.h"
+	"../../LinearMath/btVector3.h"
+	"btJacobianEntry.h"
+
+1432383127 /home/martynas/Desktop/smengine/smart-engine/dependencies/includes/bullet/BulletDynamics/ConstraintSolver/btSolve2LinearConstraint.h
+	"../../LinearMath/btMatrix3x3.h"
+	"../../LinearMath/btVector3.h"
+
+1432383127 source:/home/martynas/Desktop/smengine/smart-engine/dependencies/includes/bullet/BulletDynamics/ConstraintSolver/btTypedConstraint.cpp
+	"btTypedConstraint.h"
+	"../Dynamics/btRigidBody.h"
+	"../../LinearMath/btSerializer.h"
+
+1432383127 source:/home/martynas/Desktop/smengine/smart-engine/dependencies/includes/bullet/BulletDynamics/ConstraintSolver/btUniversalConstraint.cpp
+	"btUniversalConstraint.h"
+	"../Dynamics/btRigidBody.h"
+	"../../LinearMath/btTransformUtil.h"
+
+1432383127 /home/martynas/Desktop/smengine/smart-engine/dependencies/includes/bullet/BulletDynamics/ConstraintSolver/btUniversalConstraint.h
+	"../../LinearMath/btVector3.h"
+	"btTypedConstraint.h"
+	"btGeneric6DofConstraint.h"
+
+1432383127 source:/home/martynas/Desktop/smengine/smart-engine/dependencies/includes/bullet/BulletDynamics/Dynamics/btDiscreteDynamicsWorld.cpp
+	"btDiscreteDynamicsWorld.h"
+	"../../BulletCollision/CollisionDispatch/btCollisionDispatcher.h"
+	"../../BulletCollision/BroadphaseCollision/btSimpleBroadphase.h"
+	"../../BulletCollision/BroadphaseCollision/btCollisionAlgorithm.h"
+	"../../BulletCollision/CollisionShapes/btCollisionShape.h"
+	"../../BulletCollision/CollisionDispatch/btSimulationIslandManager.h"
+	"../../LinearMath/btTransformUtil.h"
+	"../../LinearMath/btQuickprof.h"
+	"../Dynamics/btRigidBody.h"
+	"../ConstraintSolver/btSequentialImpulseConstraintSolver.h"
+	"../ConstraintSolver/btContactSolverInfo.h"
+	"../ConstraintSolver/btTypedConstraint.h"
+	"../ConstraintSolver/btPoint2PointConstraint.h"
+	"../ConstraintSolver/btHingeConstraint.h"
+	"../ConstraintSolver/btConeTwistConstraint.h"
+	"../ConstraintSolver/btGeneric6DofConstraint.h"
+	"../ConstraintSolver/btSliderConstraint.h"
+	"../ConstraintSolver/btContactConstraint.h"
+	"../../LinearMath/btIDebugDraw.h"
+	"../../BulletCollision/CollisionShapes/btSphereShape.h"
+	"../Dynamics/btActionInterface.h"
+	"../../LinearMath/btQuickprof.h"
+	"../../LinearMath/btMotionState.h"
+	"../../LinearMath/btSerializer.h"
+
+1432383127 /home/martynas/Desktop/smengine/smart-engine/dependencies/includes/bullet/BulletDynamics/Dynamics/btDiscreteDynamicsWorld.h
+	"btDynamicsWorld.h"
+	"../../LinearMath/btAlignedObjectArray.h"
+
+1432383127 /home/martynas/Desktop/smengine/smart-engine/dependencies/includes/bullet/BulletDynamics/Dynamics/btDynamicsWorld.h
+	"../../BulletCollision/CollisionDispatch/btCollisionWorld.h"
+	"../ConstraintSolver/btContactSolverInfo.h"
+
+1432383127 source:/home/martynas/Desktop/smengine/smart-engine/dependencies/includes/bullet/BulletDynamics/Dynamics/btRigidBody.cpp
+	"btRigidBody.h"
+	"../../BulletCollision/CollisionShapes/btConvexShape.h"
+	"../../LinearMath/btMinMax.h"
+	"../../LinearMath/btTransformUtil.h"
+	"../../LinearMath/btMotionState.h"
+	"../ConstraintSolver/btTypedConstraint.h"
+	"../../LinearMath/btSerializer.h"
+
+1432383127 source:/home/martynas/Desktop/smengine/smart-engine/dependencies/includes/bullet/BulletDynamics/Dynamics/btSimpleDynamicsWorld.cpp
+	"btSimpleDynamicsWorld.h"
+	"../../BulletCollision/CollisionDispatch/btCollisionDispatcher.h"
+	"../../BulletCollision/BroadphaseCollision/btSimpleBroadphase.h"
+	"../../BulletCollision/CollisionShapes/btCollisionShape.h"
+	"../Dynamics/btRigidBody.h"
+	"../ConstraintSolver/btSequentialImpulseConstraintSolver.h"
+	"../ConstraintSolver/btContactSolverInfo.h"
+
+1432383127 /home/martynas/Desktop/smengine/smart-engine/dependencies/includes/bullet/BulletDynamics/Dynamics/btSimpleDynamicsWorld.h
+	"btDynamicsWorld.h"
+
+1432383127 source:/home/martynas/Desktop/smengine/smart-engine/dependencies/includes/bullet/BulletDynamics/Vehicle/btRaycastVehicle.cpp
+	"../../LinearMath/btVector3.h"
+	"btRaycastVehicle.h"
+	"../ConstraintSolver/btSolve2LinearConstraint.h"
+	"../ConstraintSolver/btJacobianEntry.h"
+	"../../LinearMath/btQuaternion.h"
+	"../Dynamics/btDynamicsWorld.h"
+	"btVehicleRaycaster.h"
+	"btWheelInfo.h"
+	"../../LinearMath/btMinMax.h"
+	"../../LinearMath/btIDebugDraw.h"
+	"../ConstraintSolver/btContactConstraint.h"
+
+1432383127 /home/martynas/Desktop/smengine/smart-engine/dependencies/includes/bullet/BulletDynamics/Vehicle/btRaycastVehicle.h
+	"../Dynamics/btRigidBody.h"
+	"../ConstraintSolver/btTypedConstraint.h"
+	"btVehicleRaycaster.h"
+	"../../LinearMath/btAlignedObjectArray.h"
+	"btWheelInfo.h"
+	"../Dynamics/btActionInterface.h"
+
+1432383127 /home/martynas/Desktop/smengine/smart-engine/dependencies/includes/bullet/BulletDynamics/Vehicle/btVehicleRaycaster.h
+	"../../LinearMath/btVector3.h"
+
+1432383127 /home/martynas/Desktop/smengine/smart-engine/dependencies/includes/bullet/BulletDynamics/Vehicle/btWheelInfo.h
+	"../../LinearMath/btVector3.h"
+	"../../LinearMath/btTransform.h"
+
+1432383127 source:/home/martynas/Desktop/smengine/smart-engine/dependencies/includes/bullet/BulletDynamics/Vehicle/btWheelInfo.cpp
+	"btWheelInfo.h"
+	"../Dynamics/btRigidBody.h"
+
+1432383127 source:/home/martynas/Desktop/smengine/smart-engine/dependencies/includes/bullet/LinearMath/btAlignedAllocator.cpp
+	"btAlignedAllocator.h"
+	<malloc.h>
+	<stdlib.h>
+	<stdio.h>
+
+1432383127 source:/home/martynas/Desktop/smengine/smart-engine/dependencies/includes/bullet/LinearMath/btConvexHull.cpp
+	<string.h>
+	"btConvexHull.h"
+	"btAlignedObjectArray.h"
+	"btMinMax.h"
+	"btVector3.h"
+
+1432383127 source:/home/martynas/Desktop/smengine/smart-engine/dependencies/includes/bullet/LinearMath/btConvexHullComputer.cpp
+	<string.h>
+	"btConvexHullComputer.h"
+	"btAlignedObjectArray.h"
+	"btMinMax.h"
+	"btVector3.h"
+	<stdint.h>
+	<stdio.h>
+
+1432383127 source:/home/martynas/Desktop/smengine/smart-engine/dependencies/includes/bullet/LinearMath/btGeometryUtil.cpp
+	"btGeometryUtil.h"
+
+1432383127 source:/home/martynas/Desktop/smengine/smart-engine/dependencies/includes/bullet/LinearMath/btPolarDecomposition.cpp
+	"btPolarDecomposition.h"
+	"btMinMax.h"
+
+1432383127 /home/martynas/Desktop/smengine/smart-engine/dependencies/includes/bullet/LinearMath/btPolarDecomposition.h
+	"btMatrix3x3.h"
+
+1432383127 source:/home/martynas/Desktop/smengine/smart-engine/dependencies/includes/bullet/LinearMath/btQuickprof.cpp
+	"btQuickprof.h"
+	<sys/sys_time.h>
+	<sys/time_util.h>
+	<stdio.h>
+	<stdio.h>
+	<Xtl.h>
+	<windows.h>
+	<time.h>
+	<sys/time.h>
+	<stdio.h>
+
+1432383127 source:/home/martynas/Desktop/smengine/smart-engine/dependencies/includes/bullet/LinearMath/btSerializer.cpp
+
+1432383127 source:/home/martynas/Desktop/smengine/smart-engine/dependencies/includes/bullet/LinearMath/btVector3.cpp
+	"btVector3.h"
+	<stdint.h>
+	<string.h>
+	<emmintrin.h>
+	<arm_neon.h>
+
+1432383127 source:/home/martynas/Desktop/smengine/smart-engine/dependencies/includes/freetype/autofit.c
+	"ft2build.h"
+	"autofit/afpic.c"
+	"autofit/afangles.c"
+	"autofit/afglobal.c"
+	"autofit/afhints.c"
+	"autofit/afdummy.c"
+	"autofit/aflatin.c"
+	"autofit/aflatin2.c"
+	"autofit/afcjk.c"
+	"autofit/afindic.c"
+	"autofit/afloader.c"
+	"autofit/afmodule.c"
+	"autofit/afwarp.c"
+
+1432383127 /home/martynas/Desktop/smengine/smart-engine/dependencies/includes/freetype/ft2build.h
+	"ftheader.h"
+
+1432383127 /home/martynas/Desktop/smengine/smart-engine/dependencies/includes/freetype/ftheader.h
+	"internal.h"
+
+1432383127 /home/martynas/Desktop/smengine/smart-engine/dependencies/includes/freetype/internal.h
+
+1432383127 /home/martynas/Desktop/smengine/smart-engine/dependencies/includes/freetype/autofit/afpic.c
+	"../ft2build.h"
+	"../ftobjs.h"
+	"afpic.h"
+	"aferrors.h"
+	"aflatin.h"
+	"aflatin2.h"
+	"afcjk.h"
+	"afdummy.h"
+	"afindic.h"
+
+1432383127 /home/martynas/Desktop/smengine/smart-engine/dependencies/includes/freetype/ftobjs.h
+	"ft2build.h"
+	"ftrender.h"
+	"ftsizes.h"
+	"ftlcdfil.h"
+	"ftmemory.h"
+	"ftgloadr.h"
+	"ftdriver.h"
+	"autohint.h"
+	"ftserv.h"
+	"ftpic.h"
+	"ftincrem.h"
+
+1432383127 /home/martynas/Desktop/smengine/smart-engine/dependencies/includes/freetype/ftrender.h
+	"ft2build.h"
+	"ftmodapi.h"
+	"ftglyph.h"
+
+1432383127 /home/martynas/Desktop/smengine/smart-engine/dependencies/includes/freetype/ftmodapi.h
+	"ft2build.h"
+	"freetype.h"
+
+1432383127 /home/martynas/Desktop/smengine/smart-engine/dependencies/includes/freetype/freetype.h
+	"ft2build.h"
+	"ftconfig.h"
+	"fttypes.h"
+	"fterrors.h"
+
+1432383127 /home/martynas/Desktop/smengine/smart-engine/dependencies/includes/freetype/ftconfig.h
+	"ft2build.h"
+	"ftoption.h"
+	"ftstdlib.h"
+	<errno.h>
+	"AvailabilityMacros.h"
+	"ConditionalMacros.h"
+
+1432383127 /home/martynas/Desktop/smengine/smart-engine/dependencies/includes/freetype/ftoption.h
+	"ft2build.h"
+
+1432383127 /home/martynas/Desktop/smengine/smart-engine/dependencies/includes/freetype/ftstdlib.h
+	<stddef.h>
+	<limits.h>
+	<string.h>
+	<stdio.h>
+	<stdlib.h>
+	<setjmp.h>
+	<stdarg.h>
+
+1432383127 /home/martynas/Desktop/smengine/smart-engine/dependencies/includes/freetype/fttypes.h
+	"ft2build.h"
+	"ftconfig.h"
+	"ftsystem.h"
+	"ftimage.h"
+	<stddef.h>
+
+1432383127 /home/martynas/Desktop/smengine/smart-engine/dependencies/includes/freetype/ftsystem.h
+	"ft2build.h"
+
+1432383127 /home/martynas/Desktop/smengine/smart-engine/dependencies/includes/freetype/ftimage.h
+	"ft2build.h"
+
+1432383127 /home/martynas/Desktop/smengine/smart-engine/dependencies/includes/freetype/fterrors.h
+	"ftmoderr.h"
+	"fterrdef.h"
+
+1432383127 /home/martynas/Desktop/smengine/smart-engine/dependencies/includes/freetype/ftmoderr.h
+
+1432383127 /home/martynas/Desktop/smengine/smart-engine/dependencies/includes/freetype/fterrdef.h
+
+1432383127 /home/martynas/Desktop/smengine/smart-engine/dependencies/includes/freetype/ftglyph.h
+	"ft2build.h"
+	"freetype.h"
+
+1432383127 /home/martynas/Desktop/smengine/smart-engine/dependencies/includes/freetype/ftsizes.h
+	"ft2build.h"
+	"freetype.h"
+
+1432383127 /home/martynas/Desktop/smengine/smart-engine/dependencies/includes/freetype/ftlcdfil.h
+	"ft2build.h"
+	"freetype.h"
+
+1432383127 /home/martynas/Desktop/smengine/smart-engine/dependencies/includes/freetype/ftmemory.h
+	"ft2build.h"
+	"ftconfig.h"
+	"fttypes.h"
+
+1432383127 /home/martynas/Desktop/smengine/smart-engine/dependencies/includes/freetype/ftgloadr.h
+	"ft2build.h"
+	"freetype.h"
+
+1432383127 /home/martynas/Desktop/smengine/smart-engine/dependencies/includes/freetype/ftdriver.h
+	"ft2build.h"
+	"ftmodapi.h"
+
+1432383127 /home/martynas/Desktop/smengine/smart-engine/dependencies/includes/freetype/autohint.h
+	"ft2build.h"
+	"freetype.h"
+
+1432383127 /home/martynas/Desktop/smengine/smart-engine/dependencies/includes/freetype/ftserv.h
+
+1432383127 /home/martynas/Desktop/smengine/smart-engine/dependencies/includes/freetype/ftpic.h
+
+1432383127 /home/martynas/Desktop/smengine/smart-engine/dependencies/includes/freetype/ftincrem.h
+	"ft2build.h"
+	"freetype.h"
+
+1432383127 /home/martynas/Desktop/smengine/smart-engine/dependencies/includes/freetype/autofit/afpic.h
+	"../ftpic.h"
+	"aftypes.h"
+
+1432383127 /home/martynas/Desktop/smengine/smart-engine/dependencies/includes/freetype/autofit/aftypes.h
+	"../ft2build.h"
+	"../ftoutln.h"
+	"../ftobjs.h"
+	"../ftdebug.h"
+
+1432383127 /home/martynas/Desktop/smengine/smart-engine/dependencies/includes/freetype/ftoutln.h
+	"ft2build.h"
+	"freetype.h"
+
+1432383127 /home/martynas/Desktop/smengine/smart-engine/dependencies/includes/freetype/ftdebug.h
+	"ft2build.h"
+	"ftconfig.h"
+	"freetype.h"
+	"fttrace.h"
+	"stdio.h"
+
+1432383127 /home/martynas/Desktop/smengine/smart-engine/dependencies/includes/freetype/fttrace.h
+
+1432383127 /home/martynas/Desktop/smengine/smart-engine/dependencies/includes/freetype/autofit/aferrors.h
+	"../ftmoderr.h"
+	"../fterrors.h"
+
+1432383127 /home/martynas/Desktop/smengine/smart-engine/dependencies/includes/freetype/autofit/aflatin.h
+	"afhints.h"
+
+1432383127 /home/martynas/Desktop/smengine/smart-engine/dependencies/includes/freetype/autofit/afhints.h
+	"aftypes.h"
+
+1432383127 /home/martynas/Desktop/smengine/smart-engine/dependencies/includes/freetype/autofit/aflatin2.h
+	"afhints.h"
+
+1432383127 /home/martynas/Desktop/smengine/smart-engine/dependencies/includes/freetype/autofit/afcjk.h
+	"afhints.h"
+	"aflatin.h"
+
+1432383127 /home/martynas/Desktop/smengine/smart-engine/dependencies/includes/freetype/autofit/afdummy.h
+	"aftypes.h"
+
+1432383127 /home/martynas/Desktop/smengine/smart-engine/dependencies/includes/freetype/autofit/afindic.h
+	"afhints.h"
+
+1432383127 /home/martynas/Desktop/smengine/smart-engine/dependencies/includes/freetype/autofit/afangles.c
+	"aftypes.h"
+
+1432383127 /home/martynas/Desktop/smengine/smart-engine/dependencies/includes/freetype/autofit/afglobal.c
+	"afglobal.h"
+	"afdummy.h"
+	"aflatin.h"
+	"afcjk.h"
+	"afindic.h"
+	"afpic.h"
+	"aferrors.h"
+	"aflatin2.h"
+
+1432383127 /home/martynas/Desktop/smengine/smart-engine/dependencies/includes/freetype/autofit/afglobal.h
+	"aftypes.h"
+	"afmodule.h"
+
+1432383127 /home/martynas/Desktop/smengine/smart-engine/dependencies/includes/freetype/autofit/afmodule.h
+	"../ft2build.h"
+	"../ftobjs.h"
+	"../ftmodapi.h"
+	"afloader.h"
+
+1432383127 /home/martynas/Desktop/smengine/smart-engine/dependencies/includes/freetype/autofit/afloader.h
+	"afhints.h"
+	"afglobal.h"
+
+1432383127 /home/martynas/Desktop/smengine/smart-engine/dependencies/includes/freetype/autofit/afhints.c
+	"afhints.h"
+	"aferrors.h"
+	"../ftcalc.h"
+	"../ftdebug.h"
+
+1432383127 /home/martynas/Desktop/smengine/smart-engine/dependencies/includes/freetype/ftcalc.h
+	"ft2build.h"
+	"freetype.h"
+
+1432383127 /home/martynas/Desktop/smengine/smart-engine/dependencies/includes/freetype/autofit/afdummy.c
+	"afdummy.h"
+	"afhints.h"
+	"aferrors.h"
+
+1432383127 /home/martynas/Desktop/smengine/smart-engine/dependencies/includes/freetype/autofit/aflatin.c
+	"../ft2build.h"
+	"../ftadvanc.h"
+	"../ftdebug.h"
+	"afglobal.h"
+	"aflatin.h"
+	"aferrors.h"
+	"afwarp.h"
+
+1432383127 /home/martynas/Desktop/smengine/smart-engine/dependencies/includes/freetype/ftadvanc.h
+	"ft2build.h"
+	"freetype.h"
+
+1432383127 /home/martynas/Desktop/smengine/smart-engine/dependencies/includes/freetype/autofit/afwarp.h
+	"afhints.h"
+
+1432383127 /home/martynas/Desktop/smengine/smart-engine/dependencies/includes/freetype/autofit/aflatin2.c
+	"afglobal.h"
+	"aflatin.h"
+	"aflatin2.h"
+	"aferrors.h"
+	"afwarp.h"
+
+1432383127 /home/martynas/Desktop/smengine/smart-engine/dependencies/includes/freetype/autofit/afcjk.c
+	"../ft2build.h"
+	"../ftadvanc.h"
+	"../ftdebug.h"
+	"aftypes.h"
+	"aflatin.h"
+	"afcjk.h"
+	"aferrors.h"
+	"afwarp.h"
+
+1432383127 /home/martynas/Desktop/smengine/smart-engine/dependencies/includes/freetype/autofit/afindic.c
+	"aftypes.h"
+	"aflatin.h"
+	"afindic.h"
+	"aferrors.h"
+	"afcjk.h"
+	"afwarp.h"
+
+1432383127 /home/martynas/Desktop/smengine/smart-engine/dependencies/includes/freetype/autofit/afloader.c
+	"afglobal.h"
+	"afloader.h"
+	"afhints.h"
+	"aferrors.h"
+	"afmodule.h"
+
+1432383127 /home/martynas/Desktop/smengine/smart-engine/dependencies/includes/freetype/autofit/afmodule.c
+	"afglobal.h"
+	"afmodule.h"
+	"afloader.h"
+	"aferrors.h"
+	"afpic.h"
+	"../ftobjs.h"
+	"../ftdebug.h"
+	"../ftautoh.h"
+	"../svprop.h"
+
+1432383127 /home/martynas/Desktop/smengine/smart-engine/dependencies/includes/freetype/ftautoh.h
+	"ft2build.h"
+	"freetype.h"
+
+1432383127 /home/martynas/Desktop/smengine/smart-engine/dependencies/includes/freetype/svprop.h
+
+1432383127 /home/martynas/Desktop/smengine/smart-engine/dependencies/includes/freetype/autofit/afwarp.c
+	"afwarp.h"
+
+1432383127 source:/home/martynas/Desktop/smengine/smart-engine/dependencies/includes/freetype/bdf.c
+	"ft2build.h"
+	"bdf/bdflib.c"
+	"bdf/bdfdrivr.c"
+
+1432383127 /home/martynas/Desktop/smengine/smart-engine/dependencies/includes/freetype/bdf/bdflib.c
+	"../ft2build.h"
+	"../ftdebug.h"
+	"../ftstream.h"
+	"../ftobjs.h"
+	"bdf.h"
+	"bdferror.h"
+
+1432383127 /home/martynas/Desktop/smengine/smart-engine/dependencies/includes/freetype/ftstream.h
+	"ft2build.h"
+	"ftsystem.h"
+	"ftobjs.h"
+
+1432383127 /home/martynas/Desktop/smengine/smart-engine/dependencies/includes/freetype/bdf/bdf.h
+	"../ft2build.h"
+	"../ftobjs.h"
+	"../ftstream.h"
+
+1432383127 /home/martynas/Desktop/smengine/smart-engine/dependencies/includes/freetype/bdf/bdferror.h
+	"../ftmoderr.h"
+	"../fterrors.h"
+
+1432383127 /home/martynas/Desktop/smengine/smart-engine/dependencies/includes/freetype/bdf/bdfdrivr.c
+	"../ft2build.h"
+	"../ftdebug.h"
+	"../ftstream.h"
+	"../ftobjs.h"
+	"../ftbdf.h"
+	"../ttnameid.h"
+	"../svbdf.h"
+	"../svxf86nm.h"
+	"bdf.h"
+	"bdfdrivr.h"
+	"bdferror.h"
+
+1432383127 /home/martynas/Desktop/smengine/smart-engine/dependencies/includes/freetype/ftbdf.h
+	"ft2build.h"
+	"freetype.h"
+
+1432383127 /home/martynas/Desktop/smengine/smart-engine/dependencies/includes/freetype/ttnameid.h
+	"ft2build.h"
+
+1432383127 /home/martynas/Desktop/smengine/smart-engine/dependencies/includes/freetype/svbdf.h
+	"ftbdf.h"
+	"ftserv.h"
+
+1432383127 /home/martynas/Desktop/smengine/smart-engine/dependencies/includes/freetype/svxf86nm.h
+	"ftserv.h"
+
+1432383127 /home/martynas/Desktop/smengine/smart-engine/dependencies/includes/freetype/bdf/bdfdrivr.h
+	"../ft2build.h"
+	"../ftdriver.h"
+	"bdf.h"
+
+1432383127 source:/home/martynas/Desktop/smengine/smart-engine/dependencies/includes/freetype/cff.c
+	"ft2build.h"
+	"cff/cffpic.c"
+	"cff/cffdrivr.c"
+	"cff/cffparse.c"
+	"cff/cffload.c"
+	"cff/cffobjs.c"
+	"cff/cffgload.c"
+	"cff/cffcmap.c"
+	"cff/cf2arrst.c"
+	"cff/cf2blues.c"
+	"cff/cf2error.c"
+	"cff/cf2font.c"
+	"cff/cf2ft.c"
+	"cff/cf2hints.c"
+	"cff/cf2intrp.c"
+	"cff/cf2read.c"
+	"cff/cf2stack.c"
+
+1432383127 /home/martynas/Desktop/smengine/smart-engine/dependencies/includes/freetype/cff/cffpic.c
+	"../ft2build.h"
+	"../ftobjs.h"
+	"cffcmap.h"
+	"cffpic.h"
+	"cfferrs.h"
+
+1432383127 /home/martynas/Desktop/smengine/smart-engine/dependencies/includes/freetype/cff/cffcmap.h
+	"cffobjs.h"
+
+1432383127 /home/martynas/Desktop/smengine/smart-engine/dependencies/includes/freetype/cff/cffobjs.h
+	"../ft2build.h"
+	"../ftobjs.h"
+	"cfftypes.h"
+	"../tttypes.h"
+	"../pshints.h"
+
+1432383127 /home/martynas/Desktop/smengine/smart-engine/dependencies/includes/freetype/cff/cfftypes.h
+	"../ft2build.h"
+	"../ftserv.h"
+	"../pshints.h"
+
+1432383127 /home/martynas/Desktop/smengine/smart-engine/dependencies/includes/freetype/pshints.h
+	"ft2build.h"
+	"freetype.h"
+	"t1tables.h"
+
+1432383127 /home/martynas/Desktop/smengine/smart-engine/dependencies/includes/freetype/t1tables.h
+	"ft2build.h"
+	"freetype.h"
+
+1432383127 /home/martynas/Desktop/smengine/smart-engine/dependencies/includes/freetype/tttypes.h
+	"ft2build.h"
+	"tttables.h"
+	"ftobjs.h"
+	"ftmm.h"
+
+1432383127 /home/martynas/Desktop/smengine/smart-engine/dependencies/includes/freetype/tttables.h
+	"ft2build.h"
+	"freetype.h"
+
+1432383127 /home/martynas/Desktop/smengine/smart-engine/dependencies/includes/freetype/ftmm.h
+	"ft2build.h"
+	"t1tables.h"
+
+1432383127 /home/martynas/Desktop/smengine/smart-engine/dependencies/includes/freetype/cff/cffpic.h
+	"../ftpic.h"
+	"cffparse.h"
+
+1432383127 /home/martynas/Desktop/smengine/smart-engine/dependencies/includes/freetype/cff/cffparse.h
+	"../ft2build.h"
+	"cfftypes.h"
+	"../ftobjs.h"
+
+1432383127 /home/martynas/Desktop/smengine/smart-engine/dependencies/includes/freetype/cff/cfferrs.h
+
+1432383127 /home/martynas/Desktop/smengine/smart-engine/dependencies/includes/freetype/cff/cffdrivr.c
+	"../ft2build.h"
+	"../ftdebug.h"
+	"../ftstream.h"
+	"../sfnt.h"
+	"cffdrivr.h"
+	"cffgload.h"
+	"cffload.h"
+	"cffcmap.h"
+	"cffparse.h"
+	"cfferrs.h"
+	"cffpic.h"
+
+1432383127 /home/martynas/Desktop/smengine/smart-engine/dependencies/includes/freetype/sfnt.h
+	"ft2build.h"
+	"ftdriver.h"
+	"tttypes.h"
+
+1432383127 /home/martynas/Desktop/smengine/smart-engine/dependencies/includes/freetype/cff/cffdrivr.h
+	"../ft2build.h"
+	"../ftdriver.h"
+
+1432383127 /home/martynas/Desktop/smengine/smart-engine/dependencies/includes/freetype/cff/cffgload.h
+	"../ft2build.h"
+	"cffobjs.h"
+
+1432383127 /home/martynas/Desktop/smengine/smart-engine/dependencies/includes/freetype/cff/cffload.h
+	"../ft2build.h"
+	"cfftypes.h"
+
+1432383127 /home/martynas/Desktop/smengine/smart-engine/dependencies/includes/freetype/cff/cffparse.c
+	"../ft2build.h"
+	"cffparse.h"
+	"../ftstream.h"
+	"../ftdebug.h"
+	"cfferrs.h"
+	"cffpic.h"
+	"cfftoken.h"
+	"cfftoken.h"
+	"cfftoken.h"
+	"cfftoken.h"
+	"cfftoken.h"
+
+1432383127 /home/martynas/Desktop/smengine/smart-engine/dependencies/includes/freetype/cff/cfftoken.h
+
+1432383127 /home/martynas/Desktop/smengine/smart-engine/dependencies/includes/freetype/cff/cffload.c
+	"../ft2build.h"
+	"../ftdebug.h"
+	"../ftobjs.h"
+	"../ftstream.h"
+	"cffload.h"
+	"cffparse.h"
+	"cfferrs.h"
+
+1432383127 /home/martynas/Desktop/smengine/smart-engine/dependencies/includes/freetype/cff/cffobjs.c
+	"../ft2build.h"
+	"../ftdebug.h"
+	"../ftcalc.h"
+	"../ftstream.h"
+	"../sfnt.h"
+	"cffobjs.h"
+	"cffload.h"
+	"cffcmap.h"
+	"cffpic.h"
+	"cfferrs.h"
+
+1432383127 /home/martynas/Desktop/smengine/smart-engine/dependencies/includes/freetype/cff/cffgload.c
+	"../ft2build.h"
+	"../ftdebug.h"
+	"../ftstream.h"
+	"../sfnt.h"
+	"cffobjs.h"
+	"cffload.h"
+	"cffgload.h"
+	"cf2ft.h"
+	"cfferrs.h"
+
+1432383127 /home/martynas/Desktop/smengine/smart-engine/dependencies/includes/freetype/cff/cf2ft.h
+	"cf2types.h"
+	"cf2glue.h"
+	"cffgload.h"
+
+1432383127 /home/martynas/Desktop/smengine/smart-engine/dependencies/includes/freetype/cff/cf2types.h
+	"../ft2build.h"
+
+1432383127 /home/martynas/Desktop/smengine/smart-engine/dependencies/includes/freetype/cff/cf2glue.h
+	"cf2error.h"
+	"cf2fixed.h"
+	"cf2arrst.h"
+	"cf2read.h"
+
+1432383127 /home/martynas/Desktop/smengine/smart-engine/dependencies/includes/freetype/cff/cf2error.h
+	"cf2ft.h"
+
+1432383127 /home/martynas/Desktop/smengine/smart-engine/dependencies/includes/freetype/cff/cf2fixed.h
+
+1432383127 /home/martynas/Desktop/smengine/smart-engine/dependencies/includes/freetype/cff/cf2arrst.h
+	"cf2error.h"
+
+1432383127 /home/martynas/Desktop/smengine/smart-engine/dependencies/includes/freetype/cff/cf2read.h
+
+1432383127 /home/martynas/Desktop/smengine/smart-engine/dependencies/includes/freetype/cff/cffcmap.c
+	"../ft2build.h"
+	"../ftdebug.h"
+	"cffcmap.h"
+	"cffload.h"
+	"cfferrs.h"
+
+1432383127 /home/martynas/Desktop/smengine/smart-engine/dependencies/includes/freetype/cff/cf2arrst.c
+	"cf2ft.h"
+	"../ftdebug.h"
+	"cf2glue.h"
+	"cf2arrst.h"
+	"cf2error.h"
+
+1432383127 /home/martynas/Desktop/smengine/smart-engine/dependencies/includes/freetype/cff/cf2blues.c
+	"cf2ft.h"
+	"../ftdebug.h"
+	"cf2blues.h"
+	"cf2hints.h"
+	"cf2font.h"
+
+1432383127 /home/martynas/Desktop/smengine/smart-engine/dependencies/includes/freetype/cff/cf2blues.h
+	"cf2glue.h"
+
+1432383127 /home/martynas/Desktop/smengine/smart-engine/dependencies/includes/freetype/cff/cf2hints.h
+
+1432383127 /home/martynas/Desktop/smengine/smart-engine/dependencies/includes/freetype/cff/cf2font.h
+	"cf2ft.h"
+	"cf2blues.h"
+
+1432383127 /home/martynas/Desktop/smengine/smart-engine/dependencies/includes/freetype/cff/cf2error.c
+	"cf2ft.h"
+	"cf2error.h"
+
+1432383127 /home/martynas/Desktop/smengine/smart-engine/dependencies/includes/freetype/cff/cf2font.c
+	"cf2ft.h"
+	"cf2glue.h"
+	"cf2font.h"
+	"cf2error.h"
+	"cf2intrp.h"
+
+1432383127 /home/martynas/Desktop/smengine/smart-engine/dependencies/includes/freetype/cff/cf2intrp.h
+	"cf2ft.h"
+	"cf2hints.h"
+
+1432383127 /home/martynas/Desktop/smengine/smart-engine/dependencies/includes/freetype/cff/cf2ft.c
+	"cf2ft.h"
+	"../ftdebug.h"
+	"cf2font.h"
+	"cf2error.h"
+
+1432383127 /home/martynas/Desktop/smengine/smart-engine/dependencies/includes/freetype/cff/cf2hints.c
+	"cf2ft.h"
+	"../ftdebug.h"
+	"cf2glue.h"
+	"cf2font.h"
+	"cf2hints.h"
+	"cf2intrp.h"
+
+1432383127 /home/martynas/Desktop/smengine/smart-engine/dependencies/includes/freetype/cff/cf2intrp.c
+	"cf2ft.h"
+	"../ftdebug.h"
+	"cf2glue.h"
+	"cf2font.h"
+	"cf2stack.h"
+	"cf2hints.h"
+	"cf2error.h"
+
+1432383127 /home/martynas/Desktop/smengine/smart-engine/dependencies/includes/freetype/cff/cf2stack.h
+
+1432383127 /home/martynas/Desktop/smengine/smart-engine/dependencies/includes/freetype/cff/cf2read.c
+	"cf2ft.h"
+	"../ftdebug.h"
+	"cf2glue.h"
+	"cf2error.h"
+
+1432383127 /home/martynas/Desktop/smengine/smart-engine/dependencies/includes/freetype/cff/cf2stack.c
+	"cf2ft.h"
+	"../ftdebug.h"
+	"cf2glue.h"
+	"cf2font.h"
+	"cf2stack.h"
+	"cf2error.h"
+
+1432383127 source:/home/martynas/Desktop/smengine/smart-engine/dependencies/includes/freetype/ftbase.c
+	"ft2build.h"
+	"base/ftpic.c"
+	"base/basepic.c"
+	"base/ftadvanc.c"
+	"base/ftcalc.c"
+	"base/ftdbgmem.c"
+	"base/ftgloadr.c"
+	"base/ftobjs.c"
+	"base/ftoutln.c"
+	"base/ftrfork.c"
+	"base/ftsnames.c"
+	"base/ftstream.c"
+	"base/fttrigon.c"
+	"base/ftutil.c"
+	"base/ftmac.c"
+
+1432383127 /home/martynas/Desktop/smengine/smart-engine/dependencies/includes/freetype/base/ftpic.c
+	"../ft2build.h"
+	"../ftobjs.h"
+	"basepic.h"
+
+1432383127 /home/martynas/Desktop/smengine/smart-engine/dependencies/includes/freetype/base/basepic.h
+	"../ftpic.h"
+	"../ftrfork.h"
+
+1432383127 /home/martynas/Desktop/smengine/smart-engine/dependencies/includes/freetype/ftrfork.h
+	"ft2build.h"
+	"ftobjs.h"
+
+1432383127 /home/martynas/Desktop/smengine/smart-engine/dependencies/includes/freetype/base/basepic.c
+	"../ft2build.h"
+	"../ftobjs.h"
+	"basepic.h"
+
+1432383127 /home/martynas/Desktop/smengine/smart-engine/dependencies/includes/freetype/base/ftadvanc.c
+	"../ft2build.h"
+	"../ftdebug.h"
+	"../ftobjs.h"
+
+1432383127 /home/martynas/Desktop/smengine/smart-engine/dependencies/includes/freetype/base/ftcalc.c
+	"../ft2build.h"
+	"../ftcalc.h"
+	"../ftdebug.h"
+	"../ftobjs.h"
+
+1432383127 /home/martynas/Desktop/smengine/smart-engine/dependencies/includes/freetype/base/ftdbgmem.c
+	"../ft2build.h"
+	"../ftdebug.h"
+	"../ftmemory.h"
+
+1432383127 /home/martynas/Desktop/smengine/smart-engine/dependencies/includes/freetype/base/ftgloadr.c
+	"../ft2build.h"
+	"../ftdebug.h"
+	"../ftgloadr.h"
+	"../ftmemory.h"
+	"../ftobjs.h"
+
+1432383127 /home/martynas/Desktop/smengine/smart-engine/dependencies/includes/freetype/base/ftobjs.c
+	"../ft2build.h"
+	"../ftvalid.h"
+	"../ftobjs.h"
+	"../ftdebug.h"
+	"../ftrfork.h"
+	"../ftstream.h"
+	"../sfnt.h"
+	"ftbase.h"
+	"md5.c"
+
+1432383127 /home/martynas/Desktop/smengine/smart-engine/dependencies/includes/freetype/ftvalid.h
+	"ft2build.h"
+	"ftstdlib.h"
+
+1432383127 /home/martynas/Desktop/smengine/smart-engine/dependencies/includes/freetype/base/ftbase.h
+	"../ft2build.h"
+	"../ftobjs.h"
+
+1432383127 /home/martynas/Desktop/smengine/smart-engine/dependencies/includes/freetype/base/md5.c
+	<string.h>
+	"md5.h"
+
+1432383127 /home/martynas/Desktop/smengine/smart-engine/dependencies/includes/freetype/base/md5.h
+	<openssl/md5.h>
+
+1432383127 /home/martynas/Desktop/smengine/smart-engine/dependencies/includes/freetype/base/ftoutln.c
+	"../ft2build.h"
+	"../ftobjs.h"
+	"../ftcalc.h"
+	"../ftdebug.h"
+
+1432383127 /home/martynas/Desktop/smengine/smart-engine/dependencies/includes/freetype/base/ftrfork.c
+	"../ft2build.h"
+	"../ftdebug.h"
+	"../ftstream.h"
+	"../ftrfork.h"
+	"basepic.h"
+
+1432383127 /home/martynas/Desktop/smengine/smart-engine/dependencies/includes/freetype/base/ftsnames.c
+	"../ft2build.h"
+	"../tttypes.h"
+	"../ftstream.h"
+
+1432383127 /home/martynas/Desktop/smengine/smart-engine/dependencies/includes/freetype/base/ftstream.c
+	"../ft2build.h"
+	"../ftstream.h"
+	"../ftdebug.h"
+
+1432383127 /home/martynas/Desktop/smengine/smart-engine/dependencies/includes/freetype/base/fttrigon.c
+	"../ft2build.h"
+	"../ftobjs.h"
+	"../ftcalc.h"
+
+1432383127 /home/martynas/Desktop/smengine/smart-engine/dependencies/includes/freetype/base/ftutil.c
+	"../ft2build.h"
+	"../ftdebug.h"
+	"../ftmemory.h"
+	"../ftobjs.h"
+
+1432383127 /home/martynas/Desktop/smengine/smart-engine/dependencies/includes/freetype/base/ftmac.c
+	"../ft2build.h"
+	"../ftstream.h"
+	"ftbase.h"
+	<CoreServices/CoreServices.h>
+	<ApplicationServices/ApplicationServices.h>
+	<sys/syslimits.h>
+
+1432383127 source:/home/martynas/Desktop/smengine/smart-engine/dependencies/includes/freetype/ftbbox.c
+	"ft2build.h"
+	"ftdebug.h"
+	"ftbbox.h"
+	"ftimage.h"
+	"ftoutln.h"
+	"ftcalc.h"
+	"ftobjs.h"
+
+1432383127 /home/martynas/Desktop/smengine/smart-engine/dependencies/includes/freetype/ftbbox.h
+	"ft2build.h"
+	"freetype.h"
+
+1432383127 source:/home/martynas/Desktop/smengine/smart-engine/dependencies/includes/freetype/ftbitmap.c
+	"ft2build.h"
+	"ftdebug.h"
+	"ftbitmap.h"
+	"ftimage.h"
+	"ftobjs.h"
+
+1432383127 /home/martynas/Desktop/smengine/smart-engine/dependencies/includes/freetype/ftbitmap.h
+	"ft2build.h"
+	"freetype.h"
+
+1432383127 source:/home/martynas/Desktop/smengine/smart-engine/dependencies/includes/freetype/ftcache.c
+	"ft2build.h"
+	"cache/ftcmru.c"
+	"cache/ftcmanag.c"
+	"cache/ftccache.c"
+	"cache/ftccmap.c"
+	"cache/ftcglyph.c"
+	"cache/ftcimage.c"
+	"cache/ftcsbits.c"
+	"cache/ftcbasic.c"
+
+1432383127 /home/martynas/Desktop/smengine/smart-engine/dependencies/includes/freetype/cache/ftcmru.c
+	"../ft2build.h"
+	"ftcmru.h"
+	"../ftobjs.h"
+	"../ftdebug.h"
+	"ftcerror.h"
+
+1432383127 /home/martynas/Desktop/smengine/smart-engine/dependencies/includes/freetype/cache/ftcmru.h
+	"../ft2build.h"
+
+1432383127 /home/martynas/Desktop/smengine/smart-engine/dependencies/includes/freetype/cache/ftcerror.h
+
+1432383127 /home/martynas/Desktop/smengine/smart-engine/dependencies/includes/freetype/cache/ftcmanag.c
+	"../ft2build.h"
+	"ftcmanag.h"
+	"../ftobjs.h"
+	"../ftdebug.h"
+	"ftccback.h"
+	"ftcerror.h"
+
+1432383127 /home/martynas/Desktop/smengine/smart-engine/dependencies/includes/freetype/cache/ftcmanag.h
+	"../ft2build.h"
+	"ftcmru.h"
+	"ftccache.h"
+
+1432383127 /home/martynas/Desktop/smengine/smart-engine/dependencies/includes/freetype/cache/ftccache.h
+	"ftcmru.h"
+
+1432383127 /home/martynas/Desktop/smengine/smart-engine/dependencies/includes/freetype/cache/ftccback.h
+	"../ft2build.h"
+	"ftcmru.h"
+	"ftcimage.h"
+	"ftcmanag.h"
+	"ftcglyph.h"
+	"ftcsbits.h"
+
+1432383127 /home/martynas/Desktop/smengine/smart-engine/dependencies/includes/freetype/cache/ftcimage.h
+	"../ft2build.h"
+	"ftcglyph.h"
+
+1432383127 /home/martynas/Desktop/smengine/smart-engine/dependencies/includes/freetype/cache/ftcglyph.h
+	"../ft2build.h"
+	"ftcmanag.h"
+
+1432383127 /home/martynas/Desktop/smengine/smart-engine/dependencies/includes/freetype/cache/ftcsbits.h
+	"../ft2build.h"
+	"ftcglyph.h"
+
+1432383127 /home/martynas/Desktop/smengine/smart-engine/dependencies/includes/freetype/cache/ftccache.c
+	"../ft2build.h"
+	"ftcmanag.h"
+	"../ftobjs.h"
+	"../ftdebug.h"
+	"ftccback.h"
+	"ftcerror.h"
+
+1432383127 /home/martynas/Desktop/smengine/smart-engine/dependencies/includes/freetype/cache/ftccmap.c
+	"../ft2build.h"
+	"ftcmanag.h"
+	"../ftmemory.h"
+	"../ftobjs.h"
+	"../ftdebug.h"
+	"ftccback.h"
+	"ftcerror.h"
+
+1432383127 /home/martynas/Desktop/smengine/smart-engine/dependencies/includes/freetype/cache/ftcglyph.c
+	"../ft2build.h"
+	"../ftobjs.h"
+	"ftcglyph.h"
+	"ftccback.h"
+	"ftcerror.h"
+
+1432383127 /home/martynas/Desktop/smengine/smart-engine/dependencies/includes/freetype/cache/ftcimage.c
+	"../ft2build.h"
+	"ftcimage.h"
+	"../ftmemory.h"
+	"ftccback.h"
+	"ftcerror.h"
+
+1432383127 /home/martynas/Desktop/smengine/smart-engine/dependencies/includes/freetype/cache/ftcsbits.c
+	"../ft2build.h"
+	"ftcsbits.h"
+	"../ftobjs.h"
+	"../ftdebug.h"
+	"ftccback.h"
+	"ftcerror.h"
+
+1432383127 /home/martynas/Desktop/smengine/smart-engine/dependencies/includes/freetype/cache/ftcbasic.c
+	"../ft2build.h"
+	"../ftobjs.h"
+	"../ftdebug.h"
+	"ftcglyph.h"
+	"ftcimage.h"
+	"ftcsbits.h"
+	"ftccback.h"
+	"ftcerror.h"
+
+1432383127 source:/home/martynas/Desktop/smengine/smart-engine/dependencies/includes/freetype/ftdebug.c
+	"ft2build.h"
+	"freetype.h"
+	"ftdebug.h"
+	"fttrace.h"
+
+1432383127 source:/home/martynas/Desktop/smengine/smart-engine/dependencies/includes/freetype/ftfstype.c
+	"ft2build.h"
+	"t1tables.h"
+	"tttables.h"
+	"ftserv.h"
+	"svpsinfo.h"
+
+1432383127 /home/martynas/Desktop/smengine/smart-engine/dependencies/includes/freetype/svpsinfo.h
+	"ftserv.h"
+	"t1types.h"
+
+1432383127 /home/martynas/Desktop/smengine/smart-engine/dependencies/includes/freetype/t1types.h
+	"ft2build.h"
+	"t1tables.h"
+	"pshints.h"
+	"ftserv.h"
+	"svpscmap.h"
+
+1432383127 /home/martynas/Desktop/smengine/smart-engine/dependencies/includes/freetype/svpscmap.h
+	"ftobjs.h"
+
+1432383127 source:/home/martynas/Desktop/smengine/smart-engine/dependencies/includes/freetype/ftgasp.c
+	"ft2build.h"
+	"ftgasp.h"
+	"tttypes.h"
+
+1432383127 /home/martynas/Desktop/smengine/smart-engine/dependencies/includes/freetype/ftgasp.h
+	"ft2build.h"
+	"freetype.h"
+
+1432383127 source:/home/martynas/Desktop/smengine/smart-engine/dependencies/includes/freetype/ftglyph.c
+	"ft2build.h"
+	"ftdebug.h"
+	"ftglyph.h"
+	"ftoutln.h"
+	"ftoutln.h"
+	"ftobjs.h"
+	"base/basepic.h"
+
+1432383127 source:/home/martynas/Desktop/smengine/smart-engine/dependencies/includes/freetype/ftgxval.c
+	"ft2build.h"
+	"ftdebug.h"
+	"ftobjs.h"
+	"svgxval.h"
+
+1432383127 /home/martynas/Desktop/smengine/smart-engine/dependencies/includes/freetype/svgxval.h
+	"ftgxval.h"
+	"ftvalid.h"
+
+1432383127 /home/martynas/Desktop/smengine/smart-engine/dependencies/includes/freetype/ftgxval.h
+	"ft2build.h"
+	"freetype.h"
+
+1432383127 source:/home/martynas/Desktop/smengine/smart-engine/dependencies/includes/freetype/ftgzip.c
+	"ft2build.h"
+	"ftmemory.h"
+	"ftstream.h"
+	"ftdebug.h"
+	"ftgzip.h"
+	"ftstdlib.h"
+	"ftmoderr.h"
+	"fterrors.h"
+	<zlib.h>
+	"gzip/zlib.h"
+	"gzip/zutil.h"
+	"gzip/inftrees.h"
+	"gzip/infblock.h"
+	"gzip/infcodes.h"
+	"gzip/infutil.h"
+	"gzip/zutil.c"
+	"gzip/inftrees.c"
+	"gzip/infutil.c"
+	"gzip/infcodes.c"
+	"gzip/infblock.c"
+	"gzip/inflate.c"
+	"gzip/adler32.c"
+
+1432383127 /home/martynas/Desktop/smengine/smart-engine/dependencies/includes/freetype/ftgzip.h
+	"ft2build.h"
+	"freetype.h"
+
+1432383127 /home/martynas/Desktop/smengine/smart-engine/dependencies/includes/freetype/gzip/zlib.h
+	"zconf.h"
+
+1432383127 /home/martynas/Desktop/smengine/smart-engine/dependencies/includes/freetype/gzip/zconf.h
+	<windows.h>
+	<windows.h>
+	<sys/types.h>
+	<unistd.h>
+
+1432383127 /home/martynas/Desktop/smengine/smart-engine/dependencies/includes/freetype/gzip/zutil.h
+	"zlib.h"
+	<stddef.h>
+	<string.h>
+	<stdlib.h>
+	<errno.h>
+	<alloc.h>
+	<unix.h>
+	<stdio.h>
+
+1432383127 /home/martynas/Desktop/smengine/smart-engine/dependencies/includes/freetype/gzip/inftrees.h
+
+1432383127 /home/martynas/Desktop/smengine/smart-engine/dependencies/includes/freetype/gzip/infblock.h
+
+1432383127 /home/martynas/Desktop/smengine/smart-engine/dependencies/includes/freetype/gzip/infcodes.h
+
+1432383127 /home/martynas/Desktop/smengine/smart-engine/dependencies/includes/freetype/gzip/infutil.h
+
+1432383127 /home/martynas/Desktop/smengine/smart-engine/dependencies/includes/freetype/gzip/zutil.c
+	"zutil.h"
+
+1432383127 /home/martynas/Desktop/smengine/smart-engine/dependencies/includes/freetype/gzip/inftrees.c
+	"zutil.h"
+	"inftrees.h"
+	"inffixed.h"
+
+1432383127 /home/martynas/Desktop/smengine/smart-engine/dependencies/includes/freetype/gzip/inffixed.h
+
+1432383127 /home/martynas/Desktop/smengine/smart-engine/dependencies/includes/freetype/gzip/infutil.c
+	"zutil.h"
+	"infblock.h"
+	"inftrees.h"
+	"infcodes.h"
+	"infutil.h"
+
+1432383127 /home/martynas/Desktop/smengine/smart-engine/dependencies/includes/freetype/gzip/infcodes.c
+	"zutil.h"
+	"inftrees.h"
+	"infblock.h"
+	"infcodes.h"
+	"infutil.h"
+
+1432383127 /home/martynas/Desktop/smengine/smart-engine/dependencies/includes/freetype/gzip/infblock.c
+	"zutil.h"
+	"infblock.h"
+	"inftrees.h"
+	"infcodes.h"
+	"infutil.h"
+
+1432383127 /home/martynas/Desktop/smengine/smart-engine/dependencies/includes/freetype/gzip/inflate.c
+	"zutil.h"
+	"infblock.h"
+
+1432383127 /home/martynas/Desktop/smengine/smart-engine/dependencies/includes/freetype/gzip/adler32.c
+	"zlib.h"
+
+1432383127 source:/home/martynas/Desktop/smengine/smart-engine/dependencies/includes/freetype/ftinit.c
+	"ft2build.h"
+	"ftconfig.h"
+	"ftobjs.h"
+	"ftdebug.h"
+	"ftmodapi.h"
+	"base/basepic.h"
+	"ftmodule.h"
+	"ftmodule.h"
+
+1432383127 /home/martynas/Desktop/smengine/smart-engine/dependencies/includes/freetype/ftmodule.h
+
+1432383127 source:/home/martynas/Desktop/smengine/smart-engine/dependencies/includes/freetype/ftlcdfil.c
+	"ft2build.h"
+	"ftdebug.h"
+	"ftlcdfil.h"
+	"ftimage.h"
+	"ftobjs.h"
+
+1432383127 source:/home/martynas/Desktop/smengine/smart-engine/dependencies/includes/freetype/ftlzw.c
+	"ft2build.h"
+	"ftmemory.h"
+	"ftstream.h"
+	"ftdebug.h"
+	"ftlzw.h"
+	"ftstdlib.h"
+	"ftmoderr.h"
+	"fterrors.h"
+	"lzw/ftzopen.h"
+	"lzw/ftzopen.c"
+
+1432383127 /home/martynas/Desktop/smengine/smart-engine/dependencies/includes/freetype/ftlzw.h
+	"ft2build.h"
+	"freetype.h"
+
+1432383127 /home/martynas/Desktop/smengine/smart-engine/dependencies/includes/freetype/lzw/ftzopen.h
+	"../ft2build.h"
+
+1432383127 /home/martynas/Desktop/smengine/smart-engine/dependencies/includes/freetype/lzw/ftzopen.c
+	"ftzopen.h"
+	"../ftmemory.h"
+	"../ftstream.h"
+	"../ftdebug.h"
+
+1432383127 source:/home/martynas/Desktop/smengine/smart-engine/dependencies/includes/freetype/ftmm.c
+	"ft2build.h"
+	"ftdebug.h"
+	"ftmm.h"
+	"ftobjs.h"
+	"svmm.h"
+
+1432383127 /home/martynas/Desktop/smengine/smart-engine/dependencies/includes/freetype/svmm.h
+	"ftserv.h"
+
+1432383127 source:/home/martynas/Desktop/smengine/smart-engine/dependencies/includes/freetype/ftotval.c
+	"ft2build.h"
+	"ftdebug.h"
+	"ftobjs.h"
+	"svotval.h"
+	"ftotval.h"
+
+1432383127 /home/martynas/Desktop/smengine/smart-engine/dependencies/includes/freetype/svotval.h
+	"ftotval.h"
+	"ftvalid.h"
+
+1432383127 /home/martynas/Desktop/smengine/smart-engine/dependencies/includes/freetype/ftotval.h
+	"ft2build.h"
+	"freetype.h"
+
+1432383127 source:/home/martynas/Desktop/smengine/smart-engine/dependencies/includes/freetype/ftpatent.c
+	"ft2build.h"
+	"freetype.h"
+	"tttags.h"
+	"ftobjs.h"
+	"ftstream.h"
+	"svsfnt.h"
+	"svttglyf.h"
+
+1432383127 /home/martynas/Desktop/smengine/smart-engine/dependencies/includes/freetype/tttags.h
+	"ft2build.h"
+	"freetype.h"
+
+1432383127 /home/martynas/Desktop/smengine/smart-engine/dependencies/includes/freetype/svsfnt.h
+	"ftserv.h"
+	"tttables.h"
+
+1432383127 /home/martynas/Desktop/smengine/smart-engine/dependencies/includes/freetype/svttglyf.h
+	"ftserv.h"
+	"tttables.h"
+
+1432383127 source:/home/martynas/Desktop/smengine/smart-engine/dependencies/includes/freetype/ftpfr.c
+	"ft2build.h"
+	"ftdebug.h"
+	"ftobjs.h"
+	"svpfr.h"
+
+1432383127 /home/martynas/Desktop/smengine/smart-engine/dependencies/includes/freetype/svpfr.h
+	"ftpfr.h"
+	"ftserv.h"
+
+1432383127 /home/martynas/Desktop/smengine/smart-engine/dependencies/includes/freetype/ftpfr.h
+	"ft2build.h"
+	"freetype.h"
+
+1432383127 source:/home/martynas/Desktop/smengine/smart-engine/dependencies/includes/freetype/ftstroke.c
+	"ft2build.h"
+	"ftstroke.h"
+	"fttrigon.h"
+	"ftoutln.h"
+	"ftmemory.h"
+	"ftdebug.h"
+	"ftobjs.h"
+	"base/basepic.h"
+
+1432383127 /home/martynas/Desktop/smengine/smart-engine/dependencies/includes/freetype/ftstroke.h
+	"ft2build.h"
+	"ftoutln.h"
+	"ftglyph.h"
+
+1432383127 /home/martynas/Desktop/smengine/smart-engine/dependencies/includes/freetype/fttrigon.h
+	"freetype.h"
+
+1432383127 source:/home/martynas/Desktop/smengine/smart-engine/dependencies/includes/freetype/ftsynth.c
+	"ft2build.h"
+	"ftsynth.h"
+	"ftdebug.h"
+	"ftobjs.h"
+	"ftoutln.h"
+	"ftbitmap.h"
+
+1432383127 /home/martynas/Desktop/smengine/smart-engine/dependencies/includes/freetype/ftsynth.h
+	"ft2build.h"
+	"freetype.h"
+
+1432383127 source:/home/martynas/Desktop/smengine/smart-engine/dependencies/includes/freetype/ftsystem.c
+	"ft2build.h"
+	"ftconfig.h"
+	"ftdebug.h"
+	"ftstream.h"
+	"ftsystem.h"
+	"fterrors.h"
+	"fttypes.h"
+
+1432383127 source:/home/martynas/Desktop/smengine/smart-engine/dependencies/includes/freetype/fttype1.c
+	"ft2build.h"
+	"ftobjs.h"
+	"ftserv.h"
+	"svpsinfo.h"
+
+1432383127 source:/home/martynas/Desktop/smengine/smart-engine/dependencies/includes/freetype/ftwinfnt.c
+	"ft2build.h"
+	"ftwinfnt.h"
+	"ftobjs.h"
+	"svwinfnt.h"
+
+1432383127 /home/martynas/Desktop/smengine/smart-engine/dependencies/includes/freetype/ftwinfnt.h
+	"ft2build.h"
+	"freetype.h"
+
+1432383127 /home/martynas/Desktop/smengine/smart-engine/dependencies/includes/freetype/svwinfnt.h
+	"ftserv.h"
+	"ftwinfnt.h"
+
+1432383127 source:/home/martynas/Desktop/smengine/smart-engine/dependencies/includes/freetype/ftxf86.c
+	"ft2build.h"
+	"ftxf86.h"
+	"ftobjs.h"
+	"svxf86nm.h"
+
+1432383127 /home/martynas/Desktop/smengine/smart-engine/dependencies/includes/freetype/ftxf86.h
+	"ft2build.h"
+	"freetype.h"
+
+1432383127 source:/home/martynas/Desktop/smengine/smart-engine/dependencies/includes/freetype/pcf.c
+	"ft2build.h"
+	"pcf/pcfutil.c"
+	"pcf/pcfread.c"
+	"pcf/pcfdrivr.c"
+
+1432383127 /home/martynas/Desktop/smengine/smart-engine/dependencies/includes/freetype/pcf/pcfutil.c
+	"../ft2build.h"
+	"pcfutil.h"
+
+1432383127 /home/martynas/Desktop/smengine/smart-engine/dependencies/includes/freetype/pcf/pcfutil.h
+	"../ft2build.h"
+
+1432383127 /home/martynas/Desktop/smengine/smart-engine/dependencies/includes/freetype/pcf/pcfread.c
+	"../ft2build.h"
+	"../ftdebug.h"
+	"../ftstream.h"
+	"../ftobjs.h"
+	"pcf.h"
+	"pcfread.h"
+	"pcferror.h"
+
+1432383127 /home/martynas/Desktop/smengine/smart-engine/dependencies/includes/freetype/pcf/pcf.h
+	"../ft2build.h"
+	"../ftdriver.h"
+	"../ftstream.h"
+
+1432383127 /home/martynas/Desktop/smengine/smart-engine/dependencies/includes/freetype/pcf/pcfread.h
+	"../ft2build.h"
+
+1432383127 /home/martynas/Desktop/smengine/smart-engine/dependencies/includes/freetype/pcf/pcferror.h
+
+1432383127 /home/martynas/Desktop/smengine/smart-engine/dependencies/includes/freetype/pcf/pcfdrivr.c
+	"../ft2build.h"
+	"../ftdebug.h"
+	"../ftstream.h"
+	"../ftobjs.h"
+	"pcf.h"
+	"pcfdrivr.h"
+	"pcfread.h"
+	"pcferror.h"
+	"pcfutil.h"
+
+1432383127 /home/martynas/Desktop/smengine/smart-engine/dependencies/includes/freetype/pcf/pcfdrivr.h
+	"../ft2build.h"
+	"../ftdriver.h"
+
+1432383127 source:/home/martynas/Desktop/smengine/smart-engine/dependencies/includes/freetype/pfr.c
+	"ft2build.h"
+	"pfr/pfrload.c"
+	"pfr/pfrgload.c"
+	"pfr/pfrcmap.c"
+	"pfr/pfrobjs.c"
+	"pfr/pfrdrivr.c"
+	"pfr/pfrsbit.c"
+
+1432383127 /home/martynas/Desktop/smengine/smart-engine/dependencies/includes/freetype/pfr/pfrload.c
+	"pfrload.h"
+	"../ftdebug.h"
+	"../ftstream.h"
+	"pfrerror.h"
+
+1432383127 /home/martynas/Desktop/smengine/smart-engine/dependencies/includes/freetype/pfr/pfrload.h
+	"pfrobjs.h"
+	"../ftstream.h"
+
+1432383127 /home/martynas/Desktop/smengine/smart-engine/dependencies/includes/freetype/pfr/pfrobjs.h
+	"pfrtypes.h"
+
+1432383127 /home/martynas/Desktop/smengine/smart-engine/dependencies/includes/freetype/pfr/pfrtypes.h
+	"../ft2build.h"
+	"../ftobjs.h"
+
+1432383127 /home/martynas/Desktop/smengine/smart-engine/dependencies/includes/freetype/pfr/pfrerror.h
+
+1432383127 /home/martynas/Desktop/smengine/smart-engine/dependencies/includes/freetype/pfr/pfrgload.c
+	"pfrgload.h"
+	"pfrsbit.h"
+	"pfrload.h"
+	"../ftdebug.h"
+	"pfrerror.h"
+
+1432383127 /home/martynas/Desktop/smengine/smart-engine/dependencies/includes/freetype/pfr/pfrgload.h
+	"pfrtypes.h"
+
+1432383127 /home/martynas/Desktop/smengine/smart-engine/dependencies/includes/freetype/pfr/pfrsbit.h
+	"pfrobjs.h"
+
+1432383127 /home/martynas/Desktop/smengine/smart-engine/dependencies/includes/freetype/pfr/pfrcmap.c
+	"../ft2build.h"
+	"../ftdebug.h"
+	"pfrcmap.h"
+	"pfrobjs.h"
+	"pfrerror.h"
+
+1432383127 /home/martynas/Desktop/smengine/smart-engine/dependencies/includes/freetype/pfr/pfrcmap.h
+	"../ft2build.h"
+	"../ftobjs.h"
+	"pfrtypes.h"
+
+1432383127 /home/martynas/Desktop/smengine/smart-engine/dependencies/includes/freetype/pfr/pfrobjs.c
+	"pfrobjs.h"
+	"pfrload.h"
+	"pfrgload.h"
+	"pfrcmap.h"
+	"pfrsbit.h"
+	"../ftdebug.h"
+	"pfrerror.h"
+
+1432383127 /home/martynas/Desktop/smengine/smart-engine/dependencies/includes/freetype/pfr/pfrdrivr.c
+	"../ft2build.h"
+	"../ftdebug.h"
+	"../ftstream.h"
+	"pfrdrivr.h"
+	"pfrobjs.h"
+	"pfrerror.h"
+
+1432383127 /home/martynas/Desktop/smengine/smart-engine/dependencies/includes/freetype/pfr/pfrdrivr.h
+	"../ft2build.h"
+	"../ftdriver.h"
+
+1432383127 /home/martynas/Desktop/smengine/smart-engine/dependencies/includes/freetype/pfr/pfrsbit.c
+	"pfrsbit.h"
+	"pfrload.h"
+	"../ftdebug.h"
+	"../ftstream.h"
+	"pfrerror.h"
+
+1432383127 source:/home/martynas/Desktop/smengine/smart-engine/dependencies/includes/freetype/psaux.c
+	"ft2build.h"
+	"psaux/psobjs.c"
+	"psaux/psauxmod.c"
+	"psaux/t1decode.c"
+	"psaux/t1cmap.c"
+	"psaux/afmparse.c"
+	"psaux/psconv.c"
+
+1432383127 /home/martynas/Desktop/smengine/smart-engine/dependencies/includes/freetype/psaux/psobjs.c
+	"../ft2build.h"
+	"../psaux.h"
+	"../ftdebug.h"
+	"../ftcalc.h"
+	"psobjs.h"
+	"psconv.h"
+	"psauxerr.h"
+
+1432383127 /home/martynas/Desktop/smengine/smart-engine/dependencies/includes/freetype/psaux.h
+	"ft2build.h"
+	"ftobjs.h"
+	"t1types.h"
+	"svpscmap.h"
+
+1432383127 /home/martynas/Desktop/smengine/smart-engine/dependencies/includes/freetype/psaux/psobjs.h
+	"../ft2build.h"
+	"../psaux.h"
+
+1432383127 /home/martynas/Desktop/smengine/smart-engine/dependencies/includes/freetype/psaux/psconv.h
+	"../ft2build.h"
+	"../psaux.h"
+
+1432383127 /home/martynas/Desktop/smengine/smart-engine/dependencies/includes/freetype/psaux/psauxerr.h
+
+1432383127 /home/martynas/Desktop/smengine/smart-engine/dependencies/includes/freetype/psaux/psauxmod.c
+	"../ft2build.h"
+	"psauxmod.h"
+	"psobjs.h"
+	"t1decode.h"
+	"t1cmap.h"
+	"afmparse.h"
+
+1432383127 /home/martynas/Desktop/smengine/smart-engine/dependencies/includes/freetype/psaux/psauxmod.h
+	"../ft2build.h"
+
+1432383127 /home/martynas/Desktop/smengine/smart-engine/dependencies/includes/freetype/psaux/t1decode.h
+	"../ft2build.h"
+	"../psaux.h"
+	"../t1types.h"
+
+1432383127 /home/martynas/Desktop/smengine/smart-engine/dependencies/includes/freetype/psaux/t1cmap.h
+	"../ft2build.h"
+	"../ftobjs.h"
+	"../t1types.h"
+
+1432383127 /home/martynas/Desktop/smengine/smart-engine/dependencies/includes/freetype/psaux/afmparse.h
+	"../ft2build.h"
+	"../psaux.h"
+
+1432383127 /home/martynas/Desktop/smengine/smart-engine/dependencies/includes/freetype/psaux/t1decode.c
+	"../ft2build.h"
+	"../ftcalc.h"
+	"../ftdebug.h"
+	"../pshints.h"
+	"t1decode.h"
+	"psobjs.h"
+	"psauxerr.h"
+
+1432383127 /home/martynas/Desktop/smengine/smart-engine/dependencies/includes/freetype/psaux/t1cmap.c
+	"t1cmap.h"
+	"../ftdebug.h"
+	"psauxerr.h"
+
+1432383127 /home/martynas/Desktop/smengine/smart-engine/dependencies/includes/freetype/psaux/afmparse.c
+	"../ft2build.h"
+	"../ftdebug.h"
+	"../psaux.h"
+	"afmparse.h"
+	"psconv.h"
+	"psauxerr.h"
+
+1432383127 /home/martynas/Desktop/smengine/smart-engine/dependencies/includes/freetype/psaux/psconv.c
+	"../ft2build.h"
+	"../psaux.h"
+	"../ftdebug.h"
+	"psconv.h"
+	"psauxerr.h"
+
+1432383127 source:/home/martynas/Desktop/smengine/smart-engine/dependencies/includes/freetype/pshinter.c
+	"ft2build.h"
+	"pshinter/pshpic.c"
+	"pshinter/pshrec.c"
+	"pshinter/pshglob.c"
+	"pshinter/pshalgo.c"
+	"pshinter/pshmod.c"
+
+1432383127 /home/martynas/Desktop/smengine/smart-engine/dependencies/includes/freetype/pshinter/pshpic.c
+	"../ft2build.h"
+	"../ftobjs.h"
+	"pshpic.h"
+	"pshnterr.h"
+
+1432383127 /home/martynas/Desktop/smengine/smart-engine/dependencies/includes/freetype/pshinter/pshpic.h
+	"../ftpic.h"
+	"../pshintsl.h"
+
+1432383127 /home/martynas/Desktop/smengine/smart-engine/dependencies/includes/freetype/pshinter/pshnterr.h
+
+1432383127 /home/martynas/Desktop/smengine/smart-engine/dependencies/includes/freetype/pshinter/pshrec.c
+	"../ft2build.h"
+	"../ftobjs.h"
+	"../ftdebug.h"
+	"../ftcalc.h"
+	"pshrec.h"
+	"pshalgo.h"
+	"pshnterr.h"
+
+1432383127 /home/martynas/Desktop/smengine/smart-engine/dependencies/includes/freetype/pshinter/pshrec.h
+	"../ft2build.h"
+	"../pshints.h"
+	"pshglob.h"
+
+1432383127 /home/martynas/Desktop/smengine/smart-engine/dependencies/includes/freetype/pshinter/pshglob.h
+	"../pshints.h"
+
+1432383127 /home/martynas/Desktop/smengine/smart-engine/dependencies/includes/freetype/pshinter/pshalgo.h
+	"pshrec.h"
+	"pshglob.h"
+
+1432383127 /home/martynas/Desktop/smengine/smart-engine/dependencies/includes/freetype/pshinter/pshglob.c
+	"../ft2build.h"
+	"../ftobjs.h"
+	"pshglob.h"
+
+1432383127 /home/martynas/Desktop/smengine/smart-engine/dependencies/includes/freetype/pshinter/pshalgo.c
+	"../ft2build.h"
+	"../ftobjs.h"
+	"../ftdebug.h"
+	"../ftcalc.h"
+	"pshalgo.h"
+	"pshnterr.h"
+
+1432383127 /home/martynas/Desktop/smengine/smart-engine/dependencies/includes/freetype/pshinter/pshmod.c
+	"../ft2build.h"
+	"../ftobjs.h"
+	"pshrec.h"
+	"pshalgo.h"
+	"pshpic.h"
+
+1432383127 source:/home/martynas/Desktop/smengine/smart-engine/dependencies/includes/freetype/psmodule.c
+	"ft2build.h"
+	"ftdebug.h"
+	"ftobjs.h"
+	"svpscmap.h"
+	"psnames/psmodule.h"
+	"psnames/pstables.h"
+	"psnames/psnamerr.h"
+	"psnames/pspic.h"
+
+1432383127 /home/martynas/Desktop/smengine/smart-engine/dependencies/includes/freetype/psnames/psmodule.h
+	"../ft2build.h"
+
+1432383127 /home/martynas/Desktop/smengine/smart-engine/dependencies/includes/freetype/psnames/pstables.h
+
+1432383127 /home/martynas/Desktop/smengine/smart-engine/dependencies/includes/freetype/psnames/psnamerr.h
+
+1432383127 /home/martynas/Desktop/smengine/smart-engine/dependencies/includes/freetype/psnames/pspic.h
+	"../ftpic.h"
+
+1432383127 source:/home/martynas/Desktop/smengine/smart-engine/dependencies/includes/freetype/raster.c
+	"ft2build.h"
+	"raster/rastpic.c"
+	"raster/ftraster.c"
+	"raster/ftrend1.c"
+
+1432383127 /home/martynas/Desktop/smengine/smart-engine/dependencies/includes/freetype/raster/rastpic.c
+	"../ft2build.h"
+	"../ftobjs.h"
+	"rastpic.h"
+	"rasterrs.h"
+
+1432383127 /home/martynas/Desktop/smengine/smart-engine/dependencies/includes/freetype/raster/rastpic.h
+	"../ftpic.h"
+
+1432383127 /home/martynas/Desktop/smengine/smart-engine/dependencies/includes/freetype/raster/rasterrs.h
+
+1432383127 /home/martynas/Desktop/smengine/smart-engine/dependencies/includes/freetype/raster/ftraster.c
+	<string.h>
+	"ftmisc.h"
+	"ftimage.h"
+	"../ft2build.h"
+	"ftraster.h"
+	"../ftcalc.h"
+	"rastpic.h"
+	"../ftobjs.h"
+	"../ftdebug.h"
+	"rasterrs.h"
+
+1432383127 /home/martynas/Desktop/smengine/smart-engine/dependencies/includes/freetype/raster/ftmisc.h
+	"inttypes.h"
+
+1432383127 /home/martynas/Desktop/smengine/smart-engine/dependencies/includes/freetype/raster/ftraster.h
+	"../ft2build.h"
+
+1432383127 /home/martynas/Desktop/smengine/smart-engine/dependencies/includes/freetype/raster/ftrend1.c
+	"../ft2build.h"
+	"../ftdebug.h"
+	"../ftobjs.h"
+	"ftrend1.h"
+	"ftraster.h"
+	"rastpic.h"
+	"rasterrs.h"
+
+1432383127 /home/martynas/Desktop/smengine/smart-engine/dependencies/includes/freetype/raster/ftrend1.h
+	"../ft2build.h"
+
+1432383127 source:/home/martynas/Desktop/smengine/smart-engine/dependencies/includes/freetype/sfnt.c
+	"ft2build.h"
+	"sfnt/sfntpic.c"
+	"sfnt/ttload.c"
+	"sfnt/ttmtx.c"
+	"sfnt/ttcmap.c"
+	"sfnt/ttkern.c"
+	"sfnt/sfobjs.c"
+	"sfnt/sfdriver.c"
+	"sfnt/pngshim.c"
+	"sfnt/ttsbit.c"
+	"sfnt/ttpost.c"
+	"sfnt/ttbdf.c"
+
+1432383127 /home/martynas/Desktop/smengine/smart-engine/dependencies/includes/freetype/sfnt/sfntpic.c
+	"../ft2build.h"
+	"../ftobjs.h"
+	"sfntpic.h"
+	"sferrors.h"
+
+1432383127 /home/martynas/Desktop/smengine/smart-engine/dependencies/includes/freetype/sfnt/sfntpic.h
+	"../ftpic.h"
+	"ttbdf.h"
+	"../ftdebug.h"
+	"../ftstream.h"
+	"../sfnt.h"
+	"ttcmap.h"
+
+1432383127 /home/martynas/Desktop/smengine/smart-engine/dependencies/includes/freetype/sfnt/ttbdf.h
+	"../ft2build.h"
+	"ttload.h"
+
+1432383127 /home/martynas/Desktop/smengine/smart-engine/dependencies/includes/freetype/sfnt/ttload.h
+	"../ft2build.h"
+	"../ftstream.h"
+	"../tttypes.h"
+
+1432383127 /home/martynas/Desktop/smengine/smart-engine/dependencies/includes/freetype/sfnt/ttcmap.h
+	"../ft2build.h"
+	"../tttypes.h"
+	"../ftvalid.h"
+
+1432383127 /home/martynas/Desktop/smengine/smart-engine/dependencies/includes/freetype/sfnt/sferrors.h
+
+1432383127 /home/martynas/Desktop/smengine/smart-engine/dependencies/includes/freetype/sfnt/ttload.c
+	"../ft2build.h"
+	"../ftdebug.h"
+	"../ftstream.h"
+	"ttload.h"
+	"sferrors.h"
+
+1432383127 /home/martynas/Desktop/smengine/smart-engine/dependencies/includes/freetype/sfnt/ttmtx.c
+	"../ft2build.h"
+	"../ftdebug.h"
+	"../ftstream.h"
+	"ttmtx.h"
+	"sferrors.h"
+
+1432383127 /home/martynas/Desktop/smengine/smart-engine/dependencies/includes/freetype/sfnt/ttmtx.h
+	"../ft2build.h"
+	"../ftstream.h"
+	"../tttypes.h"
+
+1432383127 /home/martynas/Desktop/smengine/smart-engine/dependencies/includes/freetype/sfnt/ttcmap.c
+	"../ft2build.h"
+	"../ftdebug.h"
+	"sferrors.h"
+	"../ftvalid.h"
+	"../ftstream.h"
+	"ttload.h"
+	"ttcmap.h"
+	"sfntpic.h"
+	"ttcmapc.h"
+	"ttcmapc.h"
+	"ttcmapc.h"
+
+1432383127 /home/martynas/Desktop/smengine/smart-engine/dependencies/includes/freetype/sfnt/ttcmapc.h
+
+1432383127 /home/martynas/Desktop/smengine/smart-engine/dependencies/includes/freetype/sfnt/ttkern.c
+	"../ft2build.h"
+	"../ftdebug.h"
+	"../ftstream.h"
+	"ttkern.h"
+	"sferrors.h"
+
+1432383127 /home/martynas/Desktop/smengine/smart-engine/dependencies/includes/freetype/sfnt/ttkern.h
+	"../ft2build.h"
+	"../ftstream.h"
+	"../tttypes.h"
+
+1432383127 /home/martynas/Desktop/smengine/smart-engine/dependencies/includes/freetype/sfnt/sfobjs.c
+	"../ft2build.h"
+	"sfobjs.h"
+	"ttload.h"
+	"ttcmap.h"
+	"ttkern.h"
+	"../sfnt.h"
+	"../ftdebug.h"
+	"sferrors.h"
+	"ttbdf.h"
+
+1432383127 /home/martynas/Desktop/smengine/smart-engine/dependencies/includes/freetype/sfnt/sfobjs.h
+	"../ft2build.h"
+	"../sfnt.h"
+	"../ftobjs.h"
+
+1432383127 /home/martynas/Desktop/smengine/smart-engine/dependencies/includes/freetype/sfnt/sfdriver.c
+	"../ft2build.h"
+	"../ftdebug.h"
+	"../sfnt.h"
+	"../ftobjs.h"
+	"sfdriver.h"
+	"ttload.h"
+	"sfobjs.h"
+	"sfntpic.h"
+	"sferrors.h"
+	"ttsbit.h"
+	"ttpost.h"
+	"ttbdf.h"
+	"ttcmap.h"
+	"ttkern.h"
+	"ttmtx.h"
+
+1432383127 /home/martynas/Desktop/smengine/smart-engine/dependencies/includes/freetype/sfnt/sfdriver.h
+	"../ft2build.h"
+
+1432383127 /home/martynas/Desktop/smengine/smart-engine/dependencies/includes/freetype/sfnt/ttsbit.h
+	"../ft2build.h"
+	"ttload.h"
+
+1432383127 /home/martynas/Desktop/smengine/smart-engine/dependencies/includes/freetype/sfnt/ttpost.h
+	"../ft2build.h"
+	"../tttypes.h"
+
+1432383127 /home/martynas/Desktop/smengine/smart-engine/dependencies/includes/freetype/sfnt/pngshim.c
+	"../ft2build.h"
+	"../ftdebug.h"
+	"../ftstream.h"
+	<png.h>
+	"pngshim.h"
+	"sferrors.h"
+
+1432383127 /home/martynas/Desktop/smengine/smart-engine/dependencies/includes/freetype/sfnt/pngshim.h
+	"../ft2build.h"
+	"ttload.h"
+
+1432383127 /home/martynas/Desktop/smengine/smart-engine/dependencies/includes/freetype/sfnt/ttsbit.c
+	"../ft2build.h"
+	"../ftdebug.h"
+	"../ftstream.h"
+	"ttsbit.h"
+	"sferrors.h"
+	"pngshim.h"
+
+1432383127 /home/martynas/Desktop/smengine/smart-engine/dependencies/includes/freetype/sfnt/ttpost.c
+	"../ft2build.h"
+	"../ftdebug.h"
+	"../ftstream.h"
+	"ttpost.h"
+	"sferrors.h"
+
+1432383127 /home/martynas/Desktop/smengine/smart-engine/dependencies/includes/freetype/sfnt/ttbdf.c
+	"../ft2build.h"
+	"../ftdebug.h"
+	"../ftstream.h"
+	"ttbdf.h"
+	"sferrors.h"
+
+1432383127 source:/home/martynas/Desktop/smengine/smart-engine/dependencies/includes/freetype/smooth.c
+	"ft2build.h"
+	"smooth/ftspic.c"
+	"smooth/ftgrays.c"
+	"smooth/ftsmooth.c"
+
+1432383127 /home/martynas/Desktop/smengine/smart-engine/dependencies/includes/freetype/smooth/ftspic.c
+	"../ft2build.h"
+	"../ftobjs.h"
+	"ftspic.h"
+	"ftsmerrs.h"
+
+1432383127 /home/martynas/Desktop/smengine/smart-engine/dependencies/includes/freetype/smooth/ftspic.h
+	"../ftpic.h"
+
+1432383127 /home/martynas/Desktop/smengine/smart-engine/dependencies/includes/freetype/smooth/ftsmerrs.h
+
+1432383127 /home/martynas/Desktop/smengine/smart-engine/dependencies/includes/freetype/smooth/ftgrays.c
+	<stdio.h>
+	<stdarg.h>
+	<stddef.h>
+	<string.h>
+	<setjmp.h>
+	<limits.h>
+	"ftimage.h"
+	"ftgrays.h"
+	"../ft2build.h"
+	"ftgrays.h"
+	"../ftobjs.h"
+	"../ftdebug.h"
+	"ftsmerrs.h"
+	"ftspic.h"
+
+1432383127 /home/martynas/Desktop/smengine/smart-engine/dependencies/includes/freetype/smooth/ftgrays.h
+	"ftimage.h"
+	"../ft2build.h"
+
+1432383127 /home/martynas/Desktop/smengine/smart-engine/dependencies/includes/freetype/smooth/ftsmooth.c
+	"../ft2build.h"
+	"../ftdebug.h"
+	"../ftobjs.h"
+	"ftsmooth.h"
+	"ftgrays.h"
+	"ftspic.h"
+	"ftsmerrs.h"
+
+1432383127 /home/martynas/Desktop/smengine/smart-engine/dependencies/includes/freetype/smooth/ftsmooth.h
+	"../ft2build.h"
+
+1432383127 source:/home/martynas/Desktop/smengine/smart-engine/dependencies/includes/freetype/truetype.c
+	"ft2build.h"
+	"truetype/ttpic.c"
+	"truetype/ttdriver.c"
+	"truetype/ttpload.c"
+	"truetype/ttgload.c"
+	"truetype/ttobjs.c"
+	"truetype/ttinterp.c"
+	"truetype/ttsubpix.c"
+	"truetype/ttgxvar.c"
+
+1432383127 /home/martynas/Desktop/smengine/smart-engine/dependencies/includes/freetype/truetype/ttpic.c
+	"../ft2build.h"
+	"../ftobjs.h"
+	"ttpic.h"
+	"tterrors.h"
+
+1432383127 /home/martynas/Desktop/smengine/smart-engine/dependencies/includes/freetype/truetype/ttpic.h
+
+1432383127 /home/martynas/Desktop/smengine/smart-engine/dependencies/includes/freetype/truetype/tterrors.h
+
+1432383127 /home/martynas/Desktop/smengine/smart-engine/dependencies/includes/freetype/truetype/ttdriver.c
+	"../ft2build.h"
+	"../ftdebug.h"
+	"../ftstream.h"
+	"../sfnt.h"
+	"ttdriver.h"
+	"ttgload.h"
+	"ttpload.h"
+	"ttgxvar.h"
+	"tterrors.h"
+	"ttpic.h"
+
+1432383127 /home/martynas/Desktop/smengine/smart-engine/dependencies/includes/freetype/truetype/ttdriver.h
+	"../ft2build.h"
+	"../ftdriver.h"
+
+1432383127 /home/martynas/Desktop/smengine/smart-engine/dependencies/includes/freetype/truetype/ttgload.h
+	"../ft2build.h"
+	"ttobjs.h"
+	"ttinterp.h"
+
+1432383127 /home/martynas/Desktop/smengine/smart-engine/dependencies/includes/freetype/truetype/ttobjs.h
+	"../ft2build.h"
+	"../ftobjs.h"
+	"../tttypes.h"
+
+1432383127 /home/martynas/Desktop/smengine/smart-engine/dependencies/includes/freetype/truetype/ttinterp.h
+	"../ft2build.h"
+	"ttobjs.h"
+
+1432383127 /home/martynas/Desktop/smengine/smart-engine/dependencies/includes/freetype/truetype/ttpload.h
+	"../ft2build.h"
+	"../tttypes.h"
+
+1432383127 /home/martynas/Desktop/smengine/smart-engine/dependencies/includes/freetype/truetype/ttgxvar.h
+	"../ft2build.h"
+	"ttobjs.h"
+
+1432383127 /home/martynas/Desktop/smengine/smart-engine/dependencies/includes/freetype/truetype/ttpload.c
+	"../ft2build.h"
+	"../ftdebug.h"
+	"../ftobjs.h"
+	"../ftstream.h"
+	"ttpload.h"
+	"ttgxvar.h"
+	"tterrors.h"
+
+1432383127 /home/martynas/Desktop/smengine/smart-engine/dependencies/includes/freetype/truetype/ttgload.c
+	"../ft2build.h"
+	"../ftdebug.h"
+	"../ftcalc.h"
+	"../ftstream.h"
+	"../sfnt.h"
+	"ttgload.h"
+	"ttpload.h"
+	"ttgxvar.h"
+	"tterrors.h"
+	"ttsubpix.h"
+
+1432383127 /home/martynas/Desktop/smengine/smart-engine/dependencies/includes/freetype/truetype/ttsubpix.h
+	"../ft2build.h"
+	"ttobjs.h"
+	"ttinterp.h"
+
+1432383127 /home/martynas/Desktop/smengine/smart-engine/dependencies/includes/freetype/truetype/ttobjs.c
+	"../ft2build.h"
+	"../ftdebug.h"
+	"../ftstream.h"
+	"../sfnt.h"
+	"ttgload.h"
+	"ttpload.h"
+	"tterrors.h"
+	"ttinterp.h"
+	"ttgxvar.h"
+
+1432383127 /home/martynas/Desktop/smengine/smart-engine/dependencies/includes/freetype/truetype/ttinterp.c
+	"../ft2build.h"
+	"../ftdebug.h"
+	"../ftcalc.h"
+	"ttinterp.h"
+	"tterrors.h"
+	"ttsubpix.h"
+
+1432383127 /home/martynas/Desktop/smengine/smart-engine/dependencies/includes/freetype/truetype/ttsubpix.c
+	"../ft2build.h"
+	"../ftdebug.h"
+	"../ftcalc.h"
+	"../ftstream.h"
+	"../sfnt.h"
+	"ttsubpix.h"
+
+1432383127 /home/martynas/Desktop/smengine/smart-engine/dependencies/includes/freetype/truetype/ttgxvar.c
+	"../ft2build.h"
+	"../ftdebug.h"
+	"../ftstream.h"
+	"../sfnt.h"
+	"ttpload.h"
+	"ttgxvar.h"
+	"tterrors.h"
+
+1432383127 source:/home/martynas/Desktop/smengine/smart-engine/dependencies/includes/freetype/type1.c
+	"ft2build.h"
+	"type1/t1parse.c"
+	"type1/t1load.c"
+	"type1/t1objs.c"
+	"type1/t1driver.c"
+	"type1/t1gload.c"
+	"type1/t1afm.c"
+
+1432383127 /home/martynas/Desktop/smengine/smart-engine/dependencies/includes/freetype/type1/t1parse.c
+	"../ft2build.h"
+	"../ftdebug.h"
+	"../ftstream.h"
+	"../psaux.h"
+	"t1parse.h"
+	"t1errors.h"
+
+1432383127 /home/martynas/Desktop/smengine/smart-engine/dependencies/includes/freetype/type1/t1parse.h
+	"../ft2build.h"
+	"../t1types.h"
+	"../ftstream.h"
+
+1432383127 /home/martynas/Desktop/smengine/smart-engine/dependencies/includes/freetype/type1/t1errors.h
+
+1432383127 /home/martynas/Desktop/smengine/smart-engine/dependencies/includes/freetype/type1/t1load.c
+	"../ft2build.h"
+	"../ftdebug.h"
+	"../t1types.h"
+	"../ftcalc.h"
+	"t1load.h"
+	"t1errors.h"
+	"t1tokens.h"
+
+1432383127 /home/martynas/Desktop/smengine/smart-engine/dependencies/includes/freetype/type1/t1load.h
+	"../ft2build.h"
+	"../ftstream.h"
+	"../psaux.h"
+	"t1parse.h"
+
+1432383127 /home/martynas/Desktop/smengine/smart-engine/dependencies/includes/freetype/type1/t1tokens.h
+
+1432383127 /home/martynas/Desktop/smengine/smart-engine/dependencies/includes/freetype/type1/t1objs.c
+	"../ft2build.h"
+	"../ftcalc.h"
+	"../ftdebug.h"
+	"../ftstream.h"
+	"t1gload.h"
+	"t1load.h"
+	"t1errors.h"
+	"t1afm.h"
+	"../psaux.h"
+
+1432383127 /home/martynas/Desktop/smengine/smart-engine/dependencies/includes/freetype/type1/t1gload.h
+	"../ft2build.h"
+	"t1objs.h"
+
+1432383127 /home/martynas/Desktop/smengine/smart-engine/dependencies/includes/freetype/type1/t1objs.h
+	"../ft2build.h"
+	"../ftobjs.h"
+	"../t1types.h"
+
+1432383127 /home/martynas/Desktop/smengine/smart-engine/dependencies/includes/freetype/type1/t1afm.h
+	"../ft2build.h"
+	"t1objs.h"
+	"../t1types.h"
+
+1432383127 /home/martynas/Desktop/smengine/smart-engine/dependencies/includes/freetype/type1/t1driver.c
+	"../ft2build.h"
+	"t1driver.h"
+	"t1gload.h"
+	"t1load.h"
+	"t1errors.h"
+	"t1afm.h"
+	"../ftdebug.h"
+	"../ftstream.h"
+
+1432383127 /home/martynas/Desktop/smengine/smart-engine/dependencies/includes/freetype/type1/t1driver.h
+	"../ft2build.h"
+	"../ftdriver.h"
+
+1432383127 /home/martynas/Desktop/smengine/smart-engine/dependencies/includes/freetype/type1/t1gload.c
+	"../ft2build.h"
+	"t1gload.h"
+	"../ftcalc.h"
+	"../ftdebug.h"
+	"../ftstream.h"
+	"../psaux.h"
+	"t1errors.h"
+
+1432383127 /home/martynas/Desktop/smengine/smart-engine/dependencies/includes/freetype/type1/t1afm.c
+	"../ft2build.h"
+	"t1afm.h"
+	"../ftdebug.h"
+	"../ftstream.h"
+	"../psaux.h"
+	"t1errors.h"
+
+1432383127 source:/home/martynas/Desktop/smengine/smart-engine/dependencies/includes/freetype/type1cid.c
+	"ft2build.h"
+	"cid/cidparse.c"
+	"cid/cidload.c"
+	"cid/cidobjs.c"
+	"cid/cidriver.c"
+	"cid/cidgload.c"
+
+1432383127 /home/martynas/Desktop/smengine/smart-engine/dependencies/includes/freetype/cid/cidparse.c
+	"../ft2build.h"
+	"../ftdebug.h"
+	"../ftobjs.h"
+	"../ftstream.h"
+	"cidparse.h"
+	"ciderrs.h"
+
+1432383127 /home/martynas/Desktop/smengine/smart-engine/dependencies/includes/freetype/cid/cidparse.h
+	"../ft2build.h"
+	"../t1types.h"
+	"../ftstream.h"
+	"../psaux.h"
+
+1432383127 /home/martynas/Desktop/smengine/smart-engine/dependencies/includes/freetype/cid/ciderrs.h
+
+1432383127 /home/martynas/Desktop/smengine/smart-engine/dependencies/includes/freetype/cid/cidload.c
+	"../ft2build.h"
+	"../ftdebug.h"
+	"../t1types.h"
+	"cidload.h"
+	"ciderrs.h"
+	"cidtoken.h"
+
+1432383127 /home/martynas/Desktop/smengine/smart-engine/dependencies/includes/freetype/cid/cidload.h
+	"../ft2build.h"
+	"../ftstream.h"
+	"cidparse.h"
+
+1432383127 /home/martynas/Desktop/smengine/smart-engine/dependencies/includes/freetype/cid/cidtoken.h
+
+1432383127 /home/martynas/Desktop/smengine/smart-engine/dependencies/includes/freetype/cid/cidobjs.c
+	"../ft2build.h"
+	"../ftdebug.h"
+	"../ftstream.h"
+	"cidgload.h"
+	"cidload.h"
+	"../psaux.h"
+	"../pshints.h"
+	"ciderrs.h"
+
+1432383127 /home/martynas/Desktop/smengine/smart-engine/dependencies/includes/freetype/cid/cidgload.h
+	"../ft2build.h"
+	"cidobjs.h"
+
+1432383127 /home/martynas/Desktop/smengine/smart-engine/dependencies/includes/freetype/cid/cidobjs.h
+	"../ft2build.h"
+	"../ftobjs.h"
+	"../t1types.h"
+
+1432383127 /home/martynas/Desktop/smengine/smart-engine/dependencies/includes/freetype/cid/cidriver.c
+	"../ft2build.h"
+	"cidriver.h"
+	"cidgload.h"
+	"../ftdebug.h"
+	"ciderrs.h"
+
+1432383127 /home/martynas/Desktop/smengine/smart-engine/dependencies/includes/freetype/cid/cidriver.h
+	"../ft2build.h"
+	"../ftdriver.h"
+
+1432383127 /home/martynas/Desktop/smengine/smart-engine/dependencies/includes/freetype/cid/cidgload.c
+	"../ft2build.h"
+	"cidload.h"
+	"cidgload.h"
+	"../ftdebug.h"
+	"../ftstream.h"
+	"../ftcalc.h"
+	"ciderrs.h"
+
+1432383127 source:/home/martynas/Desktop/smengine/smart-engine/dependencies/includes/freetype/type42.c
+	"ft2build.h"
+	"type42/t42objs.c"
+	"type42/t42parse.c"
+	"type42/t42drivr.c"
+
+1432383127 /home/martynas/Desktop/smengine/smart-engine/dependencies/includes/freetype/type42/t42objs.c
+	"t42objs.h"
+	"t42parse.h"
+	"t42error.h"
+	"../ftdebug.h"
+
+1432383127 /home/martynas/Desktop/smengine/smart-engine/dependencies/includes/freetype/type42/t42objs.h
+	"../ft2build.h"
+	"../t1types.h"
+	"t42types.h"
+	"../ftobjs.h"
+	"../ftdriver.h"
+	"../pshints.h"
+
+1432383127 /home/martynas/Desktop/smengine/smart-engine/dependencies/includes/freetype/type42/t42types.h
+	"../ft2build.h"
+	"../t1types.h"
+	"../pshints.h"
+
+1432383127 /home/martynas/Desktop/smengine/smart-engine/dependencies/includes/freetype/type42/t42parse.h
+	"t42objs.h"
+	"../psaux.h"
+
+1432383127 /home/martynas/Desktop/smengine/smart-engine/dependencies/includes/freetype/type42/t42error.h
+
+1432383127 /home/martynas/Desktop/smengine/smart-engine/dependencies/includes/freetype/type42/t42parse.c
+	"t42parse.h"
+	"t42error.h"
+	"../ftdebug.h"
+	"../ftstream.h"
+	"../psaux.h"
+
+1432383127 /home/martynas/Desktop/smengine/smart-engine/dependencies/includes/freetype/type42/t42drivr.c
+	"t42drivr.h"
+	"t42objs.h"
+	"t42error.h"
+	"../ftdebug.h"
+
+1432383127 /home/martynas/Desktop/smengine/smart-engine/dependencies/includes/freetype/type42/t42drivr.h
+	"../ft2build.h"
+	"../ftdriver.h"
+
+1432383127 source:/home/martynas/Desktop/smengine/smart-engine/dependencies/includes/freetype/winfnt.c
+	"ft2build.h"
+	"ftwinfnt.h"
+	"ftdebug.h"
+	"ftstream.h"
+	"ftobjs.h"
+	"ttnameid.h"
+	"winfonts/winfnt.h"
+	"winfonts/fnterrs.h"
+	"svwinfnt.h"
+	"svxf86nm.h"
+
+1432383127 /home/martynas/Desktop/smengine/smart-engine/dependencies/includes/freetype/winfonts/winfnt.h
+	"../ft2build.h"
+	"../ftdriver.h"
+
+1432383127 /home/martynas/Desktop/smengine/smart-engine/dependencies/includes/freetype/winfonts/fnterrs.h
+
+1432383127 source:/home/martynas/Desktop/smengine/smart-engine/dependencies/includes/libpng/png.c
+	"png.h"
+	"pngpriv.h"
+
+1432383127 /home/martynas/Desktop/smengine/smart-engine/dependencies/includes/libpng/png.h
+	"../zlib/zlib.h"
+	"pngconf.h"
+
+1432383127 /home/martynas/Desktop/smengine/smart-engine/dependencies/includes/zlib/zlib.h
+	"zconf.h"
+
+1432383127 /home/martynas/Desktop/smengine/smart-engine/dependencies/includes/zlib/zconf.h
+	<windows.h>
+	<limits.h>
+	<sys/types.h>
+	<stdarg.h>
+	<stddef.h>
+	<unistd.h>
+	<unixio.h>
+
+1432383127 /home/martynas/Desktop/smengine/smart-engine/dependencies/includes/libpng/pngconf.h
+	<limits.h>
+	"config.h"
+	"pngusr.h"
+	<stdio.h>
+	<stdio.h>
+	<sys/types.h>
+	<setjmp.h>
+	<strings.h>
+	<string.h>
+	<time.h>
+	<dos.h>
+
+1432383127 /home/martynas/Desktop/smengine/smart-engine/dependencies/includes/libpng/config.h
+
+1432383127 /home/martynas/Desktop/smengine/smart-engine/dependencies/includes/libpng/pngpriv.h
+	<stdlib.h>
+	<fp.h>
+	<math.h>
+	<m68881.h>
+	<mem.h>
+	<alloc.h>
+	<windows.h>
+	<malloc.h>
+	<crtdbg.h>
+
+1432383127 source:/home/martynas/Desktop/smengine/smart-engine/dependencies/includes/libpng/pngerror.c
+	"png.h"
+	"pngpriv.h"
+
+1432383127 source:/home/martynas/Desktop/smengine/smart-engine/dependencies/includes/libpng/pngget.c
+	"png.h"
+	"pngpriv.h"
+
+1432383127 source:/home/martynas/Desktop/smengine/smart-engine/dependencies/includes/libpng/pngmem.c
+	"png.h"
+	"pngpriv.h"
+
+1432383127 source:/home/martynas/Desktop/smengine/smart-engine/dependencies/includes/libpng/pngpread.c
+	"png.h"
+	"pngpriv.h"
+
+1432383127 source:/home/martynas/Desktop/smengine/smart-engine/dependencies/includes/libpng/pngread.c
+	"png.h"
+	"pngpriv.h"
+
+1432383127 source:/home/martynas/Desktop/smengine/smart-engine/dependencies/includes/libpng/pngrio.c
+	"png.h"
+	"pngpriv.h"
+
+1432383127 source:/home/martynas/Desktop/smengine/smart-engine/dependencies/includes/libpng/pngrtran.c
+	"png.h"
+	"pngpriv.h"
+
+1432383127 source:/home/martynas/Desktop/smengine/smart-engine/dependencies/includes/libpng/pngrutil.c
+	"png.h"
+	"pngpriv.h"
+
+1432383127 source:/home/martynas/Desktop/smengine/smart-engine/dependencies/includes/libpng/pngset.c
+	"png.h"
+	"pngpriv.h"
+
+1432383127 source:/home/martynas/Desktop/smengine/smart-engine/dependencies/includes/libpng/pngtrans.c
+	"png.h"
+	"pngpriv.h"
+
+1432383127 source:/home/martynas/Desktop/smengine/smart-engine/dependencies/includes/libpng/pngwio.c
+	"png.h"
+	"pngpriv.h"
+
+1432383127 source:/home/martynas/Desktop/smengine/smart-engine/dependencies/includes/libpng/pngwrite.c
+	"png.h"
+	"pngpriv.h"
+
+1432383127 source:/home/martynas/Desktop/smengine/smart-engine/dependencies/includes/libpng/pngwtran.c
+	"png.h"
+	"pngpriv.h"
+
+1432383127 source:/home/martynas/Desktop/smengine/smart-engine/dependencies/includes/libpng/pngwutil.c
+	"png.h"
+	"pngpriv.h"
+
+1432383127 source:/home/martynas/Desktop/smengine/smart-engine/dependencies/includes/lua/lapi.c
+	<stdarg.h>
+	<string.h>
+	"lua.h"
+	"lapi.h"
+	"ldebug.h"
+	"ldo.h"
+	"lfunc.h"
+	"lgc.h"
+	"lmem.h"
+	"lobject.h"
+	"lstate.h"
+	"lstring.h"
+	"ltable.h"
+	"ltm.h"
+	"lundump.h"
+	"lvm.h"
+
+1432383127 /home/martynas/Desktop/smengine/smart-engine/dependencies/includes/lua/lua.h
+	<stdarg.h>
+	<stddef.h>
+	"luaconf.h"
+
+1432383127 /home/martynas/Desktop/smengine/smart-engine/dependencies/includes/lua/luaconf.h
+	<limits.h>
+	<stddef.h>
+	<stdio.h>
+	<math.h>
+
+1432383127 /home/martynas/Desktop/smengine/smart-engine/dependencies/includes/lua/lapi.h
+	"llimits.h"
+	"lstate.h"
+
+1432383127 /home/martynas/Desktop/smengine/smart-engine/dependencies/includes/lua/llimits.h
+	<limits.h>
+	<stddef.h>
+	"lua.h"
+	<assert.h>
+	<math.h>
+	<float.h>
+	<math.h>
+
+1432383127 /home/martynas/Desktop/smengine/smart-engine/dependencies/includes/lua/lstate.h
+	"lua.h"
+	"lobject.h"
+	"ltm.h"
+	"lzio.h"
+
+1432383127 /home/martynas/Desktop/smengine/smart-engine/dependencies/includes/lua/lobject.h
+	<stdarg.h>
+	"llimits.h"
+	"lua.h"
+
+1432383127 /home/martynas/Desktop/smengine/smart-engine/dependencies/includes/lua/ltm.h
+	"lobject.h"
+
+1432383127 /home/martynas/Desktop/smengine/smart-engine/dependencies/includes/lua/lzio.h
+	"lua.h"
+	"lmem.h"
+
+1432383127 /home/martynas/Desktop/smengine/smart-engine/dependencies/includes/lua/lmem.h
+	<stddef.h>
+	"llimits.h"
+	"lua.h"
+
+1432383127 /home/martynas/Desktop/smengine/smart-engine/dependencies/includes/lua/ldebug.h
+	"lstate.h"
+
+1432383127 /home/martynas/Desktop/smengine/smart-engine/dependencies/includes/lua/ldo.h
+	"lobject.h"
+	"lstate.h"
+	"lzio.h"
+
+1432383127 /home/martynas/Desktop/smengine/smart-engine/dependencies/includes/lua/lfunc.h
+	"lobject.h"
+
+1432383127 /home/martynas/Desktop/smengine/smart-engine/dependencies/includes/lua/lgc.h
+	"lobject.h"
+	"lstate.h"
+
+1432383127 /home/martynas/Desktop/smengine/smart-engine/dependencies/includes/lua/lstring.h
+	"lgc.h"
+	"lobject.h"
+	"lstate.h"
+
+1432383127 /home/martynas/Desktop/smengine/smart-engine/dependencies/includes/lua/ltable.h
+	"lobject.h"
+
+1432383127 /home/martynas/Desktop/smengine/smart-engine/dependencies/includes/lua/lundump.h
+	"lobject.h"
+	"lzio.h"
+
+1432383127 /home/martynas/Desktop/smengine/smart-engine/dependencies/includes/lua/lvm.h
+	"ldo.h"
+	"lobject.h"
+	"ltm.h"
+
+1432383127 source:/home/martynas/Desktop/smengine/smart-engine/dependencies/includes/lua/lauxlib.c
+	<errno.h>
+	<stdarg.h>
+	<stdio.h>
+	<stdlib.h>
+	<string.h>
+	"lua.h"
+	"lauxlib.h"
+	<sys/wait.h>
+
+1432383127 /home/martynas/Desktop/smengine/smart-engine/dependencies/includes/lua/lauxlib.h
+	<stddef.h>
+	<stdio.h>
+	"lua.h"
+
+1432383127 source:/home/martynas/Desktop/smengine/smart-engine/dependencies/includes/lua/lbaselib.c
+	<ctype.h>
+	<stdio.h>
+	<stdlib.h>
+	<string.h>
+	"lua.h"
+	"lauxlib.h"
+	"lualib.h"
+
+1432383127 /home/martynas/Desktop/smengine/smart-engine/dependencies/includes/lua/lualib.h
+	"lua.h"
+
+1432383127 source:/home/martynas/Desktop/smengine/smart-engine/dependencies/includes/lua/lbitlib.c
+	"lua.h"
+	"lauxlib.h"
+	"lualib.h"
+
+1432383127 source:/home/martynas/Desktop/smengine/smart-engine/dependencies/includes/lua/lcode.c
+	<stdlib.h>
+	"lua.h"
+	"lcode.h"
+	"ldebug.h"
+	"ldo.h"
+	"lgc.h"
+	"llex.h"
+	"lmem.h"
+	"lobject.h"
+	"lopcodes.h"
+	"lparser.h"
+	"lstring.h"
+	"ltable.h"
+	"lvm.h"
+
+1432383127 /home/martynas/Desktop/smengine/smart-engine/dependencies/includes/lua/lcode.h
+	"llex.h"
+	"lobject.h"
+	"lopcodes.h"
+	"lparser.h"
+
+1432383127 /home/martynas/Desktop/smengine/smart-engine/dependencies/includes/lua/llex.h
+	"lobject.h"
+	"lzio.h"
+
+1432383127 /home/martynas/Desktop/smengine/smart-engine/dependencies/includes/lua/lopcodes.h
+	"llimits.h"
+
+1432383127 /home/martynas/Desktop/smengine/smart-engine/dependencies/includes/lua/lparser.h
+	"llimits.h"
+	"lobject.h"
+	"lzio.h"
+
+1432383127 source:/home/martynas/Desktop/smengine/smart-engine/dependencies/includes/lua/lcorolib.c
+	<stdlib.h>
+	"lua.h"
+	"lauxlib.h"
+	"lualib.h"
+
+1432383127 source:/home/martynas/Desktop/smengine/smart-engine/dependencies/includes/lua/lctype.c
+	"lctype.h"
+	<limits.h>
+
+1432383127 /home/martynas/Desktop/smengine/smart-engine/dependencies/includes/lua/lctype.h
+	"lua.h"
+	<limits.h>
+	"llimits.h"
+	<ctype.h>
+
+1432383127 source:/home/martynas/Desktop/smengine/smart-engine/dependencies/includes/lua/ldblib.c
+	<stdio.h>
+	<stdlib.h>
+	<string.h>
+	"lua.h"
+	"lauxlib.h"
+	"lualib.h"
+
+1432383127 source:/home/martynas/Desktop/smengine/smart-engine/dependencies/includes/lua/ldebug.c
+	<stdarg.h>
+	<stddef.h>
+	<string.h>
+	"lua.h"
+	"lapi.h"
+	"lcode.h"
+	"ldebug.h"
+	"ldo.h"
+	"lfunc.h"
+	"lobject.h"
+	"lopcodes.h"
+	"lstate.h"
+	"lstring.h"
+	"ltable.h"
+	"ltm.h"
+	"lvm.h"
+
+1432383127 source:/home/martynas/Desktop/smengine/smart-engine/dependencies/includes/lua/ldo.c
+	<setjmp.h>
+	<stdlib.h>
+	<string.h>
+	"lua.h"
+	"lapi.h"
+	"ldebug.h"
+	"ldo.h"
+	"lfunc.h"
+	"lgc.h"
+	"lmem.h"
+	"lobject.h"
+	"lopcodes.h"
+	"lparser.h"
+	"lstate.h"
+	"lstring.h"
+	"ltable.h"
+	"ltm.h"
+	"lundump.h"
+	"lvm.h"
+	"lzio.h"
+
+1432383127 source:/home/martynas/Desktop/smengine/smart-engine/dependencies/includes/lua/ldump.c
+	<stddef.h>
+	"lua.h"
+	"lobject.h"
+	"lstate.h"
+	"lundump.h"
+
+1432383127 source:/home/martynas/Desktop/smengine/smart-engine/dependencies/includes/lua/lfunc.c
+	<stddef.h>
+	"lua.h"
+	"lfunc.h"
+	"lgc.h"
+	"lmem.h"
+	"lobject.h"
+	"lstate.h"
+
+1432383127 source:/home/martynas/Desktop/smengine/smart-engine/dependencies/includes/lua/lgc.c
+	<string.h>
+	"lua.h"
+	"ldebug.h"
+	"ldo.h"
+	"lfunc.h"
+	"lgc.h"
+	"lmem.h"
+	"lobject.h"
+	"lstate.h"
+	"lstring.h"
+	"ltable.h"
+	"ltm.h"
+
+1432383127 source:/home/martynas/Desktop/smengine/smart-engine/dependencies/includes/lua/linit.c
+	"lua.h"
+	"lualib.h"
+	"lauxlib.h"
+
+1432383127 source:/home/martynas/Desktop/smengine/smart-engine/dependencies/includes/lua/liolib.c
+	<errno.h>
+	<stdio.h>
+	<stdlib.h>
+	<string.h>
+	"lua.h"
+	"lauxlib.h"
+	"lualib.h"
+
+1432383127 source:/home/martynas/Desktop/smengine/smart-engine/dependencies/includes/lua/llex.c
+	<locale.h>
+	<string.h>
+	"lua.h"
+	"lctype.h"
+	"ldo.h"
+	"llex.h"
+	"lobject.h"
+	"lparser.h"
+	"lstate.h"
+	"lstring.h"
+	"ltable.h"
+	"lzio.h"
+
+1432383127 source:/home/martynas/Desktop/smengine/smart-engine/dependencies/includes/lua/lmathlib.c
+	<stdlib.h>
+	<math.h>
+	"lua.h"
+	"lauxlib.h"
+	"lualib.h"
+
+1432383127 source:/home/martynas/Desktop/smengine/smart-engine/dependencies/includes/lua/lmem.c
+	<stddef.h>
+	"lua.h"
+	"ldebug.h"
+	"ldo.h"
+	"lgc.h"
+	"lmem.h"
+	"lobject.h"
+	"lstate.h"
+
+1432383127 source:/home/martynas/Desktop/smengine/smart-engine/dependencies/includes/lua/loadlib.c
+	<windows.h>
+	<stdlib.h>
+	<string.h>
+	"lua.h"
+	"lauxlib.h"
+	"lualib.h"
+	<dlfcn.h>
+
+1432383127 source:/home/martynas/Desktop/smengine/smart-engine/dependencies/includes/lua/lobject.c
+	<stdarg.h>
+	<stdio.h>
+	<stdlib.h>
+	<string.h>
+	"lua.h"
+	"lctype.h"
+	"ldebug.h"
+	"ldo.h"
+	"lmem.h"
+	"lobject.h"
+	"lstate.h"
+	"lstring.h"
+	"lvm.h"
+	<math.h>
+
+1432383127 source:/home/martynas/Desktop/smengine/smart-engine/dependencies/includes/lua/lopcodes.c
+	"lopcodes.h"
+
+1432383127 source:/home/martynas/Desktop/smengine/smart-engine/dependencies/includes/lua/loslib.c
+	<errno.h>
+	<locale.h>
+	<stdlib.h>
+	<string.h>
+	<time.h>
+	"lua.h"
+	"lauxlib.h"
+	"lualib.h"
+	<unistd.h>
+
+1432383127 source:/home/martynas/Desktop/smengine/smart-engine/dependencies/includes/lua/lparser.c
+	<string.h>
+	"lua.h"
+	"lcode.h"
+	"ldebug.h"
+	"ldo.h"
+	"lfunc.h"
+	"llex.h"
+	"lmem.h"
+	"lobject.h"
+	"lopcodes.h"
+	"lparser.h"
+	"lstate.h"
+	"lstring.h"
+	"ltable.h"
+
+1432383127 source:/home/martynas/Desktop/smengine/smart-engine/dependencies/includes/lua/lstate.c
+	<stddef.h>
+	<string.h>
+	"lua.h"
+	"lapi.h"
+	"ldebug.h"
+	"ldo.h"
+	"lfunc.h"
+	"lgc.h"
+	"llex.h"
+	"lmem.h"
+	"lstate.h"
+	"lstring.h"
+	"ltable.h"
+	"ltm.h"
+	<time.h>
+
+1432383127 source:/home/martynas/Desktop/smengine/smart-engine/dependencies/includes/lua/lstring.c
+	<string.h>
+	"lua.h"
+	"lmem.h"
+	"lobject.h"
+	"lstate.h"
+	"lstring.h"
+
+1432383127 source:/home/martynas/Desktop/smengine/smart-engine/dependencies/includes/lua/lstrlib.c
+	<ctype.h>
+	<stddef.h>
+	<stdio.h>
+	<stdlib.h>
+	<string.h>
+	"lua.h"
+	"lauxlib.h"
+	"lualib.h"
+
+1432383127 source:/home/martynas/Desktop/smengine/smart-engine/dependencies/includes/lua/ltable.c
+	<string.h>
+	"lua.h"
+	"ldebug.h"
+	"ldo.h"
+	"lgc.h"
+	"lmem.h"
+	"lobject.h"
+	"lstate.h"
+	"lstring.h"
+	"ltable.h"
+	"lvm.h"
+
+1432383127 source:/home/martynas/Desktop/smengine/smart-engine/dependencies/includes/lua/ltablib.c
+	<stddef.h>
+	"lua.h"
+	"lauxlib.h"
+	"lualib.h"
+
+1432383127 source:/home/martynas/Desktop/smengine/smart-engine/dependencies/includes/lua/ltm.c
+	<string.h>
+	"lua.h"
+	"lobject.h"
+	"lstate.h"
+	"lstring.h"
+	"ltable.h"
+	"ltm.h"
+
+1432383127 source:/home/martynas/Desktop/smengine/smart-engine/dependencies/includes/lua/lundump.c
+	<string.h>
+	"lua.h"
+	"ldebug.h"
+	"ldo.h"
+	"lfunc.h"
+	"lmem.h"
+	"lobject.h"
+	"lstring.h"
+	"lundump.h"
+	"lzio.h"
+
+1432383127 source:/home/martynas/Desktop/smengine/smart-engine/dependencies/includes/lua/lvm.c
+	<stdio.h>
+	<stdlib.h>
+	<string.h>
+	"lua.h"
+	"ldebug.h"
+	"ldo.h"
+	"lfunc.h"
+	"lgc.h"
+	"lobject.h"
+	"lopcodes.h"
+	"lstate.h"
+	"lstring.h"
+	"ltable.h"
+	"ltm.h"
+	"lvm.h"
+
+1432383127 source:/home/martynas/Desktop/smengine/smart-engine/dependencies/includes/lua/lzio.c
+	<string.h>
+	"lua.h"
+	"llimits.h"
+	"lmem.h"
+	"lstate.h"
+	"lzio.h"
+
+1432383127 source:/home/martynas/Desktop/smengine/smart-engine/dependencies/includes/zlib/adler32.c
+	"zutil.h"
+
+1432383127 /home/martynas/Desktop/smengine/smart-engine/dependencies/includes/zlib/zutil.h
+	"zlib.h"
+	<stddef.h>
+	<string.h>
+	<stdlib.h>
+	<alloc.h>
+	<malloc.h>
+	<malloc.h>
+	<unix.h>
+	<stdio.h>
+
+1432383127 source:/home/martynas/Desktop/smengine/smart-engine/dependencies/includes/zlib/compress.c
+	"zlib.h"
+
+1432383127 source:/home/martynas/Desktop/smengine/smart-engine/dependencies/includes/zlib/crc32.c
+	<stdio.h>
+	"zutil.h"
+	"crc32.h"
+
+1432383127 /home/martynas/Desktop/smengine/smart-engine/dependencies/includes/zlib/crc32.h
+
+1432383127 source:/home/martynas/Desktop/smengine/smart-engine/dependencies/includes/zlib/deflate.c
+	"deflate.h"
+
+1432383127 /home/martynas/Desktop/smengine/smart-engine/dependencies/includes/zlib/deflate.h
+	"zutil.h"
+
+1432383127 source:/home/martynas/Desktop/smengine/smart-engine/dependencies/includes/zlib/gzclose.c
+	"gzguts.h"
+
+1432383127 /home/martynas/Desktop/smengine/smart-engine/dependencies/includes/zlib/gzguts.h
+	<stdio.h>
+	"zlib.h"
+	<string.h>
+	<stdlib.h>
+	<limits.h>
+	<fcntl.h>
+	<stddef.h>
+	<io.h>
+	<windows.h>
+	<errno.h>
+
+1432383127 source:/home/martynas/Desktop/smengine/smart-engine/dependencies/includes/zlib/gzlib.c
+	"gzguts.h"
+
+1432383127 source:/home/martynas/Desktop/smengine/smart-engine/dependencies/includes/zlib/gzread.c
+	"gzguts.h"
+
+1432383127 source:/home/martynas/Desktop/smengine/smart-engine/dependencies/includes/zlib/gzwrite.c
+	"gzguts.h"
+	<stdarg.h>
+
+1432383127 source:/home/martynas/Desktop/smengine/smart-engine/dependencies/includes/zlib/infback.c
+	"zutil.h"
+	"inftrees.h"
+	"inflate.h"
+	"inffast.h"
+	"inffixed.h"
+
+1432383127 /home/martynas/Desktop/smengine/smart-engine/dependencies/includes/zlib/inftrees.h
+
+1432383127 /home/martynas/Desktop/smengine/smart-engine/dependencies/includes/zlib/inflate.h
+
+1432383127 /home/martynas/Desktop/smengine/smart-engine/dependencies/includes/zlib/inffast.h
+
+1432383127 /home/martynas/Desktop/smengine/smart-engine/dependencies/includes/zlib/inffixed.h
+
+1432383127 source:/home/martynas/Desktop/smengine/smart-engine/dependencies/includes/zlib/inffast.c
+	"zutil.h"
+	"inftrees.h"
+	"inflate.h"
+	"inffast.h"
+
+1432383127 source:/home/martynas/Desktop/smengine/smart-engine/dependencies/includes/zlib/inflate.c
+	"zutil.h"
+	"inftrees.h"
+	"inflate.h"
+	"inffast.h"
+	"inffixed.h"
+	<stdio.h>
+
+1432383127 source:/home/martynas/Desktop/smengine/smart-engine/dependencies/includes/zlib/inftrees.c
+	"zutil.h"
+	"inftrees.h"
+
+1432383127 source:/home/martynas/Desktop/smengine/smart-engine/dependencies/includes/zlib/trees.c
+	"deflate.h"
+	<ctype.h>
+	"trees.h"
+	<stdio.h>
+
+1432383127 /home/martynas/Desktop/smengine/smart-engine/dependencies/includes/zlib/trees.h
+
+1432383127 source:/home/martynas/Desktop/smengine/smart-engine/dependencies/includes/zlib/uncompr.c
+	"zlib.h"
+
+1432383127 source:/home/martynas/Desktop/smengine/smart-engine/dependencies/includes/zlib/zutil.c
+	"zutil.h"
+	"gzguts.h"
+
+1432383128 source:/home/martynas/Desktop/smengine/smart-engine/ghost/BoundingBox.cpp
+	"BoundingBox.h"
+
+1432383128 /home/martynas/Desktop/smengine/smart-engine/ghost/BoundingBox.h
+	"Multiplatform/Ghost.h"
+	"BoundingVolume.h"
+
+1432383128 /home/martynas/Desktop/smengine/smart-engine/ghost/Multiplatform/Ghost.h
+	"Win32/WindowsGhost.h"
+	"Android/AndroidGhost.h"
+	"Linux/LinuxGhost.h"
+	"MacOSX/SMart.h"
+
+1433061163 /home/martynas/Desktop/smengine/smart-engine/ghost/Multiplatform/Win32/WindowsGhost.h
+	<stdlib.h>
+	<crtdbg.h>
+	<stdio.h>
+	<unordered_map>
+	<queue>
+	<string>
+	<time.h>
+	<WinSock2.h>
+	<windows.h>
+	<fstream>
+	<sstream>
+	<iomanip>
+	<limits>
+	<chrono>
+	<thread>
+	<mutex>
+	<glew.h>
+	<assert.h>
+
+1432383128 /home/martynas/Desktop/smengine/smart-engine/ghost/Multiplatform/Android/AndroidGhost.h
+	<stdio.h>
+	<vector>
+	<string>
+	<string.h>
+	<time.h>
+	<iostream>
+	<fstream>
+	<sstream>
+	<iomanip>
+	<stdio.h>
+	<unistd.h>
+	<algorithm>
+	<float.h>
+	<limits.h>
+	<stdarg.h>
+	<android/log.h>
+	<jni.h>
+	<hash_map>
+	<sys/time.h>
+	<stdint.h>
+	<pthread.h>
+	<sys/socket.h>
+	<arpa/inet.h>
+	<netdb.h>
+	<netinet/in.h>
+	<resolv.h>
+	<errno.h>
+	<queue>
+	<assert.h>
+	<GLES2/gl2.h>
+	<GLES2/gl2ext.h>
+
+1433064281 /home/martynas/Desktop/smengine/smart-engine/ghost/Multiplatform/Linux/LinuxGhost.h
+	<stdio.h>
+	<unordered_map>
+	<queue>
+	<vector>
+	<string>
+	<string.h>
+	<time.h>
+	<iostream>
+	<fstream>
+	<sstream>
+	<iomanip>
+	<stdio.h>
+	<unistd.h>
+	<algorithm>
+	<float.h>
+	<limits.h>
+	<stdarg.h>
+	<sys/time.h>
+	<stdint.h>
+	<pthread.h>
+	<sys/socket.h>
+	<arpa/inet.h>
+	<netdb.h>
+	<netinet/in.h>
+	<resolv.h>
+	<assert.h>
+	<thread>
+	<mutex>
+	"../../../dependencies/includes/glew/glew.h"
+
+1432383127 /home/martynas/Desktop/smengine/smart-engine/dependencies/includes/glew/glew.h
+	<stddef.h>
+	<inttypes.h>
+	<stdint.h>
+	<inttypes.h>
+	<OpenGL/glu.h>
+	<GL/glu.h>
+
+1432383128 /home/martynas/Desktop/smengine/smart-engine/ghost/Multiplatform/MacOSX/SMart.h
+	<stdio.h>
+	<unordered_map>
+	<vector>
+	<string>
+	<string.h>
+	<time.h>
+	<iostream>
+	<fstream>
+	<sstream>
+	<iomanip>
+	<stdio.h>
+	<unistd.h>
+	<algorithm>
+	<float.h>
+	<limits.h>
+	<stdarg.h>
+	<sys/time.h>
+	<sys/socket.h>
+	<arpa/inet.h>
+	<netdb.h>
+	<netinet/in.h>
+	<resolv.h>
+	<queue>
+	<GL/glew.h>
+
+1432383128 /home/martynas/Desktop/smengine/smart-engine/ghost/BoundingVolume.h
+	"Multiplatform/Ghost.h"
+	"Vec3.h"
+	"Camera.h"
+
+1432383128 /home/martynas/Desktop/smengine/smart-engine/ghost/Vec3.h
+	"Multiplatform/Ghost.h"
+
+1432383128 /home/martynas/Desktop/smengine/smart-engine/ghost/Camera.h
+	"Multiplatform/Ghost.h"
+	"Matrix.h"
+
+1432383128 /home/martynas/Desktop/smengine/smart-engine/ghost/Matrix.h
+	"Multiplatform/Ghost.h"
+	"Vec3.h"
+
+1432383128 source:/home/martynas/Desktop/smengine/smart-engine/ghost/BoundingSphere.cpp
+	"BoundingSphere.h"
+
+1432383128 /home/martynas/Desktop/smengine/smart-engine/ghost/BoundingSphere.h
+	"Multiplatform/Ghost.h"
+	"BoundingVolume.h"
+
+1432383128 source:/home/martynas/Desktop/smengine/smart-engine/ghost/Camera.cpp
+	"Camera.h"
+	"Node.h"
+	"Multiplatform/Database.h"
+
+1432383128 /home/martynas/Desktop/smengine/smart-engine/ghost/Node.h
+	"Multiplatform/Ghost.h"
+	"Matrix.h"
+	"Quaternion.h"
+
+1432383128 /home/martynas/Desktop/smengine/smart-engine/ghost/Quaternion.h
+	"Utils.h"
+
+1432383128 /home/martynas/Desktop/smengine/smart-engine/ghost/Utils.h
+	"Multiplatform/Ghost.h"
+
+1432383128 /home/martynas/Desktop/smengine/smart-engine/ghost/Multiplatform/Database.h
+	"Ghost.h"
+
+1432383128 source:/home/martynas/Desktop/smengine/smart-engine/ghost/Color.cpp
+	"Color.h"
+
+1432383128 /home/martynas/Desktop/smengine/smart-engine/ghost/Color.h
+	"Multiplatform/Ghost.h"
+
+1433061507 source:/home/martynas/Desktop/smengine/smart-engine/ghost/Console.cpp
+	"Console.h"
+	"Multiplatform/ServiceLocator.h"
+	"Resources/GUIImage.h"
+	"Resources/GUIText.h"
+	"Node.h"
+	"ResourceManager.h"
+	"ThreadManager.h"
+	"Thread.h"
+	<iostream>
+	"ScriptManager.h"
+	"Multiplatform/Socket.h"
+	"Network/HttpRequest.h"
+	"Network/HttpResponse.h"
+
+1432383128 /home/martynas/Desktop/smengine/smart-engine/ghost/Console.h
+	"Multiplatform/Ghost.h"
+
+1432383128 /home/martynas/Desktop/smengine/smart-engine/ghost/Multiplatform/ServiceLocator.h
+	"../Multiplatform/Ghost.h"
+	"../Network/SocketParams.h"
+
+1432383128 /home/martynas/Desktop/smengine/smart-engine/ghost/Network/SocketParams.h
+	"../Multiplatform/Ghost.h"
+
+1432383128 /home/martynas/Desktop/smengine/smart-engine/ghost/Resources/GUIImage.h
+	"GUISurface.h"
+
+1432383128 /home/martynas/Desktop/smengine/smart-engine/ghost/Resources/GUISurface.h
+	"../Multiplatform/Ghost.h"
+	"Resource.h"
+	"Renderable.h"
+
+1432383128 /home/martynas/Desktop/smengine/smart-engine/ghost/Resources/Resource.h
+	"../Multiplatform/Ghost.h"
+	"Attributes.h"
+
+1432383128 /home/martynas/Desktop/smengine/smart-engine/ghost/Resources/Attributes.h
+	"../Multiplatform/Ghost.h"
+
+1432383128 /home/martynas/Desktop/smengine/smart-engine/ghost/Resources/Renderable.h
+	"../Multiplatform/Ghost.h"
+	"../Color.h"
+	"Shader.h"
+
+1432383128 /home/martynas/Desktop/smengine/smart-engine/ghost/Resources/Shader.h
+	"../Multiplatform/Ghost.h"
+	"Resource.h"
+
+1433064933 /home/martynas/Desktop/smengine/smart-engine/ghost/Resources/GUIText.h
+	"GUISurface.h"
+	"../Matrix.h"
+	"Vertex.h"
+
+1432383128 /home/martynas/Desktop/smengine/smart-engine/ghost/Resources/Vertex.h
+	"../Multiplatform/Ghost.h"
+
+1432383128 /home/martynas/Desktop/smengine/smart-engine/ghost/ResourceManager.h
+	"Multiplatform/Ghost.h"
+	"Resources/Resource.h"
+	"Vec3.h"
+
+1432383128 /home/martynas/Desktop/smengine/smart-engine/ghost/ThreadManager.h
+	"Multiplatform/Ghost.h"
+
+1432383128 /home/martynas/Desktop/smengine/smart-engine/ghost/Thread.h
+	"Multiplatform/Ghost.h"
+
+1432383128 /home/martynas/Desktop/smengine/smart-engine/ghost/ScriptManager.h
+	"Multiplatform/Ghost.h"
+	"../dependencies/includes/lua/lua.hpp"
+
+1432383127 /home/martynas/Desktop/smengine/smart-engine/dependencies/includes/lua/lua.hpp
+	"lua.h"
+	"lualib.h"
+	"lauxlib.h"
+
+1432383128 /home/martynas/Desktop/smengine/smart-engine/ghost/Multiplatform/Socket.h
+	"Ghost.h"
+
+1432383128 /home/martynas/Desktop/smengine/smart-engine/ghost/Network/HttpRequest.h
+	"../Multiplatform/Ghost.h"
+
+1432383128 /home/martynas/Desktop/smengine/smart-engine/ghost/Network/HttpResponse.h
+	"../Multiplatform/Ghost.h"
+
+1432383128 source:/home/martynas/Desktop/smengine/smart-engine/ghost/Engine.cpp
+	"Engine.h"
+	"Multiplatform/Ghost.h"
+	"Multiplatform/ServiceLocator.h"
+	"Multiplatform/GraphicsManager.h"
+	"Multiplatform/SoundManager.h"
+	"Multiplatform/Database.h"
+	"PhysicsManager.h"
+	"ResourceManager.h"
+	"Node.h"
+	"Resources/Shader.h"
+	"Xml.h"
+	"ResourceManager.h"
+	"Resources/TextureRGBA.h"
+	"Resources/AtlasTexture.h"
+	"Resources/Sprite.h"
+	"Input.h"
+	"Environment.h"
+	"ScriptManager.h"
+	"TextManager.h"
+	"ThreadManager.h"
+	"Network/NetworkManager.h"
+	"Network/HttpRequest.h"
+	"Resources/Animatable.h"
+	"Camera.h"
+	"GUIManager.h"
+	"Resources/GUIText.h"
+	"TextureAtlas.h"
+	"ScenarioManager.h"
+	"SceneManager.h"
+	"NodeManager.h"
+	"Console.h"
+	"Thread.h"
+
+1432383128 /home/martynas/Desktop/smengine/smart-engine/ghost/Engine.h
+	"Multiplatform/Ghost.h"
+
+1432383128 /home/martynas/Desktop/smengine/smart-engine/ghost/Multiplatform/GraphicsManager.h
+	"Ghost.h"
+	"../Matrix.h"
+	"../Color.h"
+
+1432383128 /home/martynas/Desktop/smengine/smart-engine/ghost/Multiplatform/SoundManager.h
+	"Ghost.h"
+
+1432383128 /home/martynas/Desktop/smengine/smart-engine/ghost/PhysicsManager.h
+	"Multiplatform/Ghost.h"
+	"../dependencies/includes/bullet/btBulletDynamicsCommon.h"
+
+1432383127 /home/martynas/Desktop/smengine/smart-engine/dependencies/includes/bullet/btBulletDynamicsCommon.h
+	"btBulletCollisionCommon.h"
+	"BulletDynamics/Dynamics/btDiscreteDynamicsWorld.h"
+	"BulletDynamics/Dynamics/btSimpleDynamicsWorld.h"
+	"BulletDynamics/Dynamics/btRigidBody.h"
+	"BulletDynamics/ConstraintSolver/btPoint2PointConstraint.h"
+	"BulletDynamics/ConstraintSolver/btHingeConstraint.h"
+	"BulletDynamics/ConstraintSolver/btConeTwistConstraint.h"
+	"BulletDynamics/ConstraintSolver/btGeneric6DofConstraint.h"
+	"BulletDynamics/ConstraintSolver/btSliderConstraint.h"
+	"BulletDynamics/ConstraintSolver/btGeneric6DofSpringConstraint.h"
+	"BulletDynamics/ConstraintSolver/btUniversalConstraint.h"
+	"BulletDynamics/ConstraintSolver/btHinge2Constraint.h"
+	"BulletDynamics/ConstraintSolver/btGearConstraint.h"
+	"BulletDynamics/ConstraintSolver/btSequentialImpulseConstraintSolver.h"
+	"BulletDynamics/Vehicle/btRaycastVehicle.h"
+
+1432383127 /home/martynas/Desktop/smengine/smart-engine/dependencies/includes/bullet/btBulletCollisionCommon.h
+	"BulletCollision/CollisionDispatch/btCollisionWorld.h"
+	"BulletCollision/CollisionDispatch/btCollisionObject.h"
+	"BulletCollision/CollisionShapes/btBoxShape.h"
+	"BulletCollision/CollisionShapes/btSphereShape.h"
+	"BulletCollision/CollisionShapes/btCapsuleShape.h"
+	"BulletCollision/CollisionShapes/btCylinderShape.h"
+	"BulletCollision/CollisionShapes/btConeShape.h"
+	"BulletCollision/CollisionShapes/btStaticPlaneShape.h"
+	"BulletCollision/CollisionShapes/btConvexHullShape.h"
+	"BulletCollision/CollisionShapes/btTriangleMesh.h"
+	"BulletCollision/CollisionShapes/btConvexTriangleMeshShape.h"
+	"BulletCollision/CollisionShapes/btBvhTriangleMeshShape.h"
+	"BulletCollision/CollisionShapes/btScaledBvhTriangleMeshShape.h"
+	"BulletCollision/CollisionShapes/btTriangleMeshShape.h"
+	"BulletCollision/CollisionShapes/btTriangleIndexVertexArray.h"
+	"BulletCollision/CollisionShapes/btCompoundShape.h"
+	"BulletCollision/CollisionShapes/btTetrahedronShape.h"
+	"BulletCollision/CollisionShapes/btEmptyShape.h"
+	"BulletCollision/CollisionShapes/btMultiSphereShape.h"
+	"BulletCollision/CollisionShapes/btUniformScalingShape.h"
+	"BulletCollision/CollisionDispatch/btSphereSphereCollisionAlgorithm.h"
+	"BulletCollision/CollisionDispatch/btDefaultCollisionConfiguration.h"
+	"BulletCollision/CollisionDispatch/btCollisionDispatcher.h"
+	"BulletCollision/BroadphaseCollision/btSimpleBroadphase.h"
+	"BulletCollision/BroadphaseCollision/btAxisSweep3.h"
+	"BulletCollision/BroadphaseCollision/btMultiSapBroadphase.h"
+	"BulletCollision/BroadphaseCollision/btDbvtBroadphase.h"
+	"LinearMath/btQuaternion.h"
+	"LinearMath/btTransform.h"
+	"LinearMath/btDefaultMotionState.h"
+	"LinearMath/btQuickprof.h"
+	"LinearMath/btIDebugDraw.h"
+	"LinearMath/btSerializer.h"
+
+1432383128 /home/martynas/Desktop/smengine/smart-engine/ghost/Xml.h
+	"Multiplatform/Ghost.h"
+
+1432383128 /home/martynas/Desktop/smengine/smart-engine/ghost/Resources/TextureRGBA.h
+	"../Multiplatform/Ghost.h"
+	"../Color.h"
+	"Texture.h"
+
+1432383128 /home/martynas/Desktop/smengine/smart-engine/ghost/Resources/Texture.h
+	"../Multiplatform/Ghost.h"
+	"../Color.h"
+	"Resource.h"
+
+1432383128 /home/martynas/Desktop/smengine/smart-engine/ghost/Resources/AtlasTexture.h
+	"../Multiplatform/Ghost.h"
+	"../Color.h"
+	"Texture.h"
+
+1432383128 /home/martynas/Desktop/smengine/smart-engine/ghost/Resources/Sprite.h
+	"../Multiplatform/Ghost.h"
+	"Resource.h"
+	"Renderable.h"
+
+1432383128 /home/martynas/Desktop/smengine/smart-engine/ghost/Input.h
+	"Multiplatform/Ghost.h"
+
+1432383128 /home/martynas/Desktop/smengine/smart-engine/ghost/Environment.h
+	"Multiplatform/Ghost.h"
+	"Vec3.h"
+
+1432383128 /home/martynas/Desktop/smengine/smart-engine/ghost/TextManager.h
+	"Multiplatform/Ghost.h"
+	"Vec3.h"
+	"../dependencies/includes/freetype/ft2build.h"
+	"../dependencies/includes/freetype/freetype.h"
+
+1432383128 /home/martynas/Desktop/smengine/smart-engine/ghost/Network/NetworkManager.h
+	"../Multiplatform/Ghost.h"
+
+1432383128 /home/martynas/Desktop/smengine/smart-engine/ghost/Resources/Animatable.h
+	"../Multiplatform/Ghost.h"
+
+1432383128 /home/martynas/Desktop/smengine/smart-engine/ghost/GUIManager.h
+	"Multiplatform/Ghost.h"
+
+1432383128 /home/martynas/Desktop/smengine/smart-engine/ghost/TextureAtlas.h
+	"Multiplatform/Ghost.h"
+
+1432383128 /home/martynas/Desktop/smengine/smart-engine/ghost/ScenarioManager.h
+	"Multiplatform/Ghost.h"
+
+1432383128 /home/martynas/Desktop/smengine/smart-engine/ghost/SceneManager.h
+	"Multiplatform/Ghost.h"
+
+1432383128 /home/martynas/Desktop/smengine/smart-engine/ghost/NodeManager.h
+	"Multiplatform/Ghost.h"
+
+1432383128 source:/home/martynas/Desktop/smengine/smart-engine/ghost/Environment.cpp
+	"Environment.h"
+	<string.h>
+
+1432383128 source:/home/martynas/Desktop/smengine/smart-engine/ghost/Extensions/Vehicle.cpp
+	"Vehicle.h"
+	"../../dependencies/includes/bullet/BulletDynamics/Vehicle/btRaycastVehicle.h"
+	"../../dependencies/includes/bullet/BulletCollision/CollisionShapes/btCompoundShape.h"
+	"../../dependencies/includes/bullet/BulletCollision/CollisionShapes/btShapeHull.h"
+	"../../dependencies/includes/bullet/BulletCollision/CollisionShapes/btConvexHullShape.h"
+	"../../dependencies/includes/bullet/LinearMath/btDefaultMotionState.h"
+	"../../dependencies/includes/bullet/BulletDynamics/Dynamics/btDynamicsWorld.h"
+	"../Node.h"
+	"../Resources/Resource.h"
+	"../Resources/Model.h"
+	"../ModelData.h"
+	"../BoundingVolume.h"
+	"../ScriptManager.h"
+	"../Utils.h"
+	"../Multiplatform/ServiceLocator.h"
+
+1432383128 /home/martynas/Desktop/smengine/smart-engine/ghost/Extensions/Vehicle.h
+	"../Multiplatform/Ghost.h"
+
+1432383128 /home/martynas/Desktop/smengine/smart-engine/ghost/Resources/Model.h
+	"Resource.h"
+	"Renderable.h"
+
+1432383128 /home/martynas/Desktop/smengine/smart-engine/ghost/ModelData.h
+	"Multiplatform/Ghost.h"
+	"Resources/Vertex.h"
+	"Color.h"
+
+1432383128 source:/home/martynas/Desktop/smengine/smart-engine/ghost/FrameBuffer.cpp
+	"FrameBuffer.h"
+	"Multiplatform/GraphicsManager.h"
+
+1432383128 /home/martynas/Desktop/smengine/smart-engine/ghost/FrameBuffer.h
+	"Multiplatform/Ghost.h"
+
+1432383128 source:/home/martynas/Desktop/smengine/smart-engine/ghost/GUIManager.cpp
+	"GUIManager.h"
+	"Multiplatform/ServiceLocator.h"
+	"Input.h"
+	"Node.h"
+	"ScriptManager.h"
+	"Resources/Resource.h"
+	"Resources/GUISurface.h"
+
+1432383128 source:/home/martynas/Desktop/smengine/smart-engine/ghost/Input.cpp
+	"Input.h"
+
+1432383128 source:/home/martynas/Desktop/smengine/smart-engine/ghost/Matrix.cpp
+	"Matrix.h"
+	"Utils.h"
+
+1432383128 source:/home/martynas/Desktop/smengine/smart-engine/ghost/MD2Parser.cpp
+	"MD2Parser.h"
+
+1432383128 /home/martynas/Desktop/smengine/smart-engine/ghost/MD2Parser.h
+	"Multiplatform/Ghost.h"
+	"Multiplatform/ServiceLocator.h"
+	"Multiplatform/FileManager.h"
+
+1432383128 /home/martynas/Desktop/smengine/smart-engine/ghost/Multiplatform/FileManager.h
+	"Ghost.h"
+
+1432383128 source:/home/martynas/Desktop/smengine/smart-engine/ghost/ModelData.cpp
+	"ModelData.h"
+	"BoundingVolume.h"
+	"Resources/Renderable.h"
+
+1432383128 source:/home/martynas/Desktop/smengine/smart-engine/ghost/Multiplatform/GraphicsManager.cpp
+	"GraphicsManager.h"
+	"ServiceLocator.h"
+	"../Multiplatform/Database.h"
+	"../Camera.h"
+	"../Node.h"
+	"../TextureAtlas.h"
+	"../ResourceManager.h"
+	"../Resources/Resource.h"
+	"../Resources/Renderable.h"
+	"../Resources/Model.h"
+	"../Resources/CubeMap.h"
+	"../Resources/TextureRGBA.h"
+	"../Resources/Symbol.h"
+	"../Resources/Shader.h"
+	"../Resources/GUIText.h"
+	"../TextManager.h"
+	"../BoundingVolume.h"
+	"../RenderPass.h"
+	"../FrameBuffer.h"
+	"../Shapes.h"
+	"../ModelData.h"
+
+1432383128 /home/martynas/Desktop/smengine/smart-engine/ghost/Resources/CubeMap.h
+	"../Multiplatform/Ghost.h"
+	"Resource.h"
+
+1432383128 /home/martynas/Desktop/smengine/smart-engine/ghost/Resources/Symbol.h
+	"../Multiplatform/Ghost.h"
+	"Resource.h"
+	"Renderable.h"
+
+1432383128 /home/martynas/Desktop/smengine/smart-engine/ghost/RenderPass.h
+	"Multiplatform/Ghost.h"
+
+1432383128 /home/martynas/Desktop/smengine/smart-engine/ghost/Shapes.h
+	"Multiplatform/Ghost.h"
+	"Resources/Vertex.h"
+
+1432383128 source:/home/martynas/Desktop/smengine/smart-engine/ghost/Multiplatform/Linux/LinuxFileManager.cpp
+	"LinuxFileManager.h"
+
+1432383128 /home/martynas/Desktop/smengine/smart-engine/ghost/Multiplatform/Linux/LinuxFileManager.h
+	"../Ghost.h"
+	"../FileManager.h"
+	"../../../dependencies/includes/libpng/png.h"
+
+1432383128 source:/home/martynas/Desktop/smengine/smart-engine/ghost/Multiplatform/Linux/LinuxGhost.cpp
+	"LinuxGhost.h"
+
+1433064018 source:/home/martynas/Desktop/smengine/smart-engine/ghost/Multiplatform/Linux/LinuxGraphicsManager.cpp
+	"LinuxGraphicsManager.h"
+	"../ServiceLocator.h"
+	"../FileManager.h"
+	"../../Resources/Shader.h"
+	"../../Resources/TextureRGBA.h"
+
+1433063989 /home/martynas/Desktop/smengine/smart-engine/ghost/Multiplatform/Linux/LinuxGraphicsManager.h
+	"../Ghost.h"
+	"../GraphicsManager.h"
+
+1433070109 source:/home/martynas/Desktop/smengine/smart-engine/ghost/Multiplatform/Linux/LinuxServiceLocator.cpp
+	"LinuxServiceLocator.h"
+	"LinuxGraphicsManager.h"
+	"LinuxFileManager.h"
+	"LinuxSocket.h"
+	"LinuxDatabase.h"
+	"../../Resources/TextureRGBA.h"
+
+1433066621 /home/martynas/Desktop/smengine/smart-engine/ghost/Multiplatform/Linux/LinuxServiceLocator.h
+	"../Ghost.h"
+	"../ServiceLocator.h"
+
+1433062198 /home/martynas/Desktop/smengine/smart-engine/ghost/Multiplatform/Linux/LinuxThread.h
+	"../Ghost.h"
+	"../ServiceLocator.h"
+	"../../Thread.h"
+
+1433063633 /home/martynas/Desktop/smengine/smart-engine/ghost/Multiplatform/Linux/LinuxSocket.h
+	"../Ghost.h"
+	"../Socket.h"
+	"../../Network/SocketParams.h"
+
+1433064143 source:/home/martynas/Desktop/smengine/smart-engine/ghost/Multiplatform/Linux/LinuxSocket.cpp
+	"LinuxSocket.h"
+	"../../Network/HttpRequest.h"
+	"../../Network/HttpResponse.h"
+
+1432383128 source:/home/martynas/Desktop/smengine/smart-engine/ghost/Multiplatform/ServiceLocator.cpp
+	"ServiceLocator.h"
+	"../Camera.h"
+	"../Environment.h"
+	"../GUIManager.h"
+	"../Input.h"
+	"../Node.h"
+	"../PhysicsManager.h"
+	"../ResourceManager.h"
+	"../SceneManager.h"
+	"../ScenarioManager.h"
+	"../ScriptManager.h"
+	"../TextManager.h"
+	"../TextureAtlas.h"
+	"../ThreadManager.h"
+	"../Network/NetworkManager.h"
+	"../NodeManager.h"
+
+1432383128 source:/home/martynas/Desktop/smengine/smart-engine/ghost/Node.cpp
+	"Node.h"
+	"ScriptManager.h"
+	"Resources/Resource.h"
+
+1432383128 source:/home/martynas/Desktop/smengine/smart-engine/ghost/NodeManager.cpp
+	"NodeManager.h"
+	"Multiplatform/ServiceLocator.h"
+
+1432383128 source:/home/martynas/Desktop/smengine/smart-engine/ghost/ObjParser.cpp
+	"ObjParser.h"
+	"Multiplatform/Ghost.h"
+	"Multiplatform/ServiceLocator.h"
+	"Thread.h"
+	"Multiplatform/FileManager.h"
+	"Multiplatform/GraphicsManager.h"
+	"ResourceManager.h"
+	"BoundingSphere.h"
+	"BoundingBox.h"
+	"Utils.h"
+	"Resources/Texture.h"
+	"Resources/Renderable.h"
+	"HashMap.h"
+
+1432383128 /home/martynas/Desktop/smengine/smart-engine/ghost/ObjParser.h
+	"ThreadManager.h"
+	"Color.h"
+	"Vec3.h"
+	"Resources/Vertex.h"
+	"BoundingVolume.h"
+	"ModelData.h"
+
+1432383128 /home/martynas/Desktop/smengine/smart-engine/ghost/HashMap.h
+	"Multiplatform/Ghost.h"
+
+1432383128 source:/home/martynas/Desktop/smengine/smart-engine/ghost/PhysicsManager.cpp
+	"PhysicsManager.h"
+	"Multiplatform/ServiceLocator.h"
+	"Multiplatform/GraphicsManager.h"
+	"Utils.h"
+	"Quaternion.h"
+	"Node.h"
+	"ModelData.h"
+	"Vec3.h"
+	"ScriptManager.h"
+	"ResourceManager.h"
+	"Resources/Shader.h"
+	"Resources/Model.h"
+	"Resources/TextureRGBA.h"
+	"Extensions/Vehicle.h"
+	"Resources/Attributes.h"
+	"../dependencies/includes/bullet/BulletCollision/NarrowPhaseCollision/btRaycastCallback.h"
+	"../dependencies/includes/bullet/BulletCollision/CollisionShapes/btShapeHull.h"
+	"../dependencies/includes/bullet/BulletCollision/Gimpact/btGImpactShape.h"
+	"../dependencies/includes/bullet/BulletCollision/Gimpact/btGImpactCollisionAlgorithm.h"
+	"../dependencies/includes/bullet/BulletCollision/CollisionShapes/btHeightfieldTerrainShape.h"
+
+1432383128 source:/home/martynas/Desktop/smengine/smart-engine/ghost/Quaternion.cpp
+	"Quaternion.h"
+
+1432383128 source:/home/martynas/Desktop/smengine/smart-engine/ghost/RenderPass.cpp
+	"RenderPass.h"
+	"Multiplatform/GraphicsManager.h"
+	"FrameBuffer.h"
+	"Camera.h"
+	"Node.h"
+	"Multiplatform/GraphicsManager.h"
+	"Multiplatform/ServiceLocator.h"
+
+1432383128 source:/home/martynas/Desktop/smengine/smart-engine/ghost/ResourceManager.cpp
+	"ResourceManager.h"
+	"Multiplatform/ServiceLocator.h"
+	"Multiplatform/FileManager.h"
+	"Multiplatform/Database.h"
+	"Node.h"
+	"Xml.h"
+	"Vec3.h"
+	"Matrix.h"
+	"Shapes.h"
+	"PhysicsManager.h"
+	"ScriptManager.h"
+	"Resources/TextureRGBA.h"
+	"Resources/CubeMap.h"
+	"Resources/Shader.h"
+	"Resources/Sprite.h"
+	"Resources/Model.h"
+	"Resources/DynamicObject.h"
+	"Resources/Script.h"
+	"Resources/Sound.h"
+	"Resources/Light.h"
+	"Resources/Scenario.h"
+	"Resources/GUIImage.h"
+	"Resources/GUIButton.h"
+	"Resources/GUIInput.h"
+	"Resources/Renderable.h"
+	"Resources/NullResource.h"
+
+1432383128 /home/martynas/Desktop/smengine/smart-engine/ghost/Resources/DynamicObject.h
+	"../Multiplatform/Ghost.h"
+	"Resource.h"
+	"Renderable.h"
+	"Animatable.h"
+
+1432383128 /home/martynas/Desktop/smengine/smart-engine/ghost/Resources/Script.h
+	"../Multiplatform/Ghost.h"
+	"Resource.h"
+
+1432383128 /home/martynas/Desktop/smengine/smart-engine/ghost/Resources/Sound.h
+	"Resource.h"
+
+1432383128 /home/martynas/Desktop/smengine/smart-engine/ghost/Resources/Light.h
+	"../Color.h"
+	"Resource.h"
+	"Renderable.h"
+
+1432383128 /home/martynas/Desktop/smengine/smart-engine/ghost/Resources/Scenario.h
+	"Resource.h"
+	"../Vec3.h"
+
+1432383128 /home/martynas/Desktop/smengine/smart-engine/ghost/Resources/GUIButton.h
+	"GUIText.h"
+
+1432383128 /home/martynas/Desktop/smengine/smart-engine/ghost/Resources/GUIInput.h
+	"GUIText.h"
+
+1432383128 /home/martynas/Desktop/smengine/smart-engine/ghost/Resources/NullResource.h
+	"../Multiplatform/Ghost.h"
+	"Resource.h"
+
+1432383128 source:/home/martynas/Desktop/smengine/smart-engine/ghost/Resources/AtlasTexture.cpp
+	"AtlasTexture.h"
+	"../Multiplatform/ServiceLocator.h"
+	"../Utils.h"
+	"../TextureAtlas.h"
+	"../Shapes.h"
+	"Vertex.h"
+
+1432383128 source:/home/martynas/Desktop/smengine/smart-engine/ghost/Resources/Attributes.cpp
+	"Attributes.h"
+
+1432383128 source:/home/martynas/Desktop/smengine/smart-engine/ghost/Resources/CubeMap.cpp
+	"CubeMap.h"
+	"../Multiplatform/ServiceLocator.h"
+	"../Multiplatform/GraphicsManager.h"
+	"../Multiplatform/FileManager.h"
+	"../Utils.h"
+	"Texture.h"
+
+1432383128 source:/home/martynas/Desktop/smengine/smart-engine/ghost/Resources/DynamicObject.cpp
+	"DynamicObject.h"
+	"Vertex.h"
+	"Texture.h"
+	"../ResourceManager.h"
+	"../MD2Parser.h"
+	"../Multiplatform/Database.h"
+	"../Multiplatform/GraphicsManager.h"
+
+1432383128 source:/home/martynas/Desktop/smengine/smart-engine/ghost/Resources/Geometry.cpp
+	"Geometry.h"
+	"../Multiplatform/ServiceLocator.h"
+
+1432383128 /home/martynas/Desktop/smengine/smart-engine/ghost/Resources/Geometry.h
+	"../Multiplatform/Ghost.h"
+	"Resource.h"
+
+1432383128 source:/home/martynas/Desktop/smengine/smart-engine/ghost/Resources/GUIButton.cpp
+	"GUIButton.h"
+	"../Multiplatform/ServiceLocator.h"
+	"../ResourceManager.h"
+	"../ScriptManager.h"
+	"../Input.h"
+	"../Utils.h"
+
+1432383128 source:/home/martynas/Desktop/smengine/smart-engine/ghost/Resources/GUIImage.cpp
+	"GUIImage.h"
+	"Vertex.h"
+	"TextureRGBA.h"
+	"../Shapes.h"
+	"../ResourceManager.h"
+	"../Multiplatform/ServiceLocator.h"
+	"../Node.h"
+
+1432383128 source:/home/martynas/Desktop/smengine/smart-engine/ghost/Resources/GUIInput.cpp
+	"GUIInput.h"
+	"TextureRGBA.h"
+	"../Shapes.h"
+	"../ResourceManager.h"
+	"../Multiplatform/ServiceLocator.h"
+	"../Node.h"
+	"../Input.h"
+	"../GUIManager.h"
+
+1432383128 source:/home/martynas/Desktop/smengine/smart-engine/ghost/Resources/GUISurface.cpp
+	"../Multiplatform/ServiceLocator.h"
+	"../Multiplatform/GraphicsManager.h"
+	"GUISurface.h"
+	"Vertex.h"
+	"AtlasTexture.h"
+	"TextureRGBA.h"
+	"Shader.h"
+	"../Shapes.h"
+	"../ResourceManager.h"
+	"../Node.h"
+
+1433064902 source:/home/martynas/Desktop/smengine/smart-engine/ghost/Resources/GUIText.cpp
+	"GUIText.h"
+	"Vertex.h"
+	"TextureRGBA.h"
+	"Symbol.h"
+	"../Shapes.h"
+	"../ResourceManager.h"
+	"../Multiplatform/ServiceLocator.h"
+	"../Multiplatform/GraphicsManager.h"
+	"../Multiplatform/Database.h"
+	"../Node.h"
+	"../Input.h"
+	"../TextManager.h"
+	"../ScriptManager.h"
+	"../Camera.h"
+
+1432383128 source:/home/martynas/Desktop/smengine/smart-engine/ghost/Resources/Light.cpp
+	"Light.h"
+	"../Multiplatform/ServiceLocator.h"
+
+1432383128 source:/home/martynas/Desktop/smengine/smart-engine/ghost/Resources/Resource.cpp
+	"Resource.h"
+	"../Multiplatform/ServiceLocator.h"
+	"Renderable.h"
+	"GUISurface.h"
+
+1432383128 source:/home/martynas/Desktop/smengine/smart-engine/ghost/Resources/Scenario.cpp
+	"Scenario.h"
+	"../Multiplatform/ServiceLocator.h"
+	"../Node.h"
+
+1432383128 source:/home/martynas/Desktop/smengine/smart-engine/ghost/Resources/Script.cpp
+	"Script.h"
+	"../Multiplatform/ServiceLocator.h"
+	"../Multiplatform/FileManager.h"
+
+1432383128 source:/home/martynas/Desktop/smengine/smart-engine/ghost/Resources/Shader.cpp
+	"Shader.h"
+	"../Multiplatform/ServiceLocator.h"
+	"../Multiplatform/GraphicsManager.h"
+	"../Multiplatform/FileManager.h"
+	"../ResourceManager.h"
+	"../ScriptManager.h"
+	"../Utils.h"
+
+1432383128 source:/home/martynas/Desktop/smengine/smart-engine/ghost/Resources/Sound.cpp
+	"Sound.h"
+	"../Multiplatform/ServiceLocator.h"
+	"../Multiplatform/FileManager.h"
+
+1432383128 source:/home/martynas/Desktop/smengine/smart-engine/ghost/Resources/Sprite.cpp
+	"Sprite.h"
+	"Vertex.h"
+	"Shader.h"
+	"../Multiplatform/Database.h"
+	"../ScriptManager.h"
+	"../Shapes.h"
+	"../ResourceManager.h"
+	"../Multiplatform/ServiceLocator.h"
+	"../Multiplatform/GraphicsManager.h"
+	"Texture.h"
+	"../Node.h"
+	"Texture.h"
+
+1432383128 source:/home/martynas/Desktop/smengine/smart-engine/ghost/Resources/Symbol.cpp
+	"Symbol.h"
+	"AtlasTexture.h"
+	"../ResourceManager.h"
+
+1432383128 source:/home/martynas/Desktop/smengine/smart-engine/ghost/Resources/Texture.cpp
+	"Texture.h"
+	"../ScriptManager.h"
+	"../ResourceManager.h"
+	"../Utils.h"
+	"TextureRGB.h"
+	"TextureRGBA.h"
+	"TextureMono.h"
+	"AtlasTexture.h"
+	"../../dependencies/includes/libpng/png.h"
+	"../Multiplatform/ServiceLocator.h"
+	"../Multiplatform/FileManager.h"
+	"Vertex.h"
+	"../Shapes.h"
+	"../Multiplatform/ServiceLocator.h"
+	"../Multiplatform/GraphicsManager.h"
+
+1432383128 /home/martynas/Desktop/smengine/smart-engine/ghost/Resources/TextureRGB.h
+	"../Multiplatform/Ghost.h"
+	"../Color.h"
+	"Texture.h"
+
+1432383128 /home/martynas/Desktop/smengine/smart-engine/ghost/Resources/TextureMono.h
+	"../Multiplatform/Ghost.h"
+	"../Color.h"
+	"Texture.h"
+
+1432383128 source:/home/martynas/Desktop/smengine/smart-engine/ghost/Resources/TextureMono.cpp
+	"TextureMono.h"
+	"../Multiplatform/ServiceLocator.h"
+	"../Multiplatform/GraphicsManager.h"
+	"../Multiplatform/FileManager.h"
+	"../Utils.h"
+	"../TextureAtlas.h"
+	"../Shapes.h"
+	"Vertex.h"
+
+1432383128 source:/home/martynas/Desktop/smengine/smart-engine/ghost/Resources/TextureRGBA.cpp
+	"TextureRGBA.h"
+	"../Multiplatform/ServiceLocator.h"
+	"../Multiplatform/GraphicsManager.h"
+	"../Multiplatform/FileManager.h"
+	"../Utils.h"
+	"../TextureAtlas.h"
+	"../Shapes.h"
+	"Vertex.h"
+
+1432383128 source:/home/martynas/Desktop/smengine/smart-engine/ghost/ScenarioManager.cpp
+	"ScenarioManager.h"
+	"Multiplatform/ServiceLocator.h"
+	"Resources/Scenario.h"
+	"ResourceManager.h"
+
+1432383128 source:/home/martynas/Desktop/smengine/smart-engine/ghost/SceneManager.cpp
+	"SceneManager.h"
+	"Multiplatform/ServiceLocator.h"
+	"Resources/Texture.h"
+	"Resources/Sprite.h"
+	"ResourceManager.h"
+	"Camera.h"
+	"Node.h"
+
+1433065198 source:/home/martynas/Desktop/smengine/smart-engine/ghost/ScriptBindings.cpp
+	"ScriptBindings.h"
+	"ScriptManager.h"
+	"Multiplatform/ServiceLocator.h"
+	"Multiplatform/SoundManager.h"
+	"Multiplatform/Database.h"
+	"Input.h"
+	"Node.h"
+	"Camera.h"
+	"PhysicsManager.h"
+	"ResourceManager.h"
+	"Network/NetworkManager.h"
+	"Network/HttpRequest.h"
+	"Network/HttpResponse.h"
+	"ScenarioManager.h"
+	"SceneManager.h"
+	"GUIManager.h"
+	"Resources/Model.h"
+	"Resources/Shader.h"
+	"Resources/Sprite.h"
+	"Resources/Sound.h"
+	"Resources/Texture.h"
+	"Resources/TextureMono.h"
+	"Resources/TextureRGBA.h"
+	"Resources/TextureRGB.h"
+	"Resources/AtlasTexture.h"
+	"Resources/GUIButton.h"
+	"Resources/NullResource.h"
+	"Resources/Scenario.h"
+	"Extensions/Vehicle.h"
+	"ModelData.h"
+
+1432383128 /home/martynas/Desktop/smengine/smart-engine/ghost/ScriptBindings.h
+	"Multiplatform/Ghost.h"
+
+1432383128 source:/home/martynas/Desktop/smengine/smart-engine/ghost/ScriptManager.cpp
+	"ScriptManager.h"
+	"Multiplatform/ServiceLocator.h"
+	"Multiplatform/Database.h"
+	"Input.h"
+	"Node.h"
+	"Resources/Script.h"
+	"ScriptBindings.h"
+	"GUIManager.h"
+
+1432383128 source:/home/martynas/Desktop/smengine/smart-engine/ghost/Settings.cpp
+	"Settings.h"
+	"Multiplatform/FileManager.h"
+	"Xml.h"
+	"Utils.h"
+
+1432383128 /home/martynas/Desktop/smengine/smart-engine/ghost/Settings.h
+	"Multiplatform/Ghost.h"
+
+1432383128 source:/home/martynas/Desktop/smengine/smart-engine/ghost/ShapeParser.cpp
+	"ShapeParser.h"
+	"Vec3.h"
+	"Resources/Texture.h"
+
+1432383128 /home/martynas/Desktop/smengine/smart-engine/ghost/ShapeParser.h
+	"Multiplatform/Ghost.h"
+
+1432383128 source:/home/martynas/Desktop/smengine/smart-engine/ghost/Shapes.cpp
+	"Shapes.h"
+	"Resources/Vertex.h"
+	"Vec3.h"
+
+1432383128 source:/home/martynas/Desktop/smengine/smart-engine/ghost/TerrainParser.cpp
+	"TerrainParser.h"
+	"BoundingSphere.h"
+	"Shapes.h"
+	"Multiplatform/ServiceLocator.h"
+	"Resources/Texture.h"
+
+1432383128 /home/martynas/Desktop/smengine/smart-engine/ghost/TerrainParser.h
+	"Multiplatform/Ghost.h"
+
+1432383128 source:/home/martynas/Desktop/smengine/smart-engine/ghost/TextManager.cpp
+	"TextManager.h"
+	"Multiplatform/ServiceLocator.h"
+	"Multiplatform/FileManager.h"
+	"Resources/Symbol.h"
+	"Resources/Texture.h"
+	"ResourceManager.h"
+	"Shapes.h"
+	"../dependencies/includes/freetype/ftglyph.h"
+
+1432383128 source:/home/martynas/Desktop/smengine/smart-engine/ghost/TextureAtlas.cpp
+	"TextureAtlas.h"
+	"Multiplatform/ServiceLocator.h"
+	"Multiplatform/GraphicsManager.h"
+	"Shapes.h"
+	"Utils.h"
+	"Resources/Texture.h"
+
+1433065473 source:/home/martynas/Desktop/smengine/smart-engine/ghost/ThreadManager.cpp
+	"ThreadManager.h"
+	"Multiplatform/ServiceLocator.h"
+	"Thread.h"
+
+1432383128 source:/home/martynas/Desktop/smengine/smart-engine/ghost/Utils.cpp
+	"Utils.h"
+
+1432383128 source:/home/martynas/Desktop/smengine/smart-engine/ghost/Vec3.cpp
+	"Vec3.h"
+
+1432383128 source:/home/martynas/Desktop/smengine/smart-engine/ghost/WaterLoader.cpp
+
+1432383128 source:/home/martynas/Desktop/smengine/smart-engine/ghost/Xml.cpp
+	"Xml.h"
+
+1433069809 source:/home/martynas/Desktop/smengine/smart-engine/ghost/Multiplatform/Linux/LinuxDatabase.cpp
+	"LinuxFileManager.h"
+
+1432383127 /home/martynas/Desktop/smengine/smart-engine/dependencies/includes/sqlite/sqlite3.h
+	<stdarg.h>
+
+1433070146 /home/martynas/Desktop/smengine/smart-engine/ghost/Multiplatform/Linux/LinuxDatabase.h
+	"../Ghost.h"
+	"../ServiceLocator.h"
+	"../Database.h"
+
+1433070213 source:/home/martynas/Desktop/smengine/smart-engine/ghost/Multiplatform/Linux/LinuxSoundManager.cpp
+	"LinuxSoundManager.h"
+
+1433070240 /home/martynas/Desktop/smengine/smart-engine/ghost/Multiplatform/Linux/LinuxSoundManager.h
+	"../../Resources/Sound.h"
+	"../../../dependencies/includes/fmod/win32/fmod.hpp"
+	"../../../dependencies/includes/fmod/win32/fmod_errors.h"
+	"../SoundManager.h"
+	<vector>
+	<algorithm>
+
+1432383127 /home/martynas/Desktop/smengine/smart-engine/dependencies/includes/fmod/win32/fmod.hpp
+	"fmod.h"
+
+1432383127 /home/martynas/Desktop/smengine/smart-engine/dependencies/includes/fmod/win32/fmod.h
+	"fmod_codec.h"
+	"fmod_dsp.h"
+	"fmod_memoryinfo.h"
+
+1432383127 /home/martynas/Desktop/smengine/smart-engine/dependencies/includes/fmod/win32/fmod_codec.h
+
+1432383127 /home/martynas/Desktop/smengine/smart-engine/dependencies/includes/fmod/win32/fmod_dsp.h
+
+1432383127 /home/martynas/Desktop/smengine/smart-engine/dependencies/includes/fmod/win32/fmod_memoryinfo.h
+
+1432383127 /home/martynas/Desktop/smengine/smart-engine/dependencies/includes/fmod/win32/fmod_errors.h
+	"fmod.h"
+
+1432383128 source:/home/martynas/Desktop/smengine/smart-engine/main_linux.cpp
+	<GL/glew.h>
+	<GL/freeglut.h>
+	"ghost/Input.h"
+	"ghost/Engine.h"
+	"ghost/Multiplatform/Linux/LinuxServiceLocator.h"
+
+1432383128 source:/home/martynas/Desktop/smengine/smart-engine/ghost/Network/HttpRequest.cpp
+	"HttpRequest.h"
+	"../Utils.h"
+
+1432383128 source:/home/martynas/Desktop/smengine/smart-engine/ghost/Network/HttpResponse.cpp
+	"HttpResponse.h"
+
+1432383128 source:/home/martynas/Desktop/smengine/smart-engine/ghost/Network/NetworkManager.cpp
+	"NetworkManager.h"
+	"../Multiplatform/ServiceLocator.h"
+	"../Thread.h"
+	"../Multiplatform/Socket.h"
+	"HttpRequest.h"
+	"HttpResponse.h"
+	"../ThreadManager.h"
+
+1432383128 source:/home/martynas/Desktop/smengine/smart-engine/ghost/Network/Request.cpp
+	"../Utils.h"
+
+1432383128 source:/home/martynas/Desktop/smengine/smart-engine/ghost/Network/SocketParams.cpp
+
+1432383128 source:/home/martynas/Desktop/smengine/smart-engine/ghost/Multiplatform/Database.cpp
+	"Database.h"
+	"FileManager.h"
+	"../Xml.h"
+	"../Utils.h"
+
+1432383128 source:/home/martynas/Desktop/smengine/smart-engine/ghost/Resources/Model.cpp
+	"Model.h"
+	"../Multiplatform/ServiceLocator.h"
+	"../Multiplatform/Database.h"
+	"Vertex.h"
+	"Texture.h"
+	"Shader.h"
+	"../ObjParser.h"
+	"../TerrainParser.h"
+	"../ShapeParser.h"
+	"../ResourceManager.h"
+	"../Shapes.h"
+	"../ScriptManager.h"
+	"../BoundingSphere.h"
+	"../BoundingBox.h"
+	"../Utils.h"
+	"../Node.h"
+	"../Multiplatform/GraphicsManager.h"
+	"ModelFactory.h"
+
+1432383128 /home/martynas/Desktop/smengine/smart-engine/ghost/Resources/ModelFactory.h
+	"Resource.h"
+	"Renderable.h"
+
+1432383127 source:/home/martynas/Desktop/smengine/smart-engine/dependencies/includes/sqlite/sqlite3.c
+	"mingw.h"
+	"_mingw.h"
+	<stdarg.h>
+	"config.h"
+	<stdint.h>
+	<inttypes.h>
+	<stdio.h>
+	<stdlib.h>
+	<string.h>
+	<assert.h>
+	<stddef.h>
+	<TargetConditionals.h>
+	<ctype.h>
+	<time.h>
+	<sys/sysctl.h>
+	<malloc/malloc.h>
+	<libkern/OSAtomic.h>
+	<malloc.h>
+	<pthread.h>
+	"windows.h"
+	<sys/cygwin.h>
+	<errno.h>
+	<process.h>
+	<math.h>
+	<sys/types.h>
+	<sys/stat.h>
+	<fcntl.h>
+	<unistd.h>
+	<sys/time.h>
+	<errno.h>
+	<sys/mman.h>
+	<sys/ioctl.h>
+	<semaphore.h>
+	<limits.h>
+	<sys/file.h>
+	<sys/param.h>
+	<sys/mount.h>
+	<utime.h>
+	<sys/dcmd_blk.h>
+	<sys/statvfs.h>
+	<dlfcn.h>
+	<tcl.h>
+	"sqlite3rtree.h"
+	<unicode/utypes.h>
+	<unicode/uregex.h>
+	<unicode/ustring.h>
+	<unicode/ucol.h>
+	<unicode/ubrk.h>
+	<unicode/utf16.h>
+
+1432383128 source:/home/martynas/Desktop/smengine/smart-engine/ghost/Resources/ModelFactory.cpp
+	"../Multiplatform/ServiceLocator.h"
+	"../Multiplatform/Database.h"
+	"Vertex.h"
+	"Texture.h"
+	"Shader.h"
+	"../ObjParser.h"
+	"../TerrainParser.h"
+	"../ShapeParser.h"
+	"../ResourceManager.h"
+	"../Shapes.h"
+	"../ScriptManager.h"
+	"../BoundingSphere.h"
+	"../BoundingBox.h"
+	"../Utils.h"
+	"../Node.h"
+	"../Multiplatform/GraphicsManager.h"
+
+1432383128 source:/home/martynas/Desktop/smengine/smart-engine/ghost/Resources/TextureRGB.cpp
+	"TextureRGB.h"
+	"../Multiplatform/ServiceLocator.h"
+	"../Multiplatform/GraphicsManager.h"
+	"../Multiplatform/FileManager.h"
+	"../Utils.h"
+	"../TextureAtlas.h"
+	"../Shapes.h"
+	"Vertex.h"
+
