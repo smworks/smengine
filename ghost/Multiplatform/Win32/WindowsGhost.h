@@ -61,12 +61,15 @@
 #include <chrono>
 #include <thread>
 #include <mutex>
+
 // GRAPHICS.
-#define GLEW_STATIC
-#include <glew.h>
-#pragma comment(lib, "glew32s.lib")
-#pragma comment(lib, "opengl32.lib")
-#pragma comment(lib, "glu32.lib")
+#ifdef ENABLE_GRAPHICS
+	#define GLEW_STATIC
+	#include <glew.h>
+	#pragma comment(lib, "glew32s.lib")
+	#pragma comment(lib, "opengl32.lib")
+	#pragma comment(lib, "glu32.lib")
+#endif
 
 using namespace std;
 using namespace stdext; // For older compilers.

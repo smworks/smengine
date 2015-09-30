@@ -155,7 +155,7 @@ bool TerrainParser::load(TerrainGeometry& geometry, BoundingVolume *& bv) {
 	int segmentRows = height / segmentSize_ + (height % segmentSize_ == 0 ? 0 : 1);
 	int segmentCols = width / segmentSize_ + (width % segmentSize_ == 0 ? 0 : 1);
 	int segmentCount = segmentRows * segmentCols;
-	vector<vector<GLushort>*>* indices = NEW vector<vector<GLushort>*>();
+	vector<vector<unsigned short>*>* indices = NEW vector<vector<unsigned short>*>();
 	vector<BoundingVolume*>* bounds = NEW vector<BoundingVolume*>();
 	indices->reserve(segmentCount);
 	bounds->reserve(segmentCount);
@@ -190,11 +190,11 @@ BoundingVolume* TerrainParser::generateBoundingVolume(
 	return bs;
 }
 
-vector<GLushort>* TerrainParser::generateSubTerrainIndices(int rowOffset, int colOffset,
+vector<unsigned short>* TerrainParser::generateSubTerrainIndices(int rowOffset, int colOffset,
 		int rows, int cols, int width, int height) {
 	int h = rowOffset + rows < height ? rows :  height - rowOffset - 1;
 	int w = colOffset + cols < width ? cols : width - colOffset - 1;
-	vector<GLushort>* indices = NEW vector<GLushort>();
+	vector<unsigned short>* indices = NEW vector<unsigned short>();
 	indices->reserve(h * w * 6);
 	for (int i = rowOffset; i < h + rowOffset; i++) {
 		for (int j = colOffset; j < w + colOffset; j++) {

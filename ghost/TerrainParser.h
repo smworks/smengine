@@ -57,7 +57,7 @@ public:
 	 * @param width - grid width vertex count.
 	 */
 	void removeVertex(
-			vector<vector<GLushort>*>* indices, vector<float>* vertices, UINT32 row, UINT32 col, UINT32 width);
+			vector<vector<unsigned short>*>* indices, vector<float>* vertices, UINT32 row, UINT32 col, UINT32 width);
 
 	/**
 	 * Creates bounding volume.
@@ -84,7 +84,7 @@ public:
 	 * @param height - height of the original terrain.
 	 * @return Generated indices for sub-terrain.
 	 */
-	vector<GLushort>* generateSubTerrainIndices(
+	vector<unsigned short>* generateSubTerrainIndices(
 		int, int, int, int, int, int);
 
 	/**

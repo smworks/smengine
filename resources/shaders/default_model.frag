@@ -1,35 +1,37 @@
+// Material data.
 uniform vec3 uAmbient;
 uniform vec3 uDiffuse;
+uniform vec3 uSpecular;
+uniform float uSpecIntensity;
+uniform float uTransparency;
+// Eye data.
+uniform vec3 uEyePos;
+varying vec3 varEyeNormal;
 // Texture data.
 uniform sampler2D mainTexture;
 uniform float uMainTexture;
 varying vec2 varTexCoords;
+// Light data.
+uniform vec3 uLightPos[8];
+uniform int uLightCount;
+varying vec4 varPos;
 
-//---------------------------------------------------------
-// Calculates fog factor for specified pixel.
-// Value 1.442695 is the result of log2.
-//---------------------------------------------------------
-/*float fogFactor() {
-	float z = gl_FragCoord.z / gl_FragCoord.w;
-	float fogFactor = exp2(
-		-uFogDensity * uFogDensity * z * z * 1.442695);
-	return clamp(fogFactor, 0.0, 1.0);
-}*/
-
-float linearDepth() {
-	float n = 0.1; // camera z near
-	float f = 300.0; // camera z far
-	float zoverw =gl_FragCoord.z;
-	return (2.0 * n) / (f + n - zoverw * (f - n));
-}
-
-void main(void)
-{
-	float depth = 1.0 - linearDepth();
-	vec4 col = vec4(depth, depth, depth, 1.0);
+void main(void) {
+	vec3 N = normalize(varEyeNormal);
+	vec3 L = normalize(vec3(1.0, 1.0, 1.0));
+	vec3 H = normalize(L + normalize(uEyePos));
 	
+	float df = max(0.0, dot(N, L));
+	
+	vec4 col = vec4(1.0);
+	float sf = max(0.0, dot(N, H));
+	sf = pow(sf, uSpecIntensity);
+	col.xyz = uAmbient + uDiffuse * df + uSpecular * sf;
+	col.w = uTransparency;
+	vec4 colTex = texture2D(mainTexture, varTexCoords);
+		
 	if (uMainTexture > 0.5) {
-		gl_FragColor = col * texture2D(mainTexture, varTexCoords);
+		gl_FragColor = col * colTex;
 	} else {
 		gl_FragColor = col;
 	}

@@ -65,6 +65,9 @@ public:
 	static const string VAL_TERRAIN;
 	static const string VAL_OBJ;
 	static const string VAL_WATER;
+	static const string VAL_POINT;
+	static const string VAL_SPOT;
+	static const string VAL_GLOBAL;
 	static const string ATTR_PHYSICS;
 	static const string ATTR_MASS;
 	static const string ATTR_FRICTION;

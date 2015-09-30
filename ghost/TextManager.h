@@ -50,7 +50,7 @@ public:
 	 */
 	INT32 getMaxHeight(string text);
 public:
-	GLfloat vertices_[18];
+	float vertices_[18];
 private:
 	FT_Library lib_;
 	FT_Error err_;

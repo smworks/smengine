@@ -14,12 +14,6 @@
 
 class Light : public Resource, public Renderable {
 public:
-	static const string ATTR_TYPE;
-	static const string VAL_POINT;
-	static const string VAL_SPOT;
-	static const string VAL_GLOBAL;
-	static const string ATTR_COLOR;
-public:
 	enum LightType {NONE, POINT_LIGHT, SPOT_LIGHT, GLOBAL_LIGHT}; 
 public:
 	Light(ServiceLocator* services);
@@ -29,20 +23,8 @@ public:
 	 * @see Resource
 	 */
 	void release();
-
-	/**
-	 * @see Resource
-	 */
 	SIZE getSize();
-
-	/**
-	 * @see Resource
-	 */
 	Resource::Type getType();
-
-	/**
-	 * @see Resource
-	 */
 	bool isValid();
     
 	/**
@@ -72,8 +54,8 @@ protected:
 	 */
 	bool create();
 private:
-	LightType lightType_;
-	Color color_;
+	LightType lightType;
+	Color color;
 };
 
 #endif

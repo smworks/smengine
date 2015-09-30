@@ -46,10 +46,10 @@ void ModelFactory::createModel(ModelData* md, Attributes& attr, ServiceLocator* 
 	ModelData& model = *md;
 	string file = attr.getString(Resource::ATTR_FILE);
 	if (file.length() == 0) {
-		LOGW("3D model name not specified.");
+		THROWEX("3D model name not specified.");
 	}
 	if (!ObjParser::parse(model, file, sl)) {
-		LOGW("Failed to parse \"%s\" 3D model.", file.c_str());
+		THROWEXEXT("Failed to parse \"%s\" 3D model.", file.c_str());
 	}
 }
 

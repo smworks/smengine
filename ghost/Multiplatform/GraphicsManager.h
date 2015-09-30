@@ -40,6 +40,9 @@ public:
 		SUPPORT_NPOT_TEXTURES, SUPPORT_UINT_INDEX, SUPPORT_COUNT
 	};
 public:
+	GraphicsManager(ServiceLocator* services);
+	virtual ~GraphicsManager();
+
 	/**
 	 * Checks if graphics context is available.
 	 * There might be situations where context is no longer
@@ -179,7 +182,11 @@ public:
 	 * @param count - buffer count.
 	 * @param buffers - array of buffer ids.
 	 */
-	virtual void unsetVertexBuffers(UINT32 count, UINT32*& buffers) = 0; 
+	virtual void unsetVertexBuffers(UINT32 count, UINT32*& buffers) = 0;
+	virtual bool setIndexBuffer(UINT32& id, void* buffer, int size) = 0;
+	virtual void unsetIndexBuffer(UINT32& id) = 0;
+	virtual void clearColorAndDepthBuffers() = 0;
+	virtual void setViewPort(float width, float height) = 0;
 protected:
 	/**
 	 * Checks support for specified extension or attribute.
@@ -189,8 +196,6 @@ public:
 	enum NodeType {NONE, MODEL, SPRITE, TEXT, SPRITE_TEXT, ALL};
 	enum TextureType {T2D, CUBE_MAP};
 public:
-	GraphicsManager(ServiceLocator* services);
-	virtual ~GraphicsManager();
 
 	/** 
 	 * Called to setup object.

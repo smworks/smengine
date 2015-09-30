@@ -34,7 +34,7 @@ DynamicObject::~DynamicObject() {
 
 void DynamicObject::release() {
 	if (cbo_ != 0) {
-		glDeleteBuffers(1, &cbo_);
+		getServiceLocator()->getGraphicsManager()->unsetVertexBuffer(cbo_);
 	}
 	vertices_.clear();
 	animations_.clear();
@@ -130,6 +130,7 @@ Shader* DynamicObject::getDefaultShader() {
 }
 
 void DynamicObject::nextFrame(double time) {
+	GraphicsManager* gm = getServiceLocator()->getGraphicsManager();
 	time_ += time;
 	UINT32 offset = 0;
 	UINT32 frames = 1;
@@ -145,8 +146,7 @@ void DynamicObject::nextFrame(double time) {
 		frame_ = 0;
 	}
 	if (cbo_ != 0) {
-		glDeleteBuffers(1, &cbo_);
-		cbo_ = 0;
+		gm->unsetVertexBuffer(cbo_);
 	}
 	if (frames > 1) {
 		UINT32 nextFrame = frame_ + 1 >= frames ?
@@ -195,17 +195,14 @@ void DynamicObject::nextFrame(double time) {
 			v.uv[1] = uv_[uv++];
 			cbo.push_back(v);
 		}
-		glGenBuffers(1, &cbo_);
-		getServiceLocator()->getGraphicsManager()->bindBuffer(cbo_);
-		glBufferData(GL_ARRAY_BUFFER, cbo.size() * sizeof(VertexPNT), &cbo[0], GL_STATIC_DRAW);
+		gm->setVertexBuffer(cbo_, &cbo[0], cbo.size() * sizeof(VertexPNT));
 		vertexStride_ = sizeof(VertexPNT);
 		posOffset_ = offsetof(VertexPNT, pos);
 		normalOffset_ = offsetof(VertexPNT, normals);
 		uvOffset_ = offsetof(VertexPNT, uv);
 		delete [] vertices;
 		delete [] normals;
-	}
-	else {
+	} else {
 		vector<VertexPNT> cbo;
 		cbo.reserve(vertexCount_);
 		VertexPNT v;
@@ -221,15 +218,12 @@ void DynamicObject::nextFrame(double time) {
 			v.uv[1] = uv_[uv++];
 			cbo.push_back(v);
 		}
-		glGenBuffers(1, &cbo_);
-		getServiceLocator()->getGraphicsManager()->bindBuffer(cbo_);
-		glBufferData(GL_ARRAY_BUFFER, cbo.size() * sizeof(VertexPNT), &cbo[0], GL_STATIC_DRAW);
+		gm->setVertexBuffer(cbo_, &cbo[0], cbo.size() * sizeof(VertexPNT));
 		vertexStride_ = sizeof(VertexPNT);
 		posOffset_ = offsetof(VertexPNT, pos);
 		normalOffset_ = offsetof(VertexPNT, normals);
 		uvOffset_ = offsetof(VertexPNT, uv);
 	}
-
 }
 
 void DynamicObject::setAnimation(string name) {

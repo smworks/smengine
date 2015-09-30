@@ -81,6 +81,21 @@ void NullGraphicsManager::unsetVertexBuffers(UINT32 count, UINT32*& buffers) {
 	buffers = 0;
 }
 
+bool NullGraphicsManager::setIndexBuffer(UINT32& id, void* buffer, int size) {
+	id = 0;
+	return true;
+}
+
+void NullGraphicsManager::unsetIndexBuffer(UINT32& id) {
+	id = 0;
+}
+
+void NullGraphicsManager::clearColorAndDepthBuffers() {
+}
+
+void NullGraphicsManager::setViewPort(float width, float height) {
+}
+
 bool NullGraphicsManager::checkSupport(Support key) {
 	return true;
 }

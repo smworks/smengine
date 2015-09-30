@@ -8,7 +8,9 @@
 #ifndef WINDOWSSOUNDMANAGER_H_
 #define WINDOWSSOUNDMANAGER_H_
 
-#ifdef DISABLE_SOUND
+#include "../SoundManager.h"
+
+#ifndef ENABLE_SOUND
 class WindowsSoundManager : public SoundManager {
 public:
 	WindowsSoundManager() {}
@@ -29,8 +31,6 @@ public:
 #else
 	#pragma comment(lib, "fmodex_vc.lib")
 #endif
-
-#include "../SoundManager.h"
 
 #include <vector>
 #include <algorithm>

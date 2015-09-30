@@ -44,6 +44,10 @@ public:
 	bool setVertexBuffer(UINT32& id, void* buffer, int size);
 	void unsetVertexBuffer(UINT32& id);
 	void unsetVertexBuffers(UINT32 count, UINT32*& buffers);
+	bool setIndexBuffer(UINT32& id, void* buffer, int size);
+	void unsetIndexBuffer(UINT32& id);
+	void clearColorAndDepthBuffers();
+	void setViewPort(float width, float height);
 	bool checkSupport(Support key);
 };
 

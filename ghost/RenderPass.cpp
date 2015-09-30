@@ -43,28 +43,23 @@ void RenderPass::setEnabled(bool state) {
 }
 
 void RenderPass::render(FrameBuffer* read, FrameBuffer* write) {
+	GraphicsManager* gm = services_->getGraphicsManager();
 	static float lastScaleWidth;
 	static float lastScaleHeight;
-	if (!renderToScreen_) {
-		services_->getGraphicsManager()->useFrameBuffer(write->getId());
-	}
-	else {
-		services_->getGraphicsManager()->useFrameBuffer(0);
-	}
-	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-	glViewport(0, 0,
-		int(float(services_->getScreenWidth()) * scaleWidth_),
-		int(float(services_->getScreenHeight()) * scaleHeight_));
+	gm->useFrameBuffer(renderToScreen_ ? 0 : write->getId());
+	gm->setViewPort(
+		services_->getScreenWidth() * scaleWidth_,
+		services_->getScreenHeight() * scaleHeight_);
 	if (renderContent_ != 0) {
-		services_->getGraphicsManager()->renderScene(
+		gm->renderScene(
 			static_cast<GraphicsManager::NodeType>(renderContent_));
 	} else if (!renderToScreen_) {
-		services_->getGraphicsManager()->renderQuad(
+		gm->renderQuad(
 			shader_, read->getColorBuffer(), read->getDepthBuffer(),
 			lastScaleWidth, lastScaleHeight);
 	}
 	if (renderToScreen_ && shader_ != 0) {
-		services_->getGraphicsManager()->renderQuad(
+		gm->renderQuad(
 			shader_, read->getColorBuffer(), read->getDepthBuffer(),
 			lastScaleWidth, lastScaleHeight);
 	}

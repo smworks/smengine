@@ -1,9 +1,4 @@
-﻿/*
- * WindowsGraphicsManager.cpp
- *
- *  Created on: 2012.06.19
- *      Author: Martynas Šustavičius
- */
+﻿#ifdef ENABLE_GRAPHICS
 
 #include "WindowsGraphicsManager.h"
 #include "WindowsFileManager.h"
@@ -414,6 +409,27 @@ void WindowsGraphicsManager::unsetVertexBuffers(UINT32 count, UINT32*& buffers) 
 	buffers = 0;
 }
 
+bool WindowsGraphicsManager::setIndexBuffer(UINT32& id, void* buffer, int size) {
+	if (id == 0) {
+		glGenBuffers(1, &id);
+	}
+	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, id);
+	glBufferData(GL_ELEMENT_ARRAY_BUFFER, size, buffer, GL_STATIC_DRAW);
+	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
+	return !checkGLError("Setting index buffer");
+}
+
+void WindowsGraphicsManager::unsetIndexBuffer(UINT32& id) {
+	unsetVertexBuffer(id);
+}
+
+void WindowsGraphicsManager::clearColorAndDepthBuffers() {
+	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+}
+
+void WindowsGraphicsManager::setViewPort(float width, float height) {
+	glViewport(0, 0, int(width), int(height));
+}
 
 bool WindowsGraphicsManager::checkSupport(Support key) {
 	switch (key) {
@@ -427,3 +443,5 @@ bool WindowsGraphicsManager::checkSupport(Support key) {
 		return false;
 	}
 }
+
+#endif

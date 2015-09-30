@@ -37,30 +37,22 @@ Model::~Model() {
 }
 
 bool Model::create() {
+	GraphicsManager* gm = getServiceLocator()->getGraphicsManager();
 	string model = getAttribute(ATTR_TYPE);
 	modelData = ModelFactory::create(model, getAttributes(), getServiceLocator());
 	setCullFace(modelData->areFacesCulled());
 	// Move data to GPU.
 	// Create combined position, normal and uv buffer object.
-	glGenBuffers(1, &cbo);
-	getServiceLocator()->getGraphicsManager()->bindBuffer(cbo);
-	glBufferData(GL_ARRAY_BUFFER,
-		modelData->getVertexCount() * modelData->getVertexStride(),
-		modelData->getVertices(), GL_STATIC_DRAW);
+	gm->setVertexBuffer(cbo, modelData->getVertices(), modelData->getVertexCount() * modelData->getVertexStride());
 	// Create index buffer object.
 	if (modelData->getIndexCount() > 0) {
-		glGenBuffers(1, &ibo);
-		glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, ibo);
 		if (modelData->getIndexType() == Renderable::INDEX_TYPE_USHORT) {
 			setIndexType(INDEX_TYPE_USHORT);
-			glBufferData(GL_ELEMENT_ARRAY_BUFFER, modelData->getIndexCount() * sizeof(UINT16),
-				modelData->getIndicesShort(), GL_STATIC_DRAW);
+			gm->setVertexBuffer(ibo, modelData->getIndicesShort(), modelData->getIndexCount() * sizeof(UINT16));
 		} else if (modelData->getIndexType() == Renderable::INDEX_TYPE_UINT) {
 			setIndexType(INDEX_TYPE_UINT);
-			glBufferData(GL_ELEMENT_ARRAY_BUFFER, modelData->getIndexCount() * sizeof(UINT32),
-				modelData->getIndicesInt(), GL_STATIC_DRAW);
+			gm->setVertexBuffer(ibo, modelData->getIndicesInt(), modelData->getIndexCount() * sizeof(UINT32));
 		}
-		glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
 	} else {
 		LOGD("Model \"%s\" does not contain indices.", model.c_str());
 	}
@@ -104,12 +96,10 @@ bool Model::create() {
 
 void Model::release() {
 	if (cbo != 0) {
-		glDeleteBuffers(1, &cbo);
-		cbo = 0;
+		getServiceLocator()->getGraphicsManager()->unsetVertexBuffer(cbo);
 	}
 	if (ibo != 0) {
-		glDeleteBuffers(1, &ibo);
-		ibo = 0;
+		getServiceLocator()->getGraphicsManager()->unsetIndexBuffer(ibo);
 	}
 	if (modelData != 0) {
 		for (UINT32 i = 0; i < modelData->getParts().size(); i++) {

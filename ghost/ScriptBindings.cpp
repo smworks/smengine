@@ -242,7 +242,7 @@ int pointerIsOver(lua_State* L) {
 	int argc = lua_gettop(L);
 	Node* node = *(Node**) lua_touserdata(L, argc);
 	lua_pop(L, argc);
-	Input* input = ScriptManager::getServiceLocator()->getInput();
+	Input* input = SM_GET_SL()->getInput();
 	float x = (float) input->getPointerX();
 	float y = (float) input->getPointerY();
 	if (node->getResource()->getType() == Resource::SPRITE) {
@@ -852,6 +852,27 @@ int nodeSetAmbient(lua_State* L) {
 	return 0;
 }
 
+int nodeSetDiffuse(lua_State* L) {
+	Node* node = SM_GET_OBJECT(L, 0, Node);
+	Model* model = dynamic_cast<Model*>(node->getResource());
+	ASSERT(model != 0, "Node does not contain model resource.");
+	ASSERT(SM_GET_ARGUMENT_COUNT(L) == 2, "Method setDiffuse expects 1 parameter of type string.");
+	string diffuse = SM_GET_STRING(L, 1);
+	model->setDiffuse(Color(diffuse));
+	return 0;
+}
+
+int nodeSetSpecular(lua_State* L) {
+	Node* node = SM_GET_OBJECT(L, 0, Node);
+	Model* model = dynamic_cast<Model*>(node->getResource());
+	ASSERT(model != 0, "Node does not contain model resource.");
+	ASSERT(SM_GET_ARGUMENT_COUNT(L) == 2,
+		"Method setSpecular expects 1 parameter of type string.");
+	string specular = SM_GET_STRING(L, 1);
+	model->setSpecular(Color(specular));
+	return 0;
+}
+
 int nodeSetType(lua_State* L) {
 	Node* node = SM_GET_OBJECT(L, 0, Node);
 	Model* model = dynamic_cast<Model*>(node->getResource());
@@ -981,6 +1002,8 @@ void registerNode() {
 	ADD_METHOD(methods, "setMarginBottom", nodeSetMarginBottom);
 	ADD_METHOD(methods, "getMarginBottom", nodeGetMarginBottom);
 	ADD_METHOD(methods, "setAmbient", nodeSetAmbient);
+	ADD_METHOD(methods, "setDiffuse", nodeSetDiffuse);
+	ADD_METHOD(methods, "setSpecular", nodeSetSpecular);
 	ADD_METHOD(methods, "setType", nodeSetType);
     ADD_METHOD(methods, "moveX", nodeMoveX);
     ADD_METHOD(methods, "moveY", nodeMoveY);
@@ -1126,7 +1149,7 @@ int newModel(lua_State* L) {
 	Model* model = static_cast<Model*>(SM_GET_RM()->get(
 		Resource::MODEL, name));
 	if (model == 0) {
-		model = NEW Model(ScriptManager::getServiceLocator());
+		model = NEW Model(SM_GET_SL());
 		SM_GET_RM()->add(name, model);
 	}
 	Node* node = NEW Node(name + "_ModelResource", model);
@@ -1149,7 +1172,7 @@ int newSprite(lua_State* L) {
 	Sprite* sprite = static_cast<Sprite*>(SM_GET_RM()->get(
 		Resource::SPRITE, val));
 	if (sprite == 0) {
-		sprite = NEW Sprite(ScriptManager::getServiceLocator());
+		sprite = NEW Sprite(SM_GET_SL());
 		if (argc == 3 || argc == 4) {
 			float width = SM_GET_FLOAT(L, 1);
 			float height = SM_GET_FLOAT(L, 2);
@@ -1174,8 +1197,8 @@ int newSprite(lua_State* L) {
 		}
 	}
 	Node* node = NEW Node(val, sprite);
-	ScriptManager::getServiceLocator()->getRootNode()->addChild(node);
-	node->setParent(ScriptManager::getServiceLocator()->getRootNode());
+	SM_GET_SL()->getRootNode()->addChild(node);
+	node->setParent(SM_GET_SL()->getRootNode());
 	SM_RETURN_OBJECT(L, "Node", Node, node);
     return 1;
 }
@@ -1377,8 +1400,8 @@ int newGUIText(lua_State* L) {
 		SM_GET_RM()->add(name, text);
 	}
 	Node* node = NEW Node(name + "_TextResource", text);
-	ScriptManager::getServiceLocator()->getRootNode()->addChild(node);
-	node->setParent(ScriptManager::getServiceLocator()->getRootNode());
+	SM_GET_SL()->getRootNode()->addChild(node);
+	node->setParent(SM_GET_SL()->getRootNode());
 	SM_RETURN_OBJECT(L, "Node", Node, node);
     return 1;
 }
@@ -1414,8 +1437,8 @@ int newGUIButton(lua_State* L) {
 	button->create();
 	SM_GET_RM()->add(name, button);
 	Node* node = NEW Node(name, button);
-	ScriptManager::getServiceLocator()->getRootNode()->addChild(node);
-	node->setParent(ScriptManager::getServiceLocator()->getRootNode());
+	SM_GET_SL()->getRootNode()->addChild(node);
+	node->setParent(SM_GET_SL()->getRootNode());
 	SM_GET_SL()->getGUIManager()->refreshNodes(SM_GET_SL()->getRootNode());
 	SM_RETURN_OBJECT(L, "Node", Node, node);
     return 1;

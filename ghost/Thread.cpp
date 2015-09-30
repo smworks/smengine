@@ -19,7 +19,7 @@ Thread::~Thread() {
 }
 
 UINT64 Thread::getId() {
-	return workerThread == 0 ? 0 : workerThread->get_id().hash();
+	return workerThread == 0 ? 0 : hash<thread::id>()(workerThread->get_id());
 }
 
 bool Thread::isRunning() {
@@ -31,7 +31,7 @@ bool Thread::isRunning() {
 }
 
 void Thread::run() {
-	LOGD("Created thread with id: %u.", this_thread::get_id().hash());
+	LOGD("Created thread with id: %u.", hash<thread::id>()(this_thread::get_id()));
 	task->run();
 	workerMutex.lock();
 	running = false;

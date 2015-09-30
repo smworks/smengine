@@ -5,6 +5,8 @@
  *      Author: Martynas Šustavičius
  */
 
+#ifdef ENABLE_GRAPHICS
+
 #include "GraphicsManager.h"
 #include "ServiceLocator.h"
 #include "../Multiplatform/Database.h"
@@ -474,8 +476,7 @@ void GraphicsManager::prepareShader(Shader* shader, Node* node, Mat4 in) {
 	//shader->setVector3(Shader::LIGHT_POS,
 	//	services_->getEnv()->getSunPos()->toArray());
 	// Eye position.
-	shader->setVector3(Shader::EYE_POS,
-		camera_->getPos().toArray());
+	shader->setVector3(Shader::EYE_POS, camera_->getPos().toArray());
 	// Fog color.
 	//if (shader->hasHandle(Shader::FOG_COLOR)) {
 	//	shader->setVector3(Shader::FOG_COLOR,
@@ -787,3 +788,5 @@ bool GraphicsManager::bindBuffer(SIZE id) {
 	glBindBuffer(GL_ARRAY_BUFFER, id);
 	return true;
 }
+
+#endif
