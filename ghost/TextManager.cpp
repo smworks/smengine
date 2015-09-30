@@ -6,6 +6,9 @@
  */
 
 #include "TextManager.h"
+
+#ifdef ENABLE_FONTS
+
 #include "Multiplatform/ServiceLocator.h"
 #include "Multiplatform/FileManager.h"
 #include "Resources/Symbol.h"
@@ -305,3 +308,5 @@ INT32 TextManager::getMaxHeight(string text) {
 	}
 	return max;
 }
+
+#endif

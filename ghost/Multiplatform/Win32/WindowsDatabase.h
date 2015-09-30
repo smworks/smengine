@@ -12,6 +12,16 @@
 #include "../ServiceLocator.h"
 #include "../Database.h"
 
+#ifndef ENABLE_DATABASE
+class WindowsDatabase : public Database {
+public:
+	WindowsDatabase(FileManager* fileManager, const string& name = "") :
+		Database(fileManager, name) {}
+	~WindowsDatabase() {}
+	ResultSet execute(string query) { ResultSet rs; return rs; }
+};
+#else
+
 struct sqlite3;
 struct sqlite3_stmt;
 
@@ -32,4 +42,5 @@ private:
 	int err_;
 };
 
+#endif
 #endif

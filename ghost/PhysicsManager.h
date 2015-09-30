@@ -9,7 +9,7 @@
 #define PHYSICSMANAGER_H_
 
 #include "Multiplatform/Ghost.h"
-#ifdef DISABLE_PHYSICS
+#ifndef ENABLE_PHYSICS
 class PhysicsManager {
 public:
 	PhysicsManager(ServiceLocator* services) {}
@@ -21,12 +21,14 @@ public:
 	void rotate(
 		Node* node, Vec3& angularMomentum, bool linear = false) {}
 	void remove(Node* node) {}
+	bool has(Node* node) { return false; }
 	void updateNode(Node* node) {}
 	Node* rayCast(Vec3& start, Vec3& end) {}
 	void setDebug(bool state) {}
 	void setGraphicsManager(GraphicsManager* gm) {}
 };
 #else
+
 #include "../dependencies/includes/bullet/btBulletDynamicsCommon.h"
 
 class Node;

@@ -5,7 +5,7 @@
  *      Author: Martynas Šustavičius
  */
 
-#ifndef DISABLE_PHYSICS
+#ifdef ENABLE_PHYSICS
 #include "PhysicsManager.h"
 #include "Multiplatform/ServiceLocator.h"
 #include "Multiplatform/GraphicsManager.h"

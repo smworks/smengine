@@ -11,12 +11,25 @@
 #include "Multiplatform/Ghost.h"
 #include "Vec3.h"
 
-#include "../dependencies/includes/freetype/ft2build.h"
-#include "../dependencies/includes/freetype/freetype.h"
-class Shader;
 class ServiceLocator;
 class Texture;
 class Symbol;
+
+#ifndef ENABLE_FONTS
+class TextManager {
+public:
+	TextManager(ServiceLocator* services) {}
+	~TextManager() {}
+	void setFontSize(SIZE size) {}
+	Texture* getText(const string& text, int size) { return 0; }
+	Symbol* getSymbol(char symbol) { return 0; }
+	INT32 getMaxHeight(string text) { return 0; }
+};
+#else
+
+#include "../dependencies/includes/freetype/ft2build.h"
+#include "../dependencies/includes/freetype/freetype.h"
+class Shader;
 
 #define SYMBOL_CACHE_SIZE 256
 
@@ -62,4 +75,5 @@ private:
 	bool error_;
 };
 
+#endif
 #endif

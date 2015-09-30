@@ -1,6 +1,7 @@
-﻿#ifdef ENABLE_GRAPHICS
+﻿#include "WindowsGraphicsManager.h"
 
-#include "WindowsGraphicsManager.h"
+#ifdef ENABLE_GRAPHICS
+
 #include "WindowsFileManager.h"
 #include "../ServiceLocator.h"
 #include "../../Resources/Shader.h"
@@ -442,6 +443,108 @@ bool WindowsGraphicsManager::checkSupport(Support key) {
 	default:
 		return false;
 	}
+}
+
+#else
+
+WindowsGraphicsManager::WindowsGraphicsManager(ServiceLocator* services) : GraphicsManager(services) {
+	LOGD("Created null WindowsGraphicsManager manager.");
+}
+
+WindowsGraphicsManager::~WindowsGraphicsManager() {
+	LOGD("Deleted null graphics manager.");
+}
+
+bool WindowsGraphicsManager::isGraphicsContextAvailable() {
+	return true;
+}
+
+bool WindowsGraphicsManager::setTexture(
+	UINT32& id, UINT8* image, UINT32 width, UINT32 height,
+	bool wrapURepeat, bool wrapVRepeat, bool useMipmaps, int textureType)
+{
+	id = 0;
+	return true;
+}
+
+bool WindowsGraphicsManager::updateTexture(
+	UINT32 id, UINT8* partBuffer, UINT32 rowOffset, UINT32 colOffset,
+	UINT32 width, UINT32 height, bool useMipmaps, int textureType)
+{
+	return true;
+}
+
+bool WindowsGraphicsManager::setCubeMap(
+	UINT32& id, UINT8** images, UINT32 width, UINT32 height,
+	bool wrapURepeat, bool wrapVRepeat, bool useMipmaps)
+{
+	return true;
+}
+
+void WindowsGraphicsManager::unsetTexture(UINT32 id) {}
+
+bool WindowsGraphicsManager::setShader(
+	UINT32& id, string vert, string frag, int handles[])
+{
+	id = 0;
+	return true;
+}
+
+void WindowsGraphicsManager::unsetShader(UINT32 id) {}
+
+void WindowsGraphicsManager::setShaderValue(
+	UINT32 id, int& handle, int type,
+	UINT32 count, void* data)
+{
+	handle = 0;
+}
+
+bool WindowsGraphicsManager::setFrameBuffer(
+	UINT32& id, UINT32& color, UINT32& depth, UINT32 width, UINT32 height)
+{
+	id = 0;
+	color = 0;
+	depth = 0;
+	return true;
+}
+
+void WindowsGraphicsManager::unsetFrameBuffer(UINT32& id, UINT32& color, UINT32& depth) {
+	id = 0;
+}
+
+void WindowsGraphicsManager::useFrameBuffer(UINT32 id) {}
+
+bool WindowsGraphicsManager::setVertexBuffer(UINT32& id, void* buffer, int size) {
+	id = 0;
+	return true;
+}
+
+void WindowsGraphicsManager::unsetVertexBuffer(UINT32& id) {
+	id = 0;
+}
+
+void WindowsGraphicsManager::unsetVertexBuffers(UINT32 count, UINT32*& buffers) {
+	delete[] buffers;
+	buffers = 0;
+}
+
+bool WindowsGraphicsManager::setIndexBuffer(UINT32& id, void* buffer, int size) {
+	id = 0;
+	return true;
+}
+
+void WindowsGraphicsManager::unsetIndexBuffer(UINT32& id) {
+	id = 0;
+}
+
+void WindowsGraphicsManager::clearColorAndDepthBuffers() {
+}
+
+void WindowsGraphicsManager::setViewPort(float width, float height) {
+}
+
+bool WindowsGraphicsManager::checkSupport(Support key) {
+	return true;
 }
 
 #endif

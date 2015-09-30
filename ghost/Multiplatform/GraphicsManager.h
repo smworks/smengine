@@ -8,6 +8,92 @@
 #ifndef GRAPHICSMANAGER_H_
 #define GRAPHICSMANAGER_H_
 
+class ServiceLocator;
+class Shader;
+
+#ifndef ENABLE_GRAPHICS
+class GraphicsManager {
+public:
+	enum Max {
+		MAX_TEXTURE_UNITS, MAX_COMBINED_TEXTURE_UNITS,
+		MAX_TEXTURE_SIZE, MAX_CUBE_MAP_SIZE,
+		MAX_RENDER_BUFFER_SIZE,
+		MAX_VIEWPORT_WIDTH, MAX_VIEWPORT_HEIGHT,
+		MAX_COUNT
+	};
+	enum Support {
+		SUPPORT_NPOT_TEXTURES, SUPPORT_UINT_INDEX, SUPPORT_COUNT
+	};
+public:
+	GraphicsManager(ServiceLocator* services) {}
+	~GraphicsManager() {}
+	virtual bool isGraphicsContextAvailable() = 0;
+	virtual bool setTexture(
+		UINT32& id, UINT8* image, UINT32 width, UINT32 height,
+		bool wrapURepeat, bool wrapVRepeat, bool useMipmaps,
+		int textureType) = 0;
+	virtual bool updateTexture(
+		UINT32 id, UINT8* partBuffer, UINT32 rowOffset, UINT32 colOffset,
+		UINT32 width, UINT32 height, bool useMipmaps, int textureType) = 0;
+	virtual bool setCubeMap(
+		UINT32& id, UINT8** images, UINT32 width, UINT32 height,
+		bool wrapURepeat, bool wrapVRepeat, bool useMipmaps) = 0;
+	virtual void unsetTexture(UINT32 id) = 0;
+	virtual bool setShader(UINT32& id, string vert, string frag, int handles[]) = 0;
+	virtual void unsetShader(UINT32 id) = 0;
+	virtual void setShaderValue(
+		UINT32 id, int& handle, int type,
+		UINT32 count, void* data) = 0;
+	virtual bool setFrameBuffer(
+		UINT32& id, UINT32& color, UINT32& depth, UINT32 width, UINT32 height) = 0;
+	virtual void unsetFrameBuffer(UINT32& id, UINT32& color, UINT32& depth) = 0;
+	virtual void useFrameBuffer(UINT32 id) = 0;
+	virtual bool setVertexBuffer(UINT32& id, void* buffer, int size) = 0;
+	virtual void unsetVertexBuffer(UINT32& id) = 0;
+	virtual void unsetVertexBuffers(UINT32 count, UINT32*& buffers) = 0;
+	virtual bool setIndexBuffer(UINT32& id, void* buffer, int size) = 0;
+	virtual void unsetIndexBuffer(UINT32& id) = 0;
+	virtual void clearColorAndDepthBuffers() = 0;
+	virtual void setViewPort(float width, float height) = 0;
+protected:
+	virtual bool checkSupport(Support key) = 0;
+public:
+	enum NodeType { NONE, MODEL, SPRITE, TEXT, SPRITE_TEXT, ALL };
+	enum TextureType { T2D, CUBE_MAP };
+public:
+	void create() {}
+	void release() {}
+	SIZE getMax(Max key) { return Max::MAX_COMBINED_TEXTURE_UNITS; }
+	bool isSupported(Support key) { return false; }
+	void resize(UINT32 width, UINT32 height) {}
+	void render() {}
+	//void renderGuiText(Node* node) {}
+	//void refreshRenderList() {}
+	//void vertex(float x, float y, float z = 0.0f) {}
+	//void color(float r, float g, float b, float a = 1.0f) {}
+	void renderScene(NodeType type) {}
+	//void renderVertices(Mat4 mat) {}
+	//void renderNode(Node* node, Mat4 mat) {}
+	//bool isOutsideCameraView(Node* node) { return true; }
+	//void prepareShader(Shader* shader, Node* node, Mat4 in);
+	//void prepareMatrix(Node* node, Mat4 in, Mat4 out);
+	//void bindCombinedBufferObject(Renderable* renderable);
+	//void bindCubeMap();
+	//void bindTextures(Shader* shader, int textures[]);
+	//void renderParts(Renderable* renderable, int textures[]);
+	//void drawViaVertices(Renderable* renderable);
+	//void drawViaIndices(Renderable* renderable);
+	//int getRenderType(Renderable* renderable);
+	//void releaseResources(Renderable* renderable);
+	void renderQuad(Shader* shader, UINT32 colorBuffer, UINT32 depthBuffer,
+		float widthScale, float heightScale) {}
+	//void setWindingOrder(int type) {}
+	//void bindTexture(SIZE id, SIZE index = 0, TextureType type = T2D) {}
+	//void useProgram(SIZE id) {}
+	//bool bindBuffer(SIZE id) { return false; }
+};
+#else
+
 #include "Ghost.h"
 #include "../Matrix.h"
 #include "../Color.h"
@@ -18,11 +104,9 @@ class ResourceManager;
 class TextManager;
 class Node;
 class Renderable;
-class Shader;
 class TextureRGBA;
 class RenderPass;
 class FrameBuffer;
-class ServiceLocator;
 
 #define USE_POST_PROCESSING "use_post_processing"
 #define PLANE "plane"
@@ -357,4 +441,5 @@ protected:
 	INT64 startTime_;
 };
 
+#endif
 #endif

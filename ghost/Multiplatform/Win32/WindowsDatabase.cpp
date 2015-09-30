@@ -6,6 +6,9 @@
  */
 
 #include "WindowsDatabase.h"
+
+#ifdef ENABLE_DATABASE
+
 #include "WindowsFileManager.h"
 
 #include "../../../dependencies/includes/sqlite/sqlite3.h"
@@ -86,3 +89,5 @@ void WindowsDatabase::destroyStatement(sqlite3_stmt* stmt) {
 		LOGDBI("Destroying statement.");
 	}
 }
+
+#endif
