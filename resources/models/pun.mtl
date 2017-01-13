@@ -1,0 +1,376 @@
+# 
+# Wavefront material file
+# Converted by the DEEP Exploration  Deep Exploration 5.5 5.5.3.2642 Release
+# Right Hemisphere, LTD
+# http://www.righthemisphere.com/
+# 
+
+newmtl Material__586
+Ka 0.054902 0.054902 0.054902
+Kd 1 1 1
+Ks 0.9 0.9 0.9
+illum 2
+Ns 119.428
+map_Kd H:\\FIATGR~1\\pun\\pun_main.png
+map_bump H:\\FIATGR~1\\pun\\pun_main_nm.png
+bump H:\\FIATGR~1\\pun\\pun_main_nm.png
+map_opacity 
+map_d 
+refl 
+map_kS 
+map_kA 
+map_Ns 
+
+newmtl Material__589
+Ka 0 0 0
+Kd 1 1 1
+Ks 0.9 0.9 0.9
+illum 2
+Ns 68.5935
+map_Kd H:\\FIATGR~1\\pun\\pun_cabin.png
+map_bump 
+bump 
+map_opacity 
+map_d 
+refl 
+map_kS 
+map_kA 
+map_Ns 
+
+newmtl Material__593
+Ka 0 0 0
+Kd 1 1 1
+Ks 0.9 0.9 0.9
+illum 2
+Ns 64
+map_Kd H:\\FIATGR~1\\pun\\pun_lights.png
+map_bump H:\\FIATGR~1\\pun\\pun_lights_nm.png
+bump H:\\FIATGR~1\\pun\\pun_lights_nm.png
+map_opacity H:\\FIATGR~1\\pun\\pun_lights.png
+map_d H:\\FIATGR~1\\pun\\pun_lights.png
+refl 
+map_kS 
+map_kA 
+map_Ns 
+
+newmtl Material3
+Ka 0.00784314 0.0666667 0.0980392
+Kd 1 1 1
+Ks 0.9 0.9 0.9
+illum 2
+Ns 27.8576
+d 0.44
+map_Kd pun_glass.png
+map_bump 
+bump 
+map_opacity pun_glass.png
+map_d pun_glass.png
+refl 
+map_kS 
+map_kA 
+map_Ns 
+
+newmtl Material__596
+Ka 0 0 0
+Kd 1 1 1
+Ks 0.9 0.9 0.9
+illum 2
+Ns 16
+map_Kd H:\\FIATGR~1\\pun\\pun_susp.png
+map_bump 
+bump 
+map_opacity H:\\FIATGR~1\\pun\\pun_susp.png
+map_d H:\\FIATGR~1\\pun\\pun_susp.png
+refl 
+map_kS 
+map_kA 
+map_Ns 
+
+newmtl Material5
+Ka 0.886275 0.533333 0.223529
+Kd 1 1 1
+Ks 0.9 0.9 0.9
+illum 2
+Ns 51.9842
+map_Kd pun_main.png
+map_bump 
+bump 
+map_opacity pun_main.png
+map_d pun_main.png
+refl 
+map_kS 
+map_kA 
+map_Ns 
+
+newmtl Material__598
+Ka 0.0901961 0.0901961 0.0901961
+Kd 1 1 1
+Ks 0.9 0.9 0.9
+illum 2
+Ns 84.4485
+map_Kd pun_main.png
+map_bump 
+bump 
+map_opacity 
+map_d 
+refl 
+map_kS 
+map_kA 
+map_Ns 
+
+newmtl Material__600
+Ka 0.027451 0.027451 0.027451
+Kd 1 1 1
+Ks 0.9 0.9 0.9
+illum 2
+Ns 16
+map_Kd H:\\FIATGR~1\\pun\\pun_main.png
+map_bump H:\\FIATGR~1\\pun\\pun_main_nm.png
+bump H:\\FIATGR~1\\pun\\pun_main_nm.png
+map_opacity 
+map_d 
+refl 
+map_kS 
+map_kA 
+map_Ns 
+
+newmtl HL_glass
+Ka 0.211765 0.211765 0.211765
+Kd 1 1 1
+Ks 0.9 0.9 0.9
+illum 2
+Ns 36.7583
+d 0.3
+map_Kd pun_lights.png
+map_bump 
+bump 
+map_opacity pun_lights.png
+map_d pun_lights.png
+refl 
+map_kS 
+map_kA 
+map_Ns 
+
+newmtl Material__602
+Ka 0 0 0
+Kd 1 1 1
+Ks 1 1 1
+illum 2
+Ns 64
+map_Kd H:\\FIATGR~1\\pun\\pun_main.png
+map_bump H:\\FIATGR~1\\pun\\pun_main_nm.png
+bump H:\\FIATGR~1\\pun\\pun_main_nm.png
+map_opacity 
+map_d 
+refl 
+map_kS 
+map_kA 
+map_Ns 
+
+newmtl Material__603
+Ka 0.588 0.588 0.588
+Kd 1 1 1
+Ks 0.9 0.9 0.9
+illum 2
+Ns 90.5097
+map_Kd pun_lights.png
+map_bump pun_lights_nm.png
+bump pun_lights_nm.png
+map_opacity 
+map_d 
+refl 
+map_kS 
+map_kA 
+map_Ns 
+
+newmtl Material__605
+Ka 0 0 0
+Kd 1 1 1
+Ks 0.9 0.9 0.9
+illum 2
+Ns 64
+map_Kd H:\\FIATGR~1\\pun\\pun_lights.png
+map_bump H:\\FIATGR~1\\pun\\pun_lights_nm.png
+bump H:\\FIATGR~1\\pun\\pun_lights_nm.png
+map_opacity H:\\FIATGR~1\\pun\\pun_lights.png
+map_d H:\\FIATGR~1\\pun\\pun_lights.png
+refl 
+map_kS 
+map_kA 
+map_Ns 
+
+newmtl Material__606
+Ka 0 0 0
+Kd 1 1 1
+Ks 0.9 0.9 0.9
+illum 2
+Ns 64
+map_Kd H:\\FIATGR~1\\pun\\pun_lights.png
+map_bump H:\\FIATGR~1\\pun\\pun_lights_nm.png
+bump H:\\FIATGR~1\\pun\\pun_lights_nm.png
+map_opacity H:\\FIATGR~1\\pun\\pun_lights.png
+map_d H:\\FIATGR~1\\pun\\pun_lights.png
+refl 
+map_kS 
+map_kA 
+map_Ns 
+
+newmtl Material13
+Ka 0 0.109804 0.458824
+Kd 0 0.109804 0.458824
+Ks 0.9 0.9 0.9
+illum 2
+Ns 78.7932
+map_Kd 
+map_bump 
+bump 
+map_opacity 
+map_d 
+refl 
+map_kS 
+map_kA 
+map_Ns 
+
+newmtl Material14
+Ka 0.294118 0.294118 0.294118
+Kd 1 1 1
+Ks 0.9 0.9 0.9
+illum 2
+Ns 119.428
+map_Kd pun_wheel_tm.png
+map_bump 
+bump 
+map_opacity 
+map_d 
+refl 
+map_kS 
+map_kA 
+map_Ns 
+
+newmtl Material__609
+Ka 0.192157 0.192157 0.192157
+Kd 1 1 1
+Ks 1 1 1
+illum 2
+Ns 5.65685
+map_Kd H:\\FIATGR~1\\pun\\pun_wheel_tm.png
+map_bump 
+bump 
+map_opacity H:\\FIATGR~1\\pun\\pun_wheel_tm.png
+map_d H:\\FIATGR~1\\pun\\pun_wheel_tm.png
+refl 
+map_kS 
+map_kA 
+map_Ns 
+
+newmtl Material__610
+Ka 0.192157 0.192157 0.192157
+Kd 1 1 1
+Ks 1 1 1
+illum 2
+Ns 5.65685
+map_Kd H:\\FIATGR~1\\pun\\pun_tread_tm.png
+map_bump 
+bump 
+map_opacity 
+map_d 
+refl 
+map_kS 
+map_kA 
+map_Ns 
+
+newmtl Material__588
+Ka 0.192157 0.192157 0.192157
+Kd 1 1 1
+Ks 1 1 1
+illum 2
+Ns 45.2548
+map_Kd H:\\FIATGR~1\\pun\\pun_wheel_gr.png
+map_bump 
+bump 
+map_opacity H:\\FIATGR~1\\pun\\pun_wheel_gr.png
+map_d H:\\FIATGR~1\\pun\\pun_wheel_gr.png
+refl 
+map_kS 
+map_kA 
+map_Ns 
+
+newmtl Material__590
+Ka 0.192157 0.192157 0.192157
+Kd 1 1 1
+Ks 1 1 1
+illum 2
+Ns 25.9921
+map_Kd H:\\FIATGR~1\\pun\\pun_tread_gr.png
+map_bump H:\\FIATGR~1\\pun\\pun_tread_gr_nm.png
+bump H:\\FIATGR~1\\pun\\pun_tread_gr_nm.png
+map_opacity 
+map_d 
+refl 
+map_kS 
+map_kA 
+map_Ns 
+
+newmtl Material2
+Ka 0.588 0.588 0.588
+Kd 1 1 1
+Ks 0.9 0.9 0.9
+illum 2
+Ns 6.49802
+map_Kd pun_wheel_gr.png
+map_bump 
+bump 
+map_opacity 
+map_d 
+refl 
+map_kS 
+map_kA 
+map_Ns 
+
+newmtl Material
+Ka 0.0784314 1 0.00784314
+Kd 0.0784314 1 0.00784314
+Ks 0.9 0.9 0.9
+illum 2
+Ns 4
+map_Kd 
+map_bump 
+bump 
+map_opacity 
+map_d 
+refl 
+map_kS 
+map_kA 
+map_Ns 
+
+newmtl Material__591
+Ka 0.192157 0.192157 0.192157
+Kd 1 1 1
+Ks 1 1 1
+illum 2
+Ns 5.65685
+map_Kd H:\\FIATGR~1\\pun\\pun_wheel_tm.png
+map_bump 
+bump 
+map_opacity H:\\FIATGR~1\\pun\\pun_wheel_tm.png
+map_d H:\\FIATGR~1\\pun\\pun_wheel_tm.png
+refl 
+map_kS 
+map_kA 
+map_Ns 
+
+newmtl Material__594
+Ka 0.192157 0.192157 0.192157
+Kd 1 1 1
+Ks 1 1 1
+illum 2
+Ns 5.65685
+map_Kd H:\\FIATGR~1\\pun\\pun_tread_tm.png
+map_bump 
+bump 
+map_opacity 
+map_d 
+refl 
+map_kS 
+map_kA 
+map_Ns 

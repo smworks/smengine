@@ -384,7 +384,7 @@ bool ObjParser::parse(ModelData& model, const string& file, ServiceLocator* serv
 	}
 	faceThread = tm->execute(NEW FaceParser(data, &faces));
 	ModelData::Material defMat;
-	defMat.name_ = "default";
+	defMat.setName("default");
 	materials.push_back(defMat);
 	while (true) {
 		lineEnd = obj.find(GHOST_NEWLINE, pos);
@@ -420,9 +420,9 @@ bool ObjParser::parse(ModelData& model, const string& file, ServiceLocator* serv
 				SIZE size = materials.size();
 				bool found = false;
 				for (SIZE i = 0; i < size; i++) {
-					if (materials[i].name_ == arr[1]) {
-						found = true;
-					}
+					//if (materials[i].name_ == arr[1]) {
+					//	found = true;
+					//}
 				}
 				if (found) {
 					if (matSize == 0) { // First element.
@@ -485,11 +485,11 @@ bool ObjParser::parse(ModelData& model, const string& file, ServiceLocator* serv
 		for (UINT32 i = 0; i < size; i++) {
 			for (UINT32 j = 0; j < materials.size(); j++) {
 				MaterialIndex& mi = matIndices[i];
-				if (mi.name_ == materials[j].name_) {
+			/*	if (mi.name_ == materials[j].name_) {
 					for (SIZE k = mi.offset_; k < mi.offset_ + mi.size_; k++) {
 						arrFaces[j].push_back(faces[k]);
 					}
-				}
+				}*/
 			}
 		}
 		faces.clear();
@@ -497,7 +497,7 @@ bool ObjParser::parse(ModelData& model, const string& file, ServiceLocator* serv
 		matIndices.clear();
 		for (UINT32 i = 0; i < arrFaces.size(); i++) {
 			MaterialIndex mi;
-			mi.name_ = materials[i].name_;
+			/*mi.name_ = materials[i].name_;*/
 			mi.offset_ = offset;
 			mi.size_ = arrFaces[i].size();
 			matIndices.push_back(mi);
@@ -624,9 +624,9 @@ bool ObjParser::parse(ModelData& model, const string& file, ServiceLocator* serv
 		MaterialIndex mi = matIndices[i];
 		if (mi.name_.length() > 0) {
 			for (UINT32 j = 0; j < materials.size(); j++) {
-				if (mi.name_ == materials[j].name_) {
+				/*if (mi.name_ == materials[j].name_) {
 					parts[i].material_ = j;
-				}
+				}*/
 			}
 		}
 		parts[i].offset_ = offset;
@@ -873,7 +873,7 @@ bool ObjParser::parseMaterial(ModelData& model, const string& file, ServiceLocat
 				return false;
 			}
 			else {
-				mat.name_ = arr[1];
+				mat.setName(arr[1]);
 			}
 			break;
 		}

@@ -24,13 +24,14 @@ public:
 			specIntensity_(0.0f),
 			transparency_(0.0f)
 		{}
-		string name_;
-		Texture* texture_;
+		char name[256];
 		Color ambient_;
 		Color diffuse_;
 		Color specular_;
 		float specIntensity_;
 		float transparency_;
+		Texture* texture_;
+		void setName(string name);
 	};
 	struct Part {
 		Part() : material_(0), offset_(0), indexCount_(0), bv_(0) {}
@@ -64,21 +65,24 @@ public:
 	vector<Part>& getParts();
 	void setCullFace(bool state);
 	bool areFacesCulled();
+	void serializeToFile(string path);
+	void deserialize(const char* binary);
+	
 private:
-	VertexType vertexType_;
 	UINT32 vertexStride_, posOffset_, normalOffset_, uvOffset_;
+	VertexType vertexType_;
 	SIZE vertexCount_;
 	UINT8* vertices_;
 	int indexType_;
+	SIZE indexCount_;
 	union Indices {
 		UINT16* indicesShort;
 		UINT32* indicesInt;
 	} indices_;
-	SIZE indexCount_;
-	BoundingVolume* boundingVolume_;
 	vector<Material> materials_;
 	vector<Part> parts_;
 	bool facesCulled;
+	BoundingVolume* boundingVolume_;
 };
 
 #endif
