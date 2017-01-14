@@ -5,7 +5,7 @@
  *      Author: Martynas Šustavičius
  */
 
-#ifdef ENABLE_PHYSICS
+
 #include "PhysicsManager.h"
 #include "Multiplatform/ServiceLocator.h"
 #include "Multiplatform/GraphicsManager.h"
@@ -586,4 +586,3 @@ void PhysicsManager::setupAttributes(btRigidBody* body, Attributes& attributes) 
 	body->setDamping(linearDamping, angularDamping);
 	body->setRestitution(restitution);
 }
-#endif

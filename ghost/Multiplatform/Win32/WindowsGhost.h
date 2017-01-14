@@ -8,6 +8,11 @@
 #ifndef WINDOWSGHOST_H_
 #define WINDOWSGHOST_H_
 
+// ENGINE SUBSYSTEMS
+#define ENABLE_FONTS
+#define ENABLE_PHYSICS
+#define ENABLE_DATABASE
+
 #define WIN32_LEAN_AND_MEAN
 #define _CRT_SECURE_CPP_OVERLOAD_STANDARD_NAMES 1
 #define _CRT_SECURE_NO_WARNINGS // Disable warnings for sscanf_s and such.
@@ -120,6 +125,14 @@ void logToFile(char* msg);
 	OUTPUT(buffLine); }
 #ifdef SMART_DEBUG
 	#define LOGD(...) { char buff[8192]; \
+		sprintf_s(buff, __VA_ARGS__); \
+		OUTPUT("DEBUG: "); \
+		OUTPUT(buff); \
+		char buffLine[256]; \
+		sprintf_s(buffLine, 256, " (%s, %d)\n", \
+			__FILE__, __LINE__); \
+		OUTPUT(buffLine); }
+	#define LOGDEXT(...) { char buff[65563]; \
 		sprintf_s(buff, __VA_ARGS__); \
 		OUTPUT("DEBUG: "); \
 		OUTPUT(buff); \

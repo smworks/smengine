@@ -26,6 +26,8 @@ public:
 	Node* rayCast(Vec3& start, Vec3& end) {}
 	void setDebug(bool state) {}
 	void setGraphicsManager(GraphicsManager* gm) {}
+	void setDebugRendering(bool state) {}
+	bool isDebugRenderingEnabled() { return false; }
 };
 #else
 

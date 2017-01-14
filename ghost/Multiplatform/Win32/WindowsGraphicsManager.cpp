@@ -26,7 +26,7 @@ WindowsGraphicsManager::WindowsGraphicsManager(ServiceLocator* services) : Graph
 	LOGD("Version: %s.", getGLString(GL_VERSION));
 	LOGD("Vendor: %s.", getGLString(GL_VENDOR));
 	LOGD("Renderer: %s.", getGLString(GL_RENDERER));
-	LOGD("Extensions: %s.", getGLString(GL_EXTENSIONS));
+	LOGDEXT("Extensions: %s.", getGLString(GL_EXTENSIONS));
 	LOGD("Created Windows graphics manager.");
 }
 

@@ -2,16 +2,17 @@
 
 -- Called when network response is available.
 function eventResponse(response)
+	print("Received Network Response event")
+	print("Content: " .. response:getContent())
+    print("Length: " .. string.len(response:getContent()))
+    print("Got response!")
+    print("Header: " .. response:getHeader())
+    print("Id: " .. response:getId())
 	if response:getId() == 0 then
 		local picture = Texture.new("dante", response)
 		local sprite = Sprite.new("dante", picture)
 		sprite:setPosXY(256.0, 256.0)
 	end
-    --print("Content: " .. response:getContent())
-    --print("Length: " .. string.len(response:getContent()))
-    --print("Got response!")
-    --print("Header: " .. response:getHeader())
-    --print("Id: " .. response:getId())
 end
 
 -- Called when GUI component listeners are activated.
@@ -30,33 +31,38 @@ function start()
     networkManager = getNetworkManager()
 	db = getDB()
     -- HttpRequest
---    request = Request.new("http://upload.wikimedia.org/wikipedia/en/8/84/Dante_transparent.png")
---    request2 = Request.new("http://kentas.lt/index.php")
---    request2:setId(1)
---    networkManager:execute(request)
---    networkManager:execute(request2)
+    request = Request.new("http://smworks.lt/assets/img/smworks.png")
+    -- request2 = Request.new("http://kentas.lt/index.php")
+    -- request2:setId(1)
+    networkManager:execute(request)
+    --networkManager:execute(request2)
 	-- Dimensions
---	width = getScreenWidth()
---	height = getScreenHeight()
---	local offsetX = width * 0.5
---	local offsetY = height * 0.5
---	size = 128.0 * 0.5
+	width = getScreenWidth()
+	height = getScreenHeight()
+	local offsetX = width * 0.5
+	local offsetY = height * 0.5
+	size = 128.0 * 0.5
 	-- Load tiles from database into textures and
 	-- create multidimensional array to represent map.
---	map = {}
---	local table = db:execute("SELECT * FROM map")
---	for i, t in pairs(table) do
---		local n = t["texture"] .. ".png"
---		local text = getTexture(n) == nil and Texture.new(n) or getTexture(n)
---		local tmpSprite = Sprite.new(n, text)
---		tmpSprite:setPosXYZ(t["x"] * size + offsetX, t["y"] * size + offsetY, t["z"])
---		tmpSprite:setScaleXYZ(0.5, 0.5, 0.5)
---		map[t["x"]] = {}
---		map[t["x"]][t["y"]] = t["type"]
---	end
+	map = {}
+	local table = db:execute("SELECT * FROM map")
+	for i, t in pairs(table) do
+		print "yahoo"
+		local n = t["texture"] .. ".png"
+		local text = getTexture(n) == nil and Texture.new(n) or getTexture(n)
+		local tmpSprite = Sprite.new(n, text)
+		tmpSprite:setPosXYZ(t["x"] * size + offsetX, t["y"] * size + offsetY, t["z"])
+		tmpSprite:setScaleXYZ(0.5, 0.5, 0.5)
+		map[t["x"]] = {}
+		map[t["x"]][t["y"]] = t["type"]
+	end
 
+	text = GUIText.new("RandomText")
+	text:setText("SDLKFJFSDLKJ")
+	text:setFontSize(12)
+	text:setMarginLeft(200)
 
-    grassTexture = Texture.new("grass_1.png");
+    grassTexture = Texture.new("grass_1.png")
 
     plane = Model.new("floor")
     plane:setType("plane")
@@ -145,7 +151,7 @@ function start()
     ball:setType("sphere")
     ball:enablePhysics("1.0")
 
-    camera:follow(ball)
+    --camera:follow(ball)
 end
 
 -- Called when program is brought to foreground.

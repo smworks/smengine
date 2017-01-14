@@ -93,6 +93,9 @@ void GUIText::update() {
 			continue;
 		}
 		symbol = getServiceLocator()->getTextManager()->getSymbol(text_[i]);
+		if (symbol == 0) {
+			continue;
+		}
 		startX = posX + getTextOffsetX() + (float) symbolOffset + symbol->getOffsetX();
 		startY = posY + getTextOffsetY() + symbol->getOffsetY() + textOffsetY - size_;
 		float sWidth = (float) symbol->getWidth();

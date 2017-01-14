@@ -784,7 +784,7 @@ int nodeSetWidth(lua_State* L) {
 
 int nodeSetHeight(lua_State* L) {
     Node* node = SM_GET_OBJECT(L, 0, Node);
-	GUISurface* surface = dynamic_cast<GUIText*>(node->getResource());
+	GUISurface* surface = dynamic_cast<GUISurface*>(node->getResource());
 	if (surface == 0) {
 		LOGW("Node does not contain GUISurface resource.");
 		return 0;
