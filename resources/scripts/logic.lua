@@ -44,6 +44,9 @@ function start()
 	size = 128.0 * 0.5
 	-- Load tiles from database into textures and
 	-- create multidimensional array to represent map.
+
+	grassTexture = Texture.new("grass_1.png")
+
 	map = {}
 	local table = db:execute("SELECT * FROM map")
 	for i, t in pairs(table) do
@@ -61,8 +64,6 @@ function start()
 	text:setText("SDLKFJFSDLKJ")
 	text:setFontSize(12)
 	text:setMarginLeft(200)
-
-    grassTexture = Texture.new("grass_1.png")
 
     plane = Model.new("floor")
     plane:setType("plane")
@@ -132,7 +133,7 @@ function start()
     --plane:enablePhysics()
 
     ball = Model.new("ball")
-    ball:setShader(Shader.new("default_model"))
+    ball:setShader(Shader.new("red"))
     ball:setAmbient("#FF0000FF")
     ball:setDiffuse("#00FFFFFF")
     ball:setSpecular("#FFFF00FF")
@@ -151,7 +152,7 @@ function start()
     ball:setType("sphere")
     ball:enablePhysics("1.0")
 
-    --camera:follow(ball)
+    camera:follow(ball)
 end
 
 -- Called when program is brought to foreground.
