@@ -383,9 +383,7 @@ bool ObjParser::parse(ModelData& model, const string& file, ServiceLocator* serv
 		uvThread = tm->execute(NEW UVParser(data, vertices, uvOffset, vertexSize));
 	}
 	faceThread = tm->execute(NEW FaceParser(data, &faces));
-	ModelData::Material defMat;
-	defMat.setName("default");
-	materials.push_back(defMat);
+	
 	while (true) {
 		lineEnd = obj.find(GHOST_NEWLINE, pos);
 		if (lineEnd == string::npos) {
@@ -420,9 +418,9 @@ bool ObjParser::parse(ModelData& model, const string& file, ServiceLocator* serv
 				SIZE size = materials.size();
 				bool found = false;
 				for (SIZE i = 0; i < size; i++) {
-					//if (materials[i].name_ == arr[1]) {
-					//	found = true;
-					//}
+					if (strcmp(materials[i].name, arr[1].c_str()) == 0) {
+						found = true;
+					}
 				}
 				if (found) {
 					if (matSize == 0) { // First element.
@@ -462,6 +460,9 @@ bool ObjParser::parse(ModelData& model, const string& file, ServiceLocator* serv
 		}
 		pos = lineEnd + 1;
 	}
+
+
+
 	tm->join(posThread);
 	if (hasNormals) {
 		tm->join(normalThread);
@@ -473,40 +474,7 @@ bool ObjParser::parse(ModelData& model, const string& file, ServiceLocator* serv
     PROFILE("Finished reading basic data for object: %s.", file.c_str());
 	matInd.size_ = matSize;
 	matIndices.push_back(matInd);
-	// Rearrange faces and material indices, to have as little
-	// material changes as possible during render stage.
-	if (matIndices.size() > materials.size()) {
-		vector<vector<Face> > arrFaces;
-		for (UINT32 i = 0; i < materials.size(); i++) {
-			vector<Face> fac;
-			arrFaces.push_back(fac);
-		}
-		SIZE size = matIndices.size();
-		for (UINT32 i = 0; i < size; i++) {
-			for (UINT32 j = 0; j < materials.size(); j++) {
-				MaterialIndex& mi = matIndices[i];
-			/*	if (mi.name_ == materials[j].name_) {
-					for (SIZE k = mi.offset_; k < mi.offset_ + mi.size_; k++) {
-						arrFaces[j].push_back(faces[k]);
-					}
-				}*/
-			}
-		}
-		faces.clear();
-		UINT32 offset = 0;
-		matIndices.clear();
-		for (UINT32 i = 0; i < arrFaces.size(); i++) {
-			MaterialIndex mi;
-			/*mi.name_ = materials[i].name_;*/
-			mi.offset_ = offset;
-			mi.size_ = arrFaces[i].size();
-			matIndices.push_back(mi);
-			for (UINT32 j = 0; j < arrFaces[i].size(); j++) {
-				faces.push_back(arrFaces[i][j]);
-			}
-			offset += mi.size_;
-		}
-	}
+	rearrangeFacesAndMaterials(matIndices, materials, faces);
 	vector<UINT16>* indexArray = 0;
 	vector<UINT32>* indexArrayInt = 0;
 	UINT32 indexReserve = 0;
@@ -523,8 +491,8 @@ bool ObjParser::parse(ModelData& model, const string& file, ServiceLocator* serv
 		indexArray = NEW vector<UINT16>();
 		indexArray->reserve(indexReserve);
 	}
-	PROFILE("Started optimizations.");
 	vector<float>* vs = NEW vector<float>();
+	PROFILE("Started optimizations.");
 	unordered_map<UniqueKey, int, UniqueKeyHash>* hm = NEW unordered_map<UniqueKey, int, UniqueKeyHash>();
 	unordered_map<UniqueKey, int, UniqueKeyHash>::const_iterator it;
 	UINT32 floatsInVertex = vertexSize / sizeof(float);
@@ -566,7 +534,7 @@ bool ObjParser::parse(ModelData& model, const string& file, ServiceLocator* serv
 					memcpy(&vertex[vInd++], &vertices[offset + sizeof(float)], sizeof(float));
 				}
 				if (useShort) {
-					indexArray->push_back(vs->size() / floatsInVertex);
+					indexArray->push_back((UINT16) (vs->size() / floatsInVertex));
 				}
 				else {
 					indexArrayInt->push_back((UINT32) vs->size() / floatsInVertex);
@@ -624,9 +592,9 @@ bool ObjParser::parse(ModelData& model, const string& file, ServiceLocator* serv
 		MaterialIndex mi = matIndices[i];
 		if (mi.name_.length() > 0) {
 			for (UINT32 j = 0; j < materials.size(); j++) {
-				/*if (mi.name_ == materials[j].name_) {
+				if (strcmp(mi.name_.c_str(), materials[j].name) == 0) {
 					parts[i].material_ = j;
-				}*/
+				}
 			}
 		}
 		parts[i].offset_ = offset;
@@ -654,6 +622,45 @@ bool ObjParser::parse(ModelData& model, const string& file, ServiceLocator* serv
 	model.setBoundingVolume(bounds);
     PROFILE("Finished parsing object: %s.", file.c_str());
 	return true;
+}
+
+void ObjParser::rearrangeFacesAndMaterials(vector<ObjParser::MaterialIndex> &matIndices,
+	vector<ModelData::Material> &materials, vector<ObjParser::Face> &faces)
+{
+	if (matIndices.size() <= materials.size()) {
+		return;
+	}
+
+	vector<vector<Face> > arrFaces;
+	for (UINT32 i = 0; i < materials.size(); i++) {
+		vector<Face> fac;
+		arrFaces.push_back(fac);
+	}
+	SIZE size = matIndices.size();
+	for (UINT32 i = 0; i < size; i++) {
+		for (UINT32 j = 0; j < materials.size(); j++) {
+			MaterialIndex& mi = matIndices[i];
+			if (strcmp(mi.name_.c_str(), materials[j].name) == 0) {
+				for (SIZE k = mi.offset_; k < mi.offset_ + mi.size_; k++) {
+					arrFaces[j].push_back(faces[k]);
+				}
+			}
+		}
+	}
+	faces.clear();
+	UINT32 offset = 0;
+	matIndices.clear();
+	for (UINT32 i = 0; i < arrFaces.size(); i++) {
+		MaterialIndex mi;
+		/*mi.name_ = materials[i].name_;*/
+		mi.offset_ = offset;
+		mi.size_ = arrFaces[i].size();
+		matIndices.push_back(mi);
+		for (UINT32 j = 0; j < arrFaces[i].size(); j++) {
+			faces.push_back(arrFaces[i][j]);
+		}
+		offset += mi.size_;
+	}
 }
 
 /*
@@ -802,11 +809,12 @@ bool ObjParser::parseMaterial(ModelData& model, const string& file, ServiceLocat
 	if (obj.length() == 0) {
 		LOGW("Material %s not found.", file.c_str());
 	}
-	model.getMaterials().push_back(ModelData::Material());
-	ModelData::Material& mat = model.getMaterials()[model.getMaterials().size() - 1];
 	string line;
 	vector<string> arr;
 	size_t lineEnd = 0, pos = 0;
+
+	ModelData::Material mat;
+	mat.setName("default");
 	while (true) {
 		lineEnd = obj.find(GHOST_NEWLINE, pos);
 		if (lineEnd == string::npos) {
@@ -873,11 +881,16 @@ bool ObjParser::parseMaterial(ModelData& model, const string& file, ServiceLocat
 				return false;
 			}
 			else {
+				model.getMaterials().push_back(mat);
+				mat = ModelData::Material();
 				mat.setName(arr[1]);
 			}
 			break;
 		}
 		pos = lineEnd + 1;
 	}
+
+	model.getMaterials().push_back(mat);
+
 	return true;
 }

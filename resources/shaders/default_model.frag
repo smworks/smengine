@@ -26,7 +26,7 @@ void main(void) {
 	vec4 col = vec4(1.0);
 	float sf = max(0.0, dot(N, H));
 	sf = pow(sf, uSpecIntensity);
-	col.xyz = uAmbient + uDiffuse * df + uSpecular * sf;
+	col.xyz = uAmbient * 0.1 + uDiffuse * df + uSpecular * sf;
 	col.w = uTransparency;
 	vec4 colTex = texture2D(mainTexture, varTexCoords);
 		

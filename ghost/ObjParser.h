@@ -51,7 +51,12 @@ private:
 		UINT32& normals, UINT32& uvCoordinates, UINT32& faces, float& maxVertexPos);
 	static bool parseMaterial(
 		ModelData& model, const string& file, ServiceLocator* services);
-
+	/**
+	 * Rearrange faces and material indices, to have as little
+	 * material changes as possible during render stage.
+	 */
+	static void rearrangeFacesAndMaterials(vector<ObjParser::MaterialIndex> &matIndices,
+		vector<ModelData::Material> &materials, vector<ObjParser::Face> &faces);
 };
 
 #endif
