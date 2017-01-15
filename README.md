@@ -57,6 +57,7 @@ end
 
 function update()
 	camera = getCamera()
+	input = getInput()
 
 	local offset = 0.1
 	if input:keyPressed(constants["W"]) then
