@@ -10,6 +10,11 @@
 
 #include "Multiplatform/Ghost.h"
 #ifndef ENABLE_PHYSICS
+class Node;
+class Vec3;
+class ServiceLocator;
+class GraphicsManager;
+
 class PhysicsManager {
 public:
 	PhysicsManager(ServiceLocator* services) {}

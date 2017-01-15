@@ -15,6 +15,7 @@
 #include "../Utils.h"
 #include "../Node.h"
 #include "../Multiplatform/GraphicsManager.h"
+#include "../Multiplatform/FileManager.h"
 
 ModelData* ModelFactory::create(string model, Attributes& attr, ServiceLocator* sl) {
 	ModelData* md = NEW ModelData();
@@ -48,9 +49,18 @@ void ModelFactory::createModel(ModelData* md, Attributes& attr, ServiceLocator* 
 	if (file.length() == 0) {
 		THROWEX("3D model name not specified.");
 	}
+
+
+
 	if (!ObjParser::parse(model, file, sl)) {
 		THROWEXEXT("Failed to parse \"%s\" 3D model.", file.c_str());
 	}
+
+	//char* bytes;
+	//SIZE size;
+	//sl->getFileManager()->loadRaw(bytes, size, (GHOST_MODELS + file).c_str());
+	//md->deserialize(sl, bytes);
+	//delete[] bytes;
 }
 
 void ModelFactory::createTerrain(ModelData* md, Attributes& attr, ServiceLocator* sl) {

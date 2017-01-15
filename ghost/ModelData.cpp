@@ -6,8 +6,10 @@
  */
 
 #include "ModelData.h"
-#include "BoundingVolume.h"
+#include "BoundingSphere.h"
+#include "BoundingBox.h"
 #include "Resources/Renderable.h"
+#include "Resources/Texture.h"
 
 ModelData::ModelData() :
 	vertexType_(VERTEX_TYPE_COUNT),
@@ -171,7 +173,7 @@ void ModelData::serializeToFile(string path) {
 	of.write((char*)&normalOffset_, sizeof(UINT32));
 	of.write((char*)&uvOffset_, sizeof(UINT32));
 	of.write((char*)&vertexCount_, sizeof(SIZE));
-	of.write((char*)vertices_, vertexCount_ * sizeof(UINT8));
+	of.write((char*)vertices_, vertexCount_ * sizeof(float));
 	of.write((char*)&indexType_, sizeof(int));
 	of.write((char*)&indexCount_, sizeof(SIZE));
 	if (indexType_ == Renderable::INDEX_TYPE_USHORT) {
@@ -188,22 +190,49 @@ void ModelData::serializeToFile(string path) {
 		of.write((char*)&m.specular_, sizeof(Color));
 		of.write((char*)&m.specIntensity_, sizeof(float));
 		of.write((char*)&m.transparency_, sizeof(float));
-		of.write((char*)&m.texture_, sizeof(Texture*));
+		
+		SIZE textureNameLength = m.texture_ == 0 ? 0 : m.texture_->getName().size();
+		of.write((char*)&textureNameLength, sizeof(SIZE));
+
+		if (textureNameLength > 0) {
+			string textureName = m.texture_->getName();
+			of.write(textureName.c_str(), textureNameLength);
+		}
 	}
 	SIZE partCount = parts_.size();
-	LOGI("Part count: %d", partCount);
 	of.write((char*)&partCount, sizeof(SIZE));
 	for (Part& p : parts_) {
 		of.write((char*)&p.material_, sizeof(SIZE));
 		of.write((char*)&p.offset_, sizeof(SIZE));
 		of.write((char*)&p.indexCount_, sizeof(SIZE));
-		of.write((char*)&p.bv_, sizeof(BoundingVolume*));
+
+		BoundingVolume::Type type = p.bv_ == 0 ? BoundingVolume::UNKNOWN : p.bv_->getType();
+		of.write((char*)&type, sizeof(BoundingVolume::Type));
+		if (type == BoundingVolume::SPHERE) {
+			float radius = ((BoundingSphere*)p.bv_)->getRadius(Vec3(1.0));
+			of.write((char*)&radius, sizeof(float));
+		}
+		else if (type == BoundingVolume::BOX) {
+			Vec3 sizes = ((BoundingBox*)p.bv_)->getSizes();
+			of.write((char*)&sizes, sizeof(Vec3));
+		}
 	}
+	BoundingVolume::Type type = boundingVolume_ == 0 ? BoundingVolume::UNKNOWN : boundingVolume_->getType();
+	of.write((char*)&type, sizeof(BoundingVolume::Type));
+	if (type == BoundingVolume::SPHERE) {
+		float radius = ((BoundingSphere*)boundingVolume_)->getRadius(Vec3(1.0));
+		of.write((char*)&radius, sizeof(float));
+	}
+	else if (type == BoundingVolume::BOX) {
+		Vec3 sizes = ((BoundingBox*)boundingVolume_)->getSizes();
+		of.write((char*)&sizes, sizeof(Vec3));
+	}
+	of.write("sm", sizeof(char) * 2);
 	of.close();
 	PROFILE("Serialization to file finished.");
 }
 
-void ModelData::deserialize(const char* binary) {
+void ModelData::deserialize(ServiceLocator* sl, const char* binary) {
 	PROFILE("Deserializing binary to model");
 	UINT32 offset = 0;
 	memcpy(&vertexStride_, binary, sizeof(UINT32));
@@ -212,9 +241,10 @@ void ModelData::deserialize(const char* binary) {
 	memcpy(&normalOffset_, binary + (offset += sizeof(UINT32)), sizeof(UINT32));
 	memcpy(&uvOffset_, binary + (offset += sizeof(UINT32)), sizeof(UINT32));
 	memcpy(&vertexCount_, binary + (offset += sizeof(UINT32)), sizeof(SIZE));
-	vertices_ = NEW UINT8[vertexCount_];
-	memcpy(vertices_, binary + (offset += sizeof(SIZE)), vertexCount_);
-	memcpy(&indexType_, binary + (offset += vertexCount_), sizeof(int));
+	SIZE sizeOfVertices = vertexCount_ * sizeof(float);
+	vertices_ = NEW UINT8[sizeOfVertices];
+	memcpy(vertices_, binary + (offset += sizeof(SIZE)), sizeOfVertices);
+	memcpy(&indexType_, binary + (offset += sizeOfVertices), sizeof(int));
 	memcpy(&indexCount_, binary + (offset += sizeof(int)), sizeof(SIZE));
 	if (indexType_ == Renderable::INDEX_TYPE_USHORT) {
 		indices_.indicesShort = NEW UINT16[indexCount_];
@@ -237,9 +267,19 @@ void ModelData::deserialize(const char* binary) {
 		memcpy(&m.specular_, binary + (offset += sizeof(Color)), sizeof(Color));
 		memcpy(&m.specIntensity_, binary + (offset += sizeof(Color)), sizeof(float));
 		memcpy(&m.transparency_, binary + (offset += sizeof(float)), sizeof(float));
-		memcpy(&m.texture_, binary + (offset += sizeof(float)), sizeof(Texture*));
-		m.texture_ = 0;
-		offset += sizeof(Texture*);
+
+		SIZE textureNameLength;
+		memcpy(&textureNameLength, binary + (offset += sizeof(float)), sizeof(SIZE));
+		offset += sizeof(SIZE);
+
+		if (textureNameLength > 0) {
+			char* name = NEW char[textureNameLength];
+			memcpy(name, binary + offset, textureNameLength);
+			offset += textureNameLength;
+			m.texture_ = Texture::load(sl, string(name, textureNameLength));
+			delete[] name;
+		}
+
 		materials_.push_back(m);
 	}
 
@@ -252,13 +292,48 @@ void ModelData::deserialize(const char* binary) {
 		memcpy(&p.material_, binary + offset, sizeof(SIZE));
 		memcpy(&p.offset_, binary + (offset += sizeof(SIZE)), sizeof(SIZE));
 		memcpy(&p.indexCount_, binary + (offset += sizeof(SIZE)), sizeof(SIZE));
-		memcpy(&p.bv_, binary + (offset += sizeof(SIZE)), sizeof(BoundingVolume*));
-		p.bv_ = 0;
-		offset += sizeof(BoundingVolume*);
+		
+		BoundingVolume::Type type;
+		memcpy(&type, binary + (offset += sizeof(SIZE)), sizeof(BoundingVolume::Type));
+		offset += sizeof(BoundingVolume::Type);
+
+		if (type == BoundingVolume::SPHERE) {
+			float radius;
+			memcpy(&radius, binary + offset, sizeof(float));
+			p.bv_ = NEW BoundingSphere(radius);
+			offset += sizeof(float);
+		}
+		else if (type == BoundingVolume::BOX) {
+			Vec3 sizes;
+			memcpy(&sizes, binary + offset, sizeof(Vec3));
+			p.bv_ = new BoundingBox(sizes);
+			offset += sizeof(Vec3);
+		}
+		
 		parts_.push_back(p);
 	}
 
+	BoundingVolume::Type type;
+	memcpy(&type, binary + offset, sizeof(BoundingVolume::Type));
+	offset += sizeof(BoundingVolume::Type);
+
+	if (type == BoundingVolume::SPHERE) {
+		float radius;
+		memcpy(&radius, binary + offset, sizeof(float));
+		boundingVolume_ = NEW BoundingSphere(radius);
+		offset += sizeof(float);
+	}
+	else if (type == BoundingVolume::BOX) {
+		Vec3 sizes;
+		memcpy(&sizes, binary + offset, sizeof(Vec3));
+		boundingVolume_ = new BoundingBox(sizes);
+		offset += sizeof(Vec3);
+	}
+
+	char sm[2];
+	memcpy(sm, binary + offset, sizeof(char) * 2);
 	PROFILE("Deserialization is finished");
+	ASSERT(sm[0] == 's' && sm[1] == 'm', "Unable to verify deserialized model");
 }
 
 void ModelData::Material::setName(string name) {

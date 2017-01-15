@@ -28,6 +28,7 @@
 #include "../dependencies/includes/bullet/BulletCollision/Gimpact/btGImpactCollisionAlgorithm.h"
 #include "../dependencies/includes/bullet/BulletCollision/CollisionShapes/btHeightfieldTerrainShape.h"
 
+#ifdef ENABLE_PHYSICS
 DebugDraw::DebugDraw(GraphicsManager* gm) : gm_(gm), debugMode_(0) {}
 
 void DebugDraw::drawLine(
@@ -586,3 +587,5 @@ void PhysicsManager::setupAttributes(btRigidBody* body, Attributes& attributes) 
 	body->setDamping(linearDamping, angularDamping);
 	body->setRestitution(restitution);
 }
+
+#endif

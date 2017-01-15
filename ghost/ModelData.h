@@ -14,6 +14,7 @@
 
 class BoundingVolume;
 class Texture;
+class ServiceLocator;
 
 class ModelData {
 public:
@@ -66,7 +67,7 @@ public:
 	void setCullFace(bool state);
 	bool areFacesCulled();
 	void serializeToFile(string path);
-	void deserialize(const char* binary);
+	void deserialize(ServiceLocator* sl, const char* binary);
 	
 private:
 	UINT32 vertexStride_, posOffset_, normalOffset_, uvOffset_;

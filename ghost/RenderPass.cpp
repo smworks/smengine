@@ -47,7 +47,7 @@ void RenderPass::render(FrameBuffer* read, FrameBuffer* write) {
 	static float lastScaleWidth;
 	static float lastScaleHeight;
 	gm->useFrameBuffer(renderToScreen_ ? 0 : write->getId());
-	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+	gm->clearColorAndDepthBuffers();
 	gm->setViewPort(
 		services_->getScreenWidth() * scaleWidth_,
 		services_->getScreenHeight() * scaleHeight_);

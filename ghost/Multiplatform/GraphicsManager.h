@@ -69,8 +69,8 @@ public:
 	void render() {}
 	//void renderGuiText(Node* node) {}
 	//void refreshRenderList() {}
-	//void vertex(float x, float y, float z = 0.0f) {}
-	//void color(float r, float g, float b, float a = 1.0f) {}
+	void vertex(float x, float y, float z = 0.0f) {}
+	void color(float r, float g, float b, float a = 1.0f) {}
 	void renderScene(NodeType type) {}
 	//void renderVertices(Mat4 mat) {}
 	//void renderNode(Node* node, Mat4 mat) {}

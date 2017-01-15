@@ -14,7 +14,7 @@
 
 class BoundingVolume {
 public:
-	enum Type {SPHERE, BOX, MESH, CAPSULE, TERRAIN};
+	enum Type {SPHERE, BOX, MESH, CAPSULE, TERRAIN, UNKNOWN};
 	enum State {INSIDE, OUTSIDE, INTERSECT};
 public:
 	BoundingVolume() {}
