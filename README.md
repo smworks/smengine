@@ -56,6 +56,8 @@ end
 #!Lua
 
 function update()
+	camera = getCamera()
+
 	local offset = 0.1
 	if input:keyPressed(constants["W"]) then
 		camera:moveZ(-offset)
