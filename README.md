@@ -48,6 +48,35 @@ function quit()
 end
 ```
 
+## Camera controls ##
+
+### Moving along camera directions and looking around ###
+
+```
+#!Lua
+
+function update()
+	local offset = 0.1
+	if input:keyPressed(constants["W"]) then
+		camera:moveZ(-offset)
+	end
+	if input:keyPressed(constants["S"]) then
+		camera:moveZ(offset)
+	end
+	if input:keyPressed(constants["A"]) then
+		camera:moveX(-offset)
+	end
+	if input:keyPressed(constants["D"]) then
+		camera:moveX(offset)
+	end
+
+    camera:addRotX(input:getPointerDeltaY() * 0.2)
+    camera:addRotY(input:getPointerDeltaX() * 0.2)
+end
+
+```
+
+
 ## Working with 3D models ##
 
 ### Loading simple plane with texture ###
