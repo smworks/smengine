@@ -173,7 +173,25 @@ void ModelData::serializeToFile(string path) {
 	of.write((char*)&normalOffset_, sizeof(UINT32));
 	of.write((char*)&uvOffset_, sizeof(UINT32));
 	of.write((char*)&vertexCount_, sizeof(SIZE));
-	of.write((char*)vertices_, vertexCount_ * sizeof(float));
+
+	SIZE sizeOfVertices;
+	if (vertexType_ == P) {
+		sizeOfVertices = vertexCount_ * sizeof(VertexP);
+	}
+	else if (vertexType_ == PN) {
+		sizeOfVertices = vertexCount_ * sizeof(VertexPN);
+	}
+	else if (vertexType_ == PT) {
+		sizeOfVertices = vertexCount_ * sizeof(VertexPT);
+	}
+	else if (vertexType_ == PNT) {
+		sizeOfVertices = vertexCount_ * sizeof(VertexPNT);
+	}
+	else {
+		LOGE("Unable to serialize model with unknown vertex type");
+	}
+
+	of.write((char*)vertices_, sizeOfVertices);
 	of.write((char*)&indexType_, sizeof(int));
 	of.write((char*)&indexCount_, sizeof(SIZE));
 	if (indexType_ == Renderable::INDEX_TYPE_USHORT) {
@@ -241,7 +259,24 @@ void ModelData::deserialize(ServiceLocator* sl, const char* binary) {
 	memcpy(&normalOffset_, binary + (offset += sizeof(UINT32)), sizeof(UINT32));
 	memcpy(&uvOffset_, binary + (offset += sizeof(UINT32)), sizeof(UINT32));
 	memcpy(&vertexCount_, binary + (offset += sizeof(UINT32)), sizeof(SIZE));
-	SIZE sizeOfVertices = vertexCount_ * sizeof(float);
+
+	SIZE sizeOfVertices;
+	if (vertexType_ == P) {
+		sizeOfVertices = vertexCount_ * sizeof(VertexP);
+	}
+	else if (vertexType_ == PN) {
+		sizeOfVertices = vertexCount_ * sizeof(VertexPN);
+	}
+	else if (vertexType_ == PT) {
+		sizeOfVertices = vertexCount_ * sizeof(VertexPT);
+	}
+	else if (vertexType_ == PNT) {
+		sizeOfVertices = vertexCount_ * sizeof(VertexPNT);
+	}
+	else {
+		LOGE("Unable to deserialize model with unknown vertex type");
+	}
+
 	vertices_ = NEW UINT8[sizeOfVertices];
 	memcpy(vertices_, binary + (offset += sizeof(SIZE)), sizeOfVertices);
 	memcpy(&indexType_, binary + (offset += sizeOfVertices), sizeof(int));

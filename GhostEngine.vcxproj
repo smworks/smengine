@@ -67,7 +67,7 @@
       <BrowseInformation>true</BrowseInformation>
       <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
       <AdditionalIncludeDirectories>%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-      <AdditionalOptions>/Bv /D ENABLE_GRAPHICS /D ENABLE_SOUND %(AdditionalOptions)</AdditionalOptions>
+      <AdditionalOptions>/Bv /D ENABLE_GRAPHICS /D ENABLE_SOUND /D ENABLE_FONTS /D ENABLE_SOUND /D ENABLE_PHYSICS /D ENABLE_DATABASE %(AdditionalOptions)</AdditionalOptions>
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
       <MinimalRebuild>false</MinimalRebuild>
     </ClCompile>
