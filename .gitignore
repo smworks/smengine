@@ -32,5 +32,8 @@ SMart Engine/*
 # Release projects.
 !releases/
 # Utility projects
+!utils/
 !utils/ModelSerializer/
-!utils/ModelSerializer/*
+utils/ModelSerializer/Debug
+utils/ModelSerializer/Release
+utils/ModelSerializer/log.txt

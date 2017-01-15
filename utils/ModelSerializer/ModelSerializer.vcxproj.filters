@@ -1,0 +1,845 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Source Files">
+      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
+      <Extensions>cpp;c;cc;cxx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
+    </Filter>
+    <Filter Include="Header Files">
+      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
+      <Extensions>h;hh;hpp;hxx;hm;inl;inc;xsd</Extensions>
+    </Filter>
+    <Filter Include="Resource Files">
+      <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
+      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
+    </Filter>
+    <Filter Include="Source Files\ghost">
+      <UniqueIdentifier>{4100706d-9ddb-48d9-8056-44ed0737244b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\ghost\Multiplatform">
+      <UniqueIdentifier>{55d6697d-0713-4b5f-ba27-7c5853711e32}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\ghost\Multiplatform\Win32">
+      <UniqueIdentifier>{23f9f8f7-29df-4454-8016-832e94f5efb1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\ghost\Resources">
+      <UniqueIdentifier>{4e26fe30-f049-458b-b98e-e2007cee29fe}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\ghost\Network">
+      <UniqueIdentifier>{3f9be78f-146c-4822-ac82-805bce36b7c2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\ghost\lua">
+      <UniqueIdentifier>{0f25a2f3-cfd5-4abf-b63d-fd06a4e217ea}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\ghost\LibPng">
+      <UniqueIdentifier>{3b2e2fd5-edee-4ab1-9b91-c6f4f6a44241}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\ghost\ZLib">
+      <UniqueIdentifier>{b7524c5f-1307-453e-a966-cb23e3298d29}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="main.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\ghost\Multiplatform\Win32\WindowsDatabase.cpp">
+      <Filter>Source Files\ghost\Multiplatform\Win32</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\ghost\Multiplatform\Win32\WindowsFileManager.cpp">
+      <Filter>Source Files\ghost\Multiplatform\Win32</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\ghost\Multiplatform\Win32\WindowsGhost.cpp">
+      <Filter>Source Files\ghost\Multiplatform\Win32</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\ghost\Multiplatform\Win32\WindowsGraphicsManager.cpp">
+      <Filter>Source Files\ghost\Multiplatform\Win32</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\ghost\Multiplatform\Win32\WindowsServiceLocator.cpp">
+      <Filter>Source Files\ghost\Multiplatform\Win32</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\ghost\Multiplatform\Win32\WindowsSocket.cpp">
+      <Filter>Source Files\ghost\Multiplatform\Win32</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\ghost\Multiplatform\Win32\WindowsSoundManager.cpp">
+      <Filter>Source Files\ghost\Multiplatform\Win32</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\ghost\Multiplatform\Database.cpp">
+      <Filter>Source Files\ghost\Multiplatform</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\ghost\Multiplatform\GraphicsManager.cpp">
+      <Filter>Source Files\ghost\Multiplatform</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\ghost\Multiplatform\NullGraphicsManager.cpp">
+      <Filter>Source Files\ghost\Multiplatform</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\ghost\Multiplatform\ServiceLocator.cpp">
+      <Filter>Source Files\ghost\Multiplatform</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\ghost\Resources\AtlasTexture.cpp">
+      <Filter>Source Files\ghost\Resources</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\ghost\Resources\Attributes.cpp">
+      <Filter>Source Files\ghost\Resources</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\ghost\Resources\CubeMap.cpp">
+      <Filter>Source Files\ghost\Resources</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\ghost\Resources\DynamicObject.cpp">
+      <Filter>Source Files\ghost\Resources</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\ghost\Resources\Geometry.cpp">
+      <Filter>Source Files\ghost\Resources</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\ghost\Resources\GUIButton.cpp">
+      <Filter>Source Files\ghost\Resources</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\ghost\Resources\GUIImage.cpp">
+      <Filter>Source Files\ghost\Resources</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\ghost\Resources\GUIInput.cpp">
+      <Filter>Source Files\ghost\Resources</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\ghost\Resources\GUISurface.cpp">
+      <Filter>Source Files\ghost\Resources</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\ghost\Resources\GUIText.cpp">
+      <Filter>Source Files\ghost\Resources</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\ghost\Resources\Light.cpp">
+      <Filter>Source Files\ghost\Resources</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\ghost\Resources\Model.cpp">
+      <Filter>Source Files\ghost\Resources</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\ghost\Resources\ModelFactory.cpp">
+      <Filter>Source Files\ghost\Resources</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\ghost\Resources\Resource.cpp">
+      <Filter>Source Files\ghost\Resources</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\ghost\Resources\Scenario.cpp">
+      <Filter>Source Files\ghost\Resources</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\ghost\Resources\Script.cpp">
+      <Filter>Source Files\ghost\Resources</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\ghost\Resources\Shader.cpp">
+      <Filter>Source Files\ghost\Resources</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\ghost\Resources\Sound.cpp">
+      <Filter>Source Files\ghost\Resources</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\ghost\Resources\Sprite.cpp">
+      <Filter>Source Files\ghost\Resources</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\ghost\Resources\Symbol.cpp">
+      <Filter>Source Files\ghost\Resources</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\ghost\Resources\Texture.cpp">
+      <Filter>Source Files\ghost\Resources</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\ghost\Resources\TextureMono.cpp">
+      <Filter>Source Files\ghost\Resources</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\ghost\Resources\TextureRGB.cpp">
+      <Filter>Source Files\ghost\Resources</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\ghost\Resources\TextureRGBA.cpp">
+      <Filter>Source Files\ghost\Resources</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\ghost\Network\HttpRequest.cpp">
+      <Filter>Source Files\ghost\Network</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\ghost\Network\HttpResponse.cpp">
+      <Filter>Source Files\ghost\Network</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\ghost\Network\NetworkManager.cpp">
+      <Filter>Source Files\ghost\Network</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\ghost\Network\Request.cpp">
+      <Filter>Source Files\ghost\Network</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\ghost\Network\SocketParams.cpp">
+      <Filter>Source Files\ghost\Network</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\ghost\BoundingBox.cpp">
+      <Filter>Source Files\ghost</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\ghost\BoundingSphere.cpp">
+      <Filter>Source Files\ghost</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\ghost\Camera.cpp">
+      <Filter>Source Files\ghost</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\ghost\Color.cpp">
+      <Filter>Source Files\ghost</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\ghost\Console.cpp">
+      <Filter>Source Files\ghost</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\ghost\Environment.cpp">
+      <Filter>Source Files\ghost</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\ghost\FrameBuffer.cpp">
+      <Filter>Source Files\ghost</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\ghost\GUIManager.cpp">
+      <Filter>Source Files\ghost</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\ghost\Input.cpp">
+      <Filter>Source Files\ghost</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\ghost\Matrix.cpp">
+      <Filter>Source Files\ghost</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\ghost\MD2Parser.cpp">
+      <Filter>Source Files\ghost</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\ghost\ModelData.cpp">
+      <Filter>Source Files\ghost</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\ghost\Node.cpp">
+      <Filter>Source Files\ghost</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\ghost\NodeManager.cpp">
+      <Filter>Source Files\ghost</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\ghost\PhysicsManager.cpp">
+      <Filter>Source Files\ghost</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\ghost\Quaternion.cpp">
+      <Filter>Source Files\ghost</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\ghost\RenderPass.cpp">
+      <Filter>Source Files\ghost</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\ghost\ResourceManager.cpp">
+      <Filter>Source Files\ghost</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\ghost\ScenarioManager.cpp">
+      <Filter>Source Files\ghost</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\ghost\SceneManager.cpp">
+      <Filter>Source Files\ghost</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\ghost\ScriptBindings.cpp">
+      <Filter>Source Files\ghost</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\ghost\ScriptManager.cpp">
+      <Filter>Source Files\ghost</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\ghost\Settings.cpp">
+      <Filter>Source Files\ghost</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\ghost\ShapeParser.cpp">
+      <Filter>Source Files\ghost</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\ghost\Shapes.cpp">
+      <Filter>Source Files\ghost</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\ghost\TerrainParser.cpp">
+      <Filter>Source Files\ghost</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\ghost\TextManager.cpp">
+      <Filter>Source Files\ghost</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\ghost\TextureAtlas.cpp">
+      <Filter>Source Files\ghost</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\ghost\Thread.cpp">
+      <Filter>Source Files\ghost</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\ghost\ThreadManager.cpp">
+      <Filter>Source Files\ghost</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\ghost\Utils.cpp">
+      <Filter>Source Files\ghost</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\ghost\Vec3.cpp">
+      <Filter>Source Files\ghost</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\ghost\WaterLoader.cpp">
+      <Filter>Source Files\ghost</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\ghost\Xml.cpp">
+      <Filter>Source Files\ghost</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\dependencies\includes\lua\lapi.c">
+      <Filter>Source Files\ghost\lua</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\dependencies\includes\lua\lauxlib.c">
+      <Filter>Source Files\ghost\lua</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\dependencies\includes\lua\lbaselib.c">
+      <Filter>Source Files\ghost\lua</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\dependencies\includes\lua\lbitlib.c">
+      <Filter>Source Files\ghost\lua</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\dependencies\includes\lua\lcode.c">
+      <Filter>Source Files\ghost\lua</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\dependencies\includes\lua\lcorolib.c">
+      <Filter>Source Files\ghost\lua</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\dependencies\includes\lua\lctype.c">
+      <Filter>Source Files\ghost\lua</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\dependencies\includes\lua\ldblib.c">
+      <Filter>Source Files\ghost\lua</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\dependencies\includes\lua\ldebug.c">
+      <Filter>Source Files\ghost\lua</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\dependencies\includes\lua\ldo.c">
+      <Filter>Source Files\ghost\lua</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\dependencies\includes\lua\ldump.c">
+      <Filter>Source Files\ghost\lua</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\dependencies\includes\lua\lfunc.c">
+      <Filter>Source Files\ghost\lua</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\dependencies\includes\lua\lgc.c">
+      <Filter>Source Files\ghost\lua</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\dependencies\includes\lua\linit.c">
+      <Filter>Source Files\ghost\lua</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\dependencies\includes\lua\liolib.c">
+      <Filter>Source Files\ghost\lua</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\dependencies\includes\lua\llex.c">
+      <Filter>Source Files\ghost\lua</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\dependencies\includes\lua\lmathlib.c">
+      <Filter>Source Files\ghost\lua</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\dependencies\includes\lua\lmem.c">
+      <Filter>Source Files\ghost\lua</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\dependencies\includes\lua\loadlib.c">
+      <Filter>Source Files\ghost\lua</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\dependencies\includes\lua\lobject.c">
+      <Filter>Source Files\ghost\lua</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\dependencies\includes\lua\lopcodes.c">
+      <Filter>Source Files\ghost\lua</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\dependencies\includes\lua\loslib.c">
+      <Filter>Source Files\ghost\lua</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\dependencies\includes\lua\lparser.c">
+      <Filter>Source Files\ghost\lua</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\dependencies\includes\lua\lstate.c">
+      <Filter>Source Files\ghost\lua</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\dependencies\includes\lua\lstring.c">
+      <Filter>Source Files\ghost\lua</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\dependencies\includes\lua\lstrlib.c">
+      <Filter>Source Files\ghost\lua</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\dependencies\includes\lua\ltable.c">
+      <Filter>Source Files\ghost\lua</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\dependencies\includes\lua\ltablib.c">
+      <Filter>Source Files\ghost\lua</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\dependencies\includes\lua\ltm.c">
+      <Filter>Source Files\ghost\lua</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\dependencies\includes\lua\lundump.c">
+      <Filter>Source Files\ghost\lua</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\dependencies\includes\lua\lvm.c">
+      <Filter>Source Files\ghost\lua</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\dependencies\includes\lua\lzio.c">
+      <Filter>Source Files\ghost\lua</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\dependencies\includes\libpng\png.c">
+      <Filter>Source Files\ghost\LibPng</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\dependencies\includes\libpng\pngerror.c">
+      <Filter>Source Files\ghost\LibPng</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\dependencies\includes\libpng\pngget.c">
+      <Filter>Source Files\ghost\LibPng</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\dependencies\includes\libpng\pngmem.c">
+      <Filter>Source Files\ghost\LibPng</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\dependencies\includes\libpng\pngpread.c">
+      <Filter>Source Files\ghost\LibPng</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\dependencies\includes\libpng\pngread.c">
+      <Filter>Source Files\ghost\LibPng</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\dependencies\includes\libpng\pngrio.c">
+      <Filter>Source Files\ghost\LibPng</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\dependencies\includes\libpng\pngrtran.c">
+      <Filter>Source Files\ghost\LibPng</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\dependencies\includes\libpng\pngrutil.c">
+      <Filter>Source Files\ghost\LibPng</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\dependencies\includes\libpng\pngset.c">
+      <Filter>Source Files\ghost\LibPng</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\dependencies\includes\libpng\pngtrans.c">
+      <Filter>Source Files\ghost\LibPng</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\dependencies\includes\libpng\pngwio.c">
+      <Filter>Source Files\ghost\LibPng</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\dependencies\includes\libpng\pngwrite.c">
+      <Filter>Source Files\ghost\LibPng</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\dependencies\includes\libpng\pngwtran.c">
+      <Filter>Source Files\ghost\LibPng</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\dependencies\includes\libpng\pngwutil.c">
+      <Filter>Source Files\ghost\LibPng</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\dependencies\includes\zlib\adler32.c">
+      <Filter>Source Files\ghost\ZLib</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\dependencies\includes\zlib\compress.c">
+      <Filter>Source Files\ghost\ZLib</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\dependencies\includes\zlib\crc32.c">
+      <Filter>Source Files\ghost\ZLib</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\dependencies\includes\zlib\deflate.c">
+      <Filter>Source Files\ghost\ZLib</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\dependencies\includes\zlib\gzclose.c">
+      <Filter>Source Files\ghost\ZLib</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\dependencies\includes\zlib\gzlib.c">
+      <Filter>Source Files\ghost\ZLib</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\dependencies\includes\zlib\gzread.c">
+      <Filter>Source Files\ghost\ZLib</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\dependencies\includes\zlib\gzwrite.c">
+      <Filter>Source Files\ghost\ZLib</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\dependencies\includes\zlib\infback.c">
+      <Filter>Source Files\ghost\ZLib</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\dependencies\includes\zlib\inffast.c">
+      <Filter>Source Files\ghost\ZLib</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\dependencies\includes\zlib\inflate.c">
+      <Filter>Source Files\ghost\ZLib</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\dependencies\includes\zlib\inftrees.c">
+      <Filter>Source Files\ghost\ZLib</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\dependencies\includes\zlib\trees.c">
+      <Filter>Source Files\ghost\ZLib</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\dependencies\includes\zlib\uncompr.c">
+      <Filter>Source Files\ghost\ZLib</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\dependencies\includes\zlib\zutil.c">
+      <Filter>Source Files\ghost\ZLib</Filter>
+    </ClCompile>
+    <ClCompile Include="ObjParser.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\..\ghost\Multiplatform\Win32\WindowsDatabase.h">
+      <Filter>Source Files\ghost\Multiplatform\Win32</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\ghost\Multiplatform\Win32\WindowsFileManager.h">
+      <Filter>Source Files\ghost\Multiplatform\Win32</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\ghost\Multiplatform\Win32\WindowsGhost.h">
+      <Filter>Source Files\ghost\Multiplatform\Win32</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\ghost\Multiplatform\Win32\WindowsGraphicsManager.h">
+      <Filter>Source Files\ghost\Multiplatform\Win32</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\ghost\Multiplatform\Win32\WindowsServiceLocator.h">
+      <Filter>Source Files\ghost\Multiplatform\Win32</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\ghost\Multiplatform\Win32\WindowsSocket.h">
+      <Filter>Source Files\ghost\Multiplatform\Win32</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\ghost\Multiplatform\Win32\WindowsSoundManager.h">
+      <Filter>Source Files\ghost\Multiplatform\Win32</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\ghost\Multiplatform\Database.h">
+      <Filter>Source Files\ghost\Multiplatform</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\ghost\Multiplatform\FileManager.h">
+      <Filter>Source Files\ghost\Multiplatform</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\ghost\Multiplatform\Ghost.h">
+      <Filter>Source Files\ghost\Multiplatform</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\ghost\Multiplatform\GraphicsManager.h">
+      <Filter>Source Files\ghost\Multiplatform</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\ghost\Multiplatform\NullGraphicsManager.h">
+      <Filter>Source Files\ghost\Multiplatform</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\ghost\Multiplatform\ServiceLocator.h">
+      <Filter>Source Files\ghost\Multiplatform</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\ghost\Multiplatform\Socket.h">
+      <Filter>Source Files\ghost\Multiplatform</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\ghost\Multiplatform\SoundManager.h">
+      <Filter>Source Files\ghost\Multiplatform</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\ghost\Multiplatform\System.h">
+      <Filter>Source Files\ghost\Multiplatform</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\ghost\Resources\Animatable.h">
+      <Filter>Source Files\ghost\Resources</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\ghost\Resources\AtlasTexture.h">
+      <Filter>Source Files\ghost\Resources</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\ghost\Resources\Attributes.h">
+      <Filter>Source Files\ghost\Resources</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\ghost\Resources\CubeMap.h">
+      <Filter>Source Files\ghost\Resources</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\ghost\Resources\DynamicObject.h">
+      <Filter>Source Files\ghost\Resources</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\ghost\Resources\Geometry.h">
+      <Filter>Source Files\ghost\Resources</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\ghost\Resources\GUIButton.h">
+      <Filter>Source Files\ghost\Resources</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\ghost\Resources\GUIImage.h">
+      <Filter>Source Files\ghost\Resources</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\ghost\Resources\GUIInput.h">
+      <Filter>Source Files\ghost\Resources</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\ghost\Resources\GUISurface.h">
+      <Filter>Source Files\ghost\Resources</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\ghost\Resources\GUIText.h">
+      <Filter>Source Files\ghost\Resources</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\ghost\Resources\Light.h">
+      <Filter>Source Files\ghost\Resources</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\ghost\Resources\Model.h">
+      <Filter>Source Files\ghost\Resources</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\ghost\Resources\ModelFactory.h">
+      <Filter>Source Files\ghost\Resources</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\ghost\Resources\NullResource.h">
+      <Filter>Source Files\ghost\Resources</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\ghost\Resources\Renderable.h">
+      <Filter>Source Files\ghost\Resources</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\ghost\Resources\Resource.h">
+      <Filter>Source Files\ghost\Resources</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\ghost\Resources\Scenario.h">
+      <Filter>Source Files\ghost\Resources</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\ghost\Resources\Script.h">
+      <Filter>Source Files\ghost\Resources</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\ghost\Resources\Shader.h">
+      <Filter>Source Files\ghost\Resources</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\ghost\Resources\Sound.h">
+      <Filter>Source Files\ghost\Resources</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\ghost\Resources\Sprite.h">
+      <Filter>Source Files\ghost\Resources</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\ghost\Resources\Symbol.h">
+      <Filter>Source Files\ghost\Resources</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\ghost\Resources\Texture.h">
+      <Filter>Source Files\ghost\Resources</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\ghost\Resources\TextureMono.h">
+      <Filter>Source Files\ghost\Resources</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\ghost\Resources\TextureRGB.h">
+      <Filter>Source Files\ghost\Resources</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\ghost\Resources\TextureRGBA.h">
+      <Filter>Source Files\ghost\Resources</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\ghost\Resources\Vertex.h">
+      <Filter>Source Files\ghost\Resources</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\ghost\Network\HttpRequest.h">
+      <Filter>Source Files\ghost\Network</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\ghost\Network\HttpResponse.h">
+      <Filter>Source Files\ghost\Network</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\ghost\Network\NetworkManager.h">
+      <Filter>Source Files\ghost\Network</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\ghost\Network\Request.h">
+      <Filter>Source Files\ghost\Network</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\ghost\Network\SocketParams.h">
+      <Filter>Source Files\ghost\Network</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\ghost\BoundingBox.h">
+      <Filter>Source Files\ghost</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\ghost\BoundingSphere.h">
+      <Filter>Source Files\ghost</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\ghost\BoundingVolume.h">
+      <Filter>Source Files\ghost</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\ghost\Camera.h">
+      <Filter>Source Files\ghost</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\ghost\Color.h">
+      <Filter>Source Files\ghost</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\ghost\Console.h">
+      <Filter>Source Files\ghost</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\ghost\Environment.h">
+      <Filter>Source Files\ghost</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\ghost\FrameBuffer.h">
+      <Filter>Source Files\ghost</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\ghost\GUIManager.h">
+      <Filter>Source Files\ghost</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\ghost\HashMap.h">
+      <Filter>Source Files\ghost</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\ghost\Input.h">
+      <Filter>Source Files\ghost</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\ghost\Matrix.h">
+      <Filter>Source Files\ghost</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\ghost\MD2Parser.h">
+      <Filter>Source Files\ghost</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\ghost\ModelData.h">
+      <Filter>Source Files\ghost</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\ghost\Node.h">
+      <Filter>Source Files\ghost</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\ghost\NodeManager.h">
+      <Filter>Source Files\ghost</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\ghost\PhysicsManager.h">
+      <Filter>Source Files\ghost</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\ghost\Quaternion.h">
+      <Filter>Source Files\ghost</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\ghost\RenderPass.h">
+      <Filter>Source Files\ghost</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\ghost\ResourceManager.h">
+      <Filter>Source Files\ghost</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\ghost\ScenarioManager.h">
+      <Filter>Source Files\ghost</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\ghost\SceneManager.h">
+      <Filter>Source Files\ghost</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\ghost\ScriptBindings.h">
+      <Filter>Source Files\ghost</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\ghost\ScriptManager.h">
+      <Filter>Source Files\ghost</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\ghost\Settings.h">
+      <Filter>Source Files\ghost</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\ghost\ShapeParser.h">
+      <Filter>Source Files\ghost</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\ghost\Shapes.h">
+      <Filter>Source Files\ghost</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\ghost\TerrainParser.h">
+      <Filter>Source Files\ghost</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\ghost\TextManager.h">
+      <Filter>Source Files\ghost</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\ghost\TextureAtlas.h">
+      <Filter>Source Files\ghost</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\ghost\Thread.h">
+      <Filter>Source Files\ghost</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\ghost\ThreadManager.h">
+      <Filter>Source Files\ghost</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\ghost\Utils.h">
+      <Filter>Source Files\ghost</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\ghost\Vec3.h">
+      <Filter>Source Files\ghost</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\ghost\WaterLoader.h">
+      <Filter>Source Files\ghost</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\ghost\Xml.h">
+      <Filter>Source Files\ghost</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\dependencies\includes\lua\lapi.h">
+      <Filter>Source Files\ghost\lua</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\dependencies\includes\lua\lauxlib.h">
+      <Filter>Source Files\ghost\lua</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\dependencies\includes\lua\lcode.h">
+      <Filter>Source Files\ghost\lua</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\dependencies\includes\lua\lctype.h">
+      <Filter>Source Files\ghost\lua</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\dependencies\includes\lua\ldebug.h">
+      <Filter>Source Files\ghost\lua</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\dependencies\includes\lua\ldo.h">
+      <Filter>Source Files\ghost\lua</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\dependencies\includes\lua\lfunc.h">
+      <Filter>Source Files\ghost\lua</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\dependencies\includes\lua\lgc.h">
+      <Filter>Source Files\ghost\lua</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\dependencies\includes\lua\llex.h">
+      <Filter>Source Files\ghost\lua</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\dependencies\includes\lua\llimits.h">
+      <Filter>Source Files\ghost\lua</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\dependencies\includes\lua\lmem.h">
+      <Filter>Source Files\ghost\lua</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\dependencies\includes\lua\lobject.h">
+      <Filter>Source Files\ghost\lua</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\dependencies\includes\lua\lopcodes.h">
+      <Filter>Source Files\ghost\lua</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\dependencies\includes\lua\lparser.h">
+      <Filter>Source Files\ghost\lua</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\dependencies\includes\lua\lstate.h">
+      <Filter>Source Files\ghost\lua</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\dependencies\includes\lua\lstring.h">
+      <Filter>Source Files\ghost\lua</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\dependencies\includes\lua\ltable.h">
+      <Filter>Source Files\ghost\lua</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\dependencies\includes\lua\ltm.h">
+      <Filter>Source Files\ghost\lua</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\dependencies\includes\lua\lua.h">
+      <Filter>Source Files\ghost\lua</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\dependencies\includes\lua\lua.hpp">
+      <Filter>Source Files\ghost\lua</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\dependencies\includes\lua\luaconf.h">
+      <Filter>Source Files\ghost\lua</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\dependencies\includes\lua\lualib.h">
+      <Filter>Source Files\ghost\lua</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\dependencies\includes\lua\lundump.h">
+      <Filter>Source Files\ghost\lua</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\dependencies\includes\lua\lvm.h">
+      <Filter>Source Files\ghost\lua</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\dependencies\includes\lua\lzio.h">
+      <Filter>Source Files\ghost\lua</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\dependencies\includes\libpng\config.h">
+      <Filter>Source Files\ghost\LibPng</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\dependencies\includes\libpng\png.h">
+      <Filter>Source Files\ghost\LibPng</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\dependencies\includes\libpng\pngconf.h">
+      <Filter>Source Files\ghost\LibPng</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\dependencies\includes\libpng\pngpriv.h">
+      <Filter>Source Files\ghost\LibPng</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\dependencies\includes\zlib\crc32.h">
+      <Filter>Source Files\ghost\ZLib</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\dependencies\includes\zlib\deflate.h">
+      <Filter>Source Files\ghost\ZLib</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\dependencies\includes\zlib\gzguts.h">
+      <Filter>Source Files\ghost\ZLib</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\dependencies\includes\zlib\inffast.h">
+      <Filter>Source Files\ghost\ZLib</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\dependencies\includes\zlib\inffixed.h">
+      <Filter>Source Files\ghost\ZLib</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\dependencies\includes\zlib\inflate.h">
+      <Filter>Source Files\ghost\ZLib</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\dependencies\includes\zlib\inftrees.h">
+      <Filter>Source Files\ghost\ZLib</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\dependencies\includes\zlib\trees.h">
+      <Filter>Source Files\ghost\ZLib</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\dependencies\includes\zlib\zconf.h">
+      <Filter>Source Files\ghost\ZLib</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\dependencies\includes\zlib\zlib.h">
+      <Filter>Source Files\ghost\ZLib</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\dependencies\includes\zlib\zutil.h">
+      <Filter>Source Files\ghost\ZLib</Filter>
+    </ClInclude>
+    <ClInclude Include="Serializer.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="ObjParser.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <Xml Include="..\..\dependencies\includes\zlib\treebuild.xml">
+      <Filter>Source Files\ghost\ZLib</Filter>
+    </Xml>
+  </ItemGroup>
+</Project>
