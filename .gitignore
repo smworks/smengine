@@ -31,3 +31,8 @@ SMart Engine/*
 !SMart Engine/SMart Engine.xcodeproj
 # Release projects.
 !releases/
+# Utility projects
+!utils/ModelSerializer/
+utils/ModelSerializer/Debug
+utils/ModelSerializer/Release
+utils/ModelSerializer/log.txt
