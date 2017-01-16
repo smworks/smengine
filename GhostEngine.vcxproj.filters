@@ -131,9 +131,6 @@
     <ClCompile Include="ghost\Node.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="ghost\ObjParser.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="ghost\Shapes.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -1028,9 +1025,6 @@
       <Filter>Source Files</Filter>
     </ClInclude>
     <ClInclude Include="ghost\Node.h">
-      <Filter>Source Files</Filter>
-    </ClInclude>
-    <ClInclude Include="ghost\ObjParser.h">
       <Filter>Source Files</Filter>
     </ClInclude>
     <ClInclude Include="ghost\Shapes.h">

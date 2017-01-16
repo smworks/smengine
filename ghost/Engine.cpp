@@ -77,7 +77,7 @@ Engine::Engine(ServiceLocator* services) :
 	services_->provide(NEW ScriptManager());
 	services_->provide(NEW Input());
 	services_->provide(NEW Environment());
-	services_->provide(NEW Camera(services_->getDB()));
+	services_->provide(NEW Camera());
 	services_->provide(NEW NodeManager(services_));
 	services_->provide(NEW SceneManager(services_));
 	services_->provide(NEW ScenarioManager(services_));

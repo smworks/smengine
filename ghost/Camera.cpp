@@ -9,13 +9,12 @@
 #include "Node.h"
 #include "Multiplatform/Database.h"
 
-Camera::Camera(Database* database) :
+Camera::Camera() :
 	spritesAttached_(false),
 	width_(0.0f),
 	height_(0.0f),
 	follow_(0),
-	lookAt_(0),
-	database_(database)
+	lookAt_(0)
 {
 	Matrix::identity(projection2D_);
 	Matrix::identity(projection3D_);

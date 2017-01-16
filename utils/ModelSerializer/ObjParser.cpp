@@ -1,16 +1,8 @@
-/*
- * ObjParser.cpp
- *
- *  Created on: 2012.06.25
- *      Author: MS
- */
-
 #include "ObjParser.h"
 #include "../../ghost/Multiplatform/Ghost.h"
 #include "../../ghost/Multiplatform/ServiceLocator.h"
 #include "../../ghost/Thread.h"
 #include "../../ghost/Multiplatform/FileManager.h"
-#include "../../ghost/Multiplatform/GraphicsManager.h"
 #include "../../ghost/ResourceManager.h"
 #include "../../ghost/BoundingSphere.h"
 #include "../../ghost/BoundingBox.h"
@@ -294,9 +286,7 @@ private:
 bool ObjParser::parse(ModelData& model, const string& file, ServiceLocator* services) {
 	PROFILE("Started loading object: %s.", file.c_str());
 	ThreadManager* tm = services->getThreadManager();
-	GraphicsManager* gm = services->getGraphicsManager();
 	Vec3 vmin(FLT_MAX), vmax(FLT_MIN), radius(0.0f);
-    //vector<Material> materials;
 	vector<MaterialIndex> matIndices;
 	vector<ModelData::Material>& materials = model.getMaterials();
 	string obj;
@@ -325,10 +315,6 @@ bool ObjParser::parse(ModelData& model, const string& file, ServiceLocator* serv
 	bool hasNormals = nNormals > 0;
 	if (nFaces * 3 > UINT_MAX) {
 		LOGW("3D model cannot have more indices than: %d.", UINT_MAX);
-		return false;
-	}
-	if (nFaces * 3 >= USHRT_MAX && !gm->isSupported(GraphicsManager::SUPPORT_UINT_INDEX)) {
-		LOGW("3D model has more indices, than device supports. Supported index count: %d.", USHRT_MAX);
 		return false;
 	}
 	UINT8* vertices;
@@ -402,6 +388,7 @@ bool ObjParser::parse(ModelData& model, const string& file, ServiceLocator* serv
 			line = obj.substr(pos, lineEnd - pos);
 			stringSplit(line, arr, ' ');
 			if (!parseMaterial(model, arr[1], services)) {
+				LOGW("Unable to parse material file: %s", arr[1].c_str());
 				return false;
 			}
 			break;
@@ -474,7 +461,7 @@ bool ObjParser::parse(ModelData& model, const string& file, ServiceLocator* serv
     PROFILE("Finished reading basic data for object: %s.", file.c_str());
 	matInd.size_ = matSize;
 	matIndices.push_back(matInd);
-	rearrangeFacesAndMaterials(matIndices, materials, faces);
+	//rearrangeFacesAndMaterials(matIndices, materials, faces);
 	vector<UINT16>* indexArray = 0;
 	vector<UINT32>* indexArrayInt = 0;
 	UINT32 indexReserve = 0;
@@ -560,25 +547,13 @@ bool ObjParser::parse(ModelData& model, const string& file, ServiceLocator* serv
 		UINT32* indexArr = NEW UINT32[indexArrayInt->size()];
 		memcpy(indexArr, &(*indexArrayInt)[0], indexArrayInt->size() * sizeof(UINT32));
 		model.setIndices(Renderable::INDEX_TYPE_UINT, indexArr, indexArrayInt->size());
-		LOGW("3D model is too large for some mobile devices.");
+		LOGI("3D model is too large for some mobile devices.");
 		LOGD("Indices: %u", (UINT32) indexArrayInt->size());
 	}
 	delete indexArray;
 	delete indexArrayInt;
-	void* vertexArray = 0;
 	SIZE vertexCount = vs->size() / floatsInVertex;
-	if (hasUV && hasNormals) {
-		vertexArray = NEW VertexPNT[vertexCount];
-	}
-	else if (hasUV && !hasNormals) {
-		vertexArray = NEW VertexPT[vertexCount];
-	}
-	else if (!hasUV && hasNormals) {
-		vertexArray = NEW VertexPN[vertexCount];
-	}
-	else {
-		vertexArray = NEW VertexP[vertexCount];
-	}
+	void* vertexArray = getAllocatedVertexBuffer(hasUV, hasNormals, vertexCount);
 	memcpy(vertexArray, &(*vs)[0], vs->size() * sizeof(float));
 	model.setVertices(vertexType, reinterpret_cast<UINT8*>(vertexArray), vertexCount);
 	LOGD("Vertex count: %u.", (UINT32) vertexCount);
@@ -624,6 +599,22 @@ bool ObjParser::parse(ModelData& model, const string& file, ServiceLocator* serv
 	return true;
 }
 
+void* ObjParser::getAllocatedVertexBuffer(bool hasUV, bool hasNormals, SIZE vertexCount)
+{
+	if (hasUV && hasNormals) {
+		return NEW VertexPNT[vertexCount];
+	}
+	else if (hasUV && !hasNormals) {
+		return NEW VertexPT[vertexCount];
+	}
+	else if (!hasUV && hasNormals) {
+		return NEW VertexPN[vertexCount];
+	}
+	else {
+		return NEW VertexP[vertexCount];
+	}
+}
+
 void ObjParser::rearrangeFacesAndMaterials(vector<ObjParser::MaterialIndex> &matIndices,
 	vector<ModelData::Material> &materials, vector<ObjParser::Face> &faces)
 {
@@ -652,7 +643,7 @@ void ObjParser::rearrangeFacesAndMaterials(vector<ObjParser::MaterialIndex> &mat
 	matIndices.clear();
 	for (UINT32 i = 0; i < arrFaces.size(); i++) {
 		MaterialIndex mi;
-		/*mi.name_ = materials[i].name_;*/
+		mi.name_ = string(materials[i].name);
 		mi.offset_ = offset;
 		mi.size_ = arrFaces[i].size();
 		matIndices.push_back(mi);

@@ -398,7 +398,6 @@
     <ClCompile Include="ghost\Input.cpp" />
     <ClCompile Include="ghost\Matrix.cpp" />
     <ClCompile Include="ghost\Node.cpp" />
-    <ClCompile Include="ghost\ObjParser.cpp" />
     <ClCompile Include="ghost\ResourceManager.cpp" />
     <ClCompile Include="ghost\Shapes.cpp" />
     <ClCompile Include="ghost\TerrainParser.cpp" />
@@ -706,7 +705,6 @@
     <ClInclude Include="ghost\Input.h" />
     <ClInclude Include="ghost\Matrix.h" />
     <ClInclude Include="ghost\Node.h" />
-    <ClInclude Include="ghost\ObjParser.h" />
     <ClInclude Include="ghost\ResourceManager.h" />
     <ClInclude Include="ghost\Shapes.h" />
     <ClInclude Include="ghost\TerrainParser.h" />

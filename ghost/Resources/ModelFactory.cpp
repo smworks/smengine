@@ -4,7 +4,7 @@
 #include "Vertex.h"
 #include "Texture.h"
 #include "Shader.h"
-#include "../ObjParser.h"
+#include "../ModelData.h"
 #include "../TerrainParser.h"
 #include "../ShapeParser.h"
 #include "../ResourceManager.h"

@@ -1,10 +1,3 @@
-/*
- * ObjParser.h
- *
- *  Created on: 2012.06.25
- *      Author: MS
- */
-
 #ifndef OBJPARSER_H_
 #define OBJPARSER_H_
 
@@ -34,28 +27,26 @@ public:
 	 * Contains one face data.
 	 */
 	struct Face {
-		/** Vertex indices. */
 		UINT32 indices_[3];
-		/** Texture indices. */
 		UINT32 texIndices_[3];
-		/** Normal indices. */
 		UINT32 normIndices_[3];
-		/** Face size. */
 		static const int FACE_SIZE = 3;
 	};
 public:
-	static bool parse(ModelData& model, const string& file, ServiceLocator* services);
+	bool parse(ModelData& model, const string& file, ServiceLocator* services);
 	static bool parseFace(Face& face, const char* line, SIZE length);
 private:
-	static void countComponents(const string& obj, UINT32& vertices,
+	void countComponents(const string& obj, UINT32& vertices,
 		UINT32& normals, UINT32& uvCoordinates, UINT32& faces, float& maxVertexPos);
-	static bool parseMaterial(
+	bool parseMaterial(
 		ModelData& model, const string& file, ServiceLocator* services);
+	void* ObjParser::getAllocatedVertexBuffer(bool hasUV, bool hasNormals, SIZE vertexCount);
+
 	/**
 	 * Rearrange faces and material indices, to have as little
 	 * material changes as possible during render stage.
 	 */
-	static void rearrangeFacesAndMaterials(vector<ObjParser::MaterialIndex> &matIndices,
+	void rearrangeFacesAndMaterials(vector<ObjParser::MaterialIndex> &matIndices,
 		vector<ModelData::Material> &materials, vector<ObjParser::Face> &faces);
 };
 

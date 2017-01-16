@@ -26,7 +26,7 @@ public:
 		float a, b, c, d;
 	};
 public:
-	Camera(Database* settings);
+	Camera();
 	~Camera();
 
 	/**
@@ -92,24 +92,9 @@ public:
 	 */
 	void getRayEnd(Vec3& vec, float length);
 
-	/**
-	 * @return 2D Projection matrix.
-	 */
 	Mat4& getProjection2D();
-
-	/**
-	 * @return 3D Projection matrix.
-	 */
 	Mat4& getProjection3D();
-
-	/**
-	 * @return Vector containing camera position.
-	 */
 	Vec3& getPos();
-
-	/**
-	 * @return Vector containing camera rotation.
-	 */
 	Vec3& getRot();
 
 	/**
@@ -136,7 +121,6 @@ private:
 	float width_, height_;
 	Plane planes[6];
 	Node* follow_, * lookAt_;
-	Database* database_;
 };
 
 #endif /* CAMERA_H_ */

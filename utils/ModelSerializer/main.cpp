@@ -1,19 +1,7 @@
 #include "../../ghost/Multiplatform/Ghost.h"
 #include "../../ghost/Multiplatform/Win32/WindowsServiceLocator.h"
-#include "../../ghost/ScriptManager.h"
-#include "../../ghost/Input.h"
-#include "../../ghost/Environment.h"
-#include "../../ghost/Camera.h"
-#include "../../ghost/NodeManager.h"
-#include "../../ghost/SceneManager.h"
-#include "../../ghost/ScenarioManager.h"
-#include "../../ghost/PhysicsManager.h"
 #include "../../ghost/ResourceManager.h"
-#include "../../ghost/TextManager.h"
-#include "../../ghost/GUIManager.h"
 #include "../../ghost/ThreadManager.h"
-#include "../../ghost/Network/NetworkManager.h"
-#include "../../ghost/TextureAtlas.h"
 #include "../../ghost/Multiplatform/Win32/WindowsFileManager.h"
 #include "../../ghost/Resources/Renderable.h"
 
@@ -24,19 +12,8 @@ ServiceLocator* getServiceLocator() {
 	WindowsServiceLocator* wsl = new WindowsServiceLocator();
 	wsl->setScreenWidth(800);
 	wsl->setScreenHeight(600);
-	wsl->provide(NEW ScriptManager());
-	wsl->provide(NEW Input());
-	wsl->provide(NEW Environment());
-	wsl->provide(NEW Camera(wsl->getDB()));
-	wsl->provide(NEW NodeManager(wsl));
-	wsl->provide(NEW SceneManager(wsl));
-	wsl->provide(NEW ScenarioManager(wsl));
-	wsl->provide(NEW PhysicsManager(wsl));
 	wsl->provide(NEW ResourceManager(wsl));
-	wsl->provide(NEW TextManager(wsl));
-	wsl->provide(NEW GUIManager(wsl));
 	wsl->provide(NEW ThreadManager(wsl));
-	wsl->provide(NEW NetworkManager(wsl));
 	PROFILE("Finished creating engine object.");
 	return wsl;
 }
@@ -58,8 +35,7 @@ int main() {
 	getline(cin, file);
 	cout << "Loading file: " << file.c_str() << endl;
 	ModelData md;
-	ObjParser parser;
-	if (parser.parse(md, file, sl)) {
+	if (ObjParser().parse(md, file, sl)) {
 		md.serializeToFile(file + ".sm");
 		cout << "Successfully serialized model" << endl;
 

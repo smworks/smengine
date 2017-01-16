@@ -90,7 +90,6 @@ FileManager* WindowsServiceLocator::getFileManager() {
 SoundManager* WindowsServiceLocator::getSoundManager() {
 	if (soundManager_ == 0) {
 		soundManager_ = NEW WindowsSoundManager();
-		LOGD("Sound manager initialized.");
 	}
 	return soundManager_;
 }
@@ -98,7 +97,6 @@ SoundManager* WindowsServiceLocator::getSoundManager() {
 Database* WindowsServiceLocator::getDB() {
 	if (database_ == 0) {
 		database_ = NEW WindowsDatabase(getFileManager());
-		LOGD("Database initialized.");
 	}
 	return database_;
 }
