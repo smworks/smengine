@@ -167,9 +167,6 @@
     <ClCompile Include="ghost\BoundingSphere.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="ghost\BoundingBox.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="ghost\Vec3.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -1002,6 +999,9 @@
       <Filter>Source Files\Resources</Filter>
     </ClCompile>
     <ClCompile Include="ghost\ServiceProvider.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="ghost\BoundingBox.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

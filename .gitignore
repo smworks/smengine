@@ -40,3 +40,6 @@ utils/ModelSerializer/*
 !utils/ModelSerializer/ModelSerializer.vcxproj.filters
 !utils/ModelSerializer/ModelSerializer.vcxproj.user
 !utils/ModelSerializer/src/
+!Tests/
+Tests/Debug/*
+Tests/Release/*

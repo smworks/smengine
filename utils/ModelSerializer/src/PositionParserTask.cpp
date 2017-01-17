@@ -36,7 +36,7 @@ void PositionParserTask::run()
 			if (data[pos + 1] == ' ')
 			{
 				bool one = true;
-				SIZE offset = 0;
+				SIZE off = 0;
 				if (lineEnd - pos > lineLength)
 				{
 					lineLength = lineEnd - pos;
@@ -52,13 +52,13 @@ void PositionParserTask::run()
 						{
 							posVec[0] = toFloat(line + 2) * adjustRatio;
 							one = false;
-							offset = i;
+							off = i;
 						}
 						else
 						{
-							posVec[1] = toFloat(line + offset + 1) * adjustRatio;
-							offset = i;
-							posVec[2] = toFloat(line + offset + 1) * adjustRatio;
+							posVec[1] = toFloat(line + off + 1) * adjustRatio;
+							off = i;
+							posVec[2] = toFloat(line + off + 1) * adjustRatio;
 							break;
 						}
 					}

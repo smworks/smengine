@@ -1,4 +1,6 @@
 #include "NormalParserTask.h"
+
+
 #include "../../../ghost/Utils.h"
 
 NormalParserTask::NormalParserTask(const char* data, UINT8* vertices, UINT32 offset, UINT32 size):
@@ -36,7 +38,7 @@ void NormalParserTask::run()
 					line = NEW char[lineLength];
 				}
 				bool one = true;
-				SIZE offset = 0;
+				SIZE off = 0;
 				memcpy(line, data + pos, lineEnd - pos);
 				for (SIZE i = 3; i < lineEnd; i++)
 				{
@@ -46,13 +48,13 @@ void NormalParserTask::run()
 						{
 							normVec[0] = toFloat(line + 2);
 							one = false;
-							offset = i;
+							off = i;
 						}
 						else
 						{
-							normVec[1] = toFloat(line + offset + 1);
-							offset = i;
-							normVec[2] = toFloat(line + offset + 1);
+							normVec[1] = toFloat(line + off + 1);
+							off = i;
+							normVec[2] = toFloat(line + off + 1);
 							break;
 						}
 					}
