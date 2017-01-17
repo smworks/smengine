@@ -43,7 +43,7 @@ int main()
 	}
 	else
 	{
-		cout << "Problem converting model. Check warning log." << endl;
+		cout << "Problem converting model. Check warning log" << endl;
 	}
 	sl->release();
 	delete sl;
