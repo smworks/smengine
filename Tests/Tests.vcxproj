@@ -19,41 +19,36 @@
     </ProjectConfiguration>
   </ItemGroup>
   <PropertyGroup Label="Globals">
-    <ProjectGuid>{759ACCE3-54DF-453E-8CEE-7E770DEE7033}</ProjectGuid>
-    <Keyword>Win32Proj</Keyword>
+    <ProjectGuid>{410C8164-532A-46F8-B165-C3CECA68FFB4}</ProjectGuid>
     <RootNamespace>Tests</RootNamespace>
     <WindowsTargetPlatformVersion>10.0.14393.0</WindowsTargetPlatformVersion>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
-    <ConfigurationType>DynamicLibrary</ConfigurationType>
+    <ConfigurationType>Application</ConfigurationType>
     <UseDebugLibraries>true</UseDebugLibraries>
     <PlatformToolset>v141</PlatformToolset>
-    <CharacterSet>Unicode</CharacterSet>
-    <UseOfMfc>false</UseOfMfc>
+    <CharacterSet>MultiByte</CharacterSet>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
-    <ConfigurationType>DynamicLibrary</ConfigurationType>
+    <ConfigurationType>Application</ConfigurationType>
     <UseDebugLibraries>false</UseDebugLibraries>
     <PlatformToolset>v141</PlatformToolset>
     <WholeProgramOptimization>true</WholeProgramOptimization>
-    <CharacterSet>Unicode</CharacterSet>
-    <UseOfMfc>false</UseOfMfc>
+    <CharacterSet>MultiByte</CharacterSet>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
-    <ConfigurationType>DynamicLibrary</ConfigurationType>
+    <ConfigurationType>Application</ConfigurationType>
     <UseDebugLibraries>true</UseDebugLibraries>
     <PlatformToolset>v141</PlatformToolset>
-    <CharacterSet>Unicode</CharacterSet>
-    <UseOfMfc>false</UseOfMfc>
+    <CharacterSet>MultiByte</CharacterSet>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
-    <ConfigurationType>DynamicLibrary</ConfigurationType>
+    <ConfigurationType>Application</ConfigurationType>
     <UseDebugLibraries>false</UseDebugLibraries>
     <PlatformToolset>v141</PlatformToolset>
     <WholeProgramOptimization>true</WholeProgramOptimization>
-    <CharacterSet>Unicode</CharacterSet>
-    <UseOfMfc>false</UseOfMfc>
+    <CharacterSet>MultiByte</CharacterSet>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
   <ImportGroup Label="ExtensionSettings">
@@ -73,82 +68,198 @@
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
-    <LinkIncremental>true</LinkIncremental>
-  </PropertyGroup>
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
-    <LinkIncremental>true</LinkIncremental>
-  </PropertyGroup>
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
-    <LinkIncremental>true</LinkIncremental>
-  </PropertyGroup>
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
-    <LinkIncremental>true</LinkIncremental>
-  </PropertyGroup>
+  <PropertyGroup />
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
-      <PrecompiledHeader>NotUsing</PrecompiledHeader>
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
-      <AdditionalIncludeDirectories>$(VCToolsInstallDir)..\..\..\Auxiliary\VS\UnitTest\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-      <PreprocessorDefinitions>WIN32;_DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <UseFullPaths>true</UseFullPaths>
+      <SDLCheck>false</SDLCheck>
+      <MultiProcessorCompilation>true</MultiProcessorCompilation>
+      <AdditionalOptions>/D _CRT_SECURE_NO_WARNINGS %(AdditionalOptions)</AdditionalOptions>
     </ClCompile>
     <Link>
-      <SubSystem>Windows</SubSystem>
-      <AdditionalLibraryDirectories>$(VCToolsInstallDir)..\..\..\Auxiliary\VS\UnitTest\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <SubSystem>Console</SubSystem>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <ClCompile>
-      <PrecompiledHeader>Use</PrecompiledHeader>
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
-      <AdditionalIncludeDirectories>$(VCToolsInstallDir)..\..\..\Auxiliary\VS\UnitTest\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-      <PreprocessorDefinitions>_DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <UseFullPaths>true</UseFullPaths>
+      <SDLCheck>true</SDLCheck>
     </ClCompile>
-    <Link>
-      <SubSystem>Windows</SubSystem>
-      <AdditionalLibraryDirectories>$(VCToolsInstallDir)..\..\..\Auxiliary\VS\UnitTest\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
-    </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <ClCompile>
       <WarningLevel>Level3</WarningLevel>
-      <PrecompiledHeader>Use</PrecompiledHeader>
       <Optimization>MaxSpeed</Optimization>
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
-      <AdditionalIncludeDirectories>$(VCToolsInstallDir)..\..\..\Auxiliary\VS\UnitTest\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-      <PreprocessorDefinitions>WIN32;NDEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <UseFullPaths>true</UseFullPaths>
+      <SDLCheck>false</SDLCheck>
+      <AdditionalOptions>/D _CRT_SECURE_NO_WARNINGS %(AdditionalOptions)</AdditionalOptions>
     </ClCompile>
     <Link>
-      <SubSystem>Windows</SubSystem>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
-      <AdditionalLibraryDirectories>$(VCToolsInstallDir)..\..\..\Auxiliary\VS\UnitTest\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <ClCompile>
       <WarningLevel>Level3</WarningLevel>
-      <PrecompiledHeader>Use</PrecompiledHeader>
       <Optimization>MaxSpeed</Optimization>
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
-      <AdditionalIncludeDirectories>$(VCToolsInstallDir)..\..\..\Auxiliary\VS\UnitTest\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-      <PreprocessorDefinitions>NDEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <UseFullPaths>true</UseFullPaths>
+      <SDLCheck>true</SDLCheck>
     </ClCompile>
     <Link>
-      <SubSystem>Windows</SubSystem>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
-      <AdditionalLibraryDirectories>$(VCToolsInstallDir)..\..\..\Auxiliary\VS\UnitTest\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
     </Link>
   </ItemDefinitionGroup>
+  <ItemGroup>
+    <ClCompile Include="..\dependencies\includes\libpng\png.c" />
+    <ClCompile Include="..\dependencies\includes\libpng\pngerror.c" />
+    <ClCompile Include="..\dependencies\includes\libpng\pngget.c" />
+    <ClCompile Include="..\dependencies\includes\libpng\pngmem.c" />
+    <ClCompile Include="..\dependencies\includes\libpng\pngpread.c" />
+    <ClCompile Include="..\dependencies\includes\libpng\pngread.c" />
+    <ClCompile Include="..\dependencies\includes\libpng\pngrio.c" />
+    <ClCompile Include="..\dependencies\includes\libpng\pngrtran.c" />
+    <ClCompile Include="..\dependencies\includes\libpng\pngrutil.c" />
+    <ClCompile Include="..\dependencies\includes\libpng\pngset.c" />
+    <ClCompile Include="..\dependencies\includes\libpng\pngtrans.c" />
+    <ClCompile Include="..\dependencies\includes\libpng\pngwio.c" />
+    <ClCompile Include="..\dependencies\includes\libpng\pngwrite.c" />
+    <ClCompile Include="..\dependencies\includes\libpng\pngwtran.c" />
+    <ClCompile Include="..\dependencies\includes\libpng\pngwutil.c" />
+    <ClCompile Include="..\dependencies\includes\lua\lapi.c" />
+    <ClCompile Include="..\dependencies\includes\lua\lauxlib.c" />
+    <ClCompile Include="..\dependencies\includes\lua\lbaselib.c" />
+    <ClCompile Include="..\dependencies\includes\lua\lbitlib.c" />
+    <ClCompile Include="..\dependencies\includes\lua\lcode.c" />
+    <ClCompile Include="..\dependencies\includes\lua\lcorolib.c" />
+    <ClCompile Include="..\dependencies\includes\lua\lctype.c" />
+    <ClCompile Include="..\dependencies\includes\lua\ldblib.c" />
+    <ClCompile Include="..\dependencies\includes\lua\ldebug.c" />
+    <ClCompile Include="..\dependencies\includes\lua\ldo.c" />
+    <ClCompile Include="..\dependencies\includes\lua\ldump.c" />
+    <ClCompile Include="..\dependencies\includes\lua\lfunc.c" />
+    <ClCompile Include="..\dependencies\includes\lua\lgc.c" />
+    <ClCompile Include="..\dependencies\includes\lua\linit.c" />
+    <ClCompile Include="..\dependencies\includes\lua\liolib.c" />
+    <ClCompile Include="..\dependencies\includes\lua\llex.c" />
+    <ClCompile Include="..\dependencies\includes\lua\lmathlib.c" />
+    <ClCompile Include="..\dependencies\includes\lua\lmem.c" />
+    <ClCompile Include="..\dependencies\includes\lua\loadlib.c" />
+    <ClCompile Include="..\dependencies\includes\lua\lobject.c" />
+    <ClCompile Include="..\dependencies\includes\lua\lopcodes.c" />
+    <ClCompile Include="..\dependencies\includes\lua\loslib.c" />
+    <ClCompile Include="..\dependencies\includes\lua\lparser.c" />
+    <ClCompile Include="..\dependencies\includes\lua\lstate.c" />
+    <ClCompile Include="..\dependencies\includes\lua\lstring.c" />
+    <ClCompile Include="..\dependencies\includes\lua\lstrlib.c" />
+    <ClCompile Include="..\dependencies\includes\lua\ltable.c" />
+    <ClCompile Include="..\dependencies\includes\lua\ltablib.c" />
+    <ClCompile Include="..\dependencies\includes\lua\ltm.c" />
+    <ClCompile Include="..\dependencies\includes\lua\lundump.c" />
+    <ClCompile Include="..\dependencies\includes\lua\lvm.c" />
+    <ClCompile Include="..\dependencies\includes\lua\lzio.c" />
+    <ClCompile Include="..\dependencies\includes\zlib\adler32.c" />
+    <ClCompile Include="..\dependencies\includes\zlib\compress.c" />
+    <ClCompile Include="..\dependencies\includes\zlib\crc32.c" />
+    <ClCompile Include="..\dependencies\includes\zlib\deflate.c" />
+    <ClCompile Include="..\dependencies\includes\zlib\gzclose.c" />
+    <ClCompile Include="..\dependencies\includes\zlib\gzlib.c" />
+    <ClCompile Include="..\dependencies\includes\zlib\gzread.c" />
+    <ClCompile Include="..\dependencies\includes\zlib\gzwrite.c" />
+    <ClCompile Include="..\dependencies\includes\zlib\infback.c" />
+    <ClCompile Include="..\dependencies\includes\zlib\inffast.c" />
+    <ClCompile Include="..\dependencies\includes\zlib\inflate.c" />
+    <ClCompile Include="..\dependencies\includes\zlib\inftrees.c" />
+    <ClCompile Include="..\dependencies\includes\zlib\trees.c" />
+    <ClCompile Include="..\dependencies\includes\zlib\uncompr.c" />
+    <ClCompile Include="..\dependencies\includes\zlib\zutil.c" />
+    <ClCompile Include="..\ghost\BoundingBox.cpp" />
+    <ClCompile Include="..\ghost\BoundingSphere.cpp" />
+    <ClCompile Include="..\ghost\Camera.cpp" />
+    <ClCompile Include="..\ghost\Color.cpp" />
+    <ClCompile Include="..\ghost\Console.cpp" />
+    <ClCompile Include="..\ghost\Environment.cpp" />
+    <ClCompile Include="..\ghost\FrameBuffer.cpp" />
+    <ClCompile Include="..\ghost\GUIManager.cpp" />
+    <ClCompile Include="..\ghost\Input.cpp" />
+    <ClCompile Include="..\ghost\Matrix.cpp" />
+    <ClCompile Include="..\ghost\MD2Parser.cpp" />
+    <ClCompile Include="..\ghost\ModelData.cpp" />
+    <ClCompile Include="..\ghost\Multiplatform\Database.cpp" />
+    <ClCompile Include="..\ghost\Multiplatform\GraphicsManager.cpp" />
+    <ClCompile Include="..\ghost\Multiplatform\NullGraphicsManager.cpp" />
+    <ClCompile Include="..\ghost\Multiplatform\ServiceLocator.cpp" />
+    <ClCompile Include="..\ghost\Multiplatform\Win32\WindowsDatabase.cpp" />
+    <ClCompile Include="..\ghost\Multiplatform\Win32\WindowsFileManager.cpp" />
+    <ClCompile Include="..\ghost\Multiplatform\Win32\WindowsGhost.cpp" />
+    <ClCompile Include="..\ghost\Multiplatform\Win32\WindowsGraphicsManager.cpp" />
+    <ClCompile Include="..\ghost\Multiplatform\Win32\WindowsServiceLocator.cpp" />
+    <ClCompile Include="..\ghost\Multiplatform\Win32\WindowsSocket.cpp" />
+    <ClCompile Include="..\ghost\Multiplatform\Win32\WindowsSoundManager.cpp" />
+    <ClCompile Include="..\ghost\Network\HttpRequest.cpp" />
+    <ClCompile Include="..\ghost\Network\HttpResponse.cpp" />
+    <ClCompile Include="..\ghost\Network\NetworkManager.cpp" />
+    <ClCompile Include="..\ghost\Network\Request.cpp" />
+    <ClCompile Include="..\ghost\Network\SocketParams.cpp" />
+    <ClCompile Include="..\ghost\Node.cpp" />
+    <ClCompile Include="..\ghost\NodeManager.cpp" />
+    <ClCompile Include="..\ghost\PhysicsManager.cpp" />
+    <ClCompile Include="..\ghost\Quaternion.cpp" />
+    <ClCompile Include="..\ghost\RenderPass.cpp" />
+    <ClCompile Include="..\ghost\ResourceManager.cpp" />
+    <ClCompile Include="..\ghost\Resources\AtlasTexture.cpp" />
+    <ClCompile Include="..\ghost\Resources\Attributes.cpp" />
+    <ClCompile Include="..\ghost\Resources\CubeMap.cpp" />
+    <ClCompile Include="..\ghost\Resources\DynamicObject.cpp" />
+    <ClCompile Include="..\ghost\Resources\Geometry.cpp" />
+    <ClCompile Include="..\ghost\Resources\GUIButton.cpp" />
+    <ClCompile Include="..\ghost\Resources\GUIImage.cpp" />
+    <ClCompile Include="..\ghost\Resources\GUIInput.cpp" />
+    <ClCompile Include="..\ghost\Resources\GUISurface.cpp" />
+    <ClCompile Include="..\ghost\Resources\GUIText.cpp" />
+    <ClCompile Include="..\ghost\Resources\Light.cpp" />
+    <ClCompile Include="..\ghost\Resources\Model.cpp" />
+    <ClCompile Include="..\ghost\Resources\ModelFactory.cpp" />
+    <ClCompile Include="..\ghost\Resources\Resource.cpp" />
+    <ClCompile Include="..\ghost\Resources\Scenario.cpp" />
+    <ClCompile Include="..\ghost\Resources\Script.cpp" />
+    <ClCompile Include="..\ghost\Resources\Shader.cpp" />
+    <ClCompile Include="..\ghost\Resources\Sound.cpp" />
+    <ClCompile Include="..\ghost\Resources\Sprite.cpp" />
+    <ClCompile Include="..\ghost\Resources\Symbol.cpp" />
+    <ClCompile Include="..\ghost\Resources\Texture.cpp" />
+    <ClCompile Include="..\ghost\Resources\TextureMono.cpp" />
+    <ClCompile Include="..\ghost\Resources\TextureRGB.cpp" />
+    <ClCompile Include="..\ghost\Resources\TextureRGBA.cpp" />
+    <ClCompile Include="..\ghost\ScenarioManager.cpp" />
+    <ClCompile Include="..\ghost\SceneManager.cpp" />
+    <ClCompile Include="..\ghost\ScriptBindings.cpp" />
+    <ClCompile Include="..\ghost\ScriptManager.cpp" />
+    <ClCompile Include="..\ghost\ServiceProvider.cpp" />
+    <ClCompile Include="..\ghost\Settings.cpp" />
+    <ClCompile Include="..\ghost\ShapeParser.cpp" />
+    <ClCompile Include="..\ghost\Shapes.cpp" />
+    <ClCompile Include="..\ghost\TerrainParser.cpp" />
+    <ClCompile Include="..\ghost\TextManager.cpp" />
+    <ClCompile Include="..\ghost\TextureAtlas.cpp" />
+    <ClCompile Include="..\ghost\Thread.cpp" />
+    <ClCompile Include="..\ghost\ThreadManager.cpp" />
+    <ClCompile Include="..\ghost\Utils.cpp" />
+    <ClCompile Include="..\ghost\Vec3.cpp" />
+    <ClCompile Include="..\ghost\WaterLoader.cpp" />
+    <ClCompile Include="..\ghost\Xml.cpp" />
+    <ClCompile Include="..\utils\ModelSerializer\src\FaceParserTask.cpp" />
+    <ClCompile Include="..\utils\ModelSerializer\src\NormalParserTask.cpp" />
+    <ClCompile Include="..\utils\ModelSerializer\src\ObjParser.cpp" />
+    <ClCompile Include="..\utils\ModelSerializer\src\PositionParserTask.cpp" />
+    <ClCompile Include="..\utils\ModelSerializer\src\UVParserTask.cpp" />
+    <ClCompile Include="main.cpp" />
+  </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\dependencies\includes\libpng\config.h" />
     <ClInclude Include="..\dependencies\includes\libpng\png.h" />
@@ -196,7 +307,6 @@
     <ClInclude Include="..\ghost\Camera.h" />
     <ClInclude Include="..\ghost\Color.h" />
     <ClInclude Include="..\ghost\Console.h" />
-    <ClInclude Include="..\ghost\Engine.h" />
     <ClInclude Include="..\ghost\Environment.h" />
     <ClInclude Include="..\ghost\FrameBuffer.h" />
     <ClInclude Include="..\ghost\GUIManager.h" />
@@ -285,163 +395,6 @@
     <ClInclude Include="..\utils\ModelSerializer\src\PositionParserTask.h" />
     <ClInclude Include="..\utils\ModelSerializer\src\UniqueKey.h" />
     <ClInclude Include="..\utils\ModelSerializer\src\UVParserTask.h" />
-    <ClInclude Include="stdafx.h" />
-    <ClInclude Include="targetver.h" />
-  </ItemGroup>
-  <ItemGroup>
-    <ClCompile Include="..\dependencies\includes\libpng\png.c" />
-    <ClCompile Include="..\dependencies\includes\libpng\pngerror.c" />
-    <ClCompile Include="..\dependencies\includes\libpng\pngget.c" />
-    <ClCompile Include="..\dependencies\includes\libpng\pngmem.c" />
-    <ClCompile Include="..\dependencies\includes\libpng\pngpread.c" />
-    <ClCompile Include="..\dependencies\includes\libpng\pngread.c" />
-    <ClCompile Include="..\dependencies\includes\libpng\pngrio.c" />
-    <ClCompile Include="..\dependencies\includes\libpng\pngrtran.c" />
-    <ClCompile Include="..\dependencies\includes\libpng\pngrutil.c" />
-    <ClCompile Include="..\dependencies\includes\libpng\pngset.c" />
-    <ClCompile Include="..\dependencies\includes\libpng\pngtrans.c" />
-    <ClCompile Include="..\dependencies\includes\libpng\pngwio.c" />
-    <ClCompile Include="..\dependencies\includes\libpng\pngwrite.c" />
-    <ClCompile Include="..\dependencies\includes\libpng\pngwtran.c" />
-    <ClCompile Include="..\dependencies\includes\libpng\pngwutil.c" />
-    <ClCompile Include="..\dependencies\includes\lua\lapi.c" />
-    <ClCompile Include="..\dependencies\includes\lua\lauxlib.c" />
-    <ClCompile Include="..\dependencies\includes\lua\lbaselib.c" />
-    <ClCompile Include="..\dependencies\includes\lua\lbitlib.c" />
-    <ClCompile Include="..\dependencies\includes\lua\lcode.c" />
-    <ClCompile Include="..\dependencies\includes\lua\lcorolib.c" />
-    <ClCompile Include="..\dependencies\includes\lua\lctype.c" />
-    <ClCompile Include="..\dependencies\includes\lua\ldblib.c" />
-    <ClCompile Include="..\dependencies\includes\lua\ldebug.c" />
-    <ClCompile Include="..\dependencies\includes\lua\ldo.c" />
-    <ClCompile Include="..\dependencies\includes\lua\ldump.c" />
-    <ClCompile Include="..\dependencies\includes\lua\lfunc.c" />
-    <ClCompile Include="..\dependencies\includes\lua\lgc.c" />
-    <ClCompile Include="..\dependencies\includes\lua\linit.c" />
-    <ClCompile Include="..\dependencies\includes\lua\liolib.c" />
-    <ClCompile Include="..\dependencies\includes\lua\llex.c" />
-    <ClCompile Include="..\dependencies\includes\lua\lmathlib.c" />
-    <ClCompile Include="..\dependencies\includes\lua\lmem.c" />
-    <ClCompile Include="..\dependencies\includes\lua\loadlib.c" />
-    <ClCompile Include="..\dependencies\includes\lua\lobject.c" />
-    <ClCompile Include="..\dependencies\includes\lua\lopcodes.c" />
-    <ClCompile Include="..\dependencies\includes\lua\loslib.c" />
-    <ClCompile Include="..\dependencies\includes\lua\lparser.c" />
-    <ClCompile Include="..\dependencies\includes\lua\lstate.c" />
-    <ClCompile Include="..\dependencies\includes\lua\lstring.c" />
-    <ClCompile Include="..\dependencies\includes\lua\lstrlib.c" />
-    <ClCompile Include="..\dependencies\includes\lua\ltable.c" />
-    <ClCompile Include="..\dependencies\includes\lua\ltablib.c" />
-    <ClCompile Include="..\dependencies\includes\lua\ltm.c" />
-    <ClCompile Include="..\dependencies\includes\lua\lundump.c" />
-    <ClCompile Include="..\dependencies\includes\lua\lvm.c" />
-    <ClCompile Include="..\dependencies\includes\lua\lzio.c" />
-    <ClCompile Include="..\dependencies\includes\zlib\adler32.c" />
-    <ClCompile Include="..\dependencies\includes\zlib\compress.c" />
-    <ClCompile Include="..\dependencies\includes\zlib\crc32.c" />
-    <ClCompile Include="..\dependencies\includes\zlib\deflate.c" />
-    <ClCompile Include="..\dependencies\includes\zlib\gzclose.c" />
-    <ClCompile Include="..\dependencies\includes\zlib\gzlib.c" />
-    <ClCompile Include="..\dependencies\includes\zlib\gzread.c" />
-    <ClCompile Include="..\dependencies\includes\zlib\gzwrite.c" />
-    <ClCompile Include="..\dependencies\includes\zlib\infback.c" />
-    <ClCompile Include="..\dependencies\includes\zlib\inffast.c" />
-    <ClCompile Include="..\dependencies\includes\zlib\inflate.c" />
-    <ClCompile Include="..\dependencies\includes\zlib\inftrees.c" />
-    <ClCompile Include="..\dependencies\includes\zlib\trees.c" />
-    <ClCompile Include="..\dependencies\includes\zlib\uncompr.c" />
-    <ClCompile Include="..\dependencies\includes\zlib\zutil.c" />
-    <ClCompile Include="..\ghost\BoundingBox.cpp" />
-    <ClCompile Include="..\ghost\BoundingSphere.cpp" />
-    <ClCompile Include="..\ghost\Camera.cpp" />
-    <ClCompile Include="..\ghost\Color.cpp" />
-    <ClCompile Include="..\ghost\Console.cpp" />
-    <ClCompile Include="..\ghost\Engine.cpp" />
-    <ClCompile Include="..\ghost\Environment.cpp" />
-    <ClCompile Include="..\ghost\FrameBuffer.cpp" />
-    <ClCompile Include="..\ghost\GUIManager.cpp" />
-    <ClCompile Include="..\ghost\Input.cpp" />
-    <ClCompile Include="..\ghost\Matrix.cpp" />
-    <ClCompile Include="..\ghost\MD2Parser.cpp" />
-    <ClCompile Include="..\ghost\ModelData.cpp" />
-    <ClCompile Include="..\ghost\Multiplatform\Database.cpp" />
-    <ClCompile Include="..\ghost\Multiplatform\GraphicsManager.cpp" />
-    <ClCompile Include="..\ghost\Multiplatform\NullGraphicsManager.cpp" />
-    <ClCompile Include="..\ghost\Multiplatform\ServiceLocator.cpp" />
-    <ClCompile Include="..\ghost\Multiplatform\Win32\WindowsDatabase.cpp" />
-    <ClCompile Include="..\ghost\Multiplatform\Win32\WindowsFileManager.cpp" />
-    <ClCompile Include="..\ghost\Multiplatform\Win32\WindowsGhost.cpp" />
-    <ClCompile Include="..\ghost\Multiplatform\Win32\WindowsGraphicsManager.cpp" />
-    <ClCompile Include="..\ghost\Multiplatform\Win32\WindowsServiceLocator.cpp" />
-    <ClCompile Include="..\ghost\Multiplatform\Win32\WindowsSocket.cpp" />
-    <ClCompile Include="..\ghost\Multiplatform\Win32\WindowsSoundManager.cpp" />
-    <ClCompile Include="..\ghost\Network\HttpRequest.cpp" />
-    <ClCompile Include="..\ghost\Network\HttpResponse.cpp" />
-    <ClCompile Include="..\ghost\Network\NetworkManager.cpp" />
-    <ClCompile Include="..\ghost\Network\Request.cpp" />
-    <ClCompile Include="..\ghost\Network\SocketParams.cpp" />
-    <ClCompile Include="..\ghost\Node.cpp" />
-    <ClCompile Include="..\ghost\NodeManager.cpp" />
-    <ClCompile Include="..\ghost\PhysicsManager.cpp" />
-    <ClCompile Include="..\ghost\Quaternion.cpp" />
-    <ClCompile Include="..\ghost\RenderPass.cpp" />
-    <ClCompile Include="..\ghost\ResourceManager.cpp" />
-    <ClCompile Include="..\ghost\Resources\AtlasTexture.cpp" />
-    <ClCompile Include="..\ghost\Resources\Attributes.cpp" />
-    <ClCompile Include="..\ghost\Resources\CubeMap.cpp" />
-    <ClCompile Include="..\ghost\Resources\DynamicObject.cpp" />
-    <ClCompile Include="..\ghost\Resources\Geometry.cpp" />
-    <ClCompile Include="..\ghost\Resources\GUIButton.cpp" />
-    <ClCompile Include="..\ghost\Resources\GUIImage.cpp" />
-    <ClCompile Include="..\ghost\Resources\GUIInput.cpp" />
-    <ClCompile Include="..\ghost\Resources\GUISurface.cpp" />
-    <ClCompile Include="..\ghost\Resources\GUIText.cpp" />
-    <ClCompile Include="..\ghost\Resources\Light.cpp" />
-    <ClCompile Include="..\ghost\Resources\Model.cpp" />
-    <ClCompile Include="..\ghost\Resources\ModelFactory.cpp" />
-    <ClCompile Include="..\ghost\Resources\Resource.cpp" />
-    <ClCompile Include="..\ghost\Resources\Scenario.cpp" />
-    <ClCompile Include="..\ghost\Resources\Script.cpp" />
-    <ClCompile Include="..\ghost\Resources\Shader.cpp" />
-    <ClCompile Include="..\ghost\Resources\Sound.cpp" />
-    <ClCompile Include="..\ghost\Resources\Sprite.cpp" />
-    <ClCompile Include="..\ghost\Resources\Symbol.cpp" />
-    <ClCompile Include="..\ghost\Resources\Texture.cpp" />
-    <ClCompile Include="..\ghost\Resources\TextureMono.cpp" />
-    <ClCompile Include="..\ghost\Resources\TextureRGB.cpp" />
-    <ClCompile Include="..\ghost\Resources\TextureRGBA.cpp" />
-    <ClCompile Include="..\ghost\ScenarioManager.cpp" />
-    <ClCompile Include="..\ghost\SceneManager.cpp" />
-    <ClCompile Include="..\ghost\ScriptBindings.cpp" />
-    <ClCompile Include="..\ghost\ScriptManager.cpp" />
-    <ClCompile Include="..\ghost\ServiceProvider.cpp" />
-    <ClCompile Include="..\ghost\Settings.cpp" />
-    <ClCompile Include="..\ghost\ShapeParser.cpp" />
-    <ClCompile Include="..\ghost\Shapes.cpp" />
-    <ClCompile Include="..\ghost\TerrainParser.cpp" />
-    <ClCompile Include="..\ghost\TextManager.cpp" />
-    <ClCompile Include="..\ghost\TextureAtlas.cpp" />
-    <ClCompile Include="..\ghost\Thread.cpp" />
-    <ClCompile Include="..\ghost\ThreadManager.cpp" />
-    <ClCompile Include="..\ghost\Utils.cpp" />
-    <ClCompile Include="..\ghost\Vec3.cpp" />
-    <ClCompile Include="..\ghost\WaterLoader.cpp" />
-    <ClCompile Include="..\ghost\Xml.cpp" />
-    <ClCompile Include="..\utils\ModelSerializer\src\FaceParserTask.cpp" />
-    <ClCompile Include="..\utils\ModelSerializer\src\main.cpp" />
-    <ClCompile Include="..\utils\ModelSerializer\src\NormalParserTask.cpp" />
-    <ClCompile Include="..\utils\ModelSerializer\src\ObjParser.cpp" />
-    <ClCompile Include="..\utils\ModelSerializer\src\PositionParserTask.cpp" />
-    <ClCompile Include="..\utils\ModelSerializer\src\UVParserTask.cpp" />
-    <ClCompile Include="stdafx.cpp">
-      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
-      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>
-      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Create</PrecompiledHeader>
-      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Create</PrecompiledHeader>
-    </ClCompile>
-    <ClCompile Include="ModelSerializer.cpp">
-      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Use</PrecompiledHeader>
-    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Xml Include="..\dependencies\includes\zlib\treebuild.xml" />

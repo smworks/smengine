@@ -35,7 +35,7 @@ string WindowsFileManager::loadText(string path) {
 	ifstream input(path, ios::in);
 	string text;
 	if (!input) {
-		LOGW("Text file \"%s\" not found.", path);
+		LOGW("Text file \"%s\" not found.", path.c_str());
 		text = "";
 	}
 	else {

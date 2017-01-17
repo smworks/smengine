@@ -41,5 +41,7 @@ utils/ModelSerializer/*
 !utils/ModelSerializer/ModelSerializer.vcxproj.user
 !utils/ModelSerializer/src/
 !Tests/
-Tests/Debug/*
-Tests/Release/*
+Tests/*
+!Tests/main.cpp
+!Tests/Tests.vcxproj
+!Tests/Tests.vcxproj.filters
