@@ -203,6 +203,7 @@
     <ClCompile Include="..\..\ghost\SceneManager.cpp" />
     <ClCompile Include="..\..\ghost\ScriptBindings.cpp" />
     <ClCompile Include="..\..\ghost\ScriptManager.cpp" />
+    <ClCompile Include="..\..\ghost\ServiceProvider.cpp" />
     <ClCompile Include="..\..\ghost\Settings.cpp" />
     <ClCompile Include="..\..\ghost\ShapeParser.cpp" />
     <ClCompile Include="..\..\ghost\Shapes.cpp" />
@@ -215,8 +216,12 @@
     <ClCompile Include="..\..\ghost\Vec3.cpp" />
     <ClCompile Include="..\..\ghost\WaterLoader.cpp" />
     <ClCompile Include="..\..\ghost\Xml.cpp" />
-    <ClCompile Include="main.cpp" />
-    <ClCompile Include="ObjParser.cpp" />
+    <ClCompile Include="src\FaceParserTask.cpp" />
+    <ClCompile Include="src\main.cpp" />
+    <ClCompile Include="src\NormalParserTask.cpp" />
+    <ClCompile Include="src\ObjParser.cpp" />
+    <ClCompile Include="src\PositionParserTask.cpp" />
+    <ClCompile Include="src\UVParserTask.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\dependencies\includes\libpng\config.h" />
@@ -332,6 +337,7 @@
     <ClInclude Include="..\..\ghost\SceneManager.h" />
     <ClInclude Include="..\..\ghost\ScriptBindings.h" />
     <ClInclude Include="..\..\ghost\ScriptManager.h" />
+    <ClInclude Include="..\..\ghost\ServiceProvider.h" />
     <ClInclude Include="..\..\ghost\Settings.h" />
     <ClInclude Include="..\..\ghost\ShapeParser.h" />
     <ClInclude Include="..\..\ghost\Shapes.h" />
@@ -344,7 +350,14 @@
     <ClInclude Include="..\..\ghost\Vec3.h" />
     <ClInclude Include="..\..\ghost\WaterLoader.h" />
     <ClInclude Include="..\..\ghost\Xml.h" />
-    <ClInclude Include="ObjParser.h" />
+    <ClInclude Include="src\Face.h" />
+    <ClInclude Include="src\FaceParserTask.h" />
+    <ClInclude Include="src\MaterialIndex.h" />
+    <ClInclude Include="src\NormalParserTask.h" />
+    <ClInclude Include="src\ObjParser.h" />
+    <ClInclude Include="src\PositionParserTask.h" />
+    <ClInclude Include="src\UniqueKey.h" />
+    <ClInclude Include="src\UVParserTask.h" />
   </ItemGroup>
   <ItemGroup>
     <Xml Include="..\..\dependencies\includes\zlib\treebuild.xml" />

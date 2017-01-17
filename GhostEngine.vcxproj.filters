@@ -1001,6 +1001,9 @@
     <ClCompile Include="ghost\Resources\ModelFactory.cpp">
       <Filter>Source Files\Resources</Filter>
     </ClCompile>
+    <ClCompile Include="ghost\ServiceProvider.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="ghost\Camera.h">
@@ -1917,6 +1920,9 @@
     </ClInclude>
     <ClInclude Include="ghost\Resources\NullResource.h">
       <Filter>Source Files\Resources</Filter>
+    </ClInclude>
+    <ClInclude Include="ghost\ServiceProvider.h">
+      <Filter>Source Files</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

@@ -36,9 +36,7 @@ SMart Engine/*
 utils/*
 !utils/ModelSerializer
 utils/ModelSerializer/*
-!utils/ModelSerializer/main.cpp
 !utils/ModelSerializer/ModelSerializer.vcxproj
 !utils/ModelSerializer/ModelSerializer.vcxproj.filters
 !utils/ModelSerializer/ModelSerializer.vcxproj.user
-!utils/ModelSerializer/ObjParser.cpp
-!utils/ModelSerializer/ObjParser.h
+!utils/ModelSerializer/src/

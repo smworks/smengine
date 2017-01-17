@@ -37,11 +37,11 @@
     <Filter Include="Source Files\ghost\ZLib">
       <UniqueIdentifier>{b7524c5f-1307-453e-a966-cb23e3298d29}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source Files\src">
+      <UniqueIdentifier>{c130de6b-9acb-4c21-a82f-92773338d5d9}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="main.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\ghost\Multiplatform\Win32\WindowsDatabase.cpp">
       <Filter>Source Files\ghost\Multiplatform\Win32</Filter>
     </ClCompile>
@@ -450,8 +450,26 @@
     <ClCompile Include="..\..\dependencies\includes\zlib\zutil.c">
       <Filter>Source Files\ghost\ZLib</Filter>
     </ClCompile>
-    <ClCompile Include="ObjParser.cpp">
-      <Filter>Source Files</Filter>
+    <ClCompile Include="src\main.cpp">
+      <Filter>Source Files\src</Filter>
+    </ClCompile>
+    <ClCompile Include="src\ObjParser.cpp">
+      <Filter>Source Files\src</Filter>
+    </ClCompile>
+    <ClCompile Include="src\NormalParserTask.cpp">
+      <Filter>Source Files\src</Filter>
+    </ClCompile>
+    <ClCompile Include="src\PositionParserTask.cpp">
+      <Filter>Source Files\src</Filter>
+    </ClCompile>
+    <ClCompile Include="src\UVParserTask.cpp">
+      <Filter>Source Files\src</Filter>
+    </ClCompile>
+    <ClCompile Include="src\FaceParserTask.cpp">
+      <Filter>Source Files\src</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\ghost\ServiceProvider.cpp">
+      <Filter>Source Files\ghost</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -830,11 +848,32 @@
     <ClInclude Include="..\..\dependencies\includes\zlib\zutil.h">
       <Filter>Source Files\ghost\ZLib</Filter>
     </ClInclude>
-    <ClInclude Include="Serializer.h">
-      <Filter>Source Files</Filter>
+    <ClInclude Include="src\ObjParser.h">
+      <Filter>Source Files\src</Filter>
     </ClInclude>
-    <ClInclude Include="ObjParser.h">
-      <Filter>Source Files</Filter>
+    <ClInclude Include="src\UniqueKey.h">
+      <Filter>Source Files\src</Filter>
+    </ClInclude>
+    <ClInclude Include="src\MaterialIndex.h">
+      <Filter>Source Files\src</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Face.h">
+      <Filter>Source Files\src</Filter>
+    </ClInclude>
+    <ClInclude Include="src\FaceParserTask.h">
+      <Filter>Source Files\src</Filter>
+    </ClInclude>
+    <ClInclude Include="src\NormalParserTask.h">
+      <Filter>Source Files\src</Filter>
+    </ClInclude>
+    <ClInclude Include="src\PositionParserTask.h">
+      <Filter>Source Files\src</Filter>
+    </ClInclude>
+    <ClInclude Include="src\UVParserTask.h">
+      <Filter>Source Files\src</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\ghost\ServiceProvider.h">
+      <Filter>Source Files\ghost</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
