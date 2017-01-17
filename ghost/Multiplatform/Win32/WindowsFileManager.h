@@ -15,24 +15,9 @@ public:
 	WindowsFileManager();
 	~WindowsFileManager();
 
-	/**
-	 * @see FileManager
-	 */
 	bool loadRaw(INT8*& bytes, SIZE& size, const char* path);
-
-	/**
-	 * @see FileManager
-	 */
-	void loadText(string& text, const char* path);
-
-	/**
-	 * @see FileManager
-	 */
+	string loadText(string path);
 	vector<string> getFiles(const char* path);
-
-	/**
-	 * @see FileManager
-	 */
 	bool fileExists(const char* path);
 };
 

@@ -32,8 +32,8 @@ bool Shader::create() {
 	string file = getAttribute(ATTR_FILE);
 	string vert, frag;
 	if (file.length() > 0) {
-		fm->loadText(vert, (GHOST_SHADERS + file + SHADER_VERTEX_SUFFIX).c_str());
-		fm->loadText(frag, (GHOST_SHADERS + file + SHADER_FRAGMENT_SUFFIX).c_str());
+		vert = fm->loadText(GHOST_SHADERS + file + SHADER_VERTEX_SUFFIX);
+		frag = fm->loadText(GHOST_SHADERS + file + SHADER_FRAGMENT_SUFFIX);
 		if (!graphicsManager_->setShader(id_, vert, frag, handles_)) {
 			LOGW("Unable to compile shader: %s.", file.c_str());
 			return false;

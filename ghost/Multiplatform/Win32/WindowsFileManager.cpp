@@ -31,8 +31,9 @@ bool WindowsFileManager::loadRaw(INT8*& bytes, SIZE& size, const char* path) {
 	return true;
 }
 
-void WindowsFileManager::loadText(string& text, const char* path) {
+string WindowsFileManager::loadText(string path) {
 	ifstream input(path, ios::in);
+	string text;
 	if (!input) {
 		LOGW("Text file \"%s\" not found.", path);
 		text = "";
@@ -42,6 +43,8 @@ void WindowsFileManager::loadText(string& text, const char* path) {
 		content << input.rdbuf();
 		text =  content.str();
 	}
+	input.close();
+	return text;
 }
 
 vector<string> WindowsFileManager::getFiles(const char* path) {

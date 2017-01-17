@@ -58,6 +58,6 @@ void Script::reset() {
 
 bool Script::create() {
 	string sc = GHOST_SCRIPTS + getAttribute(ATTR_FILE);
-	getServiceLocator()->getFileManager()->loadText(script_, sc.c_str());
+	script_ = getServiceLocator()->getFileManager()->loadText(sc);
 	return script_.length() > 0;
 }

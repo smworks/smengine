@@ -21,11 +21,9 @@ ObjParser::ObjParser(ServiceLocator* serviceLocator): ServiceProvider(serviceLoc
 bool ObjParser::parse(ModelData& model, const string& file)
 {
 	PROFILE("Started loading object: %s.", file.c_str());
-	Vec3 vmin(FLT_MAX), vmax(FLT_MIN), radius(0.0f);
 	vector<MaterialIndex> matIndices;
 	auto& materials = model.getMaterials();
-	string obj;
-	getFileManager()->loadText(obj, file.c_str());
+	auto obj = getFileManager()->loadText(file);
 	if (obj.length() == 0)
 	{
 		LOGW("Unable to load file %s, "
@@ -101,6 +99,7 @@ bool ObjParser::parse(ModelData& model, const string& file)
 	vector<string> arr;
 	const char* data = obj.c_str();
 	UINT64 posThread = 0, normalThread = 0, uvThread = 0, faceThread = 0;
+	Vec3 vmin(FLT_MAX), vmax(FLT_MIN), radius(0.0f);
 	posThread = getThreadManager()->execute(NEW PositionParserTask(
 		data, vertices, posOffset, vertexSize, &vmin, &vmax, &radius, maxVertexPos));
 	if (hasNormals)
@@ -543,18 +542,17 @@ void ObjParser::countComponents(
 /*
  * Loads material data into entity model.
  */
-bool ObjParser::parseMaterial(ModelData& model, const string& file)
+bool ObjParser::parseMaterial(ModelData& model, string file) const
 {
-	string obj;
-	getFileManager()->loadText(obj, file.c_str());
+	auto obj = getFileManager()->loadText(file);
 	if (obj.length() == 0)
 	{
 		LOGW("Material %s not found.", file.c_str());
 	}
+
 	string line;
 	vector<string> arr;
 	size_t lineEnd = 0, pos = 0;
-
 	ModelData::Material mat;
 	mat.setName("default");
 	while (true)

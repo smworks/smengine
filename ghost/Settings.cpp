@@ -39,8 +39,7 @@ Settings::~Settings() {
 }
 
 void Settings::fromFile(const string& file) {
-	string data;
-	fileManager_->loadText(data, (GHOST_SCENES + file).c_str());
+	string data = fileManager_->loadText(GHOST_SCENES + file);
 	if (data.length() == 0) {
 		LOGW("Configuration file not found.");
 		return;

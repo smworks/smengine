@@ -26,12 +26,12 @@ public:
 
 	/**
 	 * Loads text file from assets folder.
-	 * @param text - string containing loaded
+	 * @param path - path to file in assets folder.
+	 * @return string containing loaded
 	 * file or empty line if file was not
 	 * found or is empty.
-	 * @param path - path to file in assets folder.
 	 */
-	virtual void loadText(string& text, const char* path) = 0;
+	virtual string loadText(string path) = 0;
 
 	/**
 	 * Finds all files in specified folder.

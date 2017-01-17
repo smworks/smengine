@@ -139,9 +139,9 @@ Node* ResourceManager::loadScene(const string& path) {
 		LOGW("Service locator not specified.");
 		return 0;
 	}
-	string content;
+	
 	PROFILE("Started parsing scene file.");
-	services_->getFileManager()->loadText(content, path.c_str());
+	string content = services_->getFileManager()->loadText(path);
 	stringReplace(content, "\\n", "\n");
 	Xml xml(content);
 	XmlNode* xmlNode = xml.getRootNode();

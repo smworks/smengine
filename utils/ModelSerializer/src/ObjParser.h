@@ -19,7 +19,7 @@ public:
 private:
 	void countComponents(const string& obj, UINT32& vertices,
 		UINT32& normals, UINT32& uvCoordinates, UINT32& faces, float& maxVertexPos);
-	bool parseMaterial(ModelData& model, const string& file);
+	bool parseMaterial(ModelData& model, string file) const;
 	void* getAllocatedVertexBuffer(bool hasUV, bool hasNormals, SIZE vertexCount);
 
 	/**
