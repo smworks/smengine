@@ -26,7 +26,8 @@ struct VertexPNT {
 		memcpy(normals, vert.normals, sizeof(normals));
 		memcpy(uv, vert.uv, sizeof(uv));
 	}
-	bool operator ==(const VertexPNT& vert) {
+	bool operator ==(const VertexPNT& vert) const
+	{
 		if (memcmp(pos, vert.pos, sizeof(pos)) != 0) {
 			return false;
 		}

@@ -23,51 +23,18 @@ bool ObjParser::parse(ModelData& model, const string& file)
 	string obj = getFileManager()->loadText(file);
 	THROWONASSERT(obj.length() == 0, "Unable to load file: %s", file.c_str());
 	
-	
 	ObjProperties objProperties = getObjProperties(obj);
-	LOGD("Size adjust ratio: %f.", 1.0f / objProperties.maxVertexPos);
-	auto hasUV = objProperties.uvCount > 0;
-	auto hasNormals = objProperties.normalCount > 0;
-	if (objProperties.faceCount * 3 > UINT_MAX)
-	{
-		LOGW("3D model cannot have more indices than: %d.", UINT_MAX);
-		return false;
-	}
-	UINT8* vertices;
-	ModelData::VertexType vertexType;
-	UINT32 posOffset = 0, normOffset = 0, uvOffset = 0, vertexSize;
-	if (hasUV && hasNormals)
-	{
-		vertices = reinterpret_cast<UINT8*>(NEW VertexPNT[objProperties.vertexCount]);
-		vertexSize = sizeof(VertexPNT);
-		posOffset = offsetof(VertexPNT, pos);
-		normOffset = offsetof(VertexPNT, normals);
-		uvOffset = offsetof(VertexPNT, uv);
-		vertexType = ModelData::PNT;
-	}
-	else if (hasUV && !hasNormals)
-	{
-		vertices = reinterpret_cast<UINT8*>(NEW VertexPT[objProperties.vertexCount]);
-		vertexSize = sizeof(VertexPT);
-		posOffset = offsetof(VertexPT, pos);
-		uvOffset = offsetof(VertexPT, uv);
-		vertexType = ModelData::PT;
-	}
-	else if (!hasUV && hasNormals)
-	{
-		vertices = reinterpret_cast<UINT8*>(NEW VertexPN[objProperties.vertexCount]);
-		vertexSize = sizeof(VertexPN);
-		posOffset = offsetof(VertexPN, pos);
-		normOffset = offsetof(VertexPN, normals);
-		vertexType = ModelData::PN;
-	}
-	else
-	{
-		vertices = reinterpret_cast<UINT8*>(NEW VertexP[objProperties.vertexCount]);
-		vertexSize = sizeof(VertexP);
-		posOffset = offsetof(VertexP, pos);
-		vertexType = ModelData::P;
-	}
+	LOGI("Size adjust ratio: %f.", 1.0f / objProperties.maxVertexPos);
+
+	THROWONASSERT(objProperties.faceCount * 3 > UINT_MAX,
+		"3D model cannot have more indices than: %d.", UINT_MAX);
+
+	VertexProperties vertexProperties = getVertexProperties(objProperties);
+
+	UINT8* vertices = NEW UINT8[vertexProperties.vertexSize * objProperties.vertexCount];
+
+
+
 	vector<Face> faces;
 	faces.resize(objProperties.faceCount);
 	string line;
@@ -82,14 +49,14 @@ bool ObjParser::parse(ModelData& model, const string& file)
 	UINT64 posThread = 0, normalThread = 0, uvThread = 0, faceThread = 0;
 	Vec3 vmin(FLT_MAX), vmax(FLT_MIN), radius(0.0f);
 	posThread = getThreadManager()->execute(NEW PositionParserTask(
-		data, vertices, posOffset, vertexSize, &vmin, &vmax, &radius, objProperties.maxVertexPos));
-	if (hasNormals)
+		data, vertices, vertexProperties.positionOffset, vertexProperties.vertexSize, &vmin, &vmax, &radius, objProperties.maxVertexPos));
+	if (vertexProperties.hasNormals())
 	{
-		normalThread = getThreadManager()->execute(NEW NormalParserTask(data, vertices, normOffset, vertexSize));
+		normalThread = getThreadManager()->execute(NEW NormalParserTask(data, vertices, vertexProperties.normalOffset, vertexProperties.vertexSize));
 	}
-	if (hasUV)
+	if (vertexProperties.hasUV())
 	{
-		uvThread = getThreadManager()->execute(NEW UVParserTask(data, vertices, uvOffset, vertexSize));
+		uvThread = getThreadManager()->execute(NEW UVParserTask(data, vertices, vertexProperties.uvOffset, vertexProperties.vertexSize));
 	}
 	faceThread = getThreadManager()->execute(NEW FaceParserTask(data, &faces));
 
@@ -182,7 +149,6 @@ bool ObjParser::parse(ModelData& model, const string& file)
 			}
 			break;
 		case 'o': // Object groups.
-			break;
 		case '#': // Comments.
 			break;
 		}
@@ -191,11 +157,11 @@ bool ObjParser::parse(ModelData& model, const string& file)
 
 
 	getThreadManager()->join(posThread);
-	if (hasNormals)
+	if (normalThread != 0)
 	{
 		getThreadManager()->join(normalThread);
 	}
-	if (hasUV)
+	if (uvThread != 0)
 	{
 		getThreadManager()->join(uvThread);
 	}
@@ -227,7 +193,7 @@ bool ObjParser::parse(ModelData& model, const string& file)
 	PROFILE("Started optimizations.");
 	unordered_map<UniqueKey, int, UniqueKeyHash>* hm = NEW unordered_map<UniqueKey, int, UniqueKeyHash>();
 	unordered_map<UniqueKey, int, UniqueKeyHash>::const_iterator it;
-	UINT32 floatsInVertex = vertexSize / sizeof(float);
+	UINT32 floatsInVertex = vertexProperties.vertexSize / sizeof(float);
 	float* vertex = NEW float[floatsInVertex];
 	for (SIZE i = 0; i < objProperties.faceCount; i++)
 	{
@@ -254,14 +220,14 @@ bool ObjParser::parse(ModelData& model, const string& file)
 			else
 			{
 				UINT32 vInd = 0;
-				UINT32 offset = index * vertexSize + posOffset;
+				UINT32 offset = index * vertexProperties.vertexSize + vertexProperties.positionOffset;
 				memcpy(&vertex[vInd++], &vertices[offset + 0], sizeof(float));
 				memcpy(&vertex[vInd++], &vertices[offset + sizeof(float)], sizeof(float));
 				memcpy(&vertex[vInd++], &vertices[offset + 2 * sizeof(float)], sizeof(float));
 				if (objProperties.normalCount > 0)
 				{
 					index = face.normIndices_[j];
-					offset = index * vertexSize + normOffset;
+					offset = index * vertexProperties.vertexSize + vertexProperties.normalOffset;
 					memcpy(&vertex[vInd++], &vertices[offset + 0], sizeof(float));
 					memcpy(&vertex[vInd++], &vertices[offset + sizeof(float)], sizeof(float));
 					memcpy(&vertex[vInd++], &vertices[offset + 2 * sizeof(float)], sizeof(float));
@@ -269,7 +235,7 @@ bool ObjParser::parse(ModelData& model, const string& file)
 				if (objProperties.uvCount > 0)
 				{
 					index = face.texIndices_[j];
-					offset = index * vertexSize + uvOffset;
+					offset = index * vertexProperties.vertexSize + vertexProperties.uvOffset;
 					memcpy(&vertex[vInd++], &vertices[offset + 0], sizeof(float));
 					memcpy(&vertex[vInd++], &vertices[offset + sizeof(float)], sizeof(float));
 				}
@@ -311,9 +277,9 @@ bool ObjParser::parse(ModelData& model, const string& file)
 	delete indexArray;
 	delete indexArrayInt;
 	SIZE vertexCount = vs->size() / floatsInVertex;
-	void* vertexArray = getAllocatedVertexBuffer(hasUV, hasNormals, vertexCount);
+	void* vertexArray = getAllocatedVertexBuffer(vertexProperties.hasUV(), vertexProperties.hasNormals(), vertexCount);
 	memcpy(vertexArray, &(*vs)[0], vs->size() * sizeof(float));
-	model.setVertices(vertexType, reinterpret_cast<UINT8*>(vertexArray), vertexCount);
+	model.setVertices(vertexProperties.vertexType, reinterpret_cast<UINT8*>(vertexArray), vertexCount);
 	LOGD("Vertex count: %u.", (UINT32) vertexCount);
 	delete vs;
 	delete [] vertices;
@@ -426,6 +392,43 @@ void ObjParser::rearrangeFacesAndMaterials(vector<MaterialIndex>& matIndices,
 		}
 		offset += mi.size_;
 	}
+}
+
+VertexProperties ObjParser::getVertexProperties(ObjProperties objProperties)
+{
+	VertexProperties vertexProperties;
+	bool hasUV = objProperties.uvCount > 0;
+	bool hasNormals = objProperties.normalCount > 0;
+	if (hasUV && hasNormals)
+	{
+		
+		vertexProperties.vertexSize = sizeof(VertexPNT);
+		vertexProperties.positionOffset = offsetof(VertexPNT, pos);
+		vertexProperties.normalOffset = offsetof(VertexPNT, normals);
+		vertexProperties.uvOffset = offsetof(VertexPNT, uv);
+		vertexProperties.vertexType = ModelData::PNT;
+	}
+	else if (hasUV && !hasNormals)
+	{
+		vertexProperties.vertexSize = sizeof(VertexPT);
+		vertexProperties.positionOffset = offsetof(VertexPT, pos);
+		vertexProperties.uvOffset = offsetof(VertexPT, uv);
+		vertexProperties.vertexType = ModelData::PT;
+	}
+	else if (!hasUV && hasNormals)
+	{
+		vertexProperties.vertexSize = sizeof(VertexPN);
+		vertexProperties.positionOffset = offsetof(VertexPN, pos);
+		vertexProperties.normalOffset = offsetof(VertexPN, normals);
+		vertexProperties.vertexType = ModelData::PN;
+	}
+	else
+	{
+		vertexProperties.vertexSize = sizeof(VertexP);
+		vertexProperties.positionOffset = offsetof(VertexP, pos);
+		vertexProperties.vertexType = ModelData::P;
+	}
+	return vertexProperties;
 }
 
 ObjProperties ObjParser::getObjProperties(string obj) const

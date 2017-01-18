@@ -360,6 +360,7 @@
     <ClInclude Include="src\PositionParserTask.h" />
     <ClInclude Include="src\UniqueKey.h" />
     <ClInclude Include="src\UVParserTask.h" />
+    <ClInclude Include="src\VertexProperties.h" />
   </ItemGroup>
   <ItemGroup>
     <Xml Include="..\..\dependencies\includes\zlib\treebuild.xml" />

@@ -878,6 +878,9 @@
     <ClInclude Include="src\ObjProperties.h">
       <Filter>Source Files\src</Filter>
     </ClInclude>
+    <ClInclude Include="src\VertexProperties.h">
+      <Filter>Source Files\src</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Xml Include="..\..\dependencies\includes\zlib\treebuild.xml">

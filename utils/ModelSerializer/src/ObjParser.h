@@ -8,6 +8,7 @@
 #include "Face.h"
 #include "../../../ghost/ServiceProvider.h"
 #include "ObjProperties.h"
+#include "VertexProperties.h"
 
 class ServiceLocator;
 
@@ -33,6 +34,8 @@ private:
 	 */
 	void rearrangeFacesAndMaterials(vector<MaterialIndex> &matIndices,
 		vector<ModelData::Material> &materials, vector<Face> &faces);
+
+	VertexProperties getVertexProperties(ObjProperties objProperties);
 };
 
 #endif
