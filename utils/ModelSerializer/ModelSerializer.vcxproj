@@ -55,6 +55,7 @@
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
       <PreprocessorDefinitions>WIN32;_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalOptions>/D _CRT_SECURE_NO_WARNINGS %(AdditionalOptions)</AdditionalOptions>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -355,6 +356,7 @@
     <ClInclude Include="src\MaterialIndex.h" />
     <ClInclude Include="src\NormalParserTask.h" />
     <ClInclude Include="src\ObjParser.h" />
+    <ClInclude Include="src\ObjProperties.h" />
     <ClInclude Include="src\PositionParserTask.h" />
     <ClInclude Include="src\UniqueKey.h" />
     <ClInclude Include="src\UVParserTask.h" />

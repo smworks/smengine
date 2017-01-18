@@ -32,6 +32,7 @@ bool WindowsFileManager::loadRaw(INT8*& bytes, SIZE& size, const char* path) {
 }
 
 string WindowsFileManager::loadText(string path) {
+	PROFILE("Started loading text file: %s.", path.c_str());
 	ifstream input(path, ios::in);
 	string text;
 	if (!input) {
@@ -44,6 +45,7 @@ string WindowsFileManager::loadText(string path) {
 		text =  content.str();
 	}
 	input.close();
+	PROFILE("Finished loading text file to string.");
 	return text;
 }
 

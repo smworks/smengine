@@ -7,6 +7,7 @@
 #include "MaterialIndex.h"
 #include "Face.h"
 #include "../../../ghost/ServiceProvider.h"
+#include "ObjProperties.h"
 
 class ServiceLocator;
 
@@ -17,8 +18,12 @@ public:
 	bool parse(ModelData& model, const string& file);
 	
 private:
-	void countComponents(const string& obj, UINT32& vertices,
-		UINT32& normals, UINT32& uvCoordinates, UINT32& faces, float& maxVertexPos);
+
+	/*
+	* Scans through model content and
+	* counts the number of vertices and faces.
+	*/
+	ObjProperties getObjProperties(string obj) const;
 	bool parseMaterial(ModelData& model, string file) const;
 	void* getAllocatedVertexBuffer(bool hasUV, bool hasNormals, SIZE vertexCount);
 

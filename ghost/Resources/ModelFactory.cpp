@@ -34,7 +34,7 @@ ModelData* ModelFactory::create(string model, Attributes& attr, ServiceLocator* 
 		createModel(md, attr, sl);
 	} else {
 		if (model.length() > 0) {
-			THROWEXEXT("Unknown model type: %s.", model.c_str());
+			THROWEX("Unknown model type: %s.", model.c_str());
 		} else {
 			THROWEX("No model type specified. Attempting to load as model type.");
 		}

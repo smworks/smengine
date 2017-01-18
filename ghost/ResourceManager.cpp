@@ -186,24 +186,24 @@ void ResourceManager::loadNodes(
 Node* ResourceManager::createNode(XmlNode* xmlNode, Node* parent) {
 	GET_VALUE(name, xmlNode, NAME);
 	if (name == 0) {
-		THROWEXEXT("Node name was not specified. This might indicate error in XML file. Parent node name is \"%s\".",
+		THROWEX("Node name was not specified. This might indicate error in XML file. Parent node name is \"%s\".",
 			parent->getName().c_str());
 	}
 	LOGD("Parsing node: %s.", name->c_str());
 	vector<XmlNode*> res = xmlNode->getNodes(RESOURCE);
 	if (res.size() != 1) {
-		THROWEXEXT("Node %s must contain one resource.", name->c_str());
+		THROWEX("Node %s must contain one resource.", name->c_str());
 	}
 	XmlNode* r = res[0];
 	string* type = r->getAttr(TYPE);
 	string* file = r->getAttr(FILE);
 	if (type == 0) {
-		THROWEXEXT("Type attribute not specified for node %s.", name->c_str());
+		THROWEX("Type attribute not specified for node %s.", name->c_str());
 	}
 	Resource::Type resType = Resource::stringToType(*type);
 	Resource* resource = create(resType);
 	if (resource == 0) {
-		THROWEXEXT("Node \"%s\" contains unknown resource type: %s.",
+		THROWEX("Node \"%s\" contains unknown resource type: %s.",
 			name->c_str(), type->c_str());
 	}
 	Attributes& attr = resource->getAttributes();

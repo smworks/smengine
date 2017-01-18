@@ -875,6 +875,9 @@
     <ClInclude Include="..\..\ghost\ServiceProvider.h">
       <Filter>Source Files\ghost</Filter>
     </ClInclude>
+    <ClInclude Include="src\ObjProperties.h">
+      <Filter>Source Files\src</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Xml Include="..\..\dependencies\includes\zlib\treebuild.xml">
