@@ -2,6 +2,7 @@
 #define POSITIONPARSERTASK_H_
 
 #include "../../../ghost/Thread.h"
+#include "RawObject.h"
 class Vec3;
 
 class PositionParserTask : public Task
@@ -9,15 +10,13 @@ class PositionParserTask : public Task
 public:
 	PositionParserTask(
 		const char* data, UINT8* vertices, UINT32 offset, UINT32 size,
-		Vec3* vmin, Vec3* vmax, Vec3* radius, float& maxVertexPos);
+		RawObject& rawObject, float& maxVertexPos);
 
 	void run() override;
 private:
 	const char* data;
 	UINT8* vertices;
-	Vec3* vmin;
-	Vec3* vmax;
-	Vec3* radius;
+	RawObject& rawObject;
 	UINT32 offset;
 	UINT32 size;
 	float maxVertexPos;

@@ -9,7 +9,7 @@ class NormalParserTask : public Task
 public:
 	NormalParserTask(const char* data, UINT8* vertices, UINT32 offset, UINT32 size);
 
-	void run() override;;
+	void run() override;
 private:
 	const char* data;
 	UINT8* vertices;

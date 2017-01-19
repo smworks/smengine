@@ -25,7 +25,6 @@ private:
 	* counts the number of vertices and faces.
 	*/
 	ObjProperties getObjProperties(string obj) const;
-	bool parseMaterial(ModelData& model, string file) const;
 	void* getAllocatedVertexBuffer(bool hasUV, bool hasNormals, SIZE vertexCount);
 
 	/**

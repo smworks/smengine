@@ -6,13 +6,14 @@
 #include "../../../ghost/BoundingSphere.h"
 #include "../../../ghost/BoundingBox.h"
 #include "../../../ghost/Utils.h"
-#include "../../../ghost/Resources/Texture.h"
 #include "../../../ghost/Resources/Renderable.h"
 #include "PositionParserTask.h"
 #include "NormalParserTask.h"
 #include "FaceParserTask.h"
 #include "UVParserTask.h"
 #include "../../../ghost/ServiceProvider.h"
+#include "MaterialParserTask.h"
+#include "RawObject.h"
 
 ObjParser::ObjParser(ServiceLocator* serviceLocator): ServiceProvider(serviceLocator)
 {
@@ -21,140 +22,30 @@ ObjParser::ObjParser(ServiceLocator* serviceLocator): ServiceProvider(serviceLoc
 bool ObjParser::parse(ModelData& model, const string& file)
 {
 	string obj = getFileManager()->loadText(file);
-	THROWONASSERT(obj.length() == 0, "Unable to load file: %s", file.c_str());
+	THROWONASSERT(obj.length() != 0, "Unable to load file: %s", file.c_str());
+
 	
+
 	ObjProperties objProperties = getObjProperties(obj);
 	LOGI("Size adjust ratio: %f.", 1.0f / objProperties.maxVertexPos);
-
-	THROWONASSERT(objProperties.faceCount * 3 > UINT_MAX,
-		"3D model cannot have more indices than: %d.", UINT_MAX);
 
 	VertexProperties vertexProperties = getVertexProperties(objProperties);
 
 	UINT8* vertices = NEW UINT8[vertexProperties.vertexSize * objProperties.vertexCount];
 
-
-
-	vector<Face> faces;
-	faces.resize(objProperties.faceCount);
-	string line;
-	SIZE pos = 0;
-	SIZE lineEnd = 0;
-	SIZE params = 0;
-	MaterialIndex matInd;
-	SIZE matOff = 0;
-	SIZE matSize = 0;
-	vector<string> arr;
+	RawObject rawObject;
 	const char* data = obj.c_str();
-	UINT64 posThread = 0, normalThread = 0, uvThread = 0, faceThread = 0;
-	Vec3 vmin(FLT_MAX), vmax(FLT_MIN), radius(0.0f);
-	posThread = getThreadManager()->execute(NEW PositionParserTask(
-		data, vertices, vertexProperties.positionOffset, vertexProperties.vertexSize, &vmin, &vmax, &radius, objProperties.maxVertexPos));
-	if (vertexProperties.hasNormals())
-	{
-		normalThread = getThreadManager()->execute(NEW NormalParserTask(data, vertices, vertexProperties.normalOffset, vertexProperties.vertexSize));
-	}
-	if (vertexProperties.hasUV())
-	{
-		uvThread = getThreadManager()->execute(NEW UVParserTask(data, vertices, vertexProperties.uvOffset, vertexProperties.vertexSize));
-	}
-	faceThread = getThreadManager()->execute(NEW FaceParserTask(data, &faces));
-
+	UINT64 posThread = getThreadManager()->execute(NEW PositionParserTask(
+		data, vertices, vertexProperties.positionOffset, vertexProperties.vertexSize, rawObject, objProperties.maxVertexPos));
+	UINT64 normalThread = vertexProperties.hasNormals() ? getThreadManager()->execute(NEW NormalParserTask(data, vertices, vertexProperties.normalOffset, vertexProperties.vertexSize)) : 0;
+	UINT64 uvThread = vertexProperties.hasUV() ? getThreadManager()->execute(NEW UVParserTask(data, vertices, vertexProperties.uvOffset, vertexProperties.vertexSize)) : 0;
+	vector<Face> faces(objProperties.faceCount);
+	UINT64 faceThread = getThreadManager()->execute(NEW FaceParserTask(data, &faces));
 	vector<MaterialIndex> matIndices;
-	auto& materials = model.getMaterials();
-	while (true)
-	{
-		lineEnd = obj.find(GHOST_NEWLINE, pos);
-		if (lineEnd == string::npos)
-		{
-			break;
-		}
-		switch (obj[pos])
-		{
-		case 'f': // Faces.
-			line = obj.substr(pos, lineEnd - pos);
-			stringSplit(line, arr, ' ');
-			params = arr.size();
-			if (params == 4)
-			{
-				matSize++;
-			}
-			break;
-		case 'm': // Material file.
-			line = obj.substr(pos, lineEnd - pos);
-			stringSplit(line, arr, ' ');
-			if (!parseMaterial(model, arr[1]))
-			{
-				LOGW("Unable to parse material file: %s", arr[1].c_str());
-				return false;
-			}
-			break;
-		case 'u': // Use material.
-			line = obj.substr(pos, lineEnd - pos);
-			stringSplit(line, arr, ' ');
-			if (materials.size() == 0)
-			{
-				LOGW("Material file must be defined first");
-			}
-			else if (arr.size() < 2)
-			{
-				LOGE("usemtl in .obj file has no name.");
-			}
-			else
-			{
-				SIZE size = materials.size();
-				bool found = false;
-				for (SIZE i = 0; i < size; i++)
-				{
-					if (strcmp(materials[i].name, arr[1].c_str()) == 0)
-					{
-						found = true;
-					}
-				}
-				if (found)
-				{
-					if (matSize == 0)
-					{ // First element.
-						matInd.name_ = arr[1];
-						matInd.offset_ = matOff;
-					}
-					else
-					{
-						matInd.size_ = matSize;
-						matOff += matSize;
-						matIndices.push_back(matInd);
-						matInd.name_ = arr[1];
-						matInd.offset_ = matOff;
-						matSize = 0;
-					}
-				}
-				else
-				{
-					LOGW("Material %s not found.", arr[1].c_str());
-					if (matSize == 0)
-					{ // First element.
-						matInd.name_ = "default";
-						matInd.offset_ = matOff;
-					}
-					else
-					{
-						matInd.size_ = matSize;
-						matOff += matSize;
-						matIndices.push_back(matInd);
-						matInd.name_ = "default";
-						matInd.offset_ = matOff;
-						matSize = 0;
-					}
-				}
-			}
-			break;
-		case 'o': // Object groups.
-		case '#': // Comments.
-			break;
-		}
-		pos = lineEnd + 1;
-	}
-
+	MaterialIndex matInd;
+	UINT64 materialThread = getThreadManager()->execute(NEW MaterialParserTask(
+		getServiceLocator(), obj, matInd, model, matIndices
+	));
 
 	getThreadManager()->join(posThread);
 	if (normalThread != 0)
@@ -166,8 +57,10 @@ bool ObjParser::parse(ModelData& model, const string& file)
 		getThreadManager()->join(uvThread);
 	}
 	getThreadManager()->join(faceThread);
+	getThreadManager()->join(materialThread);
+
 	PROFILE("Finished reading basic data for object: %s.", file.c_str());
-	matInd.size_ = matSize;
+
 	matIndices.push_back(matInd);
 	//rearrangeFacesAndMaterials(matIndices, materials, faces);
 	vector<UINT16>* indexArray = 0;
@@ -175,7 +68,7 @@ bool ObjParser::parse(ModelData& model, const string& file)
 	UINT32 indexReserve = 0;
 	for (UINT32 i = 0; i < matIndices.size(); i++)
 	{
-		indexReserve += matIndices[i].size_ * 3;
+		indexReserve += matIndices[i].size * 3;
 	}
 	bool useShort = true;
 	if (indexReserve >= USHRT_MAX)
@@ -198,7 +91,7 @@ bool ObjParser::parse(ModelData& model, const string& file)
 	for (SIZE i = 0; i < objProperties.faceCount; i++)
 	{
 		Face& face = faces[i];
-		for (int j = 0; j < Face::FACE_SIZE; j++)
+		for (auto j = 0; j < Face::FACE_SIZE; j++)
 		{
 			UINT32 index = face.indices_[j];
 			UniqueKey key;
@@ -287,28 +180,29 @@ bool ObjParser::parse(ModelData& model, const string& file)
 	vector<ModelData::Part>& parts = model.getParts();
 	parts.resize(matIndices.size());
 	UINT32 offset = 0;
+	auto& materials = model.getMaterials();
 	for (UINT32 i = 0; i < matIndices.size(); i++)
 	{
 		MaterialIndex mi = matIndices[i];
-		if (mi.name_.length() > 0)
+		if (mi.name.length() > 0)
 		{
 			for (UINT32 j = 0; j < materials.size(); j++)
 			{
-				if (strcmp(mi.name_.c_str(), materials[j].name) == 0)
+				if (strcmp(mi.name.c_str(), materials[j].name) == 0)
 				{
 					parts[i].material_ = j;
 				}
 			}
 		}
 		parts[i].offset_ = offset;
-		parts[i].indexCount_ = (UINT32) mi.size_ * 3;
+		parts[i].indexCount_ = (UINT32) mi.size * 3;
 		offset += parts[i].indexCount_;
 	}
 	// Calculate bounding volume.
-	float width = vmax.getX() - vmin.getX();
-	float height = vmax.getY() - vmin.getY();
-	float depth = vmax.getZ() - vmin.getZ();
-	float r = radius.length();
+	float width = rawObject.maxVertex.getX() - rawObject.minVertex.getX();
+	float height = rawObject.maxVertex.getY() - rawObject.minVertex.getY();
+	float depth = rawObject.maxVertex.getZ() - rawObject.minVertex.getZ();
+	float r = rawObject.radius;
 	float volumeBox = width * height * depth;
 	float volumeSphere = 4.0f / 3.0f * (float) SMART_PI * r * r * r;
 	LOGD("Sphere radius: %f. Box width: %f, height: %f, depth: %f.", r, width, height, depth);
@@ -318,7 +212,7 @@ bool ObjParser::parse(ModelData& model, const string& file)
 	BoundingVolume* bounds = 0;
 	if (volumeSphere < volumeBox)
 	{
-		bounds = NEW BoundingSphere(radius.length());
+		bounds = NEW BoundingSphere(rawObject.radius);
 	}
 	else
 	{
@@ -367,9 +261,9 @@ void ObjParser::rearrangeFacesAndMaterials(vector<MaterialIndex>& matIndices,
 		for (UINT32 j = 0; j < materials.size(); j++)
 		{
 			MaterialIndex& mi = matIndices[i];
-			if (strcmp(mi.name_.c_str(), materials[j].name) == 0)
+			if (strcmp(mi.name.c_str(), materials[j].name) == 0)
 			{
-				for (SIZE k = mi.offset_; k < mi.offset_ + mi.size_; k++)
+				for (SIZE k = mi.offset; k < mi.offset + mi.size; k++)
 				{
 					arrFaces[j].push_back(faces[k]);
 				}
@@ -382,15 +276,15 @@ void ObjParser::rearrangeFacesAndMaterials(vector<MaterialIndex>& matIndices,
 	for (UINT32 i = 0; i < arrFaces.size(); i++)
 	{
 		MaterialIndex mi;
-		mi.name_ = string(materials[i].name);
-		mi.offset_ = offset;
-		mi.size_ = arrFaces[i].size();
+		mi.name = string(materials[i].name);
+		mi.offset = offset;
+		mi.size = arrFaces[i].size();
 		matIndices.push_back(mi);
 		for (UINT32 j = 0; j < arrFaces[i].size(); j++)
 		{
 			faces.push_back(arrFaces[i][j]);
 		}
-		offset += mi.size_;
+		offset += mi.size;
 	}
 }
 
@@ -401,7 +295,6 @@ VertexProperties ObjParser::getVertexProperties(ObjProperties objProperties)
 	bool hasNormals = objProperties.normalCount > 0;
 	if (hasUV && hasNormals)
 	{
-		
 		vertexProperties.vertexSize = sizeof(VertexPNT);
 		vertexProperties.positionOffset = offsetof(VertexPNT, pos);
 		vertexProperties.normalOffset = offsetof(VertexPNT, normals);
@@ -512,111 +405,4 @@ ObjProperties ObjParser::getObjProperties(string obj) const
 		pos++;
 	}
 	return properties;
-}
-
-/*
- * Loads material data into entity model.
- */
-bool ObjParser::parseMaterial(ModelData& model, string file) const
-{
-	auto obj = getFileManager()->loadText(file);
-	if (obj.length() == 0)
-	{
-		LOGW("Material %s not found.", file.c_str());
-	}
-
-	string line;
-	vector<string> arr;
-	size_t lineEnd = 0, pos = 0;
-	ModelData::Material mat;
-	mat.setName("default");
-	while (true)
-	{
-		lineEnd = obj.find(GHOST_NEWLINE, pos);
-		if (lineEnd == string::npos)
-		{
-			break;
-		}
-		line = obj.substr(pos, lineEnd - pos);
-		if (line.length() == 0)
-		{
-			pos = lineEnd + 1;
-			continue;
-		}
-		stringSplit(line, arr, ' ');
-		if (arr.size() < 2)
-		{
-			pos = lineEnd + 1;
-			continue;
-		}
-
-		switch (obj[pos])
-		{
-		case 'K':
-			switch (obj[pos + 1])
-			{
-			case 'a': // Ambient color.
-				mat.ambient_.setRGB(
-					toFloat(arr[1].c_str()),
-					toFloat(arr[2].c_str()),
-					toFloat(arr[3].c_str()));
-				break;
-			case 'd': // Diffuse color.
-				mat.diffuse_.setRGB(
-					toFloat(arr[1].c_str()),
-					toFloat(arr[2].c_str()),
-					toFloat(arr[3].c_str()));
-				break;
-			case 's': // Specular color.
-				mat.specular_.setRGB(
-					toFloat(arr[1].c_str()),
-					toFloat(arr[2].c_str()),
-					toFloat(arr[3].c_str()));
-				break;
-			}
-			break;
-		case 'N': // Specular color intensity.
-			mat.specIntensity_ = toFloat(arr[1].c_str());
-			break;
-		case 'd': // Transparency.
-			mat.transparency_ = toFloat(arr[1].c_str());
-			break;
-		case 'm': // Texture.
-			{
-				SIZE index = arr[1].find_last_of("/\\");
-				string texture;
-				if (index != string::npos)
-				{
-					texture = arr[1].substr(index + 1);
-				}
-				else
-				{
-					texture = arr[1];
-				}
-				if (texture.length() > 0)
-				{
-					mat.texture_ = Texture::load(getServiceLocator(), texture);
-				}
-			}
-			break;
-		case 'n':
-			if (arr.size() < 2)
-			{
-				LOGE("Used materials has no name.");
-				return false;
-			}
-			else
-			{
-				model.getMaterials().push_back(mat);
-				mat = ModelData::Material();
-				mat.setName(arr[1]);
-			}
-			break;
-		}
-		pos = lineEnd + 1;
-	}
-
-	model.getMaterials().push_back(mat);
-
-	return true;
 }

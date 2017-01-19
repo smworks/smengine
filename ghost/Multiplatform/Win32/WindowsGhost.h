@@ -183,7 +183,7 @@ void logToFile(char* msg);
 	throw runtime_error(buff);\
 }
 #define THROWONASSERT(cond, msg, ...) \
-	if (cond) { \
+	if (!cond) { \
 		THROWEX(msg, __VA_ARGS__) \
 	}
 

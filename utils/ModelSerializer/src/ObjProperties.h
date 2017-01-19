@@ -10,10 +10,10 @@ struct ObjProperties
 	{
 	}
 
-	UINT64 vertexCount;
-	UINT64 normalCount;
-	UINT64 uvCount;
-	UINT64 faceCount;
+	UINT32 vertexCount;
+	UINT32 normalCount;
+	UINT32 uvCount;
+	UINT32 faceCount;
 	float maxVertexPos;
 };
 

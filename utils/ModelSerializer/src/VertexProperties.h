@@ -1,5 +1,5 @@
 #ifndef VERTEXPROPERTIES_H_
-#define OBJPROPERTIES_H_
+#define VERTEXPROPERTIES_H_
 
 #include "../../../ghost/Multiplatform/Ghost.h"
 #include "../../../ghost/ModelData.h"

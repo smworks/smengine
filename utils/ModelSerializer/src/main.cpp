@@ -31,19 +31,24 @@ int main()
 #endif
 
 	auto* sl = getServiceLocator();
-	cout << "Enter model file to convert: ";
-	string file;
-	getline(cin, file);
-	cout << "Loading file: " << file.c_str() << endl;
-	ModelData md;
-	if (ObjParser(sl).parse(md, file))
-	{
-		md.serializeToFile(file + ".sm");
-		cout << "Successfully serialized model" << endl;
+	try {
+		cout << "Enter model file to convert: ";
+		string file;
+		getline(cin, file);
+		cout << "Loading file: " << file.c_str() << endl;
+		ModelData md;
+		if (ObjParser(sl).parse(md, file))
+		{
+			md.serializeToFile(file + ".sm");
+			cout << "Successfully serialized model" << endl;
+		}
+		else
+		{
+			cout << "Problem converting model. Check warning log" << endl;
+		}
 	}
-	else
-	{
-		cout << "Problem converting model. Check warning log" << endl;
+	catch (exception e) {
+		cout << "Exception occured: " << e.what() << endl;
 	}
 	sl->release();
 	delete sl;

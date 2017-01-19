@@ -2,12 +2,10 @@
 #include "../../../ghost/Utils.h"
 #include "../../../ghost/Vec3.h"
 
-PositionParserTask::PositionParserTask(const char* data, UINT8* vertices, UINT32 offset, UINT32 size, Vec3* vmin, Vec3* vmax, Vec3* radius, float& maxVertexPos):
+PositionParserTask::PositionParserTask(const char* data, UINT8* vertices, UINT32 offset, UINT32 size, RawObject& rawObject, float& maxVertexPos):
 	data(data),
 	vertices(vertices),
-	vmin(vmin),
-	vmax(vmax),
-	radius(radius),
+	rawObject(rawObject),
 	offset(offset),
 	size(size),
 	maxVertexPos(maxVertexPos)
@@ -66,33 +64,33 @@ void PositionParserTask::run()
 				memcpy(&vertices[index++ * size + offset], &posVec[0], sizeof(float) * 3);
 				static Vec3 tmp;
 				tmp.setXYZ(posVec[0], posVec[1], posVec[2]);
-				if (tmp.length() > radius->length())
+				if (tmp.length() > rawObject.radius)
 				{
-					radius->setXYZ(tmp);
+					rawObject.radius = tmp.length();
 				}
-				if (vmin->getX() > posVec[0])
+				if (rawObject.minVertex.getX() > posVec[0])
 				{
-					vmin->setX(posVec[0]);
+					rawObject.minVertex.setX(posVec[0]);
 				}
-				if (vmin->getY() > posVec[1])
+				if (rawObject.minVertex.getY() > posVec[1])
 				{
-					vmin->setY(posVec[1]);
+					rawObject.minVertex.setY(posVec[1]);
 				}
-				if (vmin->getZ() > posVec[2])
+				if (rawObject.minVertex.getZ() > posVec[2])
 				{
-					vmin->setZ(posVec[2]);
+					rawObject.minVertex.setZ(posVec[2]);
 				}
-				if (vmax->getX() < posVec[0])
+				if (rawObject.maxVertex.getX() < posVec[0])
 				{
-					vmax->setX(posVec[0]);
+					rawObject.maxVertex.setX(posVec[0]);
 				}
-				if (vmax->getY() < posVec[1])
+				if (rawObject.maxVertex.getY() < posVec[1])
 				{
-					vmax->setY(posVec[1]);
+					rawObject.maxVertex.setY(posVec[1]);
 				}
-				if (vmax->getZ() < posVec[2])
+				if (rawObject.maxVertex.getZ() < posVec[2])
 				{
-					vmax->setZ(posVec[2]);
+				rawObject.maxVertex.setZ(posVec[2]);
 				}
 			}
 		}

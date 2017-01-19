@@ -219,6 +219,7 @@
     <ClCompile Include="..\..\ghost\Xml.cpp" />
     <ClCompile Include="src\FaceParserTask.cpp" />
     <ClCompile Include="src\main.cpp" />
+    <ClCompile Include="src\MaterialParserTask.cpp" />
     <ClCompile Include="src\NormalParserTask.cpp" />
     <ClCompile Include="src\ObjParser.cpp" />
     <ClCompile Include="src\PositionParserTask.cpp" />
@@ -354,6 +355,7 @@
     <ClInclude Include="src\Face.h" />
     <ClInclude Include="src\FaceParserTask.h" />
     <ClInclude Include="src\MaterialIndex.h" />
+    <ClInclude Include="src\MaterialParserTask.h" />
     <ClInclude Include="src\NormalParserTask.h" />
     <ClInclude Include="src\ObjParser.h" />
     <ClInclude Include="src\ObjProperties.h" />

@@ -471,6 +471,9 @@
     <ClCompile Include="..\..\ghost\ServiceProvider.cpp">
       <Filter>Source Files\ghost</Filter>
     </ClCompile>
+    <ClCompile Include="src\MaterialParserTask.cpp">
+      <Filter>Source Files\src</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\ghost\Multiplatform\Win32\WindowsDatabase.h">
@@ -879,6 +882,9 @@
       <Filter>Source Files\src</Filter>
     </ClInclude>
     <ClInclude Include="src\VertexProperties.h">
+      <Filter>Source Files\src</Filter>
+    </ClInclude>
+    <ClInclude Include="src\MaterialParserTask.h">
       <Filter>Source Files\src</Filter>
     </ClInclude>
   </ItemGroup>

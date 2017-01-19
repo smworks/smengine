@@ -6,15 +6,15 @@
 struct MaterialIndex
 {
 	MaterialIndex() :
-		name_(""),
-		offset_(0),
-		size_(0)
+		name(""),
+		offset(0),
+		size(0)
 	{
 	}
 
-	string name_;
-	SIZE offset_;
-	SIZE size_;
+	string name;
+	SIZE offset;
+	SIZE size;
 };
 
 #endif
