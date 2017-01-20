@@ -9,6 +9,7 @@
 #include "../../../ghost/ServiceProvider.h"
 #include "ObjProperties.h"
 #include "VertexProperties.h"
+#include "RawObject.h"
 
 class ServiceLocator;
 
@@ -17,6 +18,7 @@ public:
 	explicit ObjParser(ServiceLocator* serviceLocator);
 
 	bool parse(ModelData& model, const string& file);
+	RawObject loadRawObject(ModelData& model, const string& file);
 	
 private:
 

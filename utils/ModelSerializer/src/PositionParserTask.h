@@ -8,18 +8,12 @@ class Vec3;
 class PositionParserTask : public Task
 {
 public:
-	PositionParserTask(
-		const char* data, UINT8* vertices, UINT32 offset, UINT32 size,
-		RawObject& rawObject, float& maxVertexPos);
+	PositionParserTask(const char* data, RawObject& rawObject);
 
 	void run() override;
 private:
 	const char* data;
-	UINT8* vertices;
 	RawObject& rawObject;
-	UINT32 offset;
-	UINT32 size;
-	float maxVertexPos;
 };
 
 #endif

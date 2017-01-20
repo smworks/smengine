@@ -32,7 +32,7 @@
 #define MAX_ACTIVE_TEXTURES 32
 
 GraphicsManager::GraphicsManager(ServiceLocator* services) :
-	services_(services),
+	services(services),
 	frontBuffer_(0),
 	backBuffer_(0),
 	windingType_(Renderable::WINDING_TYPE_NONE),
@@ -55,7 +55,7 @@ GraphicsManager::~GraphicsManager() {
 }
 
 void GraphicsManager::create() {
-	if (!services_->isGuiAvailable()) {
+	if (!services->isGuiAvailable()) {
 		LOGD("Graphics manager not properly created.")
 		return;
 	}
@@ -77,10 +77,10 @@ void GraphicsManager::create() {
         Shapes::getShape(Shapes::SHAPE_SCREEN_PLANE, Shapes::VERTEX_TEX));
 	setVertexBuffer(planeUVBO_, &(*uvbo)[0], (UINT32) uvbo->size() * sizeof(VertexT));
 	delete uvbo;
-	database_ = services_->getDB();
-	camera_ = services_->getCamera();
-	resourceManager_ = services_->getRM();
-	textManager_ = services_->getTextManager();
+	database_ = services->getDB();
+	camera_ = services->getCamera();
+	resourceManager_ = services->getRM();
+	textManager_ = services->getTextManager();
 	#ifdef SMART_DEBUG
         glClearColor(1.0f, 0.5f, 1.0f, 1.0f);
         //glClearColor(1.0f, 1.0f, 1.0f, 1.0f);
@@ -103,7 +103,7 @@ void GraphicsManager::create() {
 	// Specify blending function.
 	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 	// Load screen plane.
-	Model* obj = NEW Model(services_);
+	Model* obj = NEW Model(services);
 	obj->getAttributes().setString(
 		Resource::ATTR_FILE, PLANE);
 	obj->getAttributes().setString(
@@ -111,7 +111,7 @@ void GraphicsManager::create() {
 	obj->create();
 	screenPlane_ = obj;
 	// Load immediate mode shader.
-	immediateShader_ = NEW Shader(services_);
+	immediateShader_ = NEW Shader(services);
 	string& immediateShaderName = database_->getString(
 		Database::IMMEDIATE_MODE_SHADER);
 	immediateShader_->getAttributes().setString(
@@ -119,21 +119,21 @@ void GraphicsManager::create() {
 	immediateShader_->create();
 	resourceManager_->add(immediateShaderName, immediateShader_);
 	// Load text shader.
-	textShader_ = NEW Shader(services_);
+	textShader_ = NEW Shader(services);
 	string& textShaderName = database_->getString(Database::DEFAULT_TEXT_SHADER);
 	textShader_->getAttributes().setString(Resource::ATTR_FILE, textShaderName);
 	textShader_->create();
 	resourceManager_->add(textShaderName, textShader_);
 
-	RenderPass* rp = NEW RenderPass(services_);
+	RenderPass* rp = NEW RenderPass(services);
 	rp->setRenderToScreen(true);
 	rp->setRenderContent(ALL);
 	rp->setFrameScale(1.0f, 1.0f);
 	passes_.push_back(rp);
 
-	//rp = NEW RenderPass(services_);
+	//rp = NEW RenderPass(services);
 	//rp->setRenderToScreen(false);
- //   Shader* shader = NEW Shader(services_);
+ //   Shader* shader = NEW Shader(services);
  //   shader->getAttributes().setString(Resource::ATTR_FILE, "horizontal_blur");
  //   shader->create();
  //   resourceManager_->add("horizontal_blur", shader);
@@ -141,9 +141,9 @@ void GraphicsManager::create() {
 	//rp->setShader(shader);
 	//passes_.push_back(rp);
 
-	//rp = NEW RenderPass(services_);
+	//rp = NEW RenderPass(services);
 	//rp->setRenderToScreen(true);
-	//shader = NEW Shader(services_);
+	//shader = NEW Shader(services);
  //   shader->getAttributes().setString(Resource::ATTR_FILE, "vertical_blur");
  //   shader->create();
  //   resourceManager_->add("vertical_blur", shader);
@@ -155,7 +155,7 @@ void GraphicsManager::create() {
 }
 
 void GraphicsManager::release() {
-	if (!services_->isGuiAvailable()) {
+	if (!services->isGuiAvailable()) {
 		return;
 	}
 	unsetVertexBuffer(planeVBO_);
@@ -223,20 +223,20 @@ void GraphicsManager::resize(UINT32 width, UINT32 height) {
 	// Update screen matrix.
 	Mat4 pos, rot, posRot, scale, posScale;
 	Matrix::translate(pos,
-		(float) services_->getScreenWidth() * 0.5f,
-		(float) services_->getScreenHeight() * 0.5f,
+		(float) services->getScreenWidth() * 0.5f,
+		(float) services->getScreenHeight() * 0.5f,
 		-1.0f);
 	Matrix::rotateX(rot, -90.0f);
 	Matrix::scale(scale,
-		(float) services_->getScreenWidth(),
+		(float) services->getScreenWidth(),
 		1.0f,
-		(float) services_->getScreenHeight());
+		(float) services->getScreenHeight());
 	Matrix::multiply(pos, rot, posRot);
 	Matrix::multiply(posRot, scale, posScale);
 	Mat4 proj;
 	Matrix::projection2D(proj,
-		(float) services_->getScreenWidth(),
-		(float) services_->getScreenHeight(),
+		(float) services->getScreenWidth(),
+		(float) services->getScreenHeight(),
 		database_->getFloat(Database::FAR_PLANE_DISTANCE));
 	Matrix::multiply(
 		proj,
@@ -285,7 +285,7 @@ void GraphicsManager::renderGuiText(Node* node) {
 	useProgram(textShader_->getId());
 	int texture = glGetUniformLocation(textShader_->getId(), "texture_0");
 	textShader_->setVector4(Shader::FOREGROUND, text->getDiffuse().toArray());
-	bindTexture(services_->getTextureAtlas()->getId(Texture::MONO));
+	bindTexture(services->getTextureAtlas()->getId(Texture::MONO));
 	glUniform1i(texture, 0);
 	glEnableVertexAttribArray(textShader_->getHandle(Shader::POS));
 	glEnableVertexAttribArray(textShader_->getHandle(Shader::UV));
@@ -311,7 +311,7 @@ struct zComparator {
 
 void GraphicsManager::refreshRenderList() {
 	vector<Node*> renderArray;
-	services_->getRootNode()->toRenderArray(renderArray);
+	services->getRootNode()->toRenderArray(renderArray);
 	spriteArray_.clear();
 	modelArray_.clear();
 	guiArray_.clear();
@@ -474,17 +474,17 @@ void GraphicsManager::prepareShader(Shader* shader, Node* node, Mat4 in) {
 	// Light count.
 	shader->setInt(Shader::LIGHT_COUNT, static_cast<UINT32>(lights_.size()));
 	//shader->setVector3(Shader::LIGHT_POS,
-	//	services_->getEnv()->getSunPos()->toArray());
+	//	services->getEnv()->getSunPos()->toArray());
 	// Eye position.
 	shader->setVector3(Shader::EYE_POS, camera_->getPos().toArray());
 	// Fog color.
 	//if (shader->hasHandle(Shader::FOG_COLOR)) {
 	//	shader->setVector3(Shader::FOG_COLOR,
-	//		services_->getEnv()->getFogColor());
+	//		services->getEnv()->getFogColor());
 	//}
 	// Fog density.
 	//shader->setFloat(Shader::FOG_DENSITY,
-	//	services_->getEnv()->getFogDensity());
+	//	services->getEnv()->getFogDensity());
 	// Timer.
 	shader->setFloat(Shader::TIMER, (getMicroseconds() - startTime_) * 0.000001f);
 }
@@ -493,7 +493,7 @@ void GraphicsManager::prepareMatrix(Node* node, Mat4 in, Mat4 out) {
 	if (node->getResource()->getType() == Resource::GUI_SURFACE) {
 		GUISurface* surface = dynamic_cast<GUISurface*>(node->getResource());
 		Mat4 pos, scale, posScale;
-		float posY = services_->getScreenHeight() - surface->getPosY() - surface->getHeight();
+		float posY = services->getScreenHeight() - surface->getPosY() - surface->getHeight();
 		Matrix::translate(pos, surface->getPosX(), posY, 0.0f);
 		Matrix::scale(scale, surface->getWidth(), surface->getHeight(), 1.0);
 		Matrix::multiply(pos, scale, posScale);
@@ -583,8 +583,8 @@ void GraphicsManager::renderParts(Renderable* renderable, int textures[]) {
 		//		continue;
 		//	}
 		//}
-		shader->setFloat(Shader::SCREEN_WIDTH, (float) services_->getScreenWidth());
-		shader->setFloat(Shader::SCREEN_HEIGHT, (float) services_->getScreenHeight());
+		shader->setFloat(Shader::SCREEN_WIDTH, (float) services->getScreenWidth());
+		shader->setFloat(Shader::SCREEN_HEIGHT, (float) services->getScreenHeight());
 		shader->setVector3(Shader::AMBIENT, renderable->getAmbient().toArray());
 		shader->setVector3(Shader::DIFFUSE, renderable->getDiffuse().toArray());
 		shader->setVector3(Shader::SPECULAR, renderable->getSpecular().toArray());
@@ -660,7 +660,7 @@ int GraphicsManager::getRenderType(Renderable* renderable) {
 			return GL_TRIANGLES;
 			// TODO: renderType = GL_QUADS;
 		default:
-			THROWEXEXT("Unknown render type: %d.", renderable->getRenderType());
+			THROWEX("Unknown render type: %d.", renderable->getRenderType());
 	}
 }
 
@@ -683,20 +683,20 @@ void GraphicsManager::renderQuad(
 	// World * View * Projection matrix.
 	Mat4 res, pos, rot, posRot, scale, posScale;
 	Matrix::translate(pos,
-		(float) services_->getScreenWidth() * 0.5f / widthScale,
-		(float) services_->getScreenHeight() * 0.5f / heightScale,
+		(float) services->getScreenWidth() * 0.5f / widthScale,
+		(float) services->getScreenHeight() * 0.5f / heightScale,
 		-1.0f);
 	Matrix::rotateX(rot, -90.0f);
 	Matrix::scale(scale,
-		(float) services_->getScreenWidth() / widthScale,
+		(float) services->getScreenWidth() / widthScale,
 		1.0f,
-		(float) services_->getScreenHeight() / heightScale);
+		(float) services->getScreenHeight() / heightScale);
 	Matrix::multiply(pos, rot, posRot);
 	Matrix::multiply(posRot, scale, posScale);
 	Mat4 proj;
 	Matrix::projection2D(proj,
-		(float) services_->getScreenWidth(),
-		(float) services_->getScreenHeight(),
+		(float) services->getScreenWidth(),
+		(float) services->getScreenHeight(),
 		database_->getFloat(Database::FAR_PLANE_DISTANCE));
 	Matrix::multiply(
 		proj,
@@ -707,10 +707,10 @@ void GraphicsManager::renderQuad(
 	shader->setFloat(Shader::TIMER, getMicroseconds() / 1000000.0f);
 	// Screen width.
 	shader->setFloat(Shader::SCREEN_WIDTH,
-		(float) services_->getScreenWidth());
+		(float) services->getScreenWidth());
 	// Screen height.
 	shader->setFloat(Shader::SCREEN_HEIGHT,
-		(float) services_->getScreenHeight());
+		(float) services->getScreenHeight());
 	bindTexture(colorBuffer);
 	glUniform1i(shader->getHandle(Shader::COLOR_BUFFER), 0);
 	if (shader->hasHandle(Shader::DEPTH_BUFFER)) {

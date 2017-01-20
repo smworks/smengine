@@ -1,9 +1,10 @@
 #include "FaceParserTask.h"
 #include "../../../ghost/Utils.h"
+#include "RawObject.h"
 
-FaceParserTask::FaceParserTask(const char* data, vector<Face>* faces):
+FaceParserTask::FaceParserTask(const char* data, RawObject& rawObject) :
 	data(data),
-	faces(faces)
+	rawObject(rawObject)
 {
 }
 
@@ -22,7 +23,7 @@ void FaceParserTask::run()
 		lineEnd = found - data;
 		if (data[pos] == 'f')
 		{
-			if (!parseFace(faces->at(faceCount++), data + pos + 2, lineEnd - pos - 2))
+			if (!parseFace(rawObject.faces.at(faceCount++), data + pos + 2, lineEnd - pos - 2))
 			{
 				LOGW("Error on line: %s", string(data + pos, lineEnd - pos - 2).c_str());
 			}

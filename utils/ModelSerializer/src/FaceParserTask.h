@@ -5,16 +5,18 @@
 #include "../../../ghost/Thread.h"
 #include "Face.h"
 
+struct RawObject;
+
 class FaceParserTask : public Task
 {
 public:
-	FaceParserTask(const char* data, vector<Face>* faces);
+	FaceParserTask(const char* data, RawObject& rawObject);
 
 	void run() override;
 	bool parseFace(Face& face, const char* line, SIZE length);
 private:
 	const char* data;
-	vector<Face>* faces;
+	RawObject& rawObject;
 };
 
 #endif

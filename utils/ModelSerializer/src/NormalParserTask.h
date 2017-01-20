@@ -4,17 +4,17 @@
 #include "../../../ghost/Multiplatform/Ghost.h"
 #include "../../../ghost/Thread.h"
 
+struct RawObject;
+
 class NormalParserTask : public Task
 {
 public:
-	NormalParserTask(const char* data, UINT8* vertices, UINT32 offset, UINT32 size);
+	NormalParserTask(const char* data, RawObject& rawObject);
 
 	void run() override;
 private:
 	const char* data;
-	UINT8* vertices;
-	UINT32 offset;
-	UINT32 size;
+	RawObject& rawObject;
 };
 
 #endif

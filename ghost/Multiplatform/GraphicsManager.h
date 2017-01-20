@@ -407,7 +407,7 @@ public:
 	bool bindBuffer(SIZE id);
 
 protected:
-	ServiceLocator* services_;
+	ServiceLocator* services;
 	Database* database_;
 	Camera* camera_;
 	ResourceManager* resourceManager_;

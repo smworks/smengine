@@ -69,7 +69,7 @@ private:
 	FT_Error err_;
 	FT_Face face_;
 	INT8* fontBuffer_;
-	ServiceLocator* services_;
+	ServiceLocator* services;
 	SIZE fontSize_;
 	Symbol*** symbolCache_;
 	bool error_;

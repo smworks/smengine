@@ -360,6 +360,7 @@
     <ClInclude Include="src\ObjParser.h" />
     <ClInclude Include="src\ObjProperties.h" />
     <ClInclude Include="src\PositionParserTask.h" />
+    <ClInclude Include="src\RawObject.h" />
     <ClInclude Include="src\UniqueKey.h" />
     <ClInclude Include="src\UVParserTask.h" />
     <ClInclude Include="src\VertexProperties.h" />

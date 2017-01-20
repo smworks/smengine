@@ -41,7 +41,7 @@ void DebugDraw::drawLine(
 }
 
 PhysicsManager::PhysicsManager(ServiceLocator* services) :
-	services_(services),
+	services(services),
 	gm_(0),
 	dd_(0),
 	debug_(false),
@@ -532,7 +532,7 @@ void PhysicsManager::addTerrain(Node* node) {
 			maxHeight = vert[i];
 		}
 	}
-	TextureRGBA* map = static_cast<TextureRGBA*>(services_->getRM()->get(
+	TextureRGBA* map = static_cast<TextureRGBA*>(services->getRM()->get(
 		Resource::TEXTURE_2D, model->getAttribute(Resource::ATTR_FILE)));
 	btHeightfieldTerrainShape* heightfieldShape = new btHeightfieldTerrainShape(
 		map->getWidth(),

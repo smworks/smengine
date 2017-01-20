@@ -1,11 +1,10 @@
 #include "UVParserTask.h"
 #include "../../../ghost/Utils.h"
+#include "RawObject.h"
 
-UVParserTask::UVParserTask(const char* data, UINT8* vertices, UINT32 offset, UINT32 size):
+UVParserTask::UVParserTask(const char* data, RawObject& rawObject):
 	data(data),
-	vertices(vertices),
-	offset(offset),
-	size(size)
+	rawObject(rawObject)
 {
 }
 
@@ -45,7 +44,7 @@ void UVParserTask::run()
 						break;
 					}
 				}
-				memcpy(&vertices[index++ * size + offset], &uvVec[0], sizeof(float) * 2);
+				memcpy(&rawObject.vertices[index++ * rawObject.vertexProperties.vertexSize + rawObject.vertexProperties.uvOffset], &uvVec[0], sizeof(float) * 2);
 			}
 		}
 		pos = lineEnd + 1;

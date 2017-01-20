@@ -19,7 +19,7 @@ public:
 	/**
 	 * @param system - pointer to service locator.
 	 */
-	ThreadManager(ServiceLocator* services);
+	explicit ThreadManager(ServiceLocator* services);
 	~ThreadManager();
 
 	/**
@@ -45,9 +45,9 @@ public:
 	 */
 	void joinAll();
 private:
-	ServiceLocator* services_;
-	vector<Thread*> threads_;
-	bool destroy_;
+	ServiceLocator* services;
+	vector<Thread*> threads;
+	bool destroy;
 };
 
 #endif

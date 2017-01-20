@@ -2,13 +2,9 @@
 #include "../../../ghost/Utils.h"
 #include "../../../ghost/Vec3.h"
 
-PositionParserTask::PositionParserTask(const char* data, UINT8* vertices, UINT32 offset, UINT32 size, RawObject& rawObject, float& maxVertexPos):
+PositionParserTask::PositionParserTask(const char* data, RawObject& rawObject) :
 	data(data),
-	vertices(vertices),
-	rawObject(rawObject),
-	offset(offset),
-	size(size),
-	maxVertexPos(maxVertexPos)
+	rawObject(rawObject)
 {
 }
 
@@ -20,7 +16,7 @@ void PositionParserTask::run()
 	char* line = NEW char[lineLength];
 	UINT32 index = 0;
 	float posVec[3];
-	float adjustRatio = 1.0f / maxVertexPos;
+	float adjustRatio = 1.0f / rawObject.objProperties.maxVertexPos;
 	while (true)
 	{
 		const char* found = strchr(data + pos, GHOST_NEWLINE);
@@ -61,7 +57,7 @@ void PositionParserTask::run()
 						}
 					}
 				}
-				memcpy(&vertices[index++ * size + offset], &posVec[0], sizeof(float) * 3);
+				memcpy(&rawObject.vertices[index++ * rawObject.vertexProperties.vertexSize + rawObject.vertexProperties.positionOffset], &posVec[0], sizeof(float) * 3);
 				static Vec3 tmp;
 				tmp.setXYZ(posVec[0], posVec[1], posVec[2]);
 				if (tmp.length() > rawObject.radius)
@@ -90,7 +86,7 @@ void PositionParserTask::run()
 				}
 				if (rawObject.maxVertex.getZ() < posVec[2])
 				{
-				rawObject.maxVertex.setZ(posVec[2]);
+					rawObject.maxVertex.setZ(posVec[2]);
 				}
 			}
 		}

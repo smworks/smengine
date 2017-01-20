@@ -4,21 +4,21 @@
 #include "../../../ghost/Resources/Texture.h"
 #include "../../../ghost/Multiplatform/FileManager.h"
 #include "MaterialIndex.h"
+#include "RawObject.h"
 
 MaterialParserTask::MaterialParserTask(ServiceLocator* sl, string data,
-                                       MaterialIndex& matInd,
-                                       ModelData& modelData,
-                                       vector<MaterialIndex>& matIndices) :
+                                       RawObject& rawObject,
+                                       ModelData& modelData) :
 	ServiceProvider(sl),
 	data(data),
-	matInd(matInd),
-	modelData(modelData),
-	matIndices(matIndices)
+	rawObject(rawObject),
+	modelData(modelData)
 {
 }
 
 void MaterialParserTask::run()
 {
+	MaterialIndex matInd;
 	auto& materials = modelData.getMaterials();
 	SIZE matOff = 0;
 	vector<string> arr;
@@ -83,7 +83,7 @@ void MaterialParserTask::run()
 					{
 						matInd.size = matSize;
 						matOff += matSize;
-						matIndices.push_back(matInd);
+						rawObject.matIndices.push_back(matInd);
 						matInd.name = arr[1];
 						matInd.offset = matOff;
 						matSize = 0;
@@ -101,7 +101,7 @@ void MaterialParserTask::run()
 					{
 						matInd.size = matSize;
 						matOff += matSize;
-						matIndices.push_back(matInd);
+						rawObject.matIndices.push_back(matInd);
 						matInd.name = "default";
 						matInd.offset = matOff;
 						matSize = 0;
@@ -116,6 +116,7 @@ void MaterialParserTask::run()
 		pos = lineEnd + 1;
 	}
 	matInd.size = matSize;
+	rawObject.matIndices.push_back(matInd);
 }
 
 /*

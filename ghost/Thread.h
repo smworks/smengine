@@ -28,9 +28,9 @@ public:
 	 * @param task - task that will be executed in thread.
 	 * @NOTE: task is deleted when thread finishes work.
 	 */
-	Thread(Task* task);
+	explicit Thread(Task* task);
 	~Thread();
-	UINT64 getId();
+	UINT64 getId() const;
 	bool isRunning();
 private:
 	void run();

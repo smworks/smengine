@@ -2,12 +2,11 @@
 
 
 #include "../../../ghost/Utils.h"
+#include "RawObject.h"
 
-NormalParserTask::NormalParserTask(const char* data, UINT8* vertices, UINT32 offset, UINT32 size):
+NormalParserTask::NormalParserTask(const char* data, RawObject& rawObject):
 	data(data),
-	vertices(vertices),
-	offset(offset),
-	size(size)
+	rawObject(rawObject)
 {
 }
 
@@ -59,7 +58,7 @@ void NormalParserTask::run()
 						}
 					}
 				}
-				memcpy(&vertices[index++ * size + offset], &normVec[0], sizeof(float) * 3);
+				memcpy(&rawObject.vertices[index++ * rawObject.vertexProperties.vertexSize + rawObject.vertexProperties.normalOffset], &normVec[0], sizeof(float) * 3);
 			}
 		}
 		pos = lineEnd + 1;

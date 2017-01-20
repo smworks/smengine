@@ -21,54 +21,19 @@ ObjParser::ObjParser(ServiceLocator* serviceLocator): ServiceProvider(serviceLoc
 
 bool ObjParser::parse(ModelData& model, const string& file)
 {
-	string obj = getFileManager()->loadText(file);
-	THROWONASSERT(obj.length() != 0, "Unable to load file: %s", file.c_str());
-
-	
-
-	ObjProperties objProperties = getObjProperties(obj);
-	LOGI("Size adjust ratio: %f.", 1.0f / objProperties.maxVertexPos);
-
-	VertexProperties vertexProperties = getVertexProperties(objProperties);
-
-	UINT8* vertices = NEW UINT8[vertexProperties.vertexSize * objProperties.vertexCount];
-
-	RawObject rawObject;
-	const char* data = obj.c_str();
-	UINT64 posThread = getThreadManager()->execute(NEW PositionParserTask(
-		data, vertices, vertexProperties.positionOffset, vertexProperties.vertexSize, rawObject, objProperties.maxVertexPos));
-	UINT64 normalThread = vertexProperties.hasNormals() ? getThreadManager()->execute(NEW NormalParserTask(data, vertices, vertexProperties.normalOffset, vertexProperties.vertexSize)) : 0;
-	UINT64 uvThread = vertexProperties.hasUV() ? getThreadManager()->execute(NEW UVParserTask(data, vertices, vertexProperties.uvOffset, vertexProperties.vertexSize)) : 0;
-	vector<Face> faces(objProperties.faceCount);
-	UINT64 faceThread = getThreadManager()->execute(NEW FaceParserTask(data, &faces));
-	vector<MaterialIndex> matIndices;
-	MaterialIndex matInd;
-	UINT64 materialThread = getThreadManager()->execute(NEW MaterialParserTask(
-		getServiceLocator(), obj, matInd, model, matIndices
-	));
-
-	getThreadManager()->join(posThread);
-	if (normalThread != 0)
-	{
-		getThreadManager()->join(normalThread);
-	}
-	if (uvThread != 0)
-	{
-		getThreadManager()->join(uvThread);
-	}
-	getThreadManager()->join(faceThread);
-	getThreadManager()->join(materialThread);
+	RawObject rawObject = loadRawObject(model, file);
 
 	PROFILE("Finished reading basic data for object: %s.", file.c_str());
 
-	matIndices.push_back(matInd);
+	
 	//rearrangeFacesAndMaterials(matIndices, materials, faces);
+
 	vector<UINT16>* indexArray = 0;
 	vector<UINT32>* indexArrayInt = 0;
 	UINT32 indexReserve = 0;
-	for (UINT32 i = 0; i < matIndices.size(); i++)
+	for (UINT32 i = 0; i < rawObject.matIndices.size(); i++)
 	{
-		indexReserve += matIndices[i].size * 3;
+		indexReserve += rawObject.matIndices[i].size * 3;
 	}
 	bool useShort = true;
 	if (indexReserve >= USHRT_MAX)
@@ -86,11 +51,11 @@ bool ObjParser::parse(ModelData& model, const string& file)
 	PROFILE("Started optimizations.");
 	unordered_map<UniqueKey, int, UniqueKeyHash>* hm = NEW unordered_map<UniqueKey, int, UniqueKeyHash>();
 	unordered_map<UniqueKey, int, UniqueKeyHash>::const_iterator it;
-	UINT32 floatsInVertex = vertexProperties.vertexSize / sizeof(float);
+	UINT32 floatsInVertex = rawObject.vertexProperties.vertexSize / sizeof(float);
 	float* vertex = NEW float[floatsInVertex];
-	for (SIZE i = 0; i < objProperties.faceCount; i++)
+	for (SIZE i = 0; i < rawObject.objProperties.faceCount; i++)
 	{
-		Face& face = faces[i];
+		Face& face = rawObject.faces[i];
 		for (auto j = 0; j < Face::FACE_SIZE; j++)
 		{
 			UINT32 index = face.indices_[j];
@@ -113,24 +78,24 @@ bool ObjParser::parse(ModelData& model, const string& file)
 			else
 			{
 				UINT32 vInd = 0;
-				UINT32 offset = index * vertexProperties.vertexSize + vertexProperties.positionOffset;
-				memcpy(&vertex[vInd++], &vertices[offset + 0], sizeof(float));
-				memcpy(&vertex[vInd++], &vertices[offset + sizeof(float)], sizeof(float));
-				memcpy(&vertex[vInd++], &vertices[offset + 2 * sizeof(float)], sizeof(float));
-				if (objProperties.normalCount > 0)
+				UINT32 offset = index * rawObject.vertexProperties.vertexSize + rawObject.vertexProperties.positionOffset;
+				memcpy(&vertex[vInd++], &rawObject.vertices[offset + 0], sizeof(float));
+				memcpy(&vertex[vInd++], &rawObject.vertices[offset + sizeof(float)], sizeof(float));
+				memcpy(&vertex[vInd++], &rawObject.vertices[offset + 2 * sizeof(float)], sizeof(float));
+				if (rawObject.objProperties.normalCount > 0)
 				{
 					index = face.normIndices_[j];
-					offset = index * vertexProperties.vertexSize + vertexProperties.normalOffset;
-					memcpy(&vertex[vInd++], &vertices[offset + 0], sizeof(float));
-					memcpy(&vertex[vInd++], &vertices[offset + sizeof(float)], sizeof(float));
-					memcpy(&vertex[vInd++], &vertices[offset + 2 * sizeof(float)], sizeof(float));
+					offset = index * rawObject.vertexProperties.vertexSize + rawObject.vertexProperties.normalOffset;
+					memcpy(&vertex[vInd++], &rawObject.vertices[offset + 0], sizeof(float));
+					memcpy(&vertex[vInd++], &rawObject.vertices[offset + sizeof(float)], sizeof(float));
+					memcpy(&vertex[vInd++], &rawObject.vertices[offset + 2 * sizeof(float)], sizeof(float));
 				}
-				if (objProperties.uvCount > 0)
+				if (rawObject.objProperties.uvCount > 0)
 				{
 					index = face.texIndices_[j];
-					offset = index * vertexProperties.vertexSize + vertexProperties.uvOffset;
-					memcpy(&vertex[vInd++], &vertices[offset + 0], sizeof(float));
-					memcpy(&vertex[vInd++], &vertices[offset + sizeof(float)], sizeof(float));
+					offset = index * rawObject.vertexProperties.vertexSize + rawObject.vertexProperties.uvOffset;
+					memcpy(&vertex[vInd++], &rawObject.vertices[offset + 0], sizeof(float));
+					memcpy(&vertex[vInd++], &rawObject.vertices[offset + sizeof(float)], sizeof(float));
 				}
 				if (useShort)
 				{
@@ -170,20 +135,19 @@ bool ObjParser::parse(ModelData& model, const string& file)
 	delete indexArray;
 	delete indexArrayInt;
 	SIZE vertexCount = vs->size() / floatsInVertex;
-	void* vertexArray = getAllocatedVertexBuffer(vertexProperties.hasUV(), vertexProperties.hasNormals(), vertexCount);
+	void* vertexArray = getAllocatedVertexBuffer(rawObject.vertexProperties.hasUV(), rawObject.vertexProperties.hasNormals(), vertexCount);
 	memcpy(vertexArray, &(*vs)[0], vs->size() * sizeof(float));
-	model.setVertices(vertexProperties.vertexType, reinterpret_cast<UINT8*>(vertexArray), vertexCount);
+	model.setVertices(rawObject.vertexProperties.vertexType, reinterpret_cast<UINT8*>(vertexArray), vertexCount);
 	LOGD("Vertex count: %u.", (UINT32) vertexCount);
 	delete vs;
-	delete [] vertices;
 	// Create separate model part array.
 	vector<ModelData::Part>& parts = model.getParts();
-	parts.resize(matIndices.size());
+	parts.resize(rawObject.matIndices.size());
 	UINT32 offset = 0;
 	auto& materials = model.getMaterials();
-	for (UINT32 i = 0; i < matIndices.size(); i++)
+	for (UINT32 i = 0; i < rawObject.matIndices.size(); i++)
 	{
-		MaterialIndex mi = matIndices[i];
+		MaterialIndex mi = rawObject.matIndices[i];
 		if (mi.name.length() > 0)
 		{
 			for (UINT32 j = 0; j < materials.size(); j++)
@@ -221,6 +185,42 @@ bool ObjParser::parse(ModelData& model, const string& file)
 	model.setBoundingVolume(bounds);
 	PROFILE("Finished parsing object: %s.", file.c_str());
 	return true;
+}
+
+RawObject ObjParser::loadRawObject(ModelData& model, const string& file)
+{
+	string obj = getFileManager()->loadText(file);
+	THROWONASSERT(obj.length() != 0, "Unable to load file: %s", file.c_str());
+
+	ObjProperties obProp = getObjProperties(obj);
+	LOGI("Size adjust ratio: %f.", 1.0f / obProp.maxVertexPos);
+
+	VertexProperties vxProp = getVertexProperties(obProp);
+
+	RawObject rawObject = RawObject(obProp, vxProp);
+	auto data = obj.c_str();
+
+	UINT64 posThread = getThreadManager()->execute(NEW PositionParserTask(data, rawObject));
+	UINT64 normalThread = vxProp.hasNormals() ? getThreadManager()->execute(NEW NormalParserTask(data, rawObject)) : 0;
+	UINT64 uvThread = vxProp.hasUV() ? getThreadManager()->execute(NEW UVParserTask(data, rawObject)) : 0;
+	UINT64 faceThread = getThreadManager()->execute(NEW FaceParserTask(data, rawObject));
+	UINT64 materialThread = getThreadManager()->execute(NEW MaterialParserTask(
+		getServiceLocator(), obj, rawObject, model
+	));
+
+	getThreadManager()->join(posThread);
+	if (normalThread != 0)
+	{
+		getThreadManager()->join(normalThread);
+	}
+	if (uvThread != 0)
+	{
+		getThreadManager()->join(uvThread);
+	}
+	getThreadManager()->join(faceThread);
+	getThreadManager()->join(materialThread);
+
+	return rawObject;
 }
 
 void* ObjParser::getAllocatedVertexBuffer(bool hasUV, bool hasNormals, SIZE vertexCount)

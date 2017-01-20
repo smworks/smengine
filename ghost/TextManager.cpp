@@ -30,7 +30,7 @@ struct GlyphObject {
 };
 
 TextManager::TextManager(ServiceLocator* services) :
-	services_(services),
+	services(services),
 	fontSize_(0),
 	symbolCache_(0),
 	error_(false)
@@ -120,9 +120,9 @@ Texture* TextManager::getText(const string& text, int size) {
 	setFontSize(size);
 	string name = "cache_";
 	name += text;
-	if (services_->getRM()->has(Resource::TEXTURE_2D, name)) {
+	if (services->getRM()->has(Resource::TEXTURE_2D, name)) {
 		Texture* texture = dynamic_cast<Texture*>(
-			services_->getRM()->get(Resource::TEXTURE_2D, name));
+			services->getRM()->get(Resource::TEXTURE_2D, name));
 		if (texture != 0) {
 			return texture;
 		}
@@ -194,7 +194,7 @@ Texture* TextManager::getText(const string& text, int size) {
 	}
 	yOffset = yOffset * -1;
 	SIZE height = heightOffset + fontSize_;
-	Texture* texture = Texture::createAtlasMono(services_, width, (UINT32) height);
+	Texture* texture = Texture::createAtlasMono(services, width, (UINT32) height);
 	UINT8 color[] = {0};
 	texture->rectangle(0, 0, width, (UINT32) height, color);
 	for (SIZE i = 0; i < glyphs.size(); i++) {
@@ -230,7 +230,7 @@ Texture* TextManager::getText(const string& text, int size) {
 	//	ss << "\n";
 	//}
 	//LOGI("%s", ss.str().c_str());
-	services_->getRM()->add(name, texture);
+	services->getRM()->add(name, texture);
 	return texture;
 }
 
@@ -245,11 +245,11 @@ Symbol* TextManager::getSymbol(char symbol) {
 	ss << "symbol_" << symbol << fontSize_;
 	string name = ss.str();
 	Symbol* cachedSymbol = dynamic_cast<Symbol*>(
-		services_->getRM()->get(Resource::SYMBOL, name));
+		services->getRM()->get(Resource::SYMBOL, name));
 	if (cachedSymbol != 0) {
 		return cachedSymbol;
 	}
-	Symbol* s = NEW Symbol(services_);
+	Symbol* s = NEW Symbol(services);
 	s->create();
 	FT_GlyphSlot glyphSlot = face_->glyph;
 	err_ = FT_Load_Char(face_, symbol,  FT_LOAD_RENDER);
@@ -274,7 +274,7 @@ Symbol* TextManager::getSymbol(char symbol) {
 	s->setAdvance(glyphSlot->advance.x >> 6);
 	s->setFontSize(fontSize_);
 	if (s->getWidth() > 0 && s->getHeight() > 0) {
-		Texture* texture = Texture::createAtlasMono(services_, s->getWidth(), s->getHeight());
+		Texture* texture = Texture::createAtlasMono(services, s->getWidth(), s->getHeight());
 		UINT8 color[] = {0};
 		texture->rectangle(0, 0, texture->getWidth(), texture->getHeight(), color);
 		for (int row = 0; row < bitmap.rows; row++) {
@@ -285,11 +285,11 @@ Symbol* TextManager::getSymbol(char symbol) {
 				}
 			}
 		}
-		services_->getRM()->add(name, texture);
+		services->getRM()->add(name, texture);
 		texture->commit();
 		s->setTexture(texture);
 	}
-	services_->getRM()->add(name, s);
+	services->getRM()->add(name, s);
 	FT_Done_Glyph(glyph);
 	if (fontSize_ < SYMBOL_CACHE_SIZE && index < SYMBOL_CACHE_SIZE ) {
 		symbolCache_[fontSize_][index] = s;

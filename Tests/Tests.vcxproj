@@ -254,6 +254,7 @@
     <ClCompile Include="..\ghost\WaterLoader.cpp" />
     <ClCompile Include="..\ghost\Xml.cpp" />
     <ClCompile Include="..\utils\ModelSerializer\src\FaceParserTask.cpp" />
+    <ClCompile Include="..\utils\ModelSerializer\src\MaterialParserTask.cpp" />
     <ClCompile Include="..\utils\ModelSerializer\src\NormalParserTask.cpp" />
     <ClCompile Include="..\utils\ModelSerializer\src\ObjParser.cpp" />
     <ClCompile Include="..\utils\ModelSerializer\src\PositionParserTask.cpp" />
@@ -390,9 +391,11 @@
     <ClInclude Include="..\utils\ModelSerializer\src\Face.h" />
     <ClInclude Include="..\utils\ModelSerializer\src\FaceParserTask.h" />
     <ClInclude Include="..\utils\ModelSerializer\src\MaterialIndex.h" />
+    <ClInclude Include="..\utils\ModelSerializer\src\MaterialParserTask.h" />
     <ClInclude Include="..\utils\ModelSerializer\src\NormalParserTask.h" />
     <ClInclude Include="..\utils\ModelSerializer\src\ObjParser.h" />
     <ClInclude Include="..\utils\ModelSerializer\src\PositionParserTask.h" />
+    <ClInclude Include="..\utils\ModelSerializer\src\RawObject.h" />
     <ClInclude Include="..\utils\ModelSerializer\src\UniqueKey.h" />
     <ClInclude Include="..\utils\ModelSerializer\src\UVParserTask.h" />
   </ItemGroup>

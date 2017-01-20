@@ -5,6 +5,7 @@
 #include "../../../ghost/Thread.h"
 #include "../../../ghost/ServiceProvider.h"
 
+struct RawObject;
 struct MaterialIndex;
 class ModelData;
 
@@ -12,16 +13,14 @@ class MaterialParserTask : public Task, public ServiceProvider
 {
 public:
 	explicit MaterialParserTask(ServiceLocator* sl, string data,
-		MaterialIndex& matInd, ModelData& modelData,
-		vector<MaterialIndex>& matIndices);
+		RawObject& rawObject, ModelData& modelData);
 
 	void run() override;
 	bool parseMaterial(string file) const;
 private:
 	string data;
-	MaterialIndex& matInd;
+	RawObject& rawObject;
 	ModelData& modelData;
-	vector<MaterialIndex>& matIndices;
 };
 
 #endif

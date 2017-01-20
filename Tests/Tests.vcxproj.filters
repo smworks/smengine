@@ -471,6 +471,9 @@
     <ClCompile Include="main.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="..\utils\ModelSerializer\src\MaterialParserTask.cpp">
+      <Filter>Source Files\src</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\ghost\BoundingBox.h">
@@ -873,6 +876,12 @@
       <Filter>Source Files\src</Filter>
     </ClInclude>
     <ClInclude Include="..\utils\ModelSerializer\src\UVParserTask.h">
+      <Filter>Source Files\src</Filter>
+    </ClInclude>
+    <ClInclude Include="..\utils\ModelSerializer\src\MaterialParserTask.h">
+      <Filter>Source Files\src</Filter>
+    </ClInclude>
+    <ClInclude Include="..\utils\ModelSerializer\src\RawObject.h">
       <Filter>Source Files\src</Filter>
     </ClInclude>
   </ItemGroup>

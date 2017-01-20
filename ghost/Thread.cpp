@@ -13,13 +13,14 @@ Thread::Thread(Task* task) : running(true), task(task) {
 }
 
 Thread::~Thread() {
-	delete task;
 	workerThread->join();
+	delete task;
 	delete workerThread;
 }
 
-UINT64 Thread::getId() {
-	return workerThread == 0 ? 0 : hash<thread::id>()(workerThread->get_id());
+UINT64 Thread::getId() const
+{
+	return workerThread == nullptr ? 0 : hash<thread::id>()(workerThread->get_id());
 }
 
 bool Thread::isRunning() {

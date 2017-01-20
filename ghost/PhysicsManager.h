@@ -178,7 +178,7 @@ private:
 	void addVehicle(Node* node);
 	void addTerrain(Node* node);
 private:
-	ServiceLocator* services_;
+	ServiceLocator* services;
 	btDefaultCollisionConfiguration* conf_;
 	btCollisionDispatcher* dispatcher_;
 	btBroadphaseInterface* pairCache_;

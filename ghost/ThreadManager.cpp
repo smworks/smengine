@@ -10,36 +10,36 @@
 #include "Thread.h"
 
 ThreadManager::ThreadManager(ServiceLocator* services) :
-	services_(services),
-	destroy_(false)
+	services(services),
+	destroy(false)
 {
 	LOGD("Created thread manager.");
 }
 
 ThreadManager::~ThreadManager() {
-	destroy_ = true;
-	PROFILE("Joining all threads. Thread count: %u.", (UINT32) threads_.size());
+	destroy = true;
+	PROFILE("Joining all threads. Thread count: %u.", static_cast<UINT32>(threads.size()));
 	joinAll();
 	PROFILE("All threads joined.");
 	LOGD("Deleted thread manager.");
 }
 
 void ThreadManager::update() {
-    for (INT32 i = threads_.size() - 1; i >= 0; i--) {
-		if (!threads_[i]->isRunning()) {
-			delete threads_[i];
-			threads_.erase(threads_.begin() + i);
+    for (INT32 i = threads.size() - 1; i >= 0; i--) {
+		if (!threads[i]->isRunning()) {
+			delete threads[i];
+			threads.erase(threads.begin() + i);
 		}
 	}
 }
 
 UINT64 ThreadManager::execute(Task* task) {
-	if (destroy_) {
+	if (destroy) {
 		delete task;
 		return 0;
 	}
-	Thread* thread = NEW Thread(task);
-	threads_.push_back(thread);
+	auto thread = NEW Thread(task);
+	threads.push_back(thread);
 	return thread->getId();
 }
 
@@ -48,16 +48,18 @@ void ThreadManager::join(UINT64 id) {
 		LOGW("Thread with id %llu attempted to join itself.", id);
 		return;
 	}
-	for (UINT32 i = 0; i < threads_.size(); i++) {
-		if (threads_[i]->getId() == id) {
-			delete threads_[i];
-			threads_.erase(threads_.begin() + i);
+	for (UINT32 i = 0; i < threads.size(); i++) {
+		if (threads[i]->getId() == id) {
+			delete threads[i];
+			threads.erase(threads.begin() + i);
 			return;
 		}
 	}
 }
 
 void ThreadManager::joinAll() {
-	for (Thread* t : threads_) delete t;
-	threads_.clear();
+	for (auto t : threads) {
+		delete t;
+	}
+	threads.clear();
 }
