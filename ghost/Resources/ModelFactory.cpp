@@ -114,8 +114,7 @@ void ModelFactory::createTerrain(ModelData* md, Attributes& attr, ServiceLocator
 		}
 		UINT32* indArray = NEW UINT32[indices.size()];
 		memcpy(indArray, &indices[0], indices.size() * sizeof(UINT32));
-		md->setIndices(Renderable::INDEX_TYPE_UINT,
-			reinterpret_cast<UINT8*>(indArray), indices.size());
+		md->setIndices(reinterpret_cast<UINT8*>(indArray), indices.size(), Renderable::INDEX_TYPE_UINT);
 	} else {
 		LOGD("Terrain uses short indices.");
 		vector<UINT16> indices;
@@ -136,8 +135,7 @@ void ModelFactory::createTerrain(ModelData* md, Attributes& attr, ServiceLocator
 		}
 		UINT16* indArray = NEW UINT16[indices.size()];
 		memcpy(indArray, &indices[0], indices.size() * sizeof(UINT16));
-		md->setIndices(Renderable::INDEX_TYPE_USHORT,
-			reinterpret_cast<UINT8*>(indArray), indices.size());
+		md->setIndices(reinterpret_cast<UINT8*>(indArray), indices.size(), Renderable::INDEX_TYPE_USHORT);
 	}
 }
 
@@ -201,7 +199,7 @@ void ModelFactory::createSphere(ModelData* md, Attributes& attr) {
 	md->setVertices(ModelData::PNT, reinterpret_cast<UINT8*>(vertices), vertexCount);
 	UINT16* ind = NEW UINT16[indices.size()];
 	memcpy(ind, &indices[0], indices.size() * sizeof(UINT16));
-	md->setIndices(Renderable::INDEX_TYPE_USHORT, ind, indices.size());
+	md->setIndices(reinterpret_cast<UINT8*>(ind), indices.size(), Renderable::INDEX_TYPE_USHORT);
 	md->getParts().resize(1);
 	md->getParts()[0].indexCount_ = indices.size();
 	md->getParts()[0].offset_ = 0;
@@ -234,7 +232,7 @@ void ModelFactory::createShape(ModelData* md, Attributes& attr, ServiceLocator* 
 	md->setVertices(ModelData::PNT, reinterpret_cast<UINT8*>(vertices), vertexCount);
 	UINT16* indices = NEW UINT16[ind->size()];
 	memcpy(indices, &(*ind)[0], ind->size() * sizeof(UINT16));
-	md->setIndices(Renderable::INDEX_TYPE_USHORT, indices, ind->size());
+	md->setIndices(reinterpret_cast<UINT8*>(indices), ind->size(), Renderable::INDEX_TYPE_USHORT);
 	md->getParts().resize(1);
 	md->getParts()[0].indexCount_ = ind->size();
 	md->getParts()[0].offset_ = 0;

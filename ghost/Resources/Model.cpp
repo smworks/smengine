@@ -7,20 +7,12 @@
 
 #include "Model.h"
 #include "../Multiplatform/ServiceLocator.h"
-#include "../Multiplatform/Database.h"
-#include "Vertex.h"
 #include "Texture.h"
 #include "Shader.h"
 #include "../ModelData.h"
-#include "../TerrainParser.h"
-#include "../ShapeParser.h"
-#include "../ResourceManager.h"
-#include "../Shapes.h"
 #include "../ScriptManager.h"
-#include "../BoundingSphere.h"
 #include "../BoundingBox.h"
 #include "../Utils.h"
-#include "../Node.h"
 #include "../Multiplatform/GraphicsManager.h"
 #include "ModelFactory.h"
 
@@ -46,12 +38,11 @@ bool Model::create() {
 	gm->setVertexBuffer(cbo, modelData->getVertices(), modelData->getVertexCount() * modelData->getVertexStride());
 	// Create index buffer object.
 	if (modelData->getIndexCount() > 0) {
+		SIZE sizeOfIndexInBytes = modelData->getIndexType() == Renderable::INDEX_TYPE_USHORT ?
+			sizeof(UINT16) : sizeof(UINT32);
 		if (modelData->getIndexType() == Renderable::INDEX_TYPE_USHORT) {
-			setIndexType(INDEX_TYPE_USHORT);
-			gm->setVertexBuffer(ibo, modelData->getIndicesShort(), modelData->getIndexCount() * sizeof(UINT16));
-		} else if (modelData->getIndexType() == Renderable::INDEX_TYPE_UINT) {
-			setIndexType(INDEX_TYPE_UINT);
-			gm->setVertexBuffer(ibo, modelData->getIndicesInt(), modelData->getIndexCount() * sizeof(UINT32));
+			setIndexType(modelData->getIndexType());
+			gm->setVertexBuffer(ibo, modelData->getIndices(), modelData->getIndexCount() * sizeOfIndexInBytes);
 		}
 	} else {
 		LOGD("Model \"%s\" does not contain indices.", model.c_str());

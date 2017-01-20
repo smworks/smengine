@@ -9,8 +9,8 @@
 #define MODELDATA_H_
 
 #include "Multiplatform/Ghost.h"
-#include "Resources/Vertex.h"
 #include "Color.h"
+#include "Resources/Renderable.h"
 
 class BoundingVolume;
 class Texture;
@@ -41,7 +41,7 @@ public:
 		SIZE indexCount_;
 		BoundingVolume* bv_;
 	};
-public:
+
 	ModelData();
 	~ModelData();
 	void setVertices(VertexType type, UINT8* vertices, SIZE vertexCount);
@@ -54,12 +54,11 @@ public:
 	void* getVertices();
 	bool hasNormals();
 	bool hasUV();
-	void setIndices(int type, void* indices, SIZE indexCount);
+	void setIndices(UINT8* indices, SIZE indexCount, Renderable::IndexType type);
 	SIZE getIndexCount();
-	int getIndexType();
+	Renderable::IndexType getIndexType();
 	UINT32 getIndexStride();
-	UINT16* getIndicesShort();
-	UINT32* getIndicesInt();
+	UINT8* getIndices();
 	void setBoundingVolume(BoundingVolume* bv);
 	BoundingVolume* getBoundingVolume();
 	vector<Material>& getMaterials();
@@ -74,12 +73,9 @@ private:
 	VertexType vertexType_;
 	SIZE vertexCount_;
 	UINT8* vertices_;
-	int indexType_;
+	Renderable::IndexType indexType_;
 	SIZE indexCount_;
-	union Indices {
-		UINT16* indicesShort;
-		UINT32* indicesInt;
-	} indices_;
+	UINT8* indices;
 	vector<Material> materials_;
 	vector<Part> parts_;
 	bool facesCulled;

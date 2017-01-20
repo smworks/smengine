@@ -14,6 +14,7 @@
 #include "../../../ghost/ServiceProvider.h"
 #include "MaterialParserTask.h"
 #include "RawObject.h"
+#include "../../../ghost/Resources/Vertex.h"
 
 ObjParser::ObjParser(ServiceLocator* serviceLocator): ServiceProvider(serviceLocator)
 {
@@ -117,23 +118,18 @@ bool ObjParser::parse(ModelData& model, const string& file)
 	delete hm;
 	PROFILE("Hash map deleted.");
 	delete [] vertex;
-	if (useShort)
+	
+	SIZE sizeOfIndexInBytes = useShort ? sizeof(UINT16) : sizeof(UINT32);
+	UINT8* indexArr = NEW UINT8[indexArray->size() * sizeOfIndexInBytes];
+	memcpy(indexArr, &(*indexArray)[0], indexArray->size() * sizeOfIndexInBytes);
+	model.setIndices(indexArr, indexArray->size(),
+		useShort ? Renderable::INDEX_TYPE_USHORT : Renderable::INDEX_TYPE_UINT);
+	LOGD("Indices: %u", indexArray->size());
+	if (!useShort)
 	{
-		UINT16* indexArr = NEW UINT16[indexArray->size()];
-		memcpy(indexArr, &(*indexArray)[0], indexArray->size() * sizeof(UINT16));
-		model.setIndices(Renderable::INDEX_TYPE_USHORT, indexArr, indexArray->size());
-		LOGD("Indices: %u", (UINT32) indexArray->size());
-	}
-	else
-	{
-		UINT32* indexArr = NEW UINT32[indexArrayInt->size()];
-		memcpy(indexArr, &(*indexArrayInt)[0], indexArrayInt->size() * sizeof(UINT32));
-		model.setIndices(Renderable::INDEX_TYPE_UINT, indexArr, indexArrayInt->size());
 		LOGI("3D model is too large for some mobile devices.");
-		LOGD("Indices: %u", (UINT32) indexArrayInt->size());
 	}
 	delete indexArray;
-	delete indexArrayInt;
 	SIZE vertexCount = vs->size() / floatsInVertex;
 	void* vertexArray = getAllocatedVertexBuffer(rawObject.vertexProperties.hasUV(), rawObject.vertexProperties.hasNormals(), vertexCount);
 	memcpy(vertexArray, &(*vs)[0], vs->size() * sizeof(float));

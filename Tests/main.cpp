@@ -60,14 +60,8 @@ bool testModelSerializer()
 		ASSERT(md.hasNormals() == md2.hasNormals(), "Has normals flag does not match");
 		ASSERT(md.hasUV() == md2.hasUV(), "Has UV flag does not match");
 
-		if (md.getIndexType() == Renderable::INDEX_TYPE_UINT)
-		{
-			ASSERT(memcmp(md.getIndicesInt(), md2.getIndicesInt(), md.getIndexCount() * sizeof(UINT32)) == 0, "Indices int array does not match");
-		}
-		else
-		{
-			ASSERT(memcmp(md.getIndicesShort(), md2.getIndicesShort(), md.getIndexCount() * sizeof(UINT16)) == 0, "Indices short array does not match");
-		}
+		SIZE sizeOfIndicesInBytes = md.getIndexType() == Renderable::INDEX_TYPE_UINT ? sizeof(UINT32) : sizeof(UINT16);
+		ASSERT(memcmp(md.getIndices(), md2.getIndices(), md.getIndexCount() * sizeOfIndicesInBytes) == 0, "Indices int array does not match");
 
 		for (SIZE i = 0; i < md.getMaterials().size(); i++)
 		{
@@ -93,8 +87,8 @@ bool testModelSerializer()
 
 		if (md.getIndexType() == Renderable::INDEX_TYPE_USHORT)
 		{
-			auto* ind1 = md.getIndicesShort();
-			auto* ind2 = md2.getIndicesShort();
+			auto ind1 = reinterpret_cast<UINT16*>(md.getIndices());
+			auto ind2 = reinterpret_cast<UINT16*>(md2.getIndices());
 			for (SIZE i = 0; i < md.getIndexCount(); i++)
 			{
 				LOGI("%d = %d", ind1[i], ind2[i]);

@@ -10,6 +10,7 @@
 #include "BoundingBox.h"
 #include "Resources/Renderable.h"
 #include "Resources/Texture.h"
+#include "Resources/Vertex.h"
 
 ModelData::ModelData() :
 	vertexType_(VERTEX_TYPE_COUNT),
@@ -28,14 +29,7 @@ ModelData::ModelData() :
 ModelData::~ModelData() {
 	delete boundingVolume_;
 	delete [] vertices_;
-	switch (indexType_) {
-	case Renderable::INDEX_TYPE_USHORT:
-		delete [] indices_.indicesShort;
-		break;
-	case Renderable::INDEX_TYPE_UINT:
-		delete [] indices_.indicesInt;
-		break;
-	}
+	delete [] indices;
 }
 
 void ModelData::setVertices(VertexType type, UINT8* vertices, SIZE vertexCount) {
@@ -105,27 +99,17 @@ bool ModelData::hasUV() {
 	return vertexType_ == PNT || vertexType_ == PT;
 }
 
-void ModelData::setIndices(int type, void* indices, SIZE indexCount) {
+void ModelData::setIndices(UINT8* indices, SIZE indexCount, Renderable::IndexType type) {
 	indexType_ = type;
 	indexCount_ = indexCount;
-	switch (indexType_) {
-	case Renderable::INDEX_TYPE_USHORT:
-		indices_.indicesShort = reinterpret_cast<UINT16*>(indices);
-		break;
-	case Renderable::INDEX_TYPE_UINT:
-		indices_.indicesInt = reinterpret_cast<UINT32*>(indices);
-		break;
-	default:
-		LOGW("Unknown model index type specified.");
-		break;
-	}
+	this->indices = indices;
 }
 
 SIZE ModelData::getIndexCount() {
 	return indexCount_;
 }
 
-int ModelData::getIndexType() {
+Renderable::IndexType ModelData::getIndexType() {
 	return indexType_;
 }
 
@@ -133,12 +117,8 @@ UINT32 ModelData::getIndexStride() {
 	return indexType_ == Renderable::INDEX_TYPE_USHORT ? sizeof(UINT16) : sizeof(UINT32);
 }
 
-UINT16* ModelData::getIndicesShort() {
-	return indexType_ == Renderable::INDEX_TYPE_USHORT ? indices_.indicesShort : 0;
-}
-
-UINT32* ModelData::getIndicesInt() {
-	return indexType_ == Renderable::INDEX_TYPE_UINT ? indices_.indicesInt : 0;
+UINT8* ModelData::getIndices() {
+	return indices;
 }
 
 void ModelData::setBoundingVolume(BoundingVolume* bv) {
@@ -194,11 +174,9 @@ void ModelData::serializeToFile(string path) {
 	of.write((char*)vertices_, sizeOfVertices);
 	of.write((char*)&indexType_, sizeof(int));
 	of.write((char*)&indexCount_, sizeof(SIZE));
-	if (indexType_ == Renderable::INDEX_TYPE_USHORT) {
-		of.write((char*)indices_.indicesShort, indexCount_ * sizeof(UINT16));
-	} else {
-		of.write((char*)indices_.indicesInt, indexCount_ * sizeof(UINT32));
-	}
+	SIZE indexSizeInBytes = indexType_ == Renderable::INDEX_TYPE_USHORT ?
+		sizeof(UINT16) : sizeof(UINT32);
+	of.write((char*) indices, indexCount_ * indexSizeInBytes);
 	SIZE materialCount = materials_.size();
 	of.write((char*)&materialCount, sizeof(SIZE));
 	for (Material& m : materials_) {
@@ -281,15 +259,12 @@ void ModelData::deserialize(ServiceLocator* sl, const char* binary) {
 	memcpy(vertices_, binary + (offset += sizeof(SIZE)), sizeOfVertices);
 	memcpy(&indexType_, binary + (offset += sizeOfVertices), sizeof(int));
 	memcpy(&indexCount_, binary + (offset += sizeof(int)), sizeof(SIZE));
-	if (indexType_ == Renderable::INDEX_TYPE_USHORT) {
-		indices_.indicesShort = NEW UINT16[indexCount_];
-		memcpy(indices_.indicesShort, binary + (offset += sizeof(SIZE)), indexCount_ * sizeof(UINT16));
-		offset += indexCount_ * sizeof(UINT16);
-	} else {
-		indices_.indicesInt = NEW UINT32[indexCount_];
-		memcpy(indices_.indicesInt, binary + (offset += sizeof(SIZE)), indexCount_ * sizeof(UINT32));
-		offset += indexCount_ * sizeof(UINT32);
-	}
+	SIZE indexSizeInBytes = indexType_ == Renderable::INDEX_TYPE_USHORT ?
+		sizeof(UINT16) : sizeof(UINT32);
+	indices = NEW UINT8[indexCount_ * indexSizeInBytes];
+	memcpy(indices, binary + (offset += sizeof(SIZE)), indexCount_ * indexSizeInBytes);
+	offset += indexCount_ * indexSizeInBytes;
+
 	SIZE materialCount;
 	memcpy(&materialCount, binary + offset, sizeof(SIZE));
 	offset += sizeof(SIZE);

@@ -22,17 +22,17 @@ class Model :
 	public Resource,
 	public Renderable {
 public:
-	Model(ServiceLocator* services);
+	explicit Model(ServiceLocator* services);
 	~Model();
 
 	/**
 	 * @see Resource
 	 */
-	bool create();
-	void release();
-	SIZE getSize();
-	Resource::Type getType();
-	bool isValid();
+	bool create() override;
+	void release() override;
+	SIZE getSize() override;
+	Resource::Type getType() override;
+	bool isValid() override;
 
 	/**
 	 * @see Renderable
