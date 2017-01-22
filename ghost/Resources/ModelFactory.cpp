@@ -95,7 +95,7 @@ void ModelFactory::createTerrain(ModelData* md, Attributes& attr, ServiceLocator
 	UINT32 indCount = (UINT32) tg.indices_->size();
 	md->getParts().resize(indCount);
 	if (tg.vertices_->size() / 3 - 1 > USHRT_MAX) {
-		LOGD("Terrain uses integer indices.");
+		LOGD("Terrain uses integer posIndices.");
 		vector<UINT32> indices;
 		SIZE offset = 0;
 		for (UINT32 i = 0; i < indCount; i++)	{
@@ -116,7 +116,7 @@ void ModelFactory::createTerrain(ModelData* md, Attributes& attr, ServiceLocator
 		memcpy(indArray, &indices[0], indices.size() * sizeof(UINT32));
 		md->setIndices(reinterpret_cast<UINT8*>(indArray), indices.size(), Renderable::INDEX_TYPE_UINT);
 	} else {
-		LOGD("Terrain uses short indices.");
+		LOGD("Terrain uses short posIndices.");
 		vector<UINT16> indices;
 		SIZE offset = 0;
 		for (UINT32 i = 0; i < indCount; i++)	{

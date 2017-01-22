@@ -86,7 +86,7 @@ public:
 	virtual SIZE getCBO() = 0;
 
 	/**
-	 * @return Number of indices in
+	 * @return Number of posIndices in
 	 * current index buffer.
 	 */
 	virtual SIZE getIndexCount() = 0;

@@ -138,7 +138,7 @@ ObjProperties ObjParser::getObjProperties(string obj) const
 			switch (obj[pos + 1])
 			{
 			case ' ':
-				properties.vertexCount += 3;
+				properties.positionCount++;
 				{
 					const char* found = strchr(data + pos + 1, GHOST_NEWLINE);
 					if (found)
@@ -182,10 +182,10 @@ ObjProperties ObjParser::getObjProperties(string obj) const
 				}
 				break;
 			case 'n':
-				properties.normalCount += 3;
+				properties.normalCount++;
 				break;
 			case 't':
-				properties.uvCount += 2;
+				properties.uvCount++;
 				break;
 			}
 			break;
@@ -209,96 +209,34 @@ ObjProperties ObjParser::getObjProperties(string obj) const
 
 void ObjParser::setVerticesAndIndices(ModelData& modelData, RawObject& rawObject) const
 {
-	
-	UINT32 indexCount = rawObject.objProperties.faceCount * 3;
-	bool useShort = indexCount < USHRT_MAX;
-	SIZE indexSize = useShort ? sizeof(UINT16) : sizeof(UINT32);
-	SIZE indexArraySize = indexCount * indexSize;
-
-	UINT8* indexArray = new UINT8[indexArraySize];
-	UINT32 indexOffset = 0;
-
-	PROFILE("Started optimizations.");
-	auto hm = NEW unordered_map<UniqueKey, int, UniqueKeyHash>();
-	UINT32 floatsInVertex = rawObject.vertexProperties.vertexSize / sizeof(float);
-	float* vertex = NEW float[floatsInVertex];
 	vector<float>* vs = NEW vector<float>();
+	SIZE vertexCount = 0;
 	for (auto& face : rawObject.faces)
 	{
 		for (auto i = 0; i < Face::FACE_SIZE; i++)
 		{
-			UINT32 index = face.indices_[i];
-			UniqueKey key(face.indices_[i], face.normIndices_[i], face.texIndices_[i]);
-			auto it = hm->find(key);
-			if (it != hm->end())
-			{
-				if (useShort) {
-					short shortIndex = it->second;
-					memcpy(indexArray + indexOffset, &shortIndex, indexSize);
-				}
-				else
-				{
-					memcpy(indexArray + indexOffset, &index, indexSize);
-				}
-				indexOffset += indexSize;
-			}
-			else
-			{
-				UINT32 vInd = 0;
-				UINT32 offset = index * rawObject.vertexProperties.vertexSize + rawObject.vertexProperties.positionOffset;
-				memcpy(&vertex[vInd++], &rawObject.vertices[offset + 0], sizeof(float));
-				memcpy(&vertex[vInd++], &rawObject.vertices[offset + sizeof(float)], sizeof(float));
-				memcpy(&vertex[vInd++], &rawObject.vertices[offset + 2 * sizeof(float)], sizeof(float));
-				if (rawObject.objProperties.normalCount > 0)
-				{
-					index = face.normIndices_[i];
-					offset = index * rawObject.vertexProperties.vertexSize + rawObject.vertexProperties.normalOffset;
-					memcpy(&vertex[vInd++], &rawObject.vertices[offset + 0], sizeof(float));
-					memcpy(&vertex[vInd++], &rawObject.vertices[offset + sizeof(float)], sizeof(float));
-					memcpy(&vertex[vInd++], &rawObject.vertices[offset + 2 * sizeof(float)], sizeof(float));
-				}
-				if (rawObject.objProperties.uvCount > 0)
-				{
-					index = face.texIndices_[i];
-					offset = index * rawObject.vertexProperties.vertexSize + rawObject.vertexProperties.uvOffset;
-					memcpy(&vertex[vInd++], &rawObject.vertices[offset + 0], sizeof(float));
-					memcpy(&vertex[vInd], &rawObject.vertices[offset + sizeof(float)], sizeof(float));
-				}
+			Vec3 pos = rawObject.positions[face.posIndices[i]];
+			vs->push_back(pos.getX());
+			vs->push_back(pos.getY());
+			vs->push_back(pos.getZ());
 
-				if (useShort) {
-					short shortIndex = static_cast<short>(vs->size() / floatsInVertex);
-					memcpy(indexArray + indexOffset, &shortIndex, indexSize);
-				}
-				else
-				{
-					int intIndex = vs->size() / floatsInVertex;
-					memcpy(indexArray + indexOffset, &intIndex, indexSize);
-					
-				}
-				indexOffset += indexSize;
-
-				hm->insert(pair<UniqueKey, int>(key, vs->size() / floatsInVertex));
-				for (SIZE j = 0; j < floatsInVertex; j++)
-				{
-					vs->push_back(vertex[j]);
-				}
+			if (rawObject.objProperties.normalCount > 0)
+			{
+				Vec3 normal = rawObject.normals[face.normIndices[i]];
+				vs->push_back(normal.getX());
+				vs->push_back(normal.getY());
+				vs->push_back(normal.getZ());
 			}
+			if (rawObject.objProperties.uvCount > 0)
+			{
+				Vec2 uv = rawObject.uvCoordinates[face.texIndices[i]];
+				vs->push_back(uv.vec[0]);
+				vs->push_back(uv.vec[1]);
+			}
+			vertexCount++;
 		}
 	}
-	PROFILE("Finished optimizing. Hash map size: %u.", static_cast<UINT32>(hm->size()));
-	delete hm;
-	PROFILE("Hash map deleted.");
-	delete[] vertex;
 
-	modelData.setIndices(indexArray, indexCount,
-		useShort ? Renderable::INDEX_TYPE_USHORT : Renderable::INDEX_TYPE_UINT);
-	LOGD("Index count: %u", indexArraySize);
-	if (!useShort)
-	{
-		LOGI("3D model is too large for some mobile devices.");
-	}
-
-	SIZE vertexCount = vs->size() / floatsInVertex;
 	void* vertexArray = getAllocatedVertexBuffer(rawObject, vertexCount);
 	memcpy(vertexArray, &(*vs)[0], vs->size() * sizeof(float));
 	modelData.setVertices(rawObject.vertexProperties.vertexType, reinterpret_cast<UINT8*>(vertexArray), vertexCount);

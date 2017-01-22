@@ -26,40 +26,37 @@ void NormalParserTask::run()
 			break;
 		}
 		lineEnd = found - data;
-		if (data[pos] == 'v')
+		if (data[pos] == 'v' && data[pos + 1] == 'n')
 		{
-			if (data[pos + 1] == 'n')
+			if (lineEnd - pos > lineLength)
 			{
-				if (lineEnd - pos > lineLength)
+				lineLength = lineEnd - pos;
+				delete[] line;
+				line = NEW char[lineLength];
+			}
+			bool one = true;
+			SIZE off = 0;
+			memcpy(line, data + pos, lineEnd - pos);
+			for (SIZE i = 3; i < lineEnd; i++)
+			{
+				if (line[i] == ' ')
 				{
-					lineLength = lineEnd - pos;
-					delete[] line;
-					line = NEW char[lineLength];
-				}
-				bool one = true;
-				SIZE off = 0;
-				memcpy(line, data + pos, lineEnd - pos);
-				for (SIZE i = 3; i < lineEnd; i++)
-				{
-					if (line[i] == ' ')
+					if (one)
 					{
-						if (one)
-						{
-							normVec[0] = toFloat(line + 2);
-							one = false;
-							off = i;
-						}
-						else
-						{
-							normVec[1] = toFloat(line + off + 1);
-							off = i;
-							normVec[2] = toFloat(line + off + 1);
-							break;
-						}
+						normVec[0] = toFloat(line + 2);
+						one = false;
+						off = i;
+					}
+					else
+					{
+						normVec[1] = toFloat(line + off + 1);
+						off = i;
+						normVec[2] = toFloat(line + off + 1);
+						break;
 					}
 				}
-				memcpy(&rawObject.vertices[index++ * rawObject.vertexProperties.vertexSize + rawObject.vertexProperties.normalOffset], &normVec[0], sizeof(float) * 3);
 			}
+			rawObject.normals.push_back(normVec);
 		}
 		pos = lineEnd + 1;
 	}

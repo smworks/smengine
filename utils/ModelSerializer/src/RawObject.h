@@ -14,21 +14,20 @@ struct RawObject
 {
 	RawObject(ObjProperties objProperties, VertexProperties vertexProperties);
 
-	/**
-	 * Custom copy constructor. Invalidates old object.
-	 */
-	RawObject(RawObject& rhs);
+	RawObject(const RawObject& rhs);
 
-	~RawObject();
+	vector<Vec3> positions;
+	vector<Vec3> normals;
+	vector<Vec2> uvCoordinates;
+	vector<Face> faces;
 
 	ObjProperties objProperties;
 	VertexProperties vertexProperties;
 	Vec3 minVertex;
 	Vec3 maxVertex;
 	float radius;
-	UINT8* vertices; // vertex, normals and uv if applicable
 	vector<MaterialIndex> matIndices;
-	vector<Face> faces;
+	
 };
 
 inline RawObject::RawObject(ObjProperties objProperties, VertexProperties vertexProperties):
@@ -36,26 +35,25 @@ inline RawObject::RawObject(ObjProperties objProperties, VertexProperties vertex
 	minVertex(Vec3(FLT_MAX)), maxVertex(Vec3(FLT_MIN)),
 	radius(0.0f)
 {
-	vertices = NEW UINT8[vertexProperties.vertexSize * objProperties.vertexCount];
-	faces = vector<Face>(objProperties.faceCount);
+	positions.reserve(objProperties.positionCount);
+	normals.reserve(objProperties.normalCount);
+	uvCoordinates.reserve(objProperties.uvCount);
+	faces.reserve(objProperties.faceCount);
 }
 
-inline RawObject::RawObject(RawObject& rhs)
+inline RawObject::RawObject(const RawObject& rhs)
 {
+	this->positions = rhs.positions;
+	this->normals = rhs.normals;
+	this->uvCoordinates = rhs.uvCoordinates;
 	this->objProperties = rhs.objProperties;
 	this->vertexProperties = rhs.vertexProperties;
 	this->minVertex = rhs.minVertex;
 	this->maxVertex = rhs.maxVertex;
 	this->radius = rhs.radius;
-	this->vertices = rhs.vertices;
 	this->matIndices = rhs.matIndices;
 	this->faces = rhs.faces;
-	rhs.vertices = nullptr;
 }
 
-inline RawObject::~RawObject()
-{
-	delete[] vertices;
-}
 
 #endif

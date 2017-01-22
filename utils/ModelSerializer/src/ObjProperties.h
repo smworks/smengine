@@ -5,12 +5,12 @@
 
 struct ObjProperties
 {
-	ObjProperties() : vertexCount(0), normalCount(0),
+	ObjProperties() : positionCount(0), normalCount(0),
 	                  uvCount(0), faceCount(0), maxVertexPos(0.0f)
 	{
 	}
 
-	UINT32 vertexCount;
+	UINT32 positionCount;
 	UINT32 normalCount;
 	UINT32 uvCount;
 	UINT32 faceCount;

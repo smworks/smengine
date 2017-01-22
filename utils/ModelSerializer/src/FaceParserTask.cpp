@@ -10,9 +10,7 @@ FaceParserTask::FaceParserTask(const char* data, RawObject& rawObject) :
 
 void FaceParserTask::run()
 {
-	SIZE lineEnd = 0;
 	SIZE pos = 0;
-	SIZE faceCount = 0;
 	while (true)
 	{
 		const char* found = strchr(data + pos, GHOST_NEWLINE);
@@ -20,10 +18,10 @@ void FaceParserTask::run()
 		{
 			break;
 		}
-		lineEnd = found - data;
+		SIZE lineEnd = found - data;
 		if (data[pos] == 'f')
 		{
-			if (!parseFace(rawObject.faces.at(faceCount++), data + pos + 2, lineEnd - pos - 2))
+			if (!parseFace(data + pos + 2, lineEnd - pos - 2))
 			{
 				LOGW("Error on line: %s", string(data + pos, lineEnd - pos - 2).c_str());
 			}
@@ -35,8 +33,9 @@ void FaceParserTask::run()
 /*
 * Initializes specified Face structure.
 */
-bool FaceParserTask::parseFace(Face& face, const char* line, SIZE length)
+bool FaceParserTask::parseFace(const char* line, SIZE length) const
 {
+	Face face;
 	const char* arr[3];
 	arr[0] = line;
 	arr[1] = arr[2] = 0;
@@ -84,21 +83,22 @@ bool FaceParserTask::parseFace(Face& face, const char* line, SIZE length)
 		}
 		if (secondSlash != 0)
 		{ // Has normals.
-			face.normIndices_[i] = toUint(
+			face.normIndices[i] = toUint(
 				arr[i] + secondSlash + 1, sizeArray[i] - secondSlash - 1) - 1;
 			if (secondSlash - firstSlash > 1)
 			{ // Has UV.
-				face.texIndices_[i] = toUint(
+				face.texIndices[i] = toUint(
 					arr[i] + firstSlash + 1, secondSlash - firstSlash - 1) - 1;
 			}
 		}
 		else if (firstSlash != 0)
 		{ // Has UV, but no normals.
-			face.texIndices_[i] = toUint(
+			face.texIndices[i] = toUint(
 				arr[i] + firstSlash + 1, sizeArray[i] - firstSlash - 1) - 1;
 		}
 		SIZE count = firstSlash == 0 ? sizeArray[i] : firstSlash;
-		face.indices_[i] = toUint(arr[i], count) - 1;
+		face.posIndices[i] = toUint(arr[i], count) - 1;
 	}
+	rawObject.faces.push_back(face);
 	return true;
 }

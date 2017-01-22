@@ -10,6 +10,27 @@
 
 #include "Multiplatform/Ghost.h"
 
+struct Vec2
+{
+	Vec2() {
+		vec[0] = 0.0f;
+		vec[1] = 0.0f;
+	}
+
+	Vec2(float x, float y)
+	{
+		vec[0] = x;
+		vec[1] = y;
+	}
+
+	Vec2(float vec[2]) {
+		this->vec[0] = vec[0];
+		this->vec[1] = vec[1];
+	}
+
+	float vec[2];
+};
+
 class Vec3 {
 public:
 	Vec3();
@@ -104,4 +125,4 @@ private:
 	float vec_[3]; // Vector components.
 };
 
-#endif /* Vec3_H_ */
+#endif

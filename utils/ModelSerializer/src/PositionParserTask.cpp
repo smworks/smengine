@@ -57,7 +57,7 @@ void PositionParserTask::run()
 						}
 					}
 				}
-				memcpy(&rawObject.vertices[index++ * rawObject.vertexProperties.vertexSize + rawObject.vertexProperties.positionOffset], &posVec[0], sizeof(float) * 3);
+				rawObject.positions.push_back(posVec);
 				static Vec3 tmp;
 				tmp.setXYZ(posVec[0], posVec[1], posVec[2]);
 				if (tmp.length() > rawObject.radius)

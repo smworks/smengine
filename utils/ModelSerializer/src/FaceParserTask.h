@@ -13,7 +13,7 @@ public:
 	FaceParserTask(const char* data, RawObject& rawObject);
 
 	void run() override;
-	bool parseFace(Face& face, const char* line, SIZE length);
+	bool parseFace(const char* line, SIZE length) const;
 private:
 	const char* data;
 	RawObject& rawObject;

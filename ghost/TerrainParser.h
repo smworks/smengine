@@ -50,7 +50,7 @@ public:
 
 	/**
 	 * Removes one vertex from vertex grid.
-	 * @param indices - vector containing vectors containing indices.
+	 * @param indices - vector containing vectors containing posIndices.
 	 * @param vertices - pointer to vertex vector.
 	 * @param row - row in grid.
 	 * @param col - col in grid.
@@ -61,8 +61,8 @@ public:
 
 	/**
 	 * Creates bounding volume.
-	 * @param rowOffset - row index from where to generate indices.
-	 * @param colOffset - column index from where to generate indices.
+	 * @param rowOffset - row index from where to generate posIndices.
+	 * @param colOffset - column index from where to generate posIndices.
 	 * @param rows - height of the sub-terrain.
 	 * @param cols - width of the sub-terrain.
 	 * @param height - height of the original terrain.
@@ -75,14 +75,14 @@ public:
 			int rows, int cols, int height, int width, float dx, float dz);
 
 	/**
-	 * Generates indices for specified size sub-terrain.
-	 * @param rowOffset - row index from where to generate indices.
-	 * @param colOffset - column index from where to generate indices.
+	 * Generates posIndices for specified size sub-terrain.
+	 * @param rowOffset - row index from where to generate posIndices.
+	 * @param colOffset - column index from where to generate posIndices.
 	 * @param rows - height of the sub-terrain.
 	 * @param cols - width of the sub-terrain.
 	 * @param width - width of the original terrain.
 	 * @param height - height of the original terrain.
-	 * @return Generated indices for sub-terrain.
+	 * @return Generated posIndices for sub-terrain.
 	 */
 	vector<unsigned short>* generateSubTerrainIndices(
 		int, int, int, int, int, int);

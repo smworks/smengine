@@ -44,7 +44,7 @@ void UVParserTask::run()
 						break;
 					}
 				}
-				memcpy(&rawObject.vertices[index++ * rawObject.vertexProperties.vertexSize + rawObject.vertexProperties.uvOffset], &uvVec[0], sizeof(float) * 2);
+				rawObject.uvCoordinates.push_back(uvVec);
 			}
 		}
 		pos = lineEnd + 1;
