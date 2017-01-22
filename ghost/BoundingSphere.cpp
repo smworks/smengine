@@ -41,7 +41,8 @@ void BoundingSphere::setRadius(float radius) {
 	radius_ = radius;
 }
 
-float BoundingSphere::getRadius(Vec3& scale) {
+float BoundingSphere::getRadius(Vec3 scale = Vec3(1.0f)) const
+{
 	float a = scale.getX() > scale.getY() ? scale.getX() : scale.getY();
 	a = a > scale.getZ() ? a : scale.getZ();
 	return radius_ * a;

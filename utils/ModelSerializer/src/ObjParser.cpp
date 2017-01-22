@@ -26,159 +26,21 @@ bool ObjParser::parse(ModelData& model, const string& file)
 
 	PROFILE("Finished reading basic data for object: %s.", file.c_str());
 
-	
 	//rearrangeFacesAndMaterials(matIndices, materials, faces);
 
-	vector<UINT16>* indexArray = 0;
-	vector<UINT32>* indexArrayInt = 0;
-	UINT32 indexReserve = 0;
-	for (UINT32 i = 0; i < rawObject.matIndices.size(); i++)
-	{
-		indexReserve += rawObject.matIndices[i].size * 3;
-	}
-	bool useShort = true;
-	if (indexReserve >= USHRT_MAX)
-	{
-		useShort = false;
-		indexArrayInt = NEW vector<UINT32>();
-		indexArrayInt->reserve(indexReserve);
-	}
-	else
-	{
-		indexArray = NEW vector<UINT16>();
-		indexArray->reserve(indexReserve);
-	}
-	vector<float>* vs = NEW vector<float>();
-	PROFILE("Started optimizations.");
-	unordered_map<UniqueKey, int, UniqueKeyHash>* hm = NEW unordered_map<UniqueKey, int, UniqueKeyHash>();
-	unordered_map<UniqueKey, int, UniqueKeyHash>::const_iterator it;
-	UINT32 floatsInVertex = rawObject.vertexProperties.vertexSize / sizeof(float);
-	float* vertex = NEW float[floatsInVertex];
-	for (SIZE i = 0; i < rawObject.objProperties.faceCount; i++)
-	{
-		Face& face = rawObject.faces[i];
-		for (auto j = 0; j < Face::FACE_SIZE; j++)
-		{
-			UINT32 index = face.indices_[j];
-			UniqueKey key;
-			key.buffer[0] = index;
-			key.buffer[1] = face.normIndices_[j];
-			key.buffer[2] = face.texIndices_[j];
-			it = hm->find(key);
-			if (it != hm->end())
-			{
-				if (useShort)
-				{
-					indexArray->push_back(it->second);
-				}
-				else
-				{
-					indexArrayInt->push_back(it->second);
-				}
-			}
-			else
-			{
-				UINT32 vInd = 0;
-				UINT32 offset = index * rawObject.vertexProperties.vertexSize + rawObject.vertexProperties.positionOffset;
-				memcpy(&vertex[vInd++], &rawObject.vertices[offset + 0], sizeof(float));
-				memcpy(&vertex[vInd++], &rawObject.vertices[offset + sizeof(float)], sizeof(float));
-				memcpy(&vertex[vInd++], &rawObject.vertices[offset + 2 * sizeof(float)], sizeof(float));
-				if (rawObject.objProperties.normalCount > 0)
-				{
-					index = face.normIndices_[j];
-					offset = index * rawObject.vertexProperties.vertexSize + rawObject.vertexProperties.normalOffset;
-					memcpy(&vertex[vInd++], &rawObject.vertices[offset + 0], sizeof(float));
-					memcpy(&vertex[vInd++], &rawObject.vertices[offset + sizeof(float)], sizeof(float));
-					memcpy(&vertex[vInd++], &rawObject.vertices[offset + 2 * sizeof(float)], sizeof(float));
-				}
-				if (rawObject.objProperties.uvCount > 0)
-				{
-					index = face.texIndices_[j];
-					offset = index * rawObject.vertexProperties.vertexSize + rawObject.vertexProperties.uvOffset;
-					memcpy(&vertex[vInd++], &rawObject.vertices[offset + 0], sizeof(float));
-					memcpy(&vertex[vInd++], &rawObject.vertices[offset + sizeof(float)], sizeof(float));
-				}
-				if (useShort)
-				{
-					indexArray->push_back((UINT16) (vs->size() / floatsInVertex));
-				}
-				else
-				{
-					indexArrayInt->push_back((UINT32) vs->size() / floatsInVertex);
-				}
-				hm->insert(pair<UniqueKey, int>(key, vs->size() / floatsInVertex));
-				for (SIZE i = 0; i < floatsInVertex; i++)
-				{
-					vs->push_back(vertex[i]);
-				}
-			}
-		}
-	}
-	PROFILE("Finished optimizing. Hash map size: %u.", (UINT32) hm->size());
-	delete hm;
-	PROFILE("Hash map deleted.");
-	delete [] vertex;
+	vector<float>* vs;
+	UINT32 floatsInVertex;
+	do_work(model, rawObject, vs, floatsInVertex);
+
 	
-	SIZE sizeOfIndexInBytes = useShort ? sizeof(UINT16) : sizeof(UINT32);
-	UINT8* indexArr = NEW UINT8[indexArray->size() * sizeOfIndexInBytes];
-	memcpy(indexArr, &(*indexArray)[0], indexArray->size() * sizeOfIndexInBytes);
-	model.setIndices(indexArr, indexArray->size(),
-		useShort ? Renderable::INDEX_TYPE_USHORT : Renderable::INDEX_TYPE_UINT);
-	LOGD("Indices: %u", indexArray->size());
-	if (!useShort)
-	{
-		LOGI("3D model is too large for some mobile devices.");
-	}
-	delete indexArray;
 	SIZE vertexCount = vs->size() / floatsInVertex;
-	void* vertexArray = getAllocatedVertexBuffer(rawObject.vertexProperties.hasUV(), rawObject.vertexProperties.hasNormals(), vertexCount);
+	void* vertexArray = getAllocatedVertexBuffer(rawObject, vertexCount);
 	memcpy(vertexArray, &(*vs)[0], vs->size() * sizeof(float));
 	model.setVertices(rawObject.vertexProperties.vertexType, reinterpret_cast<UINT8*>(vertexArray), vertexCount);
 	LOGD("Vertex count: %u.", (UINT32) vertexCount);
 	delete vs;
-	// Create separate model part array.
-	vector<ModelData::Part>& parts = model.getParts();
-	parts.resize(rawObject.matIndices.size());
-	UINT32 offset = 0;
-	auto& materials = model.getMaterials();
-	for (UINT32 i = 0; i < rawObject.matIndices.size(); i++)
-	{
-		MaterialIndex mi = rawObject.matIndices[i];
-		if (mi.name.length() > 0)
-		{
-			for (UINT32 j = 0; j < materials.size(); j++)
-			{
-				if (strcmp(mi.name.c_str(), materials[j].name) == 0)
-				{
-					parts[i].material_ = j;
-				}
-			}
-		}
-		parts[i].offset_ = offset;
-		parts[i].indexCount_ = (UINT32) mi.size * 3;
-		offset += parts[i].indexCount_;
-	}
-	// Calculate bounding volume.
-	float width = rawObject.maxVertex.getX() - rawObject.minVertex.getX();
-	float height = rawObject.maxVertex.getY() - rawObject.minVertex.getY();
-	float depth = rawObject.maxVertex.getZ() - rawObject.minVertex.getZ();
-	float r = rawObject.radius;
-	float volumeBox = width * height * depth;
-	float volumeSphere = 4.0f / 3.0f * (float) SMART_PI * r * r * r;
-	LOGD("Sphere radius: %f. Box width: %f, height: %f, depth: %f.", r, width, height, depth);
-	LOGD("Calculating optimal bounding volume for mesh. "
-		"Box volume: %f, Sphere volume: %f. Optimal is %s.",
-		volumeBox, volumeSphere, volumeSphere < volumeBox ? "sphere" : "box");
-	BoundingVolume* bounds = 0;
-	if (volumeSphere < volumeBox)
-	{
-		bounds = NEW BoundingSphere(rawObject.radius);
-	}
-	else
-	{
-		bounds = NEW BoundingBox(Vec3(width, height, depth));
-	}
-	model.setBoundingVolume(bounds);
+	model.setParts(divideIntoPartsByMaterial(model.getMaterials(), rawObject));
+	model.setBoundingVolume(getBoundingVolume(rawObject));
 	PROFILE("Finished parsing object: %s.", file.c_str());
 	return true;
 }
@@ -219,8 +81,10 @@ RawObject ObjParser::loadRawObject(ModelData& model, const string& file)
 	return rawObject;
 }
 
-void* ObjParser::getAllocatedVertexBuffer(bool hasUV, bool hasNormals, SIZE vertexCount)
+void* ObjParser::getAllocatedVertexBuffer(RawObject& rawObject, SIZE vertexCount)
 {
+	bool hasUV = rawObject.vertexProperties.hasUV();
+	bool hasNormals = rawObject.vertexProperties.hasNormals();
 	if (hasUV && hasNormals)
 	{
 		return NEW VertexPNT[vertexCount];
@@ -401,4 +265,145 @@ ObjProperties ObjParser::getObjProperties(string obj) const
 		pos++;
 	}
 	return properties;
+}
+
+void ObjParser::do_work(ModelData& modelData, RawObject& rawObject, vector<float>*& vs, UINT32& floatsInVertex) const
+{
+	auto lambda = [](int a, MaterialIndex b) { return a + b.size; };
+	UINT32 indexCount = 3 * accumulate(rawObject.matIndices.begin(), rawObject.matIndices.end(), 0, lambda);
+	bool useShort = indexCount < USHRT_MAX;
+	SIZE indexSize = useShort ? sizeof(UINT16) : sizeof(UINT32);
+	SIZE indexArraySize = indexCount * indexSize;
+
+	UINT8* indexArray = new UINT8[indexArraySize];
+	UINT32 indexOffset = 0;
+
+	vs = NEW vector<float>();
+	PROFILE("Started optimizations.");
+	unordered_map<UniqueKey, int, UniqueKeyHash>* hm = NEW unordered_map<UniqueKey, int, UniqueKeyHash>();
+	unordered_map<UniqueKey, int, UniqueKeyHash>::const_iterator it;
+	floatsInVertex = rawObject.vertexProperties.vertexSize / sizeof(float);
+	float* vertex = NEW float[floatsInVertex];
+	for (SIZE i = 0; i < rawObject.objProperties.faceCount; i++)
+	{
+		Face& face = rawObject.faces[i];
+		for (auto j = 0; j < Face::FACE_SIZE; j++)
+		{
+			UINT32 index = face.indices_[j];
+			UniqueKey key;
+			key.buffer[0] = index;
+			key.buffer[1] = face.normIndices_[j];
+			key.buffer[2] = face.texIndices_[j];
+			it = hm->find(key);
+			if (it != hm->end())
+			{
+				if (useShort) {
+					short shortIndex = it->second;
+					memcpy(indexArray + indexOffset, &shortIndex, indexSize);
+				}
+				else
+				{
+					memcpy(indexArray + indexOffset, &index, indexSize);
+				}
+				indexOffset += indexSize;
+			}
+			else
+			{
+				UINT32 vInd = 0;
+				UINT32 offset = index * rawObject.vertexProperties.vertexSize + rawObject.vertexProperties.positionOffset;
+				memcpy(&vertex[vInd++], &rawObject.vertices[offset + 0], sizeof(float));
+				memcpy(&vertex[vInd++], &rawObject.vertices[offset + sizeof(float)], sizeof(float));
+				memcpy(&vertex[vInd++], &rawObject.vertices[offset + 2 * sizeof(float)], sizeof(float));
+				if (rawObject.objProperties.normalCount > 0)
+				{
+					index = face.normIndices_[j];
+					offset = index * rawObject.vertexProperties.vertexSize + rawObject.vertexProperties.normalOffset;
+					memcpy(&vertex[vInd++], &rawObject.vertices[offset + 0], sizeof(float));
+					memcpy(&vertex[vInd++], &rawObject.vertices[offset + sizeof(float)], sizeof(float));
+					memcpy(&vertex[vInd++], &rawObject.vertices[offset + 2 * sizeof(float)], sizeof(float));
+				}
+				if (rawObject.objProperties.uvCount > 0)
+				{
+					index = face.texIndices_[j];
+					offset = index * rawObject.vertexProperties.vertexSize + rawObject.vertexProperties.uvOffset;
+					memcpy(&vertex[vInd++], &rawObject.vertices[offset + 0], sizeof(float));
+					memcpy(&vertex[vInd++], &rawObject.vertices[offset + sizeof(float)], sizeof(float));
+				}
+
+				if (useShort) {
+					short shortIndex = static_cast<short>(vs->size() / floatsInVertex);
+					memcpy(indexArray + indexOffset, &shortIndex, indexSize);
+				}
+				else
+				{
+					int intIndex = vs->size() / floatsInVertex;
+					memcpy(indexArray + indexOffset, &intIndex, indexSize);
+					
+				}
+				indexOffset += indexSize;
+
+				hm->insert(pair<UniqueKey, int>(key, vs->size() / floatsInVertex));
+				for (SIZE i = 0; i < floatsInVertex; i++)
+				{
+					vs->push_back(vertex[i]);
+				}
+			}
+		}
+	}
+	PROFILE("Finished optimizing. Hash map size: %u.", (UINT32)hm->size());
+	delete hm;
+	PROFILE("Hash map deleted.");
+	delete[] vertex;
+
+	modelData.setIndices(indexArray, indexCount,
+		useShort ? Renderable::INDEX_TYPE_USHORT : Renderable::INDEX_TYPE_UINT);
+	LOGD("Index count: %u", indexArraySize);
+	if (!useShort)
+	{
+		LOGI("3D model is too large for some mobile devices.");
+	}
+}
+
+vector<ModelData::Part> ObjParser::divideIntoPartsByMaterial(
+	vector<ModelData::Material>& materials, RawObject& rawObject) const
+{
+	// Create separate model part array.
+	vector<ModelData::Part> parts(rawObject.matIndices.size());
+	UINT32 offset = 0;
+	for (UINT32 i = 0; i < rawObject.matIndices.size(); i++)
+	{
+		MaterialIndex mi = rawObject.matIndices[i];
+		if (mi.name.length() > 0)
+		{
+			for (UINT32 j = 0; j < materials.size(); j++)
+			{
+				if (strcmp(mi.name.c_str(), materials[j].name) == 0)
+				{
+					parts[i].material_ = j;
+				}
+			}
+		}
+		parts[i].offset_ = offset;
+		parts[i].indexCount_ = static_cast<UINT32>(mi.size) * 3;
+		offset += parts[i].indexCount_;
+	}
+	return parts;
+}
+
+
+BoundingVolume* ObjParser::getBoundingVolume(RawObject& rawObject) const
+{
+	float width = rawObject.maxVertex.getX() - rawObject.minVertex.getX();
+	float height = rawObject.maxVertex.getY() - rawObject.minVertex.getY();
+	float depth = rawObject.maxVertex.getZ() - rawObject.minVertex.getZ();
+	float r = rawObject.radius;
+	float volumeBox = width * height * depth;
+	float volumeSphere = 4.0f / 3.0f * static_cast<float>(SMART_PI) * r * r * r;
+	LOGD("Sphere radius: %f. Box width: %f, height: %f, depth: %f.", r, width, height, depth);
+	LOGD("Calculating optimal bounding volume for mesh. "
+		"Box volume: %f, Sphere volume: %f. Optimal is %s.",
+		volumeBox, volumeSphere, volumeSphere < volumeBox ? "sphere" : "box");
+	return volumeSphere < volumeBox
+		                         ? static_cast<BoundingVolume*>(NEW BoundingSphere(rawObject.radius))
+		                         : static_cast<BoundingVolume*>(NEW BoundingBox(Vec3(width, height, depth)));
 }

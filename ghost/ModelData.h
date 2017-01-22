@@ -34,6 +34,7 @@ public:
 		Texture* texture_;
 		void setName(string name);
 	};
+
 	struct Part {
 		Part() : material_(0), offset_(0), indexCount_(0), bv_(0) {}
 		SIZE material_;
@@ -45,26 +46,27 @@ public:
 	ModelData();
 	~ModelData();
 	void setVertices(VertexType type, UINT8* vertices, SIZE vertexCount);
-	SIZE getVertexCount();
-	VertexType getVertexType();
-	UINT32 getVertexStride();
-	UINT32 getPosOffset();
-	UINT32 getNormalOffset();
-	UINT32 getUVOffset();
-	void* getVertices();
-	bool hasNormals();
-	bool hasUV();
+	SIZE getVertexCount() const;
+	VertexType getVertexType() const;
+	UINT32 getVertexStride() const;
+	UINT32 getPosOffset() const;
+	UINT32 getNormalOffset() const;
+	UINT32 getUVOffset() const;
+	void* getVertices() const;
+	bool hasNormals() const;
+	bool hasUV() const;
 	void setIndices(UINT8* indices, SIZE indexCount, Renderable::IndexType type);
-	SIZE getIndexCount();
-	Renderable::IndexType getIndexType();
-	UINT32 getIndexStride();
-	UINT8* getIndices();
+	SIZE getIndexCount() const;
+	Renderable::IndexType getIndexType() const;
+	SIZE getIndexSize() const;
+	UINT8* getIndices() const;
 	void setBoundingVolume(BoundingVolume* bv);
-	BoundingVolume* getBoundingVolume();
+	BoundingVolume* getBoundingVolume() const;
 	vector<Material>& getMaterials();
+	void setParts(vector<Part> parts);
 	vector<Part>& getParts();
 	void setCullFace(bool state);
-	bool areFacesCulled();
+	bool areFacesCulled() const;
 	void serializeToFile(string path);
 	void deserialize(ServiceLocator* sl, const char* binary);
 	

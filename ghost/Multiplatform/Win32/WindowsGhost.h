@@ -67,6 +67,7 @@
 #include <chrono>
 #include <thread>
 #include <mutex>
+#include <numeric>
 
 // GRAPHICS.
 #ifdef ENABLE_GRAPHICS

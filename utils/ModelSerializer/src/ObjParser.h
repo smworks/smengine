@@ -13,30 +13,37 @@
 
 class ServiceLocator;
 
-class ObjParser : public ServiceProvider {
+class ObjParser : public ServiceProvider
+{
 public:
 	explicit ObjParser(ServiceLocator* serviceLocator);
 
 	bool parse(ModelData& model, const string& file);
-	RawObject loadRawObject(ModelData& model, const string& file);
-	
-private:
 
+private:
 	/*
 	* Scans through model content and
 	* counts the number of vertices and faces.
 	*/
 	ObjProperties getObjProperties(string obj) const;
-	void* getAllocatedVertexBuffer(bool hasUV, bool hasNormals, SIZE vertexCount);
+	static VertexProperties getVertexProperties(ObjProperties objProperties);
+	RawObject loadRawObject(ModelData& model, const string& file);
 
 	/**
 	 * Rearrange faces and material indices, to have as little
 	 * material changes as possible during render stage.
 	 */
-	void rearrangeFacesAndMaterials(vector<MaterialIndex> &matIndices,
-		vector<ModelData::Material> &materials, vector<Face> &faces);
+	static void rearrangeFacesAndMaterials(vector<MaterialIndex>& matIndices,
+	                                vector<ModelData::Material>& materials, vector<Face>& faces);
 
-	VertexProperties getVertexProperties(ObjProperties objProperties);
+	void do_work(ModelData& modelData, RawObject& rawObject,
+	             vector<float>*& vs, UINT32& floatsInVertex) const;
+
+	static void* getAllocatedVertexBuffer(RawObject& rawObject, SIZE vertexCount);
+
+
+	vector<ModelData::Part> divideIntoPartsByMaterial(vector<ModelData::Material>& materials, RawObject& rawObject) const;
+	BoundingVolume* getBoundingVolume(RawObject& rawObject) const;
 };
 
 #endif

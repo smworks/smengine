@@ -405,15 +405,8 @@ void PhysicsManager::addMesh(Node* node) {
 		else {
 			UINT8* vertexArray = reinterpret_cast<UINT8*>(modelData->getVertices());
 			PHY_ScalarType type;
-			UINT8* indexArray;
-			if (modelData->getIndexType() == Renderable::INDEX_TYPE_USHORT) {
-				type = PHY_SHORT;
-				indexArray = reinterpret_cast<UINT8*>(modelData->getIndicesShort());
-			}
-			else {
-				type = PHY_INTEGER;
-				indexArray = reinterpret_cast<UINT8*>(modelData->getIndicesInt());
-			}
+			UINT8* indexArray = modelData->getIndices();
+			type = modelData->getIndexType() == Renderable::INDEX_TYPE_USHORT ? PHY_SHORT : PHY_INTEGER;
 			btTriangleIndexVertexArray* meshInterface = new btTriangleIndexVertexArray();
 			meshInterfaces_.push_back(meshInterface);
 			btIndexedMesh part;
@@ -425,7 +418,7 @@ void PhysicsManager::addMesh(Node* node) {
 			// Indices.
 			part.m_numTriangles = (int) modelData->getIndexCount() / 3;
 			part.m_triangleIndexBase = indexArray;
-			part.m_triangleIndexStride = modelData->getIndexStride() * 3;
+			part.m_triangleIndexStride = modelData->getIndexSize() * 3;
 			part.m_indexType = type;
 			// Add mesh to mesh interface.
 			meshInterface->addIndexedMesh(part, type);

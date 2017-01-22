@@ -11,6 +11,13 @@
 #include <corecrt_io.h>
 #include <fcntl.h>
 
+#define ASSERT_EQUAL(first, second, ...) \
+		if (first != second) { \
+			LOGE(__VA_ARGS__); \
+			LOGE("First value: %d, second value: %d", first, second); \
+			assert(false); \
+		} 
+
 ServiceLocator* getServiceLocator()
 {
 	auto* wsl = new WindowsServiceLocator();
@@ -44,8 +51,8 @@ bool testModelSerializer()
 		ASSERT(md.getBoundingVolume() != nullptr, "Bounding volume on original model can not be null");
 		ASSERT(md2.getBoundingVolume() != nullptr, "Bounding volume on serialized model can not be null");
 		ASSERT(md.getBoundingVolume()->getType() == md2.getBoundingVolume()->getType(), "Bounding volume does not match");
-		ASSERT(md.getIndexCount() == md2.getIndexCount(), "Index count does not match");
-		ASSERT(md.getIndexStride() == md2.getIndexStride(), "Index stride does not match");
+		ASSERT_EQUAL(md.getIndexCount(), md2.getIndexCount(), "Index count does not match");
+		ASSERT(md.getIndexSize() == md2.getIndexSize(), "Index stride does not match");
 		ASSERT(md.getIndexType() == md2.getIndexType(), "Index type does not match");
 		ASSERT(md.getMaterials().size() == md2.getMaterials().size(), "Material size does not match");
 		ASSERT(md.getNormalOffset() == md2.getNormalOffset(), "Normal offset does not match");
@@ -112,7 +119,7 @@ bool testModelSerializer()
 	return true;
 }
 
-#define TEST(method, message) \
+#define TEST(method) \
 	wcout << #method << ": " << (method() ? L"☑" : L"☐") << endl
 
 int main()

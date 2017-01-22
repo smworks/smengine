@@ -50,7 +50,7 @@ public:
 	 * Maximum scale component will be selected.
 	 * @return Sphere radius.
 	 */
-	float getRadius(Vec3& scale);
+	float getRadius(Vec3 scale) const;
 private:
 	float radius_;
 };
