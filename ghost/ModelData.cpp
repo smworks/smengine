@@ -13,54 +13,74 @@
 #include "Resources/Vertex.h"
 
 ModelData::ModelData() :
-	vertexStride_(0),
-	posOffset_(0),
-	normalOffset_(0),
-	uvOffset_(0),
-	vertexType_(VERTEX_TYPE_COUNT),
-	vertexCount_(0),
-	vertices_(nullptr),
-	indexType_(Renderable::INDEX_TYPE_COUNT),
-	indexCount_(0),
+	vertexStride(0),
+	posOffset(0),
+	normalOffset(0),
+	uvOffset(0),
+	vertexType(VERTEX_TYPE_COUNT),
+	vertexCount(0),
+	vertices(nullptr),
+	indexType(Renderable::INDEX_TYPE_COUNT),
+	indexCount(0),
 	indices(nullptr),
 	facesCulled(true),
-	boundingVolume_(nullptr)
+	boundingVolume(nullptr)
 {
+}
+
+ModelData::ModelData(const ModelData& rhs)
+{
+	vertexStride = rhs.vertexStride;
+	posOffset = rhs.posOffset;
+	normalOffset = rhs.normalOffset;
+	uvOffset = rhs.uvOffset;
+	vertexType = rhs.vertexType;
+	vertexCount = rhs.vertexCount;
+	vertices = new UINT8[rhs.vertexStride * rhs.vertexCount];
+	memcpy(vertices, rhs.vertices, rhs.vertexStride * rhs.vertexCount);
+	indexType = rhs.indexType;
+	indexCount = rhs.indexCount;
+	indices = new UINT8[rhs.indexCount * rhs.getIndexSize()];
+	memcpy(indices, rhs.indices, rhs.indexCount * rhs.getIndexSize());
+	materials = rhs.materials;
+	parts = rhs.parts;
+	facesCulled = rhs.facesCulled;
+	boundingVolume = rhs.boundingVolume->copy();
 }
 
 ModelData::~ModelData()
 {
-	delete boundingVolume_;
-	delete [] vertices_;
+	delete boundingVolume;
+	delete [] vertices;
 	delete [] indices;
 }
 
 void ModelData::setVertices(VertexType type, UINT8* vertices, SIZE vertexCount)
 {
-	vertexType_ = type;
-	vertexCount_ = vertexCount;
-	vertices_ = vertices;
-	switch (vertexType_)
+	vertexType = type;
+	this->vertexCount = vertexCount;
+	this->vertices = vertices;
+	switch (vertexType)
 	{
 	case PNT:
-		vertexStride_ = sizeof(VertexPNT);
-		posOffset_ = offsetof(VertexPNT, pos);
-		normalOffset_ = offsetof(VertexPNT, normals);
-		uvOffset_ = offsetof(VertexPNT, uv);
+		vertexStride = sizeof(VertexPNT);
+		posOffset = offsetof(VertexPNT, pos);
+		normalOffset = offsetof(VertexPNT, normals);
+		uvOffset = offsetof(VertexPNT, uv);
 		break;
 	case PN:
-		vertexStride_ = sizeof(VertexPN);
-		posOffset_ = offsetof(VertexPN, pos);
-		normalOffset_ = offsetof(VertexPN, normals);
+		vertexStride = sizeof(VertexPN);
+		posOffset = offsetof(VertexPN, pos);
+		normalOffset = offsetof(VertexPN, normals);
 		break;
 	case PT:
-		vertexStride_ = sizeof(VertexPT);
-		posOffset_ = offsetof(VertexPT, pos);
-		uvOffset_ = offsetof(VertexPT, uv);
+		vertexStride = sizeof(VertexPT);
+		posOffset = offsetof(VertexPT, pos);
+		uvOffset = offsetof(VertexPT, uv);
 		break;
 	case P:
-		vertexStride_ = sizeof(VertexP);
-		posOffset_ = offsetof(VertexP, pos);
+		vertexStride = sizeof(VertexP);
+		posOffset = offsetof(VertexP, pos);
 		break;
 	default:
 		LOGW("Unknown model vertex type specified.");
@@ -70,69 +90,69 @@ void ModelData::setVertices(VertexType type, UINT8* vertices, SIZE vertexCount)
 
 SIZE ModelData::getVertexCount() const
 {
-	return vertexCount_;
+	return vertexCount;
 }
 
 ModelData::VertexType ModelData::getVertexType() const
 {
-	return vertexType_;
+	return vertexType;
 }
 
 UINT32 ModelData::getVertexStride() const
 {
-	return vertexStride_;
+	return vertexStride;
 }
 
 UINT32 ModelData::getPosOffset() const
 {
-	return posOffset_;
+	return posOffset;
 }
 
 UINT32 ModelData::getNormalOffset() const
 {
-	return normalOffset_;
+	return normalOffset;
 }
 
 UINT32 ModelData::getUVOffset() const
 {
-	return uvOffset_;
+	return uvOffset;
 }
 
 void* ModelData::getVertices() const
 {
-	return vertices_;
+	return vertices;
 }
 
 bool ModelData::hasNormals() const
 {
-	return vertexType_ == PNT || vertexType_ == PN;
+	return vertexType == PNT || vertexType == PN;
 }
 
 bool ModelData::hasUV() const
 {
-	return vertexType_ == PNT || vertexType_ == PT;
+	return vertexType == PNT || vertexType == PT;
 }
 
 void ModelData::setIndices(UINT8* indices, SIZE indexCount, Renderable::IndexType type)
 {
-	indexType_ = type;
-	indexCount_ = indexCount;
+	indexType = type;
+	this->indexCount = indexCount;
 	this->indices = indices;
 }
 
 SIZE ModelData::getIndexCount() const
 {
-	return indexCount_;
+	return indexCount;
 }
 
 Renderable::IndexType ModelData::getIndexType() const
 {
-	return indexType_;
+	return indexType;
 }
 
 SIZE ModelData::getIndexSize() const
 {
-	return indexType_ == Renderable::INDEX_TYPE_USHORT ? sizeof(UINT16) : sizeof(UINT32);
+	return indexType == Renderable::INDEX_TYPE_USHORT ? sizeof(UINT16) : sizeof(UINT32);
 }
 
 UINT8* ModelData::getIndices() const
@@ -142,27 +162,27 @@ UINT8* ModelData::getIndices() const
 
 void ModelData::setBoundingVolume(BoundingVolume* bv)
 {
-	boundingVolume_ = bv;
+	boundingVolume = bv;
 }
 
 BoundingVolume* ModelData::getBoundingVolume() const
 {
-	return boundingVolume_;
+	return boundingVolume;
 }
 
 vector<ModelData::Material>& ModelData::getMaterials()
 {
-	return materials_;
+	return materials;
 }
 
 void ModelData::setParts(vector<ModelData::Part> parts)
 {
-	this->parts_ = parts;
+	this->parts = parts;
 }
 
 vector<ModelData::Part>& ModelData::getParts()
 {
-	return parts_;
+	return parts;
 }
 
 void ModelData::setCullFace(bool state)
@@ -179,42 +199,42 @@ void ModelData::serializeToFile(string path)
 {
 	PROFILE("Started serialization to file: %s", path.c_str());
 	ofstream of(path, ios::binary | ios::out);
-	of.write(reinterpret_cast<char*>(&vertexStride_), sizeof(UINT32));
-	of.write(reinterpret_cast<char*>(&vertexType_), sizeof(VertexType));
-	of.write(reinterpret_cast<char*>(&posOffset_), sizeof(UINT32));
-	of.write(reinterpret_cast<char*>(&normalOffset_), sizeof(UINT32));
-	of.write(reinterpret_cast<char*>(&uvOffset_), sizeof(UINT32));
-	of.write(reinterpret_cast<char*>(&vertexCount_), sizeof(SIZE));
+	of.write(reinterpret_cast<char*>(&vertexStride), sizeof(UINT32));
+	of.write(reinterpret_cast<char*>(&vertexType), sizeof(VertexType));
+	of.write(reinterpret_cast<char*>(&posOffset), sizeof(UINT32));
+	of.write(reinterpret_cast<char*>(&normalOffset), sizeof(UINT32));
+	of.write(reinterpret_cast<char*>(&uvOffset), sizeof(UINT32));
+	of.write(reinterpret_cast<char*>(&vertexCount), sizeof(SIZE));
 
 	SIZE sizeOfVertices;
-	if (vertexType_ == P)
+	if (vertexType == P)
 	{
-		sizeOfVertices = vertexCount_ * sizeof(VertexP);
+		sizeOfVertices = vertexCount * sizeof(VertexP);
 	}
-	else if (vertexType_ == PN)
+	else if (vertexType == PN)
 	{
-		sizeOfVertices = vertexCount_ * sizeof(VertexPN);
+		sizeOfVertices = vertexCount * sizeof(VertexPN);
 	}
-	else if (vertexType_ == PT)
+	else if (vertexType == PT)
 	{
-		sizeOfVertices = vertexCount_ * sizeof(VertexPT);
+		sizeOfVertices = vertexCount * sizeof(VertexPT);
 	}
-	else if (vertexType_ == PNT)
+	else if (vertexType == PNT)
 	{
-		sizeOfVertices = vertexCount_ * sizeof(VertexPNT);
+		sizeOfVertices = vertexCount * sizeof(VertexPNT);
 	}
 	else
 	{
 		THROWEX("Unable to serialize model with unknown vertex type");
 	}
 
-	of.write(reinterpret_cast<char*>(vertices_), sizeOfVertices);
-	of.write(reinterpret_cast<char*>(&indexType_), sizeof(int));
-	of.write(reinterpret_cast<char*>(&indexCount_), sizeof(SIZE));
-	of.write(reinterpret_cast<char*>(indices), indexCount_ * getIndexSize());
-	SIZE materialCount = materials_.size();
+	of.write(reinterpret_cast<char*>(vertices), sizeOfVertices);
+	of.write(reinterpret_cast<char*>(&indexType), sizeof(int));
+	of.write(reinterpret_cast<char*>(&indexCount), sizeof(SIZE));
+	of.write(reinterpret_cast<char*>(indices), indexCount * getIndexSize());
+	SIZE materialCount = materials.size();
 	of.write(reinterpret_cast<char*>(&materialCount), sizeof(SIZE));
-	for (auto& m : materials_)
+	for (auto& m : materials)
 	{
 		of.write(m.name, sizeof(Material::name));
 		of.write(reinterpret_cast<char*>(&m.ambient_), sizeof(Color));
@@ -232,37 +252,37 @@ void ModelData::serializeToFile(string path)
 			of.write(textureName.c_str(), textureNameLength);
 		}
 	}
-	SIZE partCount = parts_.size();
+	SIZE partCount = parts.size();
 	of.write(reinterpret_cast<char*>(&partCount), sizeof(SIZE));
-	for (auto& p : parts_)
+	for (auto& p : parts)
 	{
 		of.write(reinterpret_cast<char*>(&p.material_), sizeof(SIZE));
 		of.write(reinterpret_cast<char*>(&p.offset_), sizeof(SIZE));
 		of.write(reinterpret_cast<char*>(&p.indexCount_), sizeof(SIZE));
 
-		BoundingVolume::Type type = p.bv_ == 0 ? BoundingVolume::UNKNOWN : p.bv_->getType();
+		BoundingVolume::Type type = p.bv == 0 ? BoundingVolume::UNKNOWN : p.bv->getType();
 		of.write(reinterpret_cast<char*>(&type), sizeof(BoundingVolume::Type));
 		if (type == BoundingVolume::SPHERE)
 		{
-			float radius = static_cast<BoundingSphere*>(p.bv_)->getRadius(Vec3(1.0));
+			float radius = static_cast<BoundingSphere*>(p.bv)->getRadius(Vec3(1.0));
 			of.write(reinterpret_cast<char*>(&radius), sizeof(float));
 		}
 		else if (type == BoundingVolume::BOX)
 		{
-			Vec3 sizes = static_cast<BoundingBox*>(p.bv_)->getSizes();
+			Vec3 sizes = static_cast<BoundingBox*>(p.bv)->getSizes();
 			of.write(reinterpret_cast<char*>(&sizes), sizeof(Vec3));
 		}
 	}
-	BoundingVolume::Type type = boundingVolume_ == 0 ? BoundingVolume::UNKNOWN : boundingVolume_->getType();
+	BoundingVolume::Type type = boundingVolume == 0 ? BoundingVolume::UNKNOWN : boundingVolume->getType();
 	of.write(reinterpret_cast<char*>(&type), sizeof(BoundingVolume::Type));
 	if (type == BoundingVolume::SPHERE)
 	{
-		float radius = static_cast<BoundingSphere*>(boundingVolume_)->getRadius(Vec3(1.0));
+		float radius = static_cast<BoundingSphere*>(boundingVolume)->getRadius(Vec3(1.0));
 		of.write(reinterpret_cast<char*>(&radius), sizeof(float));
 	}
 	else if (type == BoundingVolume::BOX)
 	{
-		Vec3 sizes = static_cast<BoundingBox*>(boundingVolume_)->getSizes();
+		Vec3 sizes = static_cast<BoundingBox*>(boundingVolume)->getSizes();
 		of.write(reinterpret_cast<char*>(&sizes), sizeof(Vec3));
 	}
 	of.write("sm", sizeof(char) * 2);
@@ -274,42 +294,42 @@ void ModelData::deserialize(ServiceLocator* sl, const char* binary)
 {
 	PROFILE("Deserializing binary to model");
 	UINT32 offset = 0;
-	memcpy(&vertexStride_, binary, sizeof(UINT32));
-	memcpy(&vertexType_, binary + (offset += sizeof(UINT32)), sizeof(VertexType));
-	memcpy(&posOffset_, binary + (offset += sizeof(VertexType)), sizeof(UINT32));
-	memcpy(&normalOffset_, binary + (offset += sizeof(UINT32)), sizeof(UINT32));
-	memcpy(&uvOffset_, binary + (offset += sizeof(UINT32)), sizeof(UINT32));
-	memcpy(&vertexCount_, binary + (offset += sizeof(UINT32)), sizeof(SIZE));
+	memcpy(&vertexStride, binary, sizeof(UINT32));
+	memcpy(&vertexType, binary + (offset += sizeof(UINT32)), sizeof(VertexType));
+	memcpy(&posOffset, binary + (offset += sizeof(VertexType)), sizeof(UINT32));
+	memcpy(&normalOffset, binary + (offset += sizeof(UINT32)), sizeof(UINT32));
+	memcpy(&uvOffset, binary + (offset += sizeof(UINT32)), sizeof(UINT32));
+	memcpy(&vertexCount, binary + (offset += sizeof(UINT32)), sizeof(SIZE));
 
 	SIZE sizeOfVertices;
-	if (vertexType_ == P)
+	if (vertexType == P)
 	{
-		sizeOfVertices = vertexCount_ * sizeof(VertexP);
+		sizeOfVertices = vertexCount * sizeof(VertexP);
 	}
-	else if (vertexType_ == PN)
+	else if (vertexType == PN)
 	{
-		sizeOfVertices = vertexCount_ * sizeof(VertexPN);
+		sizeOfVertices = vertexCount * sizeof(VertexPN);
 	}
-	else if (vertexType_ == PT)
+	else if (vertexType == PT)
 	{
-		sizeOfVertices = vertexCount_ * sizeof(VertexPT);
+		sizeOfVertices = vertexCount * sizeof(VertexPT);
 	}
-	else if (vertexType_ == PNT)
+	else if (vertexType == PNT)
 	{
-		sizeOfVertices = vertexCount_ * sizeof(VertexPNT);
+		sizeOfVertices = vertexCount * sizeof(VertexPNT);
 	}
 	else
 	{
 		THROWEX("Unable to deserialize model with unknown vertex type");
 	}
 
-	vertices_ = NEW UINT8[sizeOfVertices];
-	memcpy(vertices_, binary + (offset += sizeof(SIZE)), sizeOfVertices);
-	memcpy(&indexType_, binary + (offset += sizeOfVertices), sizeof(int));
-	memcpy(&indexCount_, binary + (offset += sizeof(int)), sizeof(SIZE));
-	indices = NEW UINT8[indexCount_ * getIndexSize()];
-	memcpy(indices, binary + (offset += sizeof(SIZE)), indexCount_ * getIndexSize());
-	offset += indexCount_ * getIndexSize();
+	vertices = NEW UINT8[sizeOfVertices];
+	memcpy(vertices, binary + (offset += sizeof(SIZE)), sizeOfVertices);
+	memcpy(&indexType, binary + (offset += sizeOfVertices), sizeof(int));
+	memcpy(&indexCount, binary + (offset += sizeof(int)), sizeof(SIZE));
+	indices = NEW UINT8[indexCount * getIndexSize()];
+	memcpy(indices, binary + (offset += sizeof(SIZE)), indexCount * getIndexSize());
+	offset += indexCount * getIndexSize();
 
 	SIZE materialCount;
 	memcpy(&materialCount, binary + offset, sizeof(SIZE));
@@ -338,7 +358,7 @@ void ModelData::deserialize(ServiceLocator* sl, const char* binary)
 			delete[] name;
 		}
 
-		materials_.push_back(m);
+		materials.push_back(m);
 	}
 
 	SIZE partCount;
@@ -360,18 +380,18 @@ void ModelData::deserialize(ServiceLocator* sl, const char* binary)
 		{
 			float radius;
 			memcpy(&radius, binary + offset, sizeof(float));
-			p.bv_ = NEW BoundingSphere(radius);
+			p.bv = NEW BoundingSphere(radius);
 			offset += sizeof(float);
 		}
 		else if (type == BoundingVolume::BOX)
 		{
 			Vec3 sizes;
 			memcpy(&sizes, binary + offset, sizeof(Vec3));
-			p.bv_ = new BoundingBox(sizes);
+			p.bv = new BoundingBox(sizes);
 			offset += sizeof(Vec3);
 		}
 
-		parts_.push_back(p);
+		parts.push_back(p);
 	}
 
 	BoundingVolume::Type type;
@@ -382,14 +402,14 @@ void ModelData::deserialize(ServiceLocator* sl, const char* binary)
 	{
 		float radius;
 		memcpy(&radius, binary + offset, sizeof(float));
-		boundingVolume_ = NEW BoundingSphere(radius);
+		boundingVolume = NEW BoundingSphere(radius);
 		offset += sizeof(float);
 	}
 	else if (type == BoundingVolume::BOX)
 	{
 		Vec3 sizes;
 		memcpy(&sizes, binary + offset, sizeof(Vec3));
-		boundingVolume_ = new BoundingBox(sizes);
+		boundingVolume = new BoundingBox(sizes);
 		offset += sizeof(Vec3);
 	}
 

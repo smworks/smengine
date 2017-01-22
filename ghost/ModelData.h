@@ -21,9 +21,9 @@ public:
 	enum VertexType {PNT, PN, PT, P, VERTEX_TYPE_COUNT};
 	struct Material {
 		Material() :
-			texture_(0),
 			specIntensity_(0.0f),
-			transparency_(0.0f)
+			transparency_(0.0f),
+			texture_(nullptr)
 		{}
 		char name[256];
 		Color ambient_;
@@ -36,14 +36,15 @@ public:
 	};
 
 	struct Part {
-		Part() : material_(0), offset_(0), indexCount_(0), bv_(0) {}
+		Part() : material_(0), offset_(0), indexCount_(0), bv(nullptr) {}
 		SIZE material_;
 		SIZE offset_;
 		SIZE indexCount_;
-		BoundingVolume* bv_;
+		BoundingVolume* bv;
 	};
 
 	ModelData();
+	ModelData(const ModelData& rhs);
 	~ModelData();
 	void setVertices(VertexType type, UINT8* vertices, SIZE vertexCount);
 	SIZE getVertexCount() const;
@@ -71,17 +72,20 @@ public:
 	void deserialize(ServiceLocator* sl, const char* binary);
 	
 private:
-	UINT32 vertexStride_, posOffset_, normalOffset_, uvOffset_;
-	VertexType vertexType_;
-	SIZE vertexCount_;
-	UINT8* vertices_;
-	Renderable::IndexType indexType_;
-	SIZE indexCount_;
+	UINT32 vertexStride;
+	UINT32 posOffset;
+	UINT32 normalOffset;
+	UINT32 uvOffset;
+	VertexType vertexType;
+	SIZE vertexCount;
+	UINT8* vertices;
+	Renderable::IndexType indexType;
+	SIZE indexCount;
 	UINT8* indices;
-	vector<Material> materials_;
-	vector<Part> parts_;
+	vector<Material> materials;
+	vector<Part> parts;
 	bool facesCulled;
-	BoundingVolume* boundingVolume_;
+	BoundingVolume* boundingVolume;
 };
 
 #endif

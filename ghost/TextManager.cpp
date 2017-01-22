@@ -43,7 +43,7 @@ TextManager::TextManager(ServiceLocator* services) :
 		0.0f, 1.0f, 0.0f,
 		0.0f, 0.0f, 0.0f
 	};
-	memcpy(vertices_, vertices, 18 * sizeof(float));
+	memcpy(vertices, vertices, 18 * sizeof(float));
 	err_ = FT_Init_FreeType(&lib_);
 	if (err_) {
 		LOGW("Failed to initialize font library.");

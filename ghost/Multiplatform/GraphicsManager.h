@@ -417,7 +417,7 @@ protected:
 	vector<Node*> guiArray_;
 	vector<Node*> lights_;
 	Color vertexColor_;
-	vector<float> vertices_;
+	vector<float> vertices;
 	vector<float> colors_;
 	Mat4 screenMatrix_;
 	Mat4 viewMatrix_;

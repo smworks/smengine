@@ -94,7 +94,7 @@ void Model::release() {
 	}
 	if (modelData != 0) {
 		for (UINT32 i = 0; i < modelData->getParts().size(); i++) {
-			delete modelData->getParts()[i].bv_;
+			delete modelData->getParts()[i].bv;
 		}
 		delete modelData;
 		modelData = 0;
@@ -139,7 +139,7 @@ SIZE Model::getIndexOffset() {
 
 BoundingVolume* Model::getBV() {
 	return modelData->getParts().size() > currentPart ?
-		modelData->getParts()[currentPart].bv_ : 0;
+		modelData->getParts()[currentPart].bv : 0;
 }
 
 SIZE Model::getCBO() {

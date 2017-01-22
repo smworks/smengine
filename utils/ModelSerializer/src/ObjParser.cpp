@@ -20,32 +20,19 @@ ObjParser::ObjParser(ServiceLocator* serviceLocator): ServiceProvider(serviceLoc
 {
 }
 
-bool ObjParser::parse(ModelData& model, const string& file)
+ModelData ObjParser::parse(string file) const
 {
+	ModelData model;
 	RawObject rawObject = loadRawObject(model, file);
-
 	PROFILE("Finished reading basic data for object: %s.", file.c_str());
-
-	//rearrangeFacesAndMaterials(matIndices, materials, faces);
-
-	vector<float>* vs;
-	UINT32 floatsInVertex;
-	do_work(model, rawObject, vs, floatsInVertex);
-
-	
-	SIZE vertexCount = vs->size() / floatsInVertex;
-	void* vertexArray = getAllocatedVertexBuffer(rawObject, vertexCount);
-	memcpy(vertexArray, &(*vs)[0], vs->size() * sizeof(float));
-	model.setVertices(rawObject.vertexProperties.vertexType, reinterpret_cast<UINT8*>(vertexArray), vertexCount);
-	LOGD("Vertex count: %u.", (UINT32) vertexCount);
-	delete vs;
+	setVerticesAndIndices(model, rawObject);
 	model.setParts(divideIntoPartsByMaterial(model.getMaterials(), rawObject));
 	model.setBoundingVolume(getBoundingVolume(rawObject));
 	PROFILE("Finished parsing object: %s.", file.c_str());
-	return true;
+	return model;
 }
 
-RawObject ObjParser::loadRawObject(ModelData& model, const string& file)
+RawObject ObjParser::loadRawObject(ModelData& model, const string& file) const
 {
 	string obj = getFileManager()->loadText(file);
 	THROWONASSERT(obj.length() != 0, "Unable to load file: %s", file.c_str());
@@ -99,53 +86,6 @@ void* ObjParser::getAllocatedVertexBuffer(RawObject& rawObject, SIZE vertexCount
 	}
 
 	return NEW VertexP[vertexCount];
-}
-
-void ObjParser::rearrangeFacesAndMaterials(vector<MaterialIndex>& matIndices,
-                                           vector<ModelData::Material>& materials, vector<Face>& faces)
-{
-	if (matIndices.size() <= materials.size())
-	{
-		return;
-	}
-
-	vector<vector<Face>> arrFaces;
-	for (UINT32 i = 0; i < materials.size(); i++)
-	{
-		vector<Face> fac;
-		arrFaces.push_back(fac);
-	}
-	SIZE size = matIndices.size();
-	for (UINT32 i = 0; i < size; i++)
-	{
-		for (UINT32 j = 0; j < materials.size(); j++)
-		{
-			MaterialIndex& mi = matIndices[i];
-			if (strcmp(mi.name.c_str(), materials[j].name) == 0)
-			{
-				for (SIZE k = mi.offset; k < mi.offset + mi.size; k++)
-				{
-					arrFaces[j].push_back(faces[k]);
-				}
-			}
-		}
-	}
-	faces.clear();
-	UINT32 offset = 0;
-	matIndices.clear();
-	for (UINT32 i = 0; i < arrFaces.size(); i++)
-	{
-		MaterialIndex mi;
-		mi.name = string(materials[i].name);
-		mi.offset = offset;
-		mi.size = arrFaces[i].size();
-		matIndices.push_back(mi);
-		for (UINT32 j = 0; j < arrFaces[i].size(); j++)
-		{
-			faces.push_back(arrFaces[i][j]);
-		}
-		offset += mi.size;
-	}
 }
 
 VertexProperties ObjParser::getVertexProperties(ObjProperties objProperties)
@@ -267,10 +207,10 @@ ObjProperties ObjParser::getObjProperties(string obj) const
 	return properties;
 }
 
-void ObjParser::do_work(ModelData& modelData, RawObject& rawObject, vector<float>*& vs, UINT32& floatsInVertex) const
+void ObjParser::setVerticesAndIndices(ModelData& modelData, RawObject& rawObject) const
 {
-	auto lambda = [](int a, MaterialIndex b) { return a + b.size; };
-	UINT32 indexCount = 3 * accumulate(rawObject.matIndices.begin(), rawObject.matIndices.end(), 0, lambda);
+	
+	UINT32 indexCount = rawObject.objProperties.faceCount * 3;
 	bool useShort = indexCount < USHRT_MAX;
 	SIZE indexSize = useShort ? sizeof(UINT16) : sizeof(UINT32);
 	SIZE indexArraySize = indexCount * indexSize;
@@ -278,23 +218,18 @@ void ObjParser::do_work(ModelData& modelData, RawObject& rawObject, vector<float
 	UINT8* indexArray = new UINT8[indexArraySize];
 	UINT32 indexOffset = 0;
 
-	vs = NEW vector<float>();
 	PROFILE("Started optimizations.");
-	unordered_map<UniqueKey, int, UniqueKeyHash>* hm = NEW unordered_map<UniqueKey, int, UniqueKeyHash>();
-	unordered_map<UniqueKey, int, UniqueKeyHash>::const_iterator it;
-	floatsInVertex = rawObject.vertexProperties.vertexSize / sizeof(float);
+	auto hm = NEW unordered_map<UniqueKey, int, UniqueKeyHash>();
+	UINT32 floatsInVertex = rawObject.vertexProperties.vertexSize / sizeof(float);
 	float* vertex = NEW float[floatsInVertex];
-	for (SIZE i = 0; i < rawObject.objProperties.faceCount; i++)
+	vector<float>* vs = NEW vector<float>();
+	for (auto& face : rawObject.faces)
 	{
-		Face& face = rawObject.faces[i];
-		for (auto j = 0; j < Face::FACE_SIZE; j++)
+		for (auto i = 0; i < Face::FACE_SIZE; i++)
 		{
-			UINT32 index = face.indices_[j];
-			UniqueKey key;
-			key.buffer[0] = index;
-			key.buffer[1] = face.normIndices_[j];
-			key.buffer[2] = face.texIndices_[j];
-			it = hm->find(key);
+			UINT32 index = face.indices_[i];
+			UniqueKey key(face.indices_[i], face.normIndices_[i], face.texIndices_[i]);
+			auto it = hm->find(key);
 			if (it != hm->end())
 			{
 				if (useShort) {
@@ -316,7 +251,7 @@ void ObjParser::do_work(ModelData& modelData, RawObject& rawObject, vector<float
 				memcpy(&vertex[vInd++], &rawObject.vertices[offset + 2 * sizeof(float)], sizeof(float));
 				if (rawObject.objProperties.normalCount > 0)
 				{
-					index = face.normIndices_[j];
+					index = face.normIndices_[i];
 					offset = index * rawObject.vertexProperties.vertexSize + rawObject.vertexProperties.normalOffset;
 					memcpy(&vertex[vInd++], &rawObject.vertices[offset + 0], sizeof(float));
 					memcpy(&vertex[vInd++], &rawObject.vertices[offset + sizeof(float)], sizeof(float));
@@ -324,10 +259,10 @@ void ObjParser::do_work(ModelData& modelData, RawObject& rawObject, vector<float
 				}
 				if (rawObject.objProperties.uvCount > 0)
 				{
-					index = face.texIndices_[j];
+					index = face.texIndices_[i];
 					offset = index * rawObject.vertexProperties.vertexSize + rawObject.vertexProperties.uvOffset;
 					memcpy(&vertex[vInd++], &rawObject.vertices[offset + 0], sizeof(float));
-					memcpy(&vertex[vInd++], &rawObject.vertices[offset + sizeof(float)], sizeof(float));
+					memcpy(&vertex[vInd], &rawObject.vertices[offset + sizeof(float)], sizeof(float));
 				}
 
 				if (useShort) {
@@ -343,14 +278,14 @@ void ObjParser::do_work(ModelData& modelData, RawObject& rawObject, vector<float
 				indexOffset += indexSize;
 
 				hm->insert(pair<UniqueKey, int>(key, vs->size() / floatsInVertex));
-				for (SIZE i = 0; i < floatsInVertex; i++)
+				for (SIZE j = 0; j < floatsInVertex; j++)
 				{
-					vs->push_back(vertex[i]);
+					vs->push_back(vertex[j]);
 				}
 			}
 		}
 	}
-	PROFILE("Finished optimizing. Hash map size: %u.", (UINT32)hm->size());
+	PROFILE("Finished optimizing. Hash map size: %u.", static_cast<UINT32>(hm->size()));
 	delete hm;
 	PROFILE("Hash map deleted.");
 	delete[] vertex;
@@ -362,10 +297,17 @@ void ObjParser::do_work(ModelData& modelData, RawObject& rawObject, vector<float
 	{
 		LOGI("3D model is too large for some mobile devices.");
 	}
+
+	SIZE vertexCount = vs->size() / floatsInVertex;
+	void* vertexArray = getAllocatedVertexBuffer(rawObject, vertexCount);
+	memcpy(vertexArray, &(*vs)[0], vs->size() * sizeof(float));
+	modelData.setVertices(rawObject.vertexProperties.vertexType, reinterpret_cast<UINT8*>(vertexArray), vertexCount);
+	LOGD("Vertex count: %u.", static_cast<UINT32>(vertexCount));
+	delete vs;
 }
 
 vector<ModelData::Part> ObjParser::divideIntoPartsByMaterial(
-	vector<ModelData::Material>& materials, RawObject& rawObject) const
+	vector<ModelData::Material>& materials, RawObject& rawObject)
 {
 	// Create separate model part array.
 	vector<ModelData::Part> parts(rawObject.matIndices.size());

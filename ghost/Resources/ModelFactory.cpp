@@ -109,7 +109,7 @@ void ModelFactory::createTerrain(ModelData* md, Attributes& attr, ServiceLocator
 				indices.push_back(tg.indices_->at(i)->at(j));
 			}
 			if (tg.bounds_ != 0 && tg.bounds_->size() > i) {
-				part.bv_ = tg.bounds_->at(i)->copy();
+				part.bv = tg.bounds_->at(i)->copy();
 			}
 		}
 		UINT32* indArray = NEW UINT32[indices.size()];
@@ -130,7 +130,7 @@ void ModelFactory::createTerrain(ModelData* md, Attributes& attr, ServiceLocator
 				indices.push_back(tg.indices_->at(i)->at(j));
 			}
 			if (tg.bounds_ != 0 && tg.bounds_->size() > i) {
-				part.bv_ = tg.bounds_->at(i)->copy();
+				part.bv = tg.bounds_->at(i)->copy();
 			}
 		}
 		UINT16* indArray = NEW UINT16[indices.size()];

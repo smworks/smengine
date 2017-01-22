@@ -36,16 +36,9 @@ int main()
 		string file;
 		getline(cin, file);
 		cout << "Loading file: " << file.c_str() << endl;
-		ModelData md;
-		if (ObjParser(sl).parse(md, file))
-		{
-			md.serializeToFile(file + ".sm");
-			cout << "Successfully serialized model" << endl;
-		}
-		else
-		{
-			cout << "Problem converting model. Check warning log" << endl;
-		}
+		ModelData md = ObjParser(sl).parse(file);
+		md.serializeToFile(file + ".sm");
+		cout << "Successfully serialized model" << endl;
 	}
 	catch (exception e) {
 		cout << "Exception occured: " << e.what() << endl;

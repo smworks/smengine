@@ -5,7 +5,12 @@
 
 struct UniqueKey
 {
-	UINT32 buffer[3];
+	UniqueKey(UINT32 position, UINT32 normal, UINT32 uv)
+	{
+		buffer[0] = position;
+		buffer[1] = normal;
+		buffer[2] = uv;
+	}
 
 	bool operator==(const UniqueKey& r) const
 	{
@@ -34,6 +39,8 @@ struct UniqueKey
 		}
 		return false;
 	}
+
+	UINT32 buffer[3];
 };
 
 struct UniqueKeyHash

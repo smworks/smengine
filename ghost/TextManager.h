@@ -63,7 +63,7 @@ public:
 	 */
 	INT32 getMaxHeight(string text);
 public:
-	float vertices_[18];
+	float vertices[18];
 private:
 	FT_Library lib_;
 	FT_Error err_;

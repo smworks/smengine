@@ -339,9 +339,9 @@ void GraphicsManager::refreshRenderList() {
 }
 
 void GraphicsManager::vertex(float x, float y, float z) {
-	vertices_.push_back(x);
-	vertices_.push_back(y);
-	vertices_.push_back(z);
+	vertices.push_back(x);
+	vertices.push_back(y);
+	vertices.push_back(z);
 	colors_.push_back(vertexColor_.getR());
 	colors_.push_back(vertexColor_.getG());
 	colors_.push_back(vertexColor_.getB());
@@ -390,7 +390,7 @@ void GraphicsManager::renderScene(NodeType type) {
 }
 
 void GraphicsManager::renderVertices(Mat4 mat) {
-	if (vertices_.size() == 0) {
+	if (vertices.size() == 0) {
 		return;
 	}
 	useProgram(immediateShader_->getId());
@@ -398,14 +398,14 @@ void GraphicsManager::renderVertices(Mat4 mat) {
     bindBuffer(0);
 	glEnableVertexAttribArray(immediateShader_->getHandle(Shader::POS));
 	glVertexAttribPointer(immediateShader_->getHandle(Shader::POS),
-		3, GL_FLOAT, GL_FALSE, 0, &vertices_[0]);
+		3, GL_FLOAT, GL_FALSE, 0, &vertices[0]);
 	glEnableVertexAttribArray(immediateShader_->getHandle(Shader::COL));
 	glVertexAttribPointer(immediateShader_->getHandle(Shader::COL),
 		4, GL_FLOAT, GL_FALSE, 0, &colors_[0]);
-    glDrawArrays(GL_LINES, 0, static_cast<GLint>(vertices_.size() / 3));
+    glDrawArrays(GL_LINES, 0, static_cast<GLint>(vertices.size() / 3));
     glDisableVertexAttribArray(immediateShader_->getHandle(Shader::COL));
 	glDisableVertexAttribArray(immediateShader_->getHandle(Shader::POS));
-	vertices_.clear();
+	vertices.clear();
 	colors_.clear();
     CHECK_GL_ERROR("Rendering vertices");
 }
