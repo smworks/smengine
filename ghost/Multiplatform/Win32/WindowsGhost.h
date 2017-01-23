@@ -9,11 +9,13 @@
 #define WINDOWSGHOST_H_
 
 // ENGINE SUBSYSTEMS
-//#define ENABLE_FONTS
-//#define ENABLE_PHYSICS
-//#define ENABLE_DATABASE
-//#define ENABLE_SOUND
-//#define ENABLE_GRAPHICS
+#ifndef DISABLE_ALL
+#define ENABLE_FONTS
+#define ENABLE_PHYSICS
+#define ENABLE_DATABASE
+#define ENABLE_SOUND
+#define ENABLE_GRAPHICS
+#endif
 
 #define WIN32_LEAN_AND_MEAN
 #define _CRT_SECURE_CPP_OVERLOAD_STANDARD_NAMES 1
@@ -72,7 +74,7 @@
 // GRAPHICS.
 #ifdef ENABLE_GRAPHICS
 	#define GLEW_STATIC
-	#include <glew.h>
+	#include "../../../dependencies/includes/glew/glew.h"
 	#pragma comment(lib, "glew32s.lib")
 	#pragma comment(lib, "opengl32.lib")
 	#pragma comment(lib, "glu32.lib")

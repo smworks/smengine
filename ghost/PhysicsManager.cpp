@@ -5,8 +5,10 @@
  *      Author: Martynas Šustavičius
  */
 
-
 #include "PhysicsManager.h"
+#include "BoundingVolume.h"
+
+#ifdef ENABLE_PHYSICS
 #include "Multiplatform/ServiceLocator.h"
 #include "Multiplatform/GraphicsManager.h"
 #include "Utils.h"
@@ -16,7 +18,6 @@
 #include "Vec3.h"
 #include "ScriptManager.h"
 #include "ResourceManager.h"
-#include "Resources/Shader.h"
 #include "Resources/Model.h"
 #include "Resources/TextureRGBA.h"
 #include "Extensions/Vehicle.h"
@@ -28,7 +29,6 @@
 #include "../dependencies/includes/bullet/BulletCollision/Gimpact/btGImpactCollisionAlgorithm.h"
 #include "../dependencies/includes/bullet/BulletCollision/CollisionShapes/btHeightfieldTerrainShape.h"
 
-#ifdef ENABLE_PHYSICS
 DebugDraw::DebugDraw(GraphicsManager* gm) : gm_(gm), debugMode_(0) {}
 
 void DebugDraw::drawLine(
@@ -133,6 +133,7 @@ void PhysicsManager::add(Node* node) {
 		return;
 	}
 	Model* model = static_cast<Model*>(node->getResource());
+	BoundingVolume* bv = model->getData()->getBoundingVolume();
 	string modelType = model->getAttribute(Model::ATTR_TYPE);
 	if (model->getAttribute("physics_object") == "vehicle") {
 		PROFILE("Adding vehicle to physics manager.");
@@ -143,11 +144,11 @@ void PhysicsManager::add(Node* node) {
 		PROFILE("Adding terrain to physics manager.");
 		addTerrain(node);
 	}
-	else if (modelType == Model::VAL_PLANE) {
+	else if (modelType == Model::VAL_PLANE || (bv != nullptr && bv->getType() == BoundingVolume::BOX)) {
 		PROFILE("Adding box to physics manager.");
 		addBox(node);
 	}
-	else if (modelType == Model::VAL_SPHERE) {
+	else if (modelType == Model::VAL_SPHERE || (bv != nullptr && bv->getType() == BoundingVolume::SPHERE)) {
 		PROFILE("Adding sphere to physics manager.");
 		addSphere(node);
 	}

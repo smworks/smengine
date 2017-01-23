@@ -8,6 +8,8 @@
 #ifndef GRAPHICSMANAGER_H_
 #define GRAPHICSMANAGER_H_
 
+#include "Ghost.h"
+
 class ServiceLocator;
 class Shader;
 
@@ -94,7 +96,6 @@ public:
 };
 #else
 
-#include "Ghost.h"
 #include "../Matrix.h"
 #include "../Color.h"
 class GraphicsManager;

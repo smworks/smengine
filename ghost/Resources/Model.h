@@ -41,7 +41,7 @@ public:
 	SIZE getTexture();
 	SIZE getIBO();
 	SIZE getIndexOffset();
-	BoundingVolume* getBV();
+	BoundingVolume* getBV() override;
 	SIZE getCBO();
 	SIZE getIndexCount();
 	SIZE getRenderCount();

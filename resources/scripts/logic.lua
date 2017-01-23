@@ -43,7 +43,7 @@ function start()
 	pun:setShader(Shader.new("default_model"))
 	pun:setString("file", "pun.sm")
 	pun:setType("mesh")
-	pun:setRotZ(90)
+	pun:setRotX(-90)
 
 	print "Loading elf"
 	pun = Model.new("elf")

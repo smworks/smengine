@@ -5,8 +5,8 @@
  *      Author: Martynas Šustavičius
  */
 
-#ifdef ENABLE_SOUND
 #include "WindowsSoundManager.h"
+#ifdef ENABLE_SOUND
 
 WindowsSoundManager::WindowsSoundManager() :
 	soundSystem_(0),

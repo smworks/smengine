@@ -5,9 +5,9 @@
  *      Author: Martynas Šustavičius
  */
 
+#include "GraphicsManager.h"
 #ifdef ENABLE_GRAPHICS
 
-#include "GraphicsManager.h"
 #include "ServiceLocator.h"
 #include "../Multiplatform/Database.h"
 #include "../Camera.h"
