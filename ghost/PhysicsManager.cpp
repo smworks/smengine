@@ -7,6 +7,7 @@
 
 #include "PhysicsManager.h"
 #include "BoundingVolume.h"
+#include "BoundingBox.h"
 
 #ifdef ENABLE_PHYSICS
 #include "Multiplatform/ServiceLocator.h"
@@ -279,10 +280,20 @@ void PhysicsManager::setGraphicsManager(GraphicsManager* gm) {
 
 void PhysicsManager::addBox(Node* node) {
 	Model* model = static_cast<Model*>(node->getResource());
-	btVector3 dimensions = btVector3(
-		toFloat(model->getAttribute(Resource::ATTR_WIDTH).c_str()) * 0.5f * node->getScale().getX(),
-		toFloat(model->getAttribute(Resource::ATTR_HEIGHT).c_str()) * 0.5f * node->getScale().getY(),
-		toFloat(model->getAttribute(Resource::ATTR_DEPTH).c_str()) * 0.5f * node->getScale().getZ());
+	btVector3 dimensions;
+	if (model->getData()->getBoundingVolume() == 0)
+	{
+		dimensions = btVector3(
+			toFloat(model->getAttribute(Resource::ATTR_WIDTH).c_str()) * 0.5f * node->getScale().getX(),
+			toFloat(model->getAttribute(Resource::ATTR_HEIGHT).c_str()) * 0.5f * node->getScale().getY(),
+			toFloat(model->getAttribute(Resource::ATTR_DEPTH).c_str()) * 0.5f * node->getScale().getZ());
+	} else
+	{
+		BoundingBox* bb = static_cast<BoundingBox*>(model->getData()->getBoundingVolume());
+		Vec3 sizes = bb->getSizes(node->getScale());
+		dimensions = btVector3(sizes.getX() * 0.5f, sizes.getY() * 0.5f, sizes.getZ() * 0.5f);
+	}
+	
 	btCollisionShape* shape = 0;
 	if (fabs(dimensions.y()) < GHOST_DELTA &&
 		(fabs(dimensions.x()) > MAX_SIZE || fabs(dimensions.y()) > MAX_SIZE)) {
@@ -307,8 +318,7 @@ void PhysicsManager::addBox(Node* node) {
 	btVector3 localInertia(0.0f, 0.0f, 0.0f);
 	float mass = toFloat(model->getAttribute(Resource::ATTR_MASS).c_str());
 	if (mass > GHOST_DELTA) {
-		shape->calculateLocalInertia(
-			toFloat(model->getAttribute(Resource::ATTR_MASS).c_str()), localInertia);
+		shape->calculateLocalInertia(mass, localInertia);
 	}
 	btDefaultMotionState* myMotionState =
 		new btDefaultMotionState(startTransform);

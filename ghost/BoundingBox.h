@@ -8,7 +8,6 @@
 #ifndef BOUNDINGBOX_H_
 #define BOUNDINGBOX_H_
 
-#include "Multiplatform/Ghost.h"
 #include "BoundingVolume.h"
 
 class BoundingBox : public BoundingVolume {
@@ -47,10 +46,10 @@ public:
 	/**
 	 * @return Vector with box sizes for each axis.
 	 */
-	Vec3& getSizes();
+	Vec3 getSizes(Vec3 scale);
 private:
-	Vec3 sizes_;
-	Vec3 corners_[8];
+	Vec3 sizes;
+	Vec3 corners[8];
 };
 
 #endif /* BOUNDINGSPHERE_H_ */

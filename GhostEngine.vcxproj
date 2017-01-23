@@ -43,7 +43,7 @@
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <LinkIncremental>true</LinkIncremental>
-    <IncludePath>$(SolutionDir)\dependencies\includes\glew;$(SolutionDir)\dependencies\includes\freetype;$(SolutionDir)\dependencies\includes\lua;$(IncludePath)</IncludePath>
+    <IncludePath>$(SolutionDir)\dependencies\includes\freetype;$(SolutionDir)\dependencies\includes\lua;$(IncludePath)</IncludePath>
     <LibraryPath>$(SolutionDir)\dependencies\libs\win32;$(LibraryPath)</LibraryPath>
     <CodeAnalysisRuleSet>MixedRecommendedRules.ruleset</CodeAnalysisRuleSet>
     <OutDir>C:\Cache\Visual Studio\$(Configuration)\</OutDir>
@@ -54,7 +54,7 @@
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <LinkIncremental>false</LinkIncremental>
-    <IncludePath>$(SolutionDir)\dependencies\includes\glew;$(SolutionDir)\dependencies\includes\devil;$(SolutionDir)\dependencies\includes\freetype;$(SolutionDir)\dependencies\includes\lua;$(IncludePath)</IncludePath>
+    <IncludePath>$(SolutionDir)\dependencies\includes\devil;$(SolutionDir)\dependencies\includes\freetype;$(SolutionDir)\dependencies\includes\lua;$(IncludePath)</IncludePath>
     <LibraryPath>$(SolutionDir)\dependencies\libs\win32;$(LibraryPath)</LibraryPath>
     <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
     <OutDir>C:\Cache\Visual Studio\$(Configuration)\</OutDir>

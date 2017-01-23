@@ -291,7 +291,7 @@ void ModelData::serializeToFile(string path)
 		}
 		else if (type == BoundingVolume::BOX)
 		{
-			Vec3 sizes = static_cast<BoundingBox*>(p.bv)->getSizes();
+			Vec3 sizes = static_cast<BoundingBox*>(p.bv)->getSizes(Vec3(1.0));
 			of.write(reinterpret_cast<char*>(&sizes), sizeof(Vec3));
 		}
 	}
@@ -304,7 +304,7 @@ void ModelData::serializeToFile(string path)
 	}
 	else if (type == BoundingVolume::BOX)
 	{
-		Vec3 sizes = static_cast<BoundingBox*>(boundingVolume)->getSizes();
+		Vec3 sizes = static_cast<BoundingBox*>(boundingVolume)->getSizes(Vec3(1.0));
 		of.write(reinterpret_cast<char*>(&sizes), sizeof(Vec3));
 	}
 	of.write("sm", sizeof(char) * 2);
