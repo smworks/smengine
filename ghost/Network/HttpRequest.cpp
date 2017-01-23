@@ -19,8 +19,7 @@ HttpRequest::HttpRequest(string uri, Method method, MimeType mimeType) :
 	if (index != string::npos) {
 		uri = uri.replace(index, http.length(), "");
 	}
-	vector<string> parts;
-	stringSplit(uri, parts, '/');
+	vector<string> parts = stringSplit(uri, '/');
 	if (parts.size() > 0 && uri.find('/') != string::npos) {
 		host_ = parts[0];
 		path_ = uri.substr(uri.find('/'));

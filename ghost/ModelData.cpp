@@ -12,6 +12,23 @@
 #include "Resources/Texture.h"
 #include "Resources/Vertex.h"
 
+ModelData::Material::Material():
+	specIntensity(0.0f),
+	transparency(0.0f),
+	texture(nullptr)
+{
+}
+
+ModelData::Material::Material(string name):
+	specIntensity(0.0f),
+	transparency(0.0f),
+	texture(nullptr)
+{
+	ASSERT(name.size() < sizeof(this->name),
+		"File name %s exceeds %d symbol limit", name.c_str(), sizeof(this->name));
+	strcpy(this->name, name.c_str());
+}
+
 ModelData::ModelData() :
 	vertexStride(0),
 	posOffset(0),
@@ -170,6 +187,11 @@ BoundingVolume* ModelData::getBoundingVolume() const
 	return boundingVolume;
 }
 
+void ModelData::setMaterials(vector<Material> materials)
+{
+	this->materials = materials;
+}
+
 vector<ModelData::Material>& ModelData::getMaterials()
 {
 	return materials;
@@ -237,18 +259,18 @@ void ModelData::serializeToFile(string path)
 	for (auto& m : materials)
 	{
 		of.write(m.name, sizeof(Material::name));
-		of.write(reinterpret_cast<char*>(&m.ambient_), sizeof(Color));
-		of.write(reinterpret_cast<char*>(&m.diffuse_), sizeof(Color));
-		of.write(reinterpret_cast<char*>(&m.specular_), sizeof(Color));
-		of.write(reinterpret_cast<char*>(&m.specIntensity_), sizeof(float));
-		of.write(reinterpret_cast<char*>(&m.transparency_), sizeof(float));
+		of.write(reinterpret_cast<char*>(&m.ambient), sizeof(Color));
+		of.write(reinterpret_cast<char*>(&m.diffuse), sizeof(Color));
+		of.write(reinterpret_cast<char*>(&m.specular), sizeof(Color));
+		of.write(reinterpret_cast<char*>(&m.specIntensity), sizeof(float));
+		of.write(reinterpret_cast<char*>(&m.transparency), sizeof(float));
 
-		SIZE textureNameLength = m.texture_ == 0 ? 0 : m.texture_->getName().size();
+		SIZE textureNameLength = m.texture == 0 ? 0 : m.texture->getName().size();
 		of.write(reinterpret_cast<char*>(&textureNameLength), sizeof(SIZE));
 
 		if (textureNameLength > 0)
 		{
-			string textureName = m.texture_->getName();
+			string textureName = m.texture->getName();
 			of.write(textureName.c_str(), textureNameLength);
 		}
 	}
@@ -339,11 +361,11 @@ void ModelData::deserialize(ServiceLocator* sl, const char* binary)
 	{
 		Material m;
 		memcpy(m.name, binary + offset, sizeof(Material::name));
-		memcpy(&m.ambient_, binary + (offset += sizeof(Material::name)), sizeof(Color));
-		memcpy(&m.diffuse_, binary + (offset += sizeof(Color)), sizeof(Color));
-		memcpy(&m.specular_, binary + (offset += sizeof(Color)), sizeof(Color));
-		memcpy(&m.specIntensity_, binary + (offset += sizeof(Color)), sizeof(float));
-		memcpy(&m.transparency_, binary + (offset += sizeof(float)), sizeof(float));
+		memcpy(&m.ambient, binary + (offset += sizeof(Material::name)), sizeof(Color));
+		memcpy(&m.diffuse, binary + (offset += sizeof(Color)), sizeof(Color));
+		memcpy(&m.specular, binary + (offset += sizeof(Color)), sizeof(Color));
+		memcpy(&m.specIntensity, binary + (offset += sizeof(Color)), sizeof(float));
+		memcpy(&m.transparency, binary + (offset += sizeof(float)), sizeof(float));
 
 		SIZE textureNameLength;
 		memcpy(&textureNameLength, binary + (offset += sizeof(float)), sizeof(SIZE));
@@ -354,7 +376,7 @@ void ModelData::deserialize(ServiceLocator* sl, const char* binary)
 			char* name = NEW char[textureNameLength];
 			memcpy(name, binary + offset, textureNameLength);
 			offset += textureNameLength;
-			m.texture_ = Texture::load(sl, string(name, textureNameLength));
+			m.texture = Texture::load(sl, string(name, textureNameLength));
 			delete[] name;
 		}
 
@@ -417,11 +439,4 @@ void ModelData::deserialize(ServiceLocator* sl, const char* binary)
 	memcpy(sm, binary + offset, sizeof(char) * 2);
 	PROFILE("Deserialization is finished");
 	ASSERT(sm[0] == 's' && sm[1] == 'm', "Unable to verify deserialized model");
-}
-
-void ModelData::Material::setName(string name)
-{
-	ASSERT(name.size() < sizeof(this->name),
-		"File name %s exceeds %d symbol limit", name.c_str(), sizeof(this->name));
-	strcpy(this->name, name.c_str());
 }

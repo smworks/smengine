@@ -2,6 +2,7 @@
 #include "../../../ghost/Multiplatform/Win32/WindowsServiceLocator.h"
 #include "../../../ghost/ResourceManager.h"
 #include "../../../ghost/ThreadManager.h"
+#include "../../../ghost/Multiplatform/FileManager.h"
 
 #include "ObjParser.h"
 #include <iostream>
@@ -39,6 +40,11 @@ int main()
 		ModelData md = ObjParser(sl).parse(file);
 		md.serializeToFile(file + ".sm");
 		cout << "Successfully serialized model" << endl;
+		ModelData md2;
+		char* data;
+		SIZE size;
+		sl->getFileManager()->loadRaw(data, size, (file + ".sm").c_str());
+		md2.deserialize(sl, data);
 	}
 	catch (exception e) {
 		cout << "Exception occured: " << e.what() << endl;

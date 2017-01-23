@@ -3,16 +3,34 @@
 
 #include "../../../ghost/Multiplatform/Ghost.h"
 #include "../../../ghost/Vec3.h"
-#include "ObjProperties.h"
-#include "VertexProperties.h"
-#include "MaterialIndex.h"
 #include "Face.h"
 
 struct VertexProperties;
 
+struct MaterialRange
+{
+	MaterialRange() :
+		materialName(""),
+		faceOffset(0),
+		faceCount(0)
+	{
+	}
+
+	MaterialRange(string materialName, SIZE faceOffset, SIZE faceCount) :
+		materialName(materialName),
+		faceOffset(faceOffset),
+		faceCount(faceCount)
+	{
+	}
+
+	string materialName;
+	SIZE faceOffset;
+	SIZE faceCount;
+};
+
 struct RawObject
 {
-	RawObject(ObjProperties objProperties, VertexProperties vertexProperties);
+	RawObject();
 
 	RawObject(const RawObject& rhs);
 
@@ -20,25 +38,12 @@ struct RawObject
 	vector<Vec3> normals;
 	vector<Vec2> uvCoordinates;
 	vector<Face> faces;
-
-	ObjProperties objProperties;
-	VertexProperties vertexProperties;
-	Vec3 minVertex;
-	Vec3 maxVertex;
-	float radius;
-	vector<MaterialIndex> matIndices;
-	
+	vector<string> materialFiles;
+	vector<MaterialRange> materialRanges;
 };
 
-inline RawObject::RawObject(ObjProperties objProperties, VertexProperties vertexProperties):
-	objProperties(objProperties), vertexProperties(vertexProperties),
-	minVertex(Vec3(FLT_MAX)), maxVertex(Vec3(FLT_MIN)),
-	radius(0.0f)
+inline RawObject::RawObject()
 {
-	positions.reserve(objProperties.positionCount);
-	normals.reserve(objProperties.normalCount);
-	uvCoordinates.reserve(objProperties.uvCount);
-	faces.reserve(objProperties.faceCount);
 }
 
 inline RawObject::RawObject(const RawObject& rhs)
@@ -46,13 +51,9 @@ inline RawObject::RawObject(const RawObject& rhs)
 	this->positions = rhs.positions;
 	this->normals = rhs.normals;
 	this->uvCoordinates = rhs.uvCoordinates;
-	this->objProperties = rhs.objProperties;
-	this->vertexProperties = rhs.vertexProperties;
-	this->minVertex = rhs.minVertex;
-	this->maxVertex = rhs.maxVertex;
-	this->radius = rhs.radius;
-	this->matIndices = rhs.matIndices;
 	this->faces = rhs.faces;
+	this->materialFiles = rhs.materialFiles;
+	this->materialRanges = rhs.materialRanges;
 }
 
 

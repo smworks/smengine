@@ -130,9 +130,16 @@ bool stringContains(const string& str1, const string& str2);
  * Splits specified string by specified delimiter into separate strings.
  * @param str - specified string.
  * @param delimiter - specified delimiter.
- * @param parts - vector that will contain splited string.
+ * @return vector that will contain splited string.
  */
-void stringSplit(const string& str, vector<string>& parts, char delimiter);
+vector<string> stringSplit(const string& str, char delimiter);
+
+/**
+ * Removes leading and trailing empty spaces
+ * @param str - original string
+ * @return trimmed string
+ */
+string trim(string str);
 
 /**
  * Iterates through string searching for "search" string and replacing

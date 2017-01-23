@@ -67,12 +67,12 @@ void GraphicsManager::create() {
 	LOGD("Max viewport dimensions: %ux%upx.", getMax(MAX_VIEWPORT_WIDTH), getMax(MAX_VIEWPORT_HEIGHT));
 	LOGD("NPOT support: %s.", isSupported(SUPPORT_NPOT_TEXTURES)  ? "true" : "false");
 	LOGD("UINT index support: %s.", isSupported(SUPPORT_UINT_INDEX)  ? "true" : "false");
-	// Create plane vertex buffer object with positions that will be used to render all 2D content.
+// Create plane vertex buffer object with positions that will be used to render all 2D content.
 	vector<VertexP>* vbo = static_cast<vector<VertexP>*>(
         Shapes::getShape(Shapes::SHAPE_SCREEN_PLANE, Shapes::VERTEX_POS));
 	setVertexBuffer(planeVBO_, &(*vbo)[0], (UINT32) vbo->size() * sizeof(VertexP));
 	delete vbo;
-	// Create plane vertex buffer object with uv coordinates that will be used to render all 2D content.
+// Create plane vertex buffer object with uv coordinates that will be used to render all 2D content.
 	vector<VertexT>* uvbo = static_cast<vector<VertexT>*>(
         Shapes::getShape(Shapes::SHAPE_SCREEN_PLANE, Shapes::VERTEX_TEX));
 	setVertexBuffer(planeUVBO_, &(*uvbo)[0], (UINT32) uvbo->size() * sizeof(VertexT));
@@ -81,28 +81,28 @@ void GraphicsManager::create() {
 	camera_ = services->getCamera();
 	resourceManager_ = services->getRM();
 	textManager_ = services->getTextManager();
-	#ifdef SMART_DEBUG
+#ifdef SMART_DEBUG
         glClearColor(1.0f, 0.5f, 1.0f, 1.0f);
-        //glClearColor(1.0f, 1.0f, 1.0f, 1.0f);
-	#else
+//glClearColor(1.0f, 1.0f, 1.0f, 1.0f);
+#else
         glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
-	#endif
-	// Disable depth buffer testing by default.
+#endif
+// Disable depth buffer testing by default.
 	glDisable(GL_DEPTH_TEST);
-	// Choose the type of depth testing.
+// Choose the type of depth testing.
 	glDepthFunc(GL_LEQUAL);
 	glDepthMask(GL_TRUE);
-	// Counter-clockwise winding.
+// Counter-clockwise winding.
 	setWindingOrder(Renderable::WINDING_TYPE_CCW);
-	// Enable face culling.
+// Enable face culling.
 	glEnable(GL_CULL_FACE);
-	// Side of faces to remove with culling.
+// Side of faces to remove with culling.
 	glCullFace(GL_BACK);
-	// Use dithering to produce better quality for 565 color buffer.
+// Use dithering to produce better quality for 565 color buffer.
 	glEnable(GL_DITHER);
-	// Specify blending function.
+// Specify blending function.
 	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
-	// Load screen plane.
+// Load screen plane.
 	Model* obj = NEW Model(services);
 	obj->getAttributes().setString(
 		Resource::ATTR_FILE, PLANE);
@@ -110,7 +110,7 @@ void GraphicsManager::create() {
 		Model::ATTR_TYPE, Model::VAL_PLANE);
 	obj->create();
 	screenPlane_ = obj;
-	// Load immediate mode shader.
+// Load immediate mode shader.
 	immediateShader_ = NEW Shader(services);
 	string& immediateShaderName = database_->getString(
 		Database::IMMEDIATE_MODE_SHADER);
@@ -118,7 +118,7 @@ void GraphicsManager::create() {
 		Resource::ATTR_FILE, immediateShaderName);
 	immediateShader_->create();
 	resourceManager_->add(immediateShaderName, immediateShader_);
-	// Load text shader.
+// Load text shader.
 	textShader_ = NEW Shader(services);
 	string& textShaderName = database_->getString(Database::DEFAULT_TEXT_SHADER);
 	textShader_->getAttributes().setString(Resource::ATTR_FILE, textShaderName);
@@ -131,25 +131,25 @@ void GraphicsManager::create() {
 	rp->setFrameScale(1.0f, 1.0f);
 	passes_.push_back(rp);
 
-	//rp = NEW RenderPass(services);
-	//rp->setRenderToScreen(false);
- //   Shader* shader = NEW Shader(services);
- //   shader->getAttributes().setString(Resource::ATTR_FILE, "horizontal_blur");
- //   shader->create();
- //   resourceManager_->add("horizontal_blur", shader);
-	//rp->setFrameScale(1.0f, 1.0f);
-	//rp->setShader(shader);
-	//passes_.push_back(rp);
+//rp = NEW RenderPass(services);
+//rp->setRenderToScreen(false);
+//   Shader* shader = NEW Shader(services);
+//   shader->getAttributes().setString(Resource::ATTR_FILE, "horizontal_blur");
+//   shader->create();
+//   resourceManager_->add("horizontal_blur", shader);
+//rp->setFrameScale(1.0f, 1.0f);
+//rp->setShader(shader);
+//passes_.push_back(rp);
 
-	//rp = NEW RenderPass(services);
-	//rp->setRenderToScreen(true);
-	//shader = NEW Shader(services);
- //   shader->getAttributes().setString(Resource::ATTR_FILE, "vertical_blur");
- //   shader->create();
- //   resourceManager_->add("vertical_blur", shader);
-	//rp->setFrameScale(1.0f, 1.0f);
-	//rp->setShader(shader);
-	//passes_.push_back(rp);
+//rp = NEW RenderPass(services);
+//rp->setRenderToScreen(true);
+//shader = NEW Shader(services);
+//   shader->getAttributes().setString(Resource::ATTR_FILE, "vertical_blur");
+//   shader->create();
+//   resourceManager_->add("vertical_blur", shader);
+//rp->setFrameScale(1.0f, 1.0f);
+//rp->setShader(shader);
+//passes_.push_back(rp);
 	startTime_ = getMicroseconds();
 	CHECK_GL_ERROR("Error initialising graphics manager.");
 }
@@ -220,7 +220,7 @@ void GraphicsManager::resize(UINT32 width, UINT32 height) {
 	if (width == 0 || height == 0) {
 		return;
 	}
-	// Update screen matrix.
+// Update screen matrix.
 	Mat4 pos, rot, posRot, scale, posScale;
 	Matrix::translate(pos,
 		(float) services->getScreenWidth() * 0.5f,
@@ -242,7 +242,7 @@ void GraphicsManager::resize(UINT32 width, UINT32 height) {
 		proj,
 		posScale,
 		screenMatrix_);
-	// Update frame buffers.
+// Update frame buffers.
 	if (frontBuffer_ != 0) {
 		delete frontBuffer_;
 	}
@@ -257,7 +257,7 @@ void GraphicsManager::render() {
 	refreshRenderList();
 	Matrix::multiply(camera_->getProjection3D(), camera_->getMatrix(), viewMatrix_);
 	camera_->extractPlanes(viewMatrix_);
-	// Render passes.
+// Render passes.
 	static vector<RenderPass*>::const_iterator passIt;
 	passIt = passes_.begin();
 	FrameBuffer* a = frontBuffer_;
@@ -272,7 +272,7 @@ void GraphicsManager::render() {
 	    }
 		passIt++;
 	}
-	// Render wireframe.
+// Render wireframe.
 	renderVertices(viewMatrix_);
 }
 
@@ -375,7 +375,7 @@ void GraphicsManager::renderScene(NodeType type) {
 		glDisable(GL_DEPTH_TEST);
 	}
 	if (type == ALL || type == TEXT || type == SPRITE_TEXT) {
-		//glEnable(GL_DEPTH_TEST);
+//glEnable(GL_DEPTH_TEST);
 		glEnable(GL_BLEND);
 		it = guiArray_.begin();
 		while (it != guiArray_.end()) {
@@ -385,7 +385,7 @@ void GraphicsManager::renderScene(NodeType type) {
 			it++;
 		}
 		glDisable(GL_BLEND);
-		//glDisable(GL_DEPTH_TEST);
+//glDisable(GL_DEPTH_TEST);
 	}
 }
 
@@ -449,17 +449,17 @@ void GraphicsManager::prepareShader(Shader* shader, Node* node, Mat4 in) {
 	useProgram(shader->getId());
 	Mat4 mat;
 	prepareMatrix(node, in, mat);
-	// World * View * Projection matrix.
+// World * View * Projection matrix.
 	shader->setMatrix4(Shader::WVP, mat);
-	// World matrix.
+// World matrix.
 	shader->setMatrix4(Shader::W, node->getMatrix());
-	// Normal matrix.
+// Normal matrix.
 	if (shader->hasHandle(Shader::N)) {
 		Mat3 normalMatrix;
 		Matrix::toMat3(node->getMatrix(), normalMatrix);
 		shader->setMatrix3(Shader::N, normalMatrix);
 	}
-	// Light position.
+// Light position.
 	if (lights_.size() > 0 && shader->hasHandle(Shader::LIGHT_POS)) {
         float* lightPos = NEW float[lights_.size() * 3];
 		for (UINT32 i = 0; i < lights_.size(); i++) {
@@ -471,21 +471,21 @@ void GraphicsManager::prepareShader(Shader* shader, Node* node, Mat4 in) {
 		shader->setVector3(Shader::LIGHT_POS, lightPos, static_cast<UINT32>(lights_.size()));
         delete lightPos;
 	}
-	// Light count.
+// Light count.
 	shader->setInt(Shader::LIGHT_COUNT, static_cast<UINT32>(lights_.size()));
-	//shader->setVector3(Shader::LIGHT_POS,
-	//	services->getEnv()->getSunPos()->toArray());
-	// Eye position.
+//shader->setVector3(Shader::LIGHT_POS,
+//	services->getEnv()->getSunPos()->toArray());
+// Eye position.
 	shader->setVector3(Shader::EYE_POS, camera_->getPos().toArray());
-	// Fog color.
-	//if (shader->hasHandle(Shader::FOG_COLOR)) {
-	//	shader->setVector3(Shader::FOG_COLOR,
-	//		services->getEnv()->getFogColor());
-	//}
-	// Fog density.
-	//shader->setFloat(Shader::FOG_DENSITY,
-	//	services->getEnv()->getFogDensity());
-	// Timer.
+// Fog color.
+//if (shader->hasHandle(Shader::FOG_COLOR)) {
+//	shader->setVector3(Shader::FOG_COLOR,
+//		services->getEnv()->getFogColor());
+//}
+// Fog density.
+//shader->setFloat(Shader::FOG_DENSITY,
+//	services->getEnv()->getFogDensity());
+// Timer.
 	shader->setFloat(Shader::TIMER, (getMicroseconds() - startTime_) * 0.000001f);
 }
 
@@ -503,7 +503,7 @@ void GraphicsManager::prepareMatrix(Node* node, Mat4 in, Mat4 out) {
 			camera_->getPos().getY(), camera_->getPos().getZ());
 		Matrix::multiply(matPos, node->getMatrix(), matPosScale);
 		Matrix::multiply(in, matPosScale, out);
-		//Matrix::multiply(matProjPosScale, matPos, res);
+//Matrix::multiply(matProjPosScale, matPos, res);
 	} else {
 		Matrix::multiply(in, node->getMatrix(), out);
 	}
@@ -535,36 +535,36 @@ void GraphicsManager::bindCombinedBufferObject(Renderable* renderable) {
 }
 
 void GraphicsManager::bindCubeMap() {
-	//if (node->hasResource(Resource::CUBE_MAP)
-	//	&& shader->hasHandle(Shader::CUBE_MAP)) {
-	//	CubeMap* t = static_cast<CubeMap*>(
-	//		node->getResource(Resource::CUBE_MAP));
-	//	bindTexture(t->getId(), 0, CUBE_MAP);
-	//	glUniform1i(shader->getHandle(Shader::CUBE_MAP), 0);
-	//}
+//if (node->hasResource(Resource::CUBE_MAP)
+//	&& shader->hasHandle(Shader::CUBE_MAP)) {
+//	CubeMap* t = static_cast<CubeMap*>(
+//		node->getResource(Resource::CUBE_MAP));
+//	bindTexture(t->getId(), 0, CUBE_MAP);
+//	glUniform1i(shader->getHandle(Shader::CUBE_MAP), 0);
+//}
 }
 
 void GraphicsManager::bindTextures(Shader* shader, int textures[]) {
 	textures[0] = glGetUniformLocation(shader->getId(), SHADER_MAIN_TEXTURE);
-	//// Bind the texture.
-	//vector<Resource*> textures = node->getResources(Resource::TEXTURE_2D);
-	//UINT32 size = textures.size() < 8 ? textures.size() : 7;
-	//UINT32 texture = 0;
-	//for (UINT32 i = 0; i < size; i++) {
-	//	texture = i + 1;
-	//	const string& name = textures[i]->getName();
-	//	TextureRGBA* tex = static_cast<TextureRGBA*>(textures[i]);
-	//	SIZE offset = node->getName().length() + 1;
-	//	string textName = name.substr(offset, name.length() - 4 - offset);
-	//	hTextures[texture] = glGetUniformLocation(shader->getId(), textName.c_str());
-	//	if (hTextures[texture] == -1) {
-	//		LOGW("Handle to texture \"%s\" not found in \"%s\" shader.",
-	//			textName.c_str(), shader->getName().c_str());
-	//		continue;
-	//	}
-	//	bindTexture(tex->getId(), i + 1);
-	//	glUniform1i(hTextures[texture], texture);
-	//}
+//// Bind the texture.
+//vector<Resource*> textures = node->getResources(Resource::TEXTURE_2D);
+//UINT32 size = textures.size() < 8 ? textures.size() : 7;
+//UINT32 texture = 0;
+//for (UINT32 i = 0; i < size; i++) {
+//	texture = i + 1;
+//	const string& name = textures[i]->getName();
+//	TextureRGBA* tex = static_cast<TextureRGBA*>(textures[i]);
+//	SIZE offset = node->getName().length() + 1;
+//	string textName = name.substr(offset, name.length() - 4 - offset);
+//	hTextures[texture] = glGetUniformLocation(shader->getId(), textName.c_str());
+//	if (hTextures[texture] == -1) {
+//		LOGW("Handle to texture \"%s\" not found in \"%s\" shader.",
+//			textName.c_str(), shader->getName().c_str());
+//		continue;
+//	}
+//	bindTexture(tex->getId(), i + 1);
+//	glUniform1i(hTextures[texture], texture);
+//}
 }
 
 void GraphicsManager::renderParts(Renderable* renderable, int textures[]) {
@@ -573,16 +573,16 @@ void GraphicsManager::renderParts(Renderable* renderable, int textures[]) {
 	SIZE lastTexture = 0;
 	for (SIZE i = 0; i < renderCount; i++) {
 		renderable->setRenderable(i);
-		// Check if this part contains bounding volume.
-		//if (renderable->getBV() != 0) {
-		//	// Check for frustum culling.
-		//	if (renderable->getBV()->isInFrustum(
-		//		camera_, renderable->getBV()->getPos(), node->getScale())
-		//		== BoundingVolume::OUTSIDE)
-		//	{
-		//		continue;
-		//	}
-		//}
+// Check if this part contains bounding volume.
+//if (renderable->getBV() != 0) {
+//	// Check for frustum culling.
+//	if (renderable->getBV()->isInFrustum(
+//		camera_, renderable->getBV()->getPos(), node->getScale())
+//		== BoundingVolume::OUTSIDE)
+//	{
+//		continue;
+//	}
+//}
 		shader->setFloat(Shader::SCREEN_WIDTH, (float) services->getScreenWidth());
 		shader->setFloat(Shader::SCREEN_HEIGHT, (float) services->getScreenHeight());
 		shader->setVector3(Shader::AMBIENT, renderable->getAmbient().toArray());
@@ -590,7 +590,7 @@ void GraphicsManager::renderParts(Renderable* renderable, int textures[]) {
 		shader->setVector3(Shader::SPECULAR, renderable->getSpecular().toArray());
 		shader->setFloat(Shader::SPECULARITY, renderable->getSpecularity());
 		shader->setFloat(Shader::TRANSPARENCY, renderable->getTransparency());
-		// Bind main texture.
+// Bind main texture.
 		if (renderable->getTexture() != lastTexture && textures[0] != -1) {
 			lastTexture = renderable->getTexture();
 			if (shader->hasHandle(Shader::MAIN_TEXTURE)) {
@@ -610,7 +610,14 @@ void GraphicsManager::renderParts(Renderable* renderable, int textures[]) {
 }
 
 void GraphicsManager::drawViaVertices(Renderable* renderable) {
-	glDrawArrays(getRenderType(renderable), 0, (GLint) renderable->getVertexCount());
+	if (renderable->getRenderCount() == 1)
+	{
+		glDrawArrays(getRenderType(renderable), 0, renderable->getVertexCount());
+	}
+	else
+	{
+		glDrawArrays(getRenderType(renderable), renderable->getIndexOffset(), renderable->getIndexCount());
+	}
 	CHECK_GL_ERROR("glDrawArrays in renderNode()");
 }
 
@@ -658,7 +665,6 @@ int GraphicsManager::getRenderType(Renderable* renderable) {
 			return GL_TRIANGLE_STRIP;
 		case Renderable::RENDER_TYPE_QUADS:
 			return GL_TRIANGLES;
-			// TODO: renderType = GL_QUADS;
 		default:
 			THROWEX("Unknown render type: %d.", renderable->getRenderType());
 	}
@@ -680,7 +686,7 @@ void GraphicsManager::renderQuad(
 			"contain required variables.");
 		return;
 	}
-	// World * View * Projection matrix.
+// World * View * Projection matrix.
 	Mat4 res, pos, rot, posRot, scale, posScale;
 	Matrix::translate(pos,
 		(float) services->getScreenWidth() * 0.5f / widthScale,
@@ -703,12 +709,12 @@ void GraphicsManager::renderQuad(
 		posScale,
 		res);
 	shader->setMatrix4(Shader::WVP, res);
-	// Timer.
+// Timer.
 	shader->setFloat(Shader::TIMER, getMicroseconds() / 1000000.0f);
-	// Screen width.
+// Screen width.
 	shader->setFloat(Shader::SCREEN_WIDTH,
 		(float) services->getScreenWidth());
-	// Screen height.
+// Screen height.
 	shader->setFloat(Shader::SCREEN_HEIGHT,
 		(float) services->getScreenHeight());
 	bindTexture(colorBuffer);
@@ -730,11 +736,11 @@ void GraphicsManager::renderQuad(
 	glDrawArrays(GL_TRIANGLES, 0, (GLint) screenPlane_->getVertexCount());
 	glDisableVertexAttribArray(shader->getHandle(Shader::UV));
 	glDisableVertexAttribArray(shader->getHandle(Shader::POS));
-	// Unbind the textures.
+// Unbind the textures.
 	for (UINT32 i = 0; i < 2; i++) {
 		bindTexture(0, i);
 	}
-	// Disable vertex arrays.
+// Disable vertex arrays.
 	glDisableVertexAttribArray(shader->getHandle(Shader::UV));
 	glDisableVertexAttribArray(shader->getHandle(Shader::POS));
 	CHECK_GL_ERROR("Error rendering post processing.");

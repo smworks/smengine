@@ -20,19 +20,17 @@ class ModelData {
 public:
 	enum VertexType {PNT, PN, PT, P, VERTEX_TYPE_COUNT};
 	struct Material {
-		Material() :
-			specIntensity_(0.0f),
-			transparency_(0.0f),
-			texture_(nullptr)
-		{}
-		char name[256];
-		Color ambient_;
-		Color diffuse_;
-		Color specular_;
-		float specIntensity_;
-		float transparency_;
-		Texture* texture_;
-		void setName(string name);
+		Material();
+
+		Material(string name);
+
+		char name[255];
+		Color ambient;
+		Color diffuse;
+		Color specular;
+		float specIntensity;
+		float transparency;
+		Texture* texture;
 	};
 
 	struct Part {
@@ -63,6 +61,7 @@ public:
 	UINT8* getIndices() const;
 	void setBoundingVolume(BoundingVolume* bv);
 	BoundingVolume* getBoundingVolume() const;
+	void setMaterials(vector<Material> materials);
 	vector<Material>& getMaterials();
 	void setParts(vector<Part> parts);
 	vector<Part>& getParts();

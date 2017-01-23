@@ -22,17 +22,45 @@ function start()
     plane:setShader(Shader.new("temp_model"))
     plane:setTexture(Texture.new("lab_floor.png"))
     plane:setPosY(0.0)
-    plane:setScaleXYZ(10.0, 1.0, 10.0)
+    plane:setScaleXYZ(20.0, 1.0, 20.0)
     plane:enablePhysics()
 
-
-	pun = Model.new("car")
+	print "Loading cube"
+	pun = Model.new("colored_cube")
 	pun:setPosY(1.0)
+	pun:setPosZ(-7.0)
 	pun:setShader(Shader.new("default_model"))
-	pun:setString("file", "car_body.obj.sm")
+	pun:setString("file", "cube.sm")
 	pun:setType("mesh")
+	pun:setRotZ(90)
 	--pun:setScaleXYZ(3, 3, 3)
 	pun:enablePhysics()
+
+	print "Loading pun"
+	pun = Model.new("pun")
+	pun:setPosY(1.0)
+	pun:setPosX(7.0)
+	pun:setShader(Shader.new("default_model"))
+	pun:setString("file", "pun.sm")
+	pun:setType("mesh")
+	pun:setRotZ(90)
+
+	print "Loading elf"
+	pun = Model.new("elf")
+	pun:setPosY(1.0)
+	pun:setPosX(-7.0)
+	pun:setShader(Shader.new("default_model"))
+	pun:setString("file", "elf.sm")
+	pun:setString("cull_face", "false");
+	pun:setType("mesh")
+
+	print "Loading car_body"
+	pun = Model.new("car_body")
+	pun:setPosY(1.0)
+	pun:setPosZ(-1.0)
+	pun:setShader(Shader.new("default_model"))
+	pun:setString("file", "car_body.sm")
+	pun:setType("mesh")
 
 	camera:setPosZ(5)
 	camera:setPosY(1)

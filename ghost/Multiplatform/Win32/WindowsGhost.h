@@ -144,20 +144,16 @@ void logToFile(char* msg);
 		OUTPUT(buffLine); }
 #else
     #define LOGD(...)
+	#define LOGDEXT(...)
 #endif
 
 // PROFILER
-#ifdef SMART_DEBUG
-    void profile(string& msg);
-    #define PROFILE(...) {\
-        char message[1024];\
-        sprintf(message, __VA_ARGS__);\
-        string msg = message;\
-        profile(msg);\
-    }
-#else
-    #define PROFILE(msg)
-#endif
+void profile(string msg);
+#define PROFILE(...) {\
+    char message[1024];\
+    sprintf(message, __VA_ARGS__);\
+    profile(message);\
+}
 
 #define RETURN(val, cond, ...) \
 	if (cond) { \

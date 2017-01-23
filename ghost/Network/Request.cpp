@@ -6,8 +6,7 @@ Request::Request(string url) :
 	port(0),
 	id(0)
 {
-	vector<string> parts;
-	stringSplit(url, parts, ':');
+	vector<string> parts = stringSplit(url, ':');
 	if (parts.size() == 2) {
 		ip = parts[0];
 		port = toInt(parts[1].c_str());

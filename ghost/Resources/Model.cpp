@@ -51,7 +51,7 @@ bool Model::create() {
 		setAmbient(Color(getAttribute(ATTR_AMBIENT)));
 		if (modelData->getMaterials().size() > 0) {
 			for (UINT32 i = 0; i < modelData->getMaterials().size(); i++) {
-				modelData->getMaterials()[i].ambient_ = getAmbient();
+				modelData->getMaterials()[i].ambient = getAmbient();
 			}
 		}
 	}
@@ -59,7 +59,7 @@ bool Model::create() {
 		setDiffuse(Color(getAttribute(ATTR_DIFFUSE)));
 		if (modelData->getMaterials().size() > 0) {
 			for (UINT32 i = 0; i < modelData->getMaterials().size(); i++) {
-				modelData->getMaterials()[i].diffuse_ = getDiffuse();
+				modelData->getMaterials()[i].diffuse = getDiffuse();
 			}
 		}
 	}
@@ -67,13 +67,14 @@ bool Model::create() {
 		setSpecular(Color(getAttribute(ATTR_SPECULAR)));
 		if (modelData->getMaterials().size() > 0) {
 			for (UINT32 i = 0; i < modelData->getMaterials().size(); i++) {
-				modelData->getMaterials()[i].specular_ = getSpecular();
+				modelData->getMaterials()[i].specular = getSpecular();
 			}
 		}
 	}
 	if (getAttribute(ATTR_CULL_FACE).length() > 0) {
 		setCullFace(toBool(getAttribute(ATTR_CULL_FACE)));
 	}
+	
 	if (getAttribute(ATTR_BLENDING).length() > 0) {
 		setBlending(toBool(getAttribute(ATTR_BLENDING)));
 	}
@@ -124,7 +125,7 @@ SIZE Model::getTexture() {
 	if (modelData->getMaterials().size() <= modelData->getParts()[currentPart].material_) {
 		return 0;
 	}
-	Texture* tex = modelData->getMaterials()[modelData->getParts()[currentPart].material_].texture_;
+	Texture* tex = modelData->getMaterials()[modelData->getParts()[currentPart].material_].texture;
 	return tex != 0 ? tex->getId() : 0;
 }
 
@@ -163,11 +164,11 @@ void Model::setRenderable(SIZE i) {
 		return;
 	}
 	ModelData::Material& mat = modelData->getMaterials()[modelData->getParts()[currentPart].material_];
-	getAmbient().setRGBA(mat.ambient_);
-	getDiffuse().setRGBA(mat.diffuse_);
-	getSpecular().setRGBA(mat.specular_);
-	setSpecularity(mat.specIntensity_);
-	setTransparency(mat.transparency_);
+	getAmbient().setRGBA(mat.ambient);
+	getDiffuse().setRGBA(mat.diffuse);
+	getSpecular().setRGBA(mat.specular);
+	setSpecularity(mat.specIntensity);
+	setTransparency(mat.transparency);
 }
 
 SIZE Model::getVertexStride() {
@@ -198,8 +199,8 @@ void Model::setTexture(Texture* texture, UINT32 index) {
 	vector<ModelData::Part>& parts = modelData->getParts();
 	if (parts.size() > index) {
 		ModelData::Material m;
-		m.ambient_ = getAmbient();
-		m.texture_ = texture;
+		m.ambient = getAmbient();
+		m.texture = texture;
 		modelData->getMaterials().push_back(m);
 		parts[index].material_ = modelData->getMaterials().size() - 1;
 	}

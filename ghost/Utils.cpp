@@ -120,8 +120,8 @@ bool stringContains(const string& str1, const string& str2) {
     return false;
 }
 
-void stringSplit(const string& str, vector<string>& parts, char delimiter) {
-	parts.clear();
+vector<string> stringSplit(const string& str, char delimiter) {
+	vector<string> parts;
 	size_t lastPos = 0, pos = 0, size = str.size();
 	while (lastPos < size) {
 		pos = str.find(delimiter, lastPos);
@@ -133,6 +133,13 @@ void stringSplit(const string& str, vector<string>& parts, char delimiter) {
 		}
 		lastPos = pos + 1;
 	}
+	return parts;
+}
+
+string trim(string str)
+{
+	str.erase(str.begin(), find_if(str.begin(), str.end(), not1(ptr_fun<int, int>(isspace))));
+	return str;
 }
 
 void stringReplace(string& src, string search, string replace) {

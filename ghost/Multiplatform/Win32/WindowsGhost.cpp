@@ -12,14 +12,12 @@ void logToFile(char* msg) {
 	ofs << msg;
 }
 
-#ifdef SMART_DEBUG
-    void profile(string& msg) {
-        static UINT64 lastCheck = getMicroseconds();
-        UINT64 now = getMicroseconds();
-        LOGD("%s Time: %llu (ms).", msg.c_str(), (now - lastCheck) / 1000);
-        lastCheck = now;
-    }
-#endif
+void profile(string msg) {
+    static UINT64 lastCheck = getMicroseconds();
+    UINT64 now = getMicroseconds();
+    LOGI("%s Time: %llu (ms).", msg.c_str(), (now - lastCheck) / 1000);
+    lastCheck = now;
+}
 
 INT64 getMicroseconds() {
 	auto time = chrono::system_clock::now();

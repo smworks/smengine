@@ -364,7 +364,12 @@ void createWindow(HINSTANCE hInstance) {
 	w.style = CS_HREDRAW | CS_VREDRAW;
 	w.lpfnWndProc = (WNDPROC) MainWndProc;
 	w.hInstance = hInstance;
-	w.hIcon = NULL;
+	w.hIcon = static_cast<HICON>(LoadImage(NULL,
+		MAKEINTRESOURCE(IDI_APPLICATION),
+		IMAGE_ICON,
+		0, 0,
+		LR_DEFAULTCOLOR | LR_SHARED | LR_DEFAULTSIZE));
+
 	w.hCursor = LoadCursor(NULL, IDC_ARROW);
 	w.hbrBackground = NULL;
 	w.lpszMenuName = appname;

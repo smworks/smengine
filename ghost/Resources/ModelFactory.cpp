@@ -53,7 +53,10 @@ void ModelFactory::createModel(ModelData* md, Attributes& attr, ServiceLocator* 
 	char* bytes;
 	SIZE size;
 	sl->getFileManager()->loadRaw(bytes, size, (GHOST_MODELS + file).c_str());
-	md->deserialize(sl, bytes);
+	if (size > 0)
+	{
+		md->deserialize(sl, bytes);
+	}
 	delete[] bytes;
 }
 
@@ -69,12 +72,12 @@ void ModelFactory::createTerrain(ModelData* md, Attributes& attr, ServiceLocator
 	BoundingVolume* bv = 0;
 	parser.load(tg, bv);
 	ModelData::Material mat;
-	mat.texture_ = 0;
-	mat.ambient_ = Color(0.2f, 0.2f, 0.2f);
-	mat.diffuse_ = Color(0.8f, 0.8f, 0.8f);
-	mat.specular_ = Color(0.0f, 0.0f, 0.0f);
-	mat.specIntensity_ = 0.0f;
-	mat.transparency_ = 1.0f;
+	mat.texture = 0;
+	mat.ambient = Color(0.2f, 0.2f, 0.2f);
+	mat.diffuse = Color(0.8f, 0.8f, 0.8f);
+	mat.specular = Color(0.0f, 0.0f, 0.0f);
+	mat.specIntensity = 0.0f;
+	mat.transparency = 1.0f;
 	md->getMaterials().push_back(mat);
 	SIZE vertexCount = tg.vertices_->size() / 3;
 	VertexPNT* vertices = NEW VertexPNT[vertexCount];

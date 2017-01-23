@@ -456,23 +456,8 @@
     <ClCompile Include="src\ObjParser.cpp">
       <Filter>Source Files\src</Filter>
     </ClCompile>
-    <ClCompile Include="src\NormalParserTask.cpp">
-      <Filter>Source Files\src</Filter>
-    </ClCompile>
-    <ClCompile Include="src\PositionParserTask.cpp">
-      <Filter>Source Files\src</Filter>
-    </ClCompile>
-    <ClCompile Include="src\UVParserTask.cpp">
-      <Filter>Source Files\src</Filter>
-    </ClCompile>
-    <ClCompile Include="src\FaceParserTask.cpp">
-      <Filter>Source Files\src</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\ghost\ServiceProvider.cpp">
       <Filter>Source Files\ghost</Filter>
-    </ClCompile>
-    <ClCompile Include="src\MaterialParserTask.cpp">
-      <Filter>Source Files\src</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -857,35 +842,11 @@
     <ClInclude Include="src\UniqueKey.h">
       <Filter>Source Files\src</Filter>
     </ClInclude>
-    <ClInclude Include="src\MaterialIndex.h">
-      <Filter>Source Files\src</Filter>
-    </ClInclude>
     <ClInclude Include="src\Face.h">
-      <Filter>Source Files\src</Filter>
-    </ClInclude>
-    <ClInclude Include="src\FaceParserTask.h">
-      <Filter>Source Files\src</Filter>
-    </ClInclude>
-    <ClInclude Include="src\NormalParserTask.h">
-      <Filter>Source Files\src</Filter>
-    </ClInclude>
-    <ClInclude Include="src\PositionParserTask.h">
-      <Filter>Source Files\src</Filter>
-    </ClInclude>
-    <ClInclude Include="src\UVParserTask.h">
       <Filter>Source Files\src</Filter>
     </ClInclude>
     <ClInclude Include="..\..\ghost\ServiceProvider.h">
       <Filter>Source Files\ghost</Filter>
-    </ClInclude>
-    <ClInclude Include="src\ObjProperties.h">
-      <Filter>Source Files\src</Filter>
-    </ClInclude>
-    <ClInclude Include="src\VertexProperties.h">
-      <Filter>Source Files\src</Filter>
-    </ClInclude>
-    <ClInclude Include="src\MaterialParserTask.h">
-      <Filter>Source Files\src</Filter>
     </ClInclude>
     <ClInclude Include="src\RawObject.h">
       <Filter>Source Files\src</Filter>
