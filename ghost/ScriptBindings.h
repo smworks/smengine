@@ -1,18 +1,11 @@
-﻿/*
- * ScriptBingings.h
- *
- *  Created on: 2013.11.03
- *      Author: Martynas Šustavičius
- */
-
-#ifndef SCRIPTBINDINGS_H_
+﻿#ifndef SCRIPTBINDINGS_H_
 #define SCRIPTBINDINGS_H_
+#include "ServiceProvider.h"
 
-#include "Multiplatform/Ghost.h"
-class ServiceLocator;
-class Node;
-class Script;
-struct lua_State;
+class ScriptBindings : public ServiceProvider
+{
+	
+};
 
 /**
  * Registers all function bindings.

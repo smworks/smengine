@@ -16,6 +16,7 @@ android/*
 !main_windows.cpp
 !.gitattributes
 !.gitignore
+!fmodex.dll
 # Code Blocks user files.
 !GameEngine.cbp
 !GameEngine.depend

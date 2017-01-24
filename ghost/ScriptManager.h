@@ -15,18 +15,19 @@ class Script;
 class HttpResponse;
 #include "../dependencies/includes/lua/lua.hpp"
 
-class ScriptManager {
+class ScriptManager
+{
 public:
-	static const string FUNCTION_EVENT_RESPONSE;
-	static const string FUNCTION_EVENT_GUI;
-	static const string FUNCTION_START;
-	static const string FUNCTION_RESIZE;
-	static const string FUNCTION_UPDATE;
-	static const string FUNCTION_PAUSE;
-	static const string FUNCTION_RESUME;
-	static const string FUNCTION_QUIT;
-	static const string CONSTANTS;
-public:
+	const string FUNCTION_EVENT_RESPONSE = "eventResponse";
+	const string FUNCTION_EVENT_GUI = "eventGUI";
+	const string FUNCTION_START = "start";
+	const string FUNCTION_RESIZE = "resize";
+	const string FUNCTION_UPDATE = "update";
+	const string FUNCTION_PAUSE = "pause";
+	const string FUNCTION_RESUME = "resume";
+	const string FUNCTION_QUIT = "quit";
+	const string CONSTANTS = "constants";
+
 	ScriptManager();
 	~ScriptManager();
 
@@ -34,7 +35,7 @@ public:
 	 * @return True if Script manager is initialized
 	 * and has a valid script.
 	 */
-	bool isReady();
+	bool isReady() const;
 
 	/**
 	 * Must be called after all of the other object that
@@ -43,23 +44,25 @@ public:
 	 * Lua runtime.
 	 * @param locator - pointer to class that has access to all engine services.
 	 */
-	void initialize(ServiceLocator* locator);
+	void initialize(ServiceLocator* locator) const;
+
+	static void addKeyMapping(lua_State * state, string luaKey, int key);
 
 	/**
 	 * Checks if function is defined in script file.
 	 * @param functionName - name of the function.
 	 * @return True if function is defined.
 	 */
-	bool isFunctionAvailable(const string& functionName);
+	static bool isFunctionAvailable(const string& functionName);
 
 	/**
 	 * Calls function with specified name and.
 	 * No parameters or return values are used.
 	 * @param functionName - name of the function.
 	 */
-	inline void invokeFunction(const string& functionName);
+	inline void invokeFunction(const string& functionName) const;
 
-	string executeCode(string code);
+	static string executeCode(string code);
 
 	/**
 	 * @param node - node that contains script resource.
@@ -71,44 +74,44 @@ public:
 	 * on lua side.
 	 * @param response - pointer to network response.
 	 */
-	void provideResponse(HttpResponse* response);
+	void provideResponse(HttpResponse* response) const;
 
 	/**
 	 * Sends event notification to script side.
 	 * @param node - pointer to node, that received event.
 	 * @param type - type of the event.
 	 */
-	void provideEventGUI(Node* node, int type);
+	void provideEventGUI(Node* node, int type) const;
 
 	/**
 	 * Executes start method in script side.
 	 */
-	void start();
+	void start() const;
 
 	/**
 	 * Executes resize methdod in script side.
 	 */
-	void resize();
+	void resize() const;
 
 	/**
 	 * Executes update methdod in script side.
 	 */
-	void update();
+	void update() const;
 
 	/**
 	 * Executes pause method in script side.
 	 */
-	void pause();
+	void pause() const;
 
 	/**
 	 * Executes resume method in script side.
 	 */
-	void resume();
+	void resume() const;
 
 	/**
 	 * Executes quit method in script side.
 	 */
-	void quit();
+	void quit() const;
 
 	static void dumpStack(lua_State* state);
 
@@ -139,15 +142,12 @@ public:
 	 * @return Pointer to lua state.
 	 */
 	static lua_State* getLuaState();
+
+	static lua_State* state;
+	static unordered_map<string, int(*)(lua_State*)> functions;
+	static ServiceLocator* serviceLocator;
 private:
-	/** Pointer to lua runtime. */
-	static lua_State* state_;
-	/** Map containing all extended Lua functionality. */
-	static unordered_map<string, int (*)(lua_State*)> functions_;
-	/** Pointer to service locator. */
-	static ServiceLocator* serviceLocator_;
-	/** Script resource. */
-	static Script* script_;
+	Script* script;
 };
 
 #endif
