@@ -122,15 +122,15 @@ void onInput(LPARAM lParam) {
 	}
 	UINT iBufferSize;
 	GetRawInputData(
-		(HRAWINPUT)lParam,
+		reinterpret_cast<HRAWINPUT>(lParam),
 		RID_INPUT,
-		NULL,
+		nullptr,
 		&iBufferSize,
 		sizeof(RAWINPUTHEADER));
 	BYTE* byBuffer = new BYTE[iBufferSize];
 	GetRawInputData(
-		(HRAWINPUT)lParam, RID_INPUT,
-		(LPVOID)byBuffer,
+		reinterpret_cast<HRAWINPUT>(lParam), RID_INPUT,
+		static_cast<LPVOID>(byBuffer),
 		&iBufferSize,
 		sizeof(RAWINPUTHEADER));
 	RAWINPUT* input = (RAWINPUT*) byBuffer;
@@ -185,7 +185,7 @@ void onInput(LPARAM lParam) {
 
 		default:
 			//LOGI("KEY: %d", key);
-			TCHAR ch = (TCHAR) key;
+			TCHAR ch = static_cast<TCHAR>(key);
 			key = ch - 54;
 		}
 		GHOST->getServiceLocator()->getInput()->provideButton(
@@ -304,7 +304,7 @@ LONG WINAPI MainWndProc(HWND g_hwnd, UINT uMsg, WPARAM  wParam, LPARAM  lParam) 
 	case WM_QUIT:
 		break;
     case WM_CLOSE:
-		if (*GHOST) GHOST->getServiceLocator()->exit();
+		if (GHOST != nullptr) GHOST->getServiceLocator()->exit();
         //DestroyWindow(g_hwnd);
         break;
 	case WM_PAINT:
@@ -320,13 +320,12 @@ LONG WINAPI MainWndProc(HWND g_hwnd, UINT uMsg, WPARAM  wParam, LPARAM  lParam) 
 		}
 		break;
     case WM_DESTROY:
-		if (*GHOST) GHOST->getServiceLocator()->exit();
+		if (GHOST != nullptr) GHOST->getServiceLocator()->exit();
         //PostQuitMessage(0);
         break;
     // Default event handler
     default: 
         return DefWindowProc (g_hwnd, uMsg, wParam, lParam); 
-        break; 
     } 
  
     return 0; 
@@ -343,7 +342,7 @@ bool initializeRawInput(HWND& g_hwnd) {
 
 	// Keyboard.
 	dev[1].dwFlags = RIDEV_NOLEGACY;
-	dev[1].hwndTarget = NULL;
+	dev[1].hwndTarget = nullptr;
 	dev[1].usUsage = 6;
 	dev[1].usUsagePage = 1;
 
@@ -362,19 +361,15 @@ void createWindow(HINSTANCE hInstance) {
 	ZeroMemory(&w, sizeof(WNDCLASSEX));
 	w.cbSize = sizeof(WNDCLASSEX);
 	w.style = CS_HREDRAW | CS_VREDRAW;
-	w.lpfnWndProc = (WNDPROC) MainWndProc;
+	w.lpfnWndProc = static_cast<WNDPROC>(MainWndProc);
 	w.hInstance = hInstance;
-	w.hIcon = static_cast<HICON>(LoadImage(NULL,
-		MAKEINTRESOURCE(IDI_APPLICATION),
-		IMAGE_ICON,
-		0, 0,
-		LR_DEFAULTCOLOR | LR_SHARED | LR_DEFAULTSIZE));
+	w.hIcon = LoadIcon(nullptr, IDI_APPLICATION);
 
-	w.hCursor = LoadCursor(NULL, IDC_ARROW);
-	w.hbrBackground = NULL;
+	w.hCursor = LoadCursor(nullptr, IDC_ARROW);
+	w.hbrBackground = nullptr;
 	w.lpszMenuName = appname;
 	w.lpszClassName = appname;
-	w.hIconSm = NULL;
+	w.hIconSm = nullptr;
     // Register the window class.
     if (!RegisterClassEx(&w)) {
 		THROWEX("Failed to register window struct");
@@ -393,13 +388,11 @@ void createWindow(HINSTANCE hInstance) {
 }
 
 void createEngineInstance() {
-	WindowsServiceLocator* wsl = new WindowsServiceLocator();
+	auto* wsl = new WindowsServiceLocator();
 	wsl->setScreenWidth(WIDTH);
 	wsl->setScreenHeight(HEIGHT);
 	GHOST = new Engine(wsl);
-	if (!*GHOST) {
-		THROWEX("Engine instance not created");
-	}
+	ASSERT(GHOST != nullptr, "Engine instance not created");
 	GHOST->resume();
 }
 
@@ -417,7 +410,7 @@ void setupMouse() {
 void runMainLoop() {
 	MSG msg;
     while (GHOST && !GHOST->getServiceLocator()->isFinished())  {
-        while (PeekMessage(&msg, NULL, 0, 0, PM_REMOVE)) {
+        while (PeekMessage(&msg, nullptr, 0, 0, PM_REMOVE)) {
             TranslateMessage(&msg);
             DispatchMessage(&msg);
 			if (msg.message == WM_QUIT) {
@@ -437,7 +430,7 @@ void releaseResources() {
 	glFinish();
 	glFlush();
 	// Release contexts and handles.
-	if (!wglMakeCurrent(NULL, NULL)) {
+	if (!wglMakeCurrent(nullptr, nullptr)) {
 		LOGE("Unable to release DC and RC.");
 	}
     if (!wglDeleteContext(hRC)) {

@@ -1,33 +1,22 @@
-/*
- * Engine.h
- *
- *  Created on: 2012.06.19
- *      Author: MS
- */
-
 #ifndef ENGINE_H_
 #define ENGINE_H_
 
 #include "Multiplatform/Ghost.h"
+#include "ServiceProvider.h"
 class Node;
 class ServiceLocator;
 class GUIText;
 class Console;
 class Task;
 
-#ifdef SMART_DEBUG
-	#define SMART_DEBUG_TEXT
-#endif
-
-class Engine {
+class Engine : public ServiceProvider {
 public:
-	operator void*();
-
-	Engine(ServiceLocator* services);
+	explicit Engine(ServiceLocator* services);
 	~Engine();
 
-	void loadScene();
+	void loadScene(string script) const;
 	void computeFrame();
+	void updateFPS();
 	void resume();
 	void pause();
 
@@ -36,32 +25,26 @@ public:
 	 * recalculate all node matrices that belong to this node.
 	 * @param node - node that will be updated.
 	 */
-	void updateNodes(Node* node, bool force = false);
+	void updateNodes(Node* node, bool force = false) const;
 	void resizeScreen(UINT32 width, UINT32 height);
 
 	/**
 	 * Informs all resources that screen size has changed.
 	 * @param node - pointer to parent scene node.
 	 */
-	void resizeResources(Node* node);
-	ServiceLocator* getServiceLocator();
+	static void resizeResources(Node* node);
 
 	static mutex& getMutex();
 	static void executeOnMainThread(Task* task);
 private:
-	void executeTasks();
+	static void executeTasks();
 
-	ServiceLocator* services_;
-	bool error_;
-	double time_;
-	bool running_;
-
-#ifdef SMART_DEBUG
-	GUIText* debugText_;
-	Node* debugNode_;
-	UINT32 debugFpsCount_;
-	double debugTime_;
-#endif
+	double time;
+	bool running;
+	GUIText* fpsText;
+	Node* fpsNode;
+	UINT32 fpsCount;
+	double fpsTime;
 	Console* console;
 	static queue<Task*>* tasks;
 	static mutex* mut;

@@ -64,8 +64,8 @@ protected:
 	/**
 	 * @see Resource
 	 */
-	bool create();
-protected:
+	bool create() override;
+	
 	int id_;
 	string script_;
 };

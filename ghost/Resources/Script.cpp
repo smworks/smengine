@@ -28,7 +28,7 @@ SIZE Script::getSize() {
 }
 
 Resource::Type Script::getType() {
-	return Resource::SCRIPT;
+	return SCRIPT;
 }
 
 bool Script::isValid() {

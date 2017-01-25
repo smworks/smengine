@@ -298,7 +298,7 @@ int getTexture(lua_State* L) {
 
 int loadScene(lua_State* L) {
 	string val = SM_GET_STRING(L, 0);
-	SM_GET_SL()->getDB()->setScene(val);
+	//SM_GET_SL()->getDB()->setScene(val);
 	return 0;
 }
 

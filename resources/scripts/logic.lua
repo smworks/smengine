@@ -108,6 +108,7 @@ function update()
 	local offset = 0.1
 	if input:keyPressed(constants["W"]) then
 		camera:moveZ(-offset)
+		loadScene("second.xml")
 	end
 	if input:keyPressed(constants["S"]) then
 		camera:moveZ(offset)

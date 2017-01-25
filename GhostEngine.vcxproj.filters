@@ -137,9 +137,6 @@
     <ClCompile Include="ghost\Utils.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="ghost\Xml.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="ghost\ResourceManager.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -1036,9 +1033,6 @@
     <ClInclude Include="ghost\Utils.h">
       <Filter>Source Files</Filter>
     </ClInclude>
-    <ClInclude Include="ghost\Xml.h">
-      <Filter>Source Files</Filter>
-    </ClInclude>
     <ClInclude Include="ghost\ResourceManager.h">
       <Filter>Source Files</Filter>
     </ClInclude>
@@ -1926,9 +1920,6 @@
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <None Include="resources\scenes\level.cfg">
-      <Filter>Resource Files\scenes</Filter>
-    </None>
     <None Include="resources\models\box.mtl">
       <Filter>Resource Files\models</Filter>
     </None>
@@ -2042,9 +2033,6 @@
     </None>
   </ItemGroup>
   <ItemGroup>
-    <Xml Include="resources\scenes\start.xml">
-      <Filter>Resource Files\scenes</Filter>
-    </Xml>
     <Xml Include="dependencies\includes\zlib\treebuild.xml">
       <Filter>Source Files\ZLib</Filter>
     </Xml>

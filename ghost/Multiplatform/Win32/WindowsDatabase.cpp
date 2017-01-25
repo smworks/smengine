@@ -18,13 +18,12 @@
 	LOGI(__VA_ARGS__); \
 	LOGI("Error: %d, %s.", err_, sqlite3_errmsg(db_));
 
-WindowsDatabase::WindowsDatabase(FileManager* fileManager, const string& name) :
-	Database(fileManager, name),
+WindowsDatabase::WindowsDatabase():
 	db_(0),
 	err_(0)
 {
 	if (initializeSQLEngine() && openConnectionToDB()) {
-		//execute("CREATE TABLE IF NOT EXISTS strings (name TEXT UNIQUE, value TEXT)");
+		prepare();
 	}
 }
 
@@ -50,7 +49,7 @@ WindowsDatabase::~WindowsDatabase() {
 }
 
 WindowsDatabase::ResultSet WindowsDatabase::execute(string query) {
-	LOGD("Executing query: %s.", query.c_str());
+	LOGD("Executing query: %s", query.c_str());
 	sqlite3_stmt* stmt = createStatement(query + ";");
 	ResultSet rs;
 	while (executeStep(stmt)) {

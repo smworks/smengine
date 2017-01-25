@@ -413,7 +413,6 @@
     <ClCompile Include="ghost\Utils.cpp" />
     <ClCompile Include="ghost\Vec3.cpp" />
     <ClCompile Include="ghost\WaterLoader.cpp" />
-    <ClCompile Include="ghost\Xml.cpp" />
     <ClCompile Include="main_windows.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -722,7 +721,6 @@
     <ClInclude Include="ghost\Utils.h" />
     <ClInclude Include="ghost\Vec3.h" />
     <ClInclude Include="ghost\WaterLoader.h" />
-    <ClInclude Include="ghost\Xml.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="resources\models\box.mtl">
@@ -740,9 +738,6 @@
     <None Include="resources\models\car_wheel.mtl">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">true</ExcludedFromBuild>
-    </None>
-    <None Include="resources\scenes\level.cfg">
-      <SubType>Designer</SubType>
     </None>
     <None Include="resources\scripts\logic.lua" />
     <None Include="resources\shaders\default_model.frag" />
@@ -780,9 +775,6 @@
   </ItemGroup>
   <ItemGroup>
     <Xml Include="dependencies\includes\zlib\treebuild.xml" />
-    <Xml Include="resources\scenes\start.xml">
-      <SubType>Designer</SubType>
-    </Xml>
   </ItemGroup>
   <ItemGroup>
     <Media Include="resources\sounds\click.mp3" />

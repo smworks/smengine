@@ -1,11 +1,4 @@
-﻿/*
- * Database.h
- *
- *  Created on: 2012.10.30
- *      Author: Martynas Šustavičius
- */
-
-#ifndef DATABASE_H_
+﻿#ifndef DATABASE_H_
 #define DATABASE_H_
 
 #include "Ghost.h"
@@ -17,11 +10,9 @@ public:
 	struct ResultSet {
 		vector<unordered_map<string, string>> vec;
 	};
-public:
-	static const string CONFIG_FILE;
-	static const string CONFIG;
-	static const string NAME;
-	static const string VALUE;
+
+	static const string START_SCRIPT;
+	static const string ROOT_NODE;
 	static const string FRAME_DURATION;
 	static const string FIELD_OF_VIEW;
 	static const string NEAR_PLANE_DISTANCE;
@@ -33,11 +24,8 @@ public:
 	static const string DEFAULT_SPRITE_SHADER;
 	static const string DEFAULT_TEXT_SHADER;
 public:
-	/**
-	 * @param fileManager - file manager object.
-	 * @param name - name of file containing configuration.
-	 */
-	Database(FileManager* fileManager, const string& name = "");
+
+	Database();
 	virtual ~Database() {}
 
 	/**
@@ -48,84 +36,15 @@ public:
 	 */
 	virtual ResultSet execute(string query) = 0;
 
-	/**
-	 * @param name - parameter name.
-	 * @return Value that belongs to specified parameter.
-	 * If no parameter was found, return "".
-	 */
-	string& getString(const string& name);
-
-	/**
-	 * Sets string parameter.
-	 * @param name - name of the string.
-	 * @param value - string value.
-	 */
-	void setString(string name, string value);
-
-	/**
-	 * @param name - parameter name.
-	 * @return Value that belongs to specified parameter.
-	 * If no parameter was found, return -1.
-	 */
-	int getInt(const string& name);
-
-	/**
-	 * @param name - parameter name.
-	 * @return Value that belongs to specified parameter.
-	 * If no parameter was found, return 0.0f.
-	 */
-	float getFloat(const string& name);
-
-	/**
-	 * @param name - parameter name.
-	 * @return Value that belongs to specified parameter.
-	 * If no parameter was found, return false.
-	 */
-	bool getBool(const string& name);
-
-	/**
-	 * @param scene - name of scene file.
-	 */
-	void setScene(const string& scene) {
-		scene_ = scene;
-		sceneLoaded_ = false;
-	}
-
-	/**
-	 * @return Name of the scene file.
-	 */
-	string& getScene() {
-		return scene_;
-	}
-
-	/**
-	 * @return True if scene needs to be loaded.
-	 */
-	bool isSceneLoaded() {
-		return sceneLoaded_;
-	}
-
-	/**
-	 * @param state - state indicating whether to load
-	 * scene, or not.
-	 */
-	void setSceneLoaded(bool state) {
-		sceneLoaded_ = state;
-	}
+	string getString(string key);
+	void setString(string key, string value);
+	int getInt(string key);
+	float getFloat(string key);
+	bool getBool(string key);
+protected:
+	void prepare();
 private:
-	/**
-	 * Loads parameters from file.
-	 * @param name - name of configuration file.
-	 */
-	void fromFile(const string& name);
-private:
-	FileManager* fileManager_;
-	unordered_map<string, string> settingsString_;
-	unordered_map<string, int> settingsInt_;
-	unordered_map<string, float> settingsFloat_;
-	unordered_map<string, bool> settingsBool_;
-	string scene_;
-	bool sceneLoaded_;
+	unordered_map<string, string> cache;
 };
 
-#endif /* DATABASE_H_ */
+#endif

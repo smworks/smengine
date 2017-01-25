@@ -96,7 +96,7 @@ SoundManager* WindowsServiceLocator::getSoundManager() {
 
 Database* WindowsServiceLocator::getDB() {
 	if (database_ == 0) {
-		database_ = NEW WindowsDatabase(getFileManager());
+		database_ = NEW WindowsDatabase();
 	}
 	return database_;
 }

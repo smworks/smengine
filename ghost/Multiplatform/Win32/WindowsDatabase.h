@@ -1,11 +1,4 @@
-﻿/*
- * WindowsDatabase.h
- *
- *  Created on: 2014.12.09
- *      Author: Martynas Šustavičius
- */
-
-#ifndef WINDOWSDATABASE_H_
+﻿#ifndef WINDOWSDATABASE_H_
 #define WINDOWSDATABASE_H_
 
 #include "../Ghost.h"
@@ -15,7 +8,7 @@
 #ifndef ENABLE_DATABASE
 class WindowsDatabase : public Database {
 public:
-	WindowsDatabase(FileManager* fileManager, const string& name = "") :
+	WindowsDatabase() :
 		Database(fileManager, name) {}
 	~WindowsDatabase() {}
 	ResultSet execute(string query) { ResultSet rs; return rs; }
@@ -27,7 +20,7 @@ struct sqlite3_stmt;
 
 class WindowsDatabase : public Database {
 public:
-	WindowsDatabase(FileManager* fileManager, const string& name = "");
+	WindowsDatabase();
 	~WindowsDatabase();
 	ResultSet execute(string query);
 protected:
