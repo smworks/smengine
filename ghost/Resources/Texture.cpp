@@ -8,7 +8,6 @@
 #include "Texture.h"
 #include "../ScriptManager.h"
 #include "../ResourceManager.h"
-#include "../Utils.h"
 #include "TextureRGB.h"
 #include "TextureRGBA.h"
 #include "TextureMono.h"
@@ -18,7 +17,6 @@
 #include "../Multiplatform/FileManager.h"
 #include "Vertex.h"
 #include "../Shapes.h"
-#include "../Multiplatform/ServiceLocator.h"
 #include "../Multiplatform/GraphicsManager.h"
 
 const string Texture::ATTR_WRAP_U = "wrap_u";
@@ -141,10 +139,10 @@ Texture* Texture::load(ServiceLocator* sl, string name, bool useRM) {
 	}
 	PNGData data = loadPng(sl, (GHOST_SPRITES + name).c_str());
 	ASSERT(data.buffer != 0, "Unable to load file \"%s\".", name.c_str());
-	Texture* texture = data.alpha ? createRGBATexture(sl) : createRGBTexture(sl);
+	Texture* texture = data.alpha ? static_cast<Texture*>(NEW TextureRGBA(sl)) : NEW TextureRGB(sl);
 	addDimensions(texture, data.width, data.height);
-	texture->getAttributes().setString(Texture::ATTR_FILE, name);
-	texture->getAttributes().setPointer(Resource::ATTR_BUFFER, data.buffer);
+	texture->getAttributes().setString(ATTR_FILE, name);
+	texture->getAttributes().setPointer(ATTR_BUFFER, data.buffer);
 	texture->create();
 	if (useRM) {
 		sl->getRM()->add(name, texture);
@@ -155,23 +153,23 @@ Texture* Texture::load(ServiceLocator* sl, string name, bool useRM) {
 
 Texture* Texture::load(ServiceLocator* sl, INT8* buffer) {
 	PNGData data = pngToRaw(buffer);
-	Texture* texture = data.alpha ? createRGBATexture(sl) : createRGBTexture(sl);
+	Texture* texture = data.alpha ? static_cast<Texture*>(NEW TextureRGBA(sl)) : NEW TextureRGB(sl);
 	addDimensions(texture, data.width, data.height);
-	texture->getAttributes().setPointer(Resource::ATTR_BUFFER, data.buffer);
+	texture->getAttributes().setPointer(ATTR_BUFFER, data.buffer);
 	texture->create();
 	return texture;
 }
 
 Texture* Texture::createRGBA(ServiceLocator* sl, UINT32 w, UINT32 h) {
-	return prepareNewTexture(createRGBATexture(sl), w, h);
+	return prepareNewTexture(NEW TextureRGBA(sl), w, h);
 }
 
 Texture* Texture::createRGB(ServiceLocator* sl, UINT32 w, UINT32 h) {
-	return prepareNewTexture(createRGBTexture(sl), w, h);
+	return prepareNewTexture(NEW TextureRGB(sl), w, h);
 }
 
 Texture* Texture::createMono(ServiceLocator* sl, UINT32 w, UINT32 h) {
-	return prepareNewTexture(createMonoTexture(sl), w, h);
+	return prepareNewTexture(NEW TextureMono(sl), w, h);
 }
 
 Texture* Texture::createAtlasMono(ServiceLocator* sl, UINT32 w, UINT32 h) {
@@ -243,18 +241,6 @@ Texture* Texture::prepareNewTexture(Texture* texture, UINT32 w, UINT32 h) {
 	addDimensions(texture, w, h);
 	texture->create();
 	return texture;
-}
-
-Texture* Texture::createRGBATexture(ServiceLocator* sl) {
-	return NEW TextureRGBA(sl);
-}
-
-Texture* Texture::createRGBTexture(ServiceLocator* sl) {
-	return NEW TextureRGB(sl);
-}
-
-Texture* Texture::createMonoTexture(ServiceLocator* sl) {
-	return NEW TextureMono(sl);
 }
 
 struct PngBuffer {

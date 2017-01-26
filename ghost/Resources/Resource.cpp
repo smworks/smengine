@@ -79,156 +79,160 @@ const string Resource::ATTR_COLOR = "color";
 const string Resource::ATTR_SPRITE_COUNT = "sprite_count";
 const string Resource::ATTR_BUFFER = "buffer";
 
-Resource::Resource(ServiceLocator* services) :
+Resource::Resource(ServiceLocator* serviceLocator) :
+	ServiceProvider(serviceLocator),
 	name_(""),
-	services_(services),
-	node_(0)
-{}
+	services_(serviceLocator),
+	node_(nullptr)
+{
+}
 
-Resource::~Resource() {}
+Resource::~Resource()
+{
+}
 
-bool Resource::isRenderable() {
-	if (dynamic_cast<const Renderable*>(this)) {
+bool Resource::isRenderable()
+{
+	if (dynamic_cast<const Renderable*>(this))
+	{
 		return true;
 	}
 	return false;
 }
 
-bool Resource::isGUIElement() {
-	if (dynamic_cast<const GUISurface*>(this)) {
+bool Resource::isGUIElement()
+{
+	if (dynamic_cast<const GUISurface*>(this))
+	{
 		return true;
 	}
 	return false;
 }
 
-string Resource::getAttribute(const string& name) {
+string Resource::getAttribute(const string& name)
+{
 	return attributes_.getString(name);
 }
 
-void Resource::setAttribute(const string& name, string value) {
+void Resource::setAttribute(const string& name, string value)
+{
 	attributes_.setString(name, value);
 }
 
-void Resource::setName(const string& name) {
+void Resource::setName(const string& name)
+{
 	name_ = name;
 }
 
-const string& Resource::getName() {
+const string& Resource::getName()
+{
 	return name_;
 }
 
-void Resource::setNode(Node* node) {
-    node_ = node;
+void Resource::setNode(Node* node)
+{
+	node_ = node;
 }
 
-Node* Resource::getNode() {
-    return node_;
+Node* Resource::getNode()
+{
+	return node_;
 }
 
-void Resource::setServiceLocator(ServiceLocator* services) {
-	if (services == 0) {
-		LOGE("Service locator object must not be null.");
-		return;
-	}
-	services_ = services;
-}
-
-ServiceLocator* Resource::getServiceLocator() {
-	return services_;
-}
-
-Attributes& Resource::getAttributes() {
+Attributes& Resource::getAttributes()
+{
 	return attributes_;
 }
 
 Resource::Type Resource::stringToType(
 	const string& type)
 {
-	if ("texture" == type) {
-		return Resource::TEXTURE_2D;
+	if ("texture" == type)
+	{
+		return TEXTURE_2D;
 	}
-	if ("symbol" == type) {
-		return Resource::SYMBOL;
+	if ("symbol" == type)
+	{
+		return SYMBOL;
 	}
-	if ("shader" == type) {
-		return Resource::SHADER;
+	if ("shader" == type)
+	{
+		return SHADER;
 	}
-	if ("static_object" == type) {
-		return Resource::MODEL;
+	if ("static_object" == type)
+	{
+		return MODEL;
 	}
-	if ("dynamic_object" == type) {
-		return Resource::DYNAMIC_OBJECT;
+	if ("dynamic_object" == type)
+	{
+		return DYNAMIC_OBJECT;
 	}
-	if ("sprite" == type) {
-		return Resource::SPRITE;
+	if ("sprite" == type)
+	{
+		return SPRITE;
 	}
-	if ("script" == type) {
-		return Resource::SCRIPT;
+	if ("script" == type)
+	{
+		return SCRIPT;
 	}
-	if ("cube_map" == type) {
-		return Resource::CUBE_MAP;
+	if ("cube_map" == type)
+	{
+		return CUBE_MAP;
 	}
-	if ("sound" == type) {
-		return Resource::SOUND;
+	if ("sound" == type)
+	{
+		return SOUND;
 	}
-	if ("physics" == type) {
-		return Resource::PHYSICS;
+	if ("physics" == type)
+	{
+		return PHYSICS;
 	}
-	if ("light" == type) {
-		return Resource::LIGHT;
+	if ("light" == type)
+	{
+		return LIGHT;
 	}
-	if ("scenario" == type) {
-		return Resource::SCENARIO;
+	if ("scenario" == type)
+	{
+		return SCENARIO;
 	}
-	if ("gui_surface" == type) {
-		return Resource::GUI_SURFACE;
+	if ("gui_surface" == type)
+	{
+		return GUI_SURFACE;
 	}
-	return Resource::UNKNOWN;
+	return UNKNOWN;
 }
 
-string Resource::typeToString(Type type) {
-    switch (type) {
-    case TEXTURE_2D:
-        return "texture";
-        break;
+string Resource::typeToString(Type type)
+{
+	switch (type)
+	{
+	case TEXTURE_2D:
+		return "texture";
 	case SYMBOL:
 		return "symbol";
-		break;
-    case SHADER:
-        return "shader";
-        break;
-    case MODEL:
-        return "static_object";
-        break;
-    case DYNAMIC_OBJECT:
-        return "dynamic_object";
-        break;
-    case SPRITE:
-        return "sprite";
-        break;
-    case SCRIPT:
-        return "script";
-        break;
-    case CUBE_MAP:
-        return "cube_map";
-        break;
-    case SOUND:
-        return "sound";
-        break;
-    case PHYSICS:
-        return "physics";
-        break;
-    case LIGHT:
-        return "light";
-        break;
+	case SHADER:
+		return "shader";
+	case MODEL:
+		return "static_object";
+	case DYNAMIC_OBJECT:
+		return "dynamic_object";
+	case SPRITE:
+		return "sprite";
+	case SCRIPT:
+		return "script";
+	case CUBE_MAP:
+		return "cube_map";
+	case SOUND:
+		return "sound";
+	case PHYSICS:
+		return "physics";
+	case LIGHT:
+		return "light";
 	case SCENARIO:
 		return "scenario";
-		break;
-    case GUI_SURFACE:
-        return "gui_surface";
-        break;
-    default:
-        return "unknown";
-        break;
-    }
+	case GUI_SURFACE:
+		return "gui_surface";
+	default:
+		return "unknown";
+	}
 }

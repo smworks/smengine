@@ -9,7 +9,6 @@
 #define TEXTURE_H_
 
 #include "../Multiplatform/Ghost.h"
-#include "../Color.h"
 #include "Resource.h"
 
 class Texture : public Resource  {
@@ -284,9 +283,6 @@ private:
 	
 	static void addDimensions(Texture* texture, UINT32 w, UINT32 h);
 	static Texture* prepareNewTexture(Texture* texture, UINT32 w, UINT32 h);
-	static Texture* createRGBATexture(ServiceLocator* sl);
-	static Texture* createRGBTexture(ServiceLocator* sl);
-	static Texture* createMonoTexture(ServiceLocator* sl);
 
 	/**
 	 * Converts PNG image to raw uncompressed image.

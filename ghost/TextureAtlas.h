@@ -9,6 +9,7 @@
 #define TEXTUREATLAS_H_
 
 #include "Multiplatform/Ghost.h"
+#include "ServiceProvider.h"
 class Texture;
 class ServiceLocator;
 
@@ -16,7 +17,7 @@ class ServiceLocator;
  * This class stores smaller textures of
  * variable size in bigger ones of appropriate type.
  */
-class TextureAtlas {
+class TextureAtlas : public ServiceProvider {
 public:
 	static const UINT16 STARTING_WIDTH = 512; //2048;
 	static const UINT16 STARTING_HEIGHT = 512; //2048;
@@ -42,7 +43,7 @@ public:
 #endif
 	};
 public:
-    TextureAtlas(ServiceLocator* services);
+    TextureAtlas(ServiceLocator* serviceLocator);
     ~TextureAtlas();
 
 	/**
@@ -94,12 +95,8 @@ private:
 private:
     /** Id counter. */
     UINT32 idCounter_;
-    /** Handle to all engine services. */
-    ServiceLocator* services_;
     /** Array of contained textures. */
 	vector<TextureHeader> textures_;
-	/** Texture iterator. */
-	vector<TextureHeader>::iterator it_;
 	/** Texture that contains other RGBA textures. */
 	Texture* textureRGBA_;
 	/** Texture that contains other monochrome textures. */

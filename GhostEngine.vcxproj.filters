@@ -68,9 +68,6 @@
     <Filter Include="Source Files\FreeType">
       <UniqueIdentifier>{57ee04c0-5de4-4909-a279-cee23e4f14ca}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Resource Files\scenes">
-      <UniqueIdentifier>{416af874-f8dd-4252-ae4f-5d305bccc87a}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Resource Files\scripts">
       <UniqueIdentifier>{2d5fcd37-c019-4bc4-98af-b283f5ed36aa}</UniqueIdentifier>
     </Filter>
@@ -2030,6 +2027,9 @@
     </None>
     <None Include="resources\shaders\temp_model.vert">
       <Filter>Resource Files\shaders</Filter>
+    </None>
+    <None Include="resources\scripts\second.lua">
+      <Filter>Resource Files\scripts</Filter>
     </None>
   </ItemGroup>
   <ItemGroup>

@@ -75,12 +75,8 @@ Engine::Engine(ServiceLocator* services) :
 	services->getPhysicsManager()->setGraphicsManager(services->getGraphicsManager());
 	services->getScriptManager()->initialize(services);
 	PROFILE("Finished creating engine object.");
-	loadScene(getDatabase()->getString(Database::START_SCRIPT));
-	time = 0;
-	console = new Console(services);
 
 	fpsText = NEW GUIText(getServiceLocator());
-	fpsText->setNode(fpsNode);
 	fpsText->setAttribute(GUIText::ATTR_WIDTH, "512px");
 	fpsText->setAttribute(GUIText::ATTR_HEIGHT, "32px");
 	fpsText->setAttribute(GUIText::ATTR_TEXT, "fps");
@@ -91,9 +87,10 @@ Engine::Engine(ServiceLocator* services) :
 	fpsText->setAttribute(GUIText::ATTR_SCREEN_TOP, "true");
 	fpsText->create();
 	getResourceManager()->add("debug text", fpsText);
-	fpsNode = NEW Node("fps", fpsText);
-	fpsNode->setState(Node::RENDERABLE, false);
-	getRootNode()->addChild(fpsNode);
+
+	loadScene(getDatabase()->getString(Database::START_SCRIPT));
+	time = 0;
+	console = new Console(services);
 }
 
 Engine::~Engine()
@@ -107,16 +104,18 @@ Engine::~Engine()
 	delete mut;
 }
 
-void Engine::loadScene(string script) const
+void Engine::loadScene(string script)
 {
 	PROFILE("Started loading scene.");
 	getSoundManager()->reset();
 	getPhysicsManager()->reset();
+
 	if (getRootNode() != nullptr)
 	{
 		delete getRootNode();
 	}
 	getThreadManager()->joinAll();
+
 	// Load scene hierarchy.
 	Resource* resource = NEW NullResource(getServiceLocator());
 	getResourceManager()->add(Database::ROOT_NODE, resource);
@@ -124,15 +123,24 @@ void Engine::loadScene(string script) const
 	Resource* scriptResource = NEW Script(getServiceLocator());
 	scriptResource->setAttribute(Resource::ATTR_FILE, script);
 	scriptResource->create();
+	getResourceManager()->add(script, scriptResource);
 	Node* scriptNode = NEW Node(script, scriptResource);
 	scriptResource->setNode(scriptNode);
 	getRootNode()->addChild(scriptNode);
 	getScriptManager()->add(scriptNode);
+	fpsNode = NEW Node("fps", fpsText);
+	fpsText->setNode(fpsNode);
+	fpsNode->setState(Node::RENDERABLE, false);
+	getRootNode()->addChild(fpsNode);
+
 
 	// Other data creation.
 	getGUIManager()->refreshNodes(getRootNode());
 	getScriptManager()->start();
 	resizeResources(getRootNode());
+
+	// Make sure scene will not be loaded again
+	getDatabase()->setString(Database::LOAD_SECOND_SCRIPT, "");
 	PROFILE("Finished loading scene.")
 }
 
@@ -147,6 +155,11 @@ void Engine::computeFrame()
 	time = getServiceLocator()->getFrameTime();
 
 	updateFPS();
+
+	if (getDatabase()->getString(Database::LOAD_SECOND_SCRIPT).length() > 0)
+	{
+		loadScene(getDatabase()->getString(Database::LOAD_SECOND_SCRIPT));
+	}
 
 	getInput()->update();
 	if (getInput()->keyReleased(Input::TILDE))

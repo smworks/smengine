@@ -3,6 +3,7 @@
 #include "../Utils.h"
 
 const string Database::START_SCRIPT = "start_script";
+const string Database::LOAD_SECOND_SCRIPT = "load_second_script";
 const string Database::ROOT_NODE = "root_node";
 const string Database::FRAME_DURATION = "frame_duration";
 const string Database::FIELD_OF_VIEW = "field_of_view";
@@ -40,7 +41,7 @@ string Database::getString(string key) {
 
 void Database::setString(string key, string value) {
 	cache.erase(key);
-	execute("INSERT INTO settings (key, value) VALUES ('" + key + "', '" + value + "')");
+	execute("INSERT OR REPLACE INTO settings (key, value) VALUES ('" + key + "', '" + value + "')");
 }
 
 int Database::getInt(string key) {
@@ -61,6 +62,7 @@ void Database::prepare() {
 		execute("CREATE TABLE settings (key TEXT UNIQUE, value TEXT)");
 		execute("INSERT INTO settings (key, value) VALUES "
 			"('" + START_SCRIPT + "', 'logic.lua'),"
+			"('" + LOAD_SECOND_SCRIPT + "', ''),"
 			"('" + ROOT_NODE + "', 'root'),"
 			"('" + FRAME_DURATION + "', '16f'),"
 			"('" + FIELD_OF_VIEW + "', '30.0f'),"

@@ -14,7 +14,7 @@ public:
 	explicit Engine(ServiceLocator* services);
 	~Engine();
 
-	void loadScene(string script) const;
+	void loadScene(string script);
 	void computeFrame();
 	void updateFPS();
 	void resume();

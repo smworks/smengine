@@ -14,13 +14,14 @@
 
 #include "../Multiplatform/Ghost.h"
 #include "Attributes.h"
+#include "../ServiceProvider.h"
 
 class ThreadManager;
 class ServiceLocator;
 class ServiceLocator;
 class Node;
 
-class Resource {
+class Resource : public ServiceProvider {
 public:
 	enum Type {
 		NULL_RESOURCE,
@@ -108,7 +109,7 @@ public:
     static const string ATTR_SPRITE_COUNT;
 	static const string ATTR_BUFFER;
 public:
-	Resource(ServiceLocator* services);
+	explicit Resource(ServiceLocator* serviceLocator);
 	virtual ~Resource();
 
 	/**
@@ -197,17 +198,6 @@ public:
 	 Node* getNode();
 
 	 /**
-	  * Provide resource with valid service locator object.
-	  * @param services - service locator object.
-	  */
-	 void setServiceLocator(ServiceLocator* services);
-
-	 /**
-	  * @return Pointer to service locator object.
-	  */
-	 ServiceLocator* getServiceLocator();
-
-	 /**
 	  * @return Reference to resource attributes object.
 	  */
 	 Attributes& getAttributes();
@@ -219,7 +209,7 @@ public:
 	 * type of resource.
 	 * @return Enum indicating type.
 	 */
-	static Resource::Type stringToType(const string& type);
+	static Type stringToType(const string& type);
 
 	/**
 	 * Converts enum type to string.

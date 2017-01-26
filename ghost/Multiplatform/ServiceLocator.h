@@ -1,14 +1,5 @@
-/*
- * ServiceLocator.h
- *
- *  Created on: 2012.06.19
- *      Author: Martynas Šustavičius
- */
-
 #ifndef SERVICELOCATOR_H_
 #define SERVICELOCATOR_H_
-
-#include "../Multiplatform/Ghost.h"
 
 class ScenarioManager;
 class Socket;
@@ -45,8 +36,8 @@ public:
 
 	void setScreenWidth(int width);
 	void setScreenHeight(int height) ;
-	int	getScreenWidth();
-	int getScreenHeight();
+	int	getScreenWidth() const;
+	int getScreenHeight() const;
 	void exit();
 
 	/**
@@ -57,7 +48,7 @@ public:
 	 */
 	virtual bool isFinished();
 	void disableGui();
-	bool isGuiAvailable();
+	bool isGuiAvailable() const;
 
 	/**
 	 * @param sleep - optional parameter,
@@ -78,7 +69,7 @@ public:
 public:
 	ServiceLocator();
 	ServiceLocator(const ServiceLocator& services);
-	const ServiceLocator& operator=(const ServiceLocator& services);
+	const ServiceLocator& operator=(const ServiceLocator& services) const;
 	virtual ~ServiceLocator();
 
 	/**

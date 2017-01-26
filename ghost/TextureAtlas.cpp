@@ -9,20 +9,18 @@
 #include "Multiplatform/ServiceLocator.h"
 #include "Multiplatform/GraphicsManager.h"
 #include "Shapes.h"
-#include "Utils.h"
 #include "Resources/Texture.h"
 
-TextureAtlas::TextureAtlas(ServiceLocator* services) :
+TextureAtlas::TextureAtlas(ServiceLocator* serviceLocator) :
+	ServiceProvider(serviceLocator),
     idCounter_(0),
-    services_(services),
     textures_(0),
-    it_(textures_.begin()),
-    textureRGBA_(0),
-	textureMono_(0)
+    textureRGBA_(nullptr),
+	textureMono_(nullptr)
 
 {
-	textureRGBA_ = Texture::createRGBA(services, STARTING_WIDTH, STARTING_HEIGHT);
-	textureMono_ = Texture::createMono(services, STARTING_WIDTH, STARTING_HEIGHT);
+	textureRGBA_ = Texture::createRGBA(serviceLocator, STARTING_WIDTH, STARTING_HEIGHT);
+	textureMono_ = Texture::createMono(serviceLocator, STARTING_WIDTH, STARTING_HEIGHT);
 	byteMap_ = NEW bool[STARTING_WIDTH * STARTING_HEIGHT];
 	skylineRGBA_.push_back(Skyline(0, 0, STARTING_WIDTH));
 	skylineMono_.push_back(Skyline(0, 0, STARTING_WIDTH));
@@ -31,7 +29,7 @@ TextureAtlas::TextureAtlas(ServiceLocator* services) :
 
 TextureAtlas::~TextureAtlas() {
 	for (UINT32 i = 0; i < textures_.size(); i++) {
-		services_->getGraphicsManager()->unsetVertexBuffer(textures_[i].cbo);
+		getGraphicsManager()->unsetVertexBuffer(textures_[i].cbo);
 	}
 	delete [] byteMap_;
 	delete textureMono_;
@@ -80,7 +78,7 @@ bool TextureAtlas::create(UINT32& id, UINT32 width, UINT32 height, int type) {
             v.uv[1] = th.uv[i * 2 + 1];
             cboArr->push_back(v);
         }
-		services_->getGraphicsManager()->setVertexBuffer(
+		getGraphicsManager()->setVertexBuffer(
 			th.cbo, &(*cboArr)[0], (UINT32) cboArr->size() * sizeof(VertexPT));
         th.id = idCounter_++;
         textures_.push_back(th);
@@ -93,7 +91,7 @@ bool TextureAtlas::create(UINT32& id, UINT32 width, UINT32 height, int type) {
 }
 
 bool TextureAtlas::clear(UINT32 id) {
-    it_ = textures_.begin();
+    auto it_ = textures_.begin();
 	while (it_ != textures_.end()) {
 		if ((*it_).id == id) {
             TextureHeader& th = (*it_);
@@ -105,7 +103,7 @@ bool TextureAtlas::clear(UINT32 id) {
                     texture->setPixel(white, i, j);
                 }
             }
-			services_->getGraphicsManager()->unsetVertexBuffer((*it_).cbo);
+			getGraphicsManager()->unsetVertexBuffer((*it_).cbo);
 			textures_.erase(it_);
 			return true;
 		}

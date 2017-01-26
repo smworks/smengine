@@ -298,7 +298,7 @@ int getTexture(lua_State* L) {
 
 int loadScene(lua_State* L) {
 	string val = SM_GET_STRING(L, 0);
-	//SM_GET_SL()->getDB()->setScene(val);
+	SM_GET_SL()->getDB()->setString(Database::LOAD_SECOND_SCRIPT, val);
 	return 0;
 }
 
@@ -1214,9 +1214,12 @@ int newTexture(lua_State* L) {
 	ASSERT(SM_IS_STRING(L, 0), "First argument to Texture constructor must be name.");
 	ASSERT(argc == 1 || argc == 2 || argc == 4 || argc == 8, "Wrong argument count for Texture constructor.");
 	string name = SM_GET_STRING(L, 0);
-	ASSERT(static_cast<Texture*>(SM_GET_RM()->get(Resource::TEXTURE_2D, name)) == 0,
-		"Texture with name %s already exists.", name.c_str());
-	Texture* texture = 0;
+	Texture* texture = static_cast<Texture*>(SM_GET_RM()->get(Resource::TEXTURE_2D, name));
+	if (texture != nullptr)
+	{
+		LOGI("Texture with name %s already exists. Reusing old one", name.c_str());
+		SM_RETURN_OBJECT(L, "Texture", Texture, texture);
+	}
 	bool alpha = false;
 	if (argc == 1) {
 		texture = Texture::load(SM_GET_SL(), name, false);

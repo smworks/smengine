@@ -12,6 +12,7 @@ public:
 	};
 
 	static const string START_SCRIPT;
+	static const string LOAD_SECOND_SCRIPT;
 	static const string ROOT_NODE;
 	static const string FRAME_DURATION;
 	static const string FIELD_OF_VIEW;
