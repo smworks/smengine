@@ -61,7 +61,7 @@ void Database::prepare() {
 	if (rs.vec.size() == 0) { // First time use of DB
 		execute("CREATE TABLE settings (key TEXT UNIQUE, value TEXT)");
 		execute("INSERT INTO settings (key, value) VALUES "
-			"('" + START_SCRIPT + "', 'logic.lua'),"
+			"('" + START_SCRIPT + "', 'main.lua'),"
 			"('" + LOAD_SECOND_SCRIPT + "', ''),"
 			"('" + ROOT_NODE + "', 'root'),"
 			"('" + FRAME_DURATION + "', '16f'),"

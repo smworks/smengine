@@ -13,9 +13,9 @@
 #include "Resources/Resource.h"
 #include "Resources/GUISurface.h"
 
-GUIManager::GUIManager(ServiceLocator* services) :
-	services_(services),
-	selectedSurface_(0)
+GUIManager::GUIManager(ServiceLocator* serviceLocator) :
+	ServiceProvider(serviceLocator),
+	selectedSurface(nullptr)
 {
 	LOGD("Created GUI manager.");
 }
@@ -25,33 +25,27 @@ GUIManager::~GUIManager() {
 }
 
 void GUIManager::refreshNodes(Node* node) {
-    nodes_.clear();
-    node->toGUIArray(nodes_);
+    nodes.clear();
+    node->toGUIArray(nodes);
 }
 
 void GUIManager::update() {
-    INT32 count = (INT32) nodes_.size();
-    int x = services_->getInput()->getPointerX();
-    int y = services_->getInput()->getPointerY();
-    for (INT32 i = count - 1; i >= 0; i--) {
-        Node* node = nodes_[i];
-		if (!node->getState(Node::RENDERABLE)) {
-			continue;
-		}
+    int x = getInput()->getPointerX();
+    int y = getInput()->getPointerY();
+	for (auto it = nodes.rbegin(); it != nodes.rend(); it++) {
+		Node* node = *it;
 		GUISurface* surface = dynamic_cast<GUISurface*>(node->getResource());
-        if (surface == 0) continue;
-		if (surface->getPosX() < x
+    	if (surface->getPosX() < x
 			&& surface->getWidth() + surface->getPosX() > x
 			&& surface->getPosY() < y
 			&& surface->getHeight() + surface->getPosY() > y)
 		{
 			surface->hasFocus();
-			if (services_->getInput()->keyReleased(
-				Input::MOUSE_L) || services_->getInput()->keyReleased(Input::TOUCH))
+			if (getInput()->keyReleased(Input::MOUSE_L)
+				|| getInput()->keyReleased(Input::TOUCH))
 			{
-				selectedSurface_ = surface;
-				services_->getScriptManager()->provideEventGUI(
-					node, CLICK);
+				selectedSurface = surface;
+				getScriptManager()->provideEventGUI(node, CLICK);
 				return;
 			}
 		}
@@ -59,5 +53,5 @@ void GUIManager::update() {
 }
 
 GUISurface* GUIManager::getSelectedSurface() {
-	return selectedSurface_;
+	return selectedSurface;
 }

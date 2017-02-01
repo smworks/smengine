@@ -18,80 +18,40 @@ class Symbol;
 
 class GUIText : public GUISurface {
 public:
-	GUIText(ServiceLocator* services);
+	explicit GUIText(ServiceLocator* services);
 	~GUIText();
 
-	/**
-     * @see GUISurface
-     */
-    virtual bool create();
+	bool create() override;
 
-	/**
-	 * @see GUISurface
-	 */
-	void update();
+	void update() override;
 
-	/**
-	 * @see GUISurface
-	 */
-	virtual void hasFocus();
+	void hasFocus() override;
 
-	/**
-	 * @param text - text that is displayed
-	 * in this GUI element.
-	 */
 	void setText(const string& text);
 
-	/**
-	 * @return String containing text.
-	 */
 	string& getText();
 
-    /**
-     * @param size - text size in pixels.
-     */
     void setTextSize(SIZE size);
 
-	/**
-	 * @return Size of the text.
-	 */
-	SIZE getTextSize();
+	SIZE getTextSize() const;
 
-	/**
-	 * @return Text width.
-	 */
-	float getTextWidth();
+	float getTextOffsetX() const;
 
-	/**
-	 * @return Text height.
-	 */
-	float getTextHeight();
+	float getTextOffsetY() const;
 
-	/**
-	 * @return Text offset on X axis used to align text.
-	 */
-	float getTextOffsetX();
+	SIZE getTextVBO() const;
 
-	/**
-	 * @return Text offset on Y axis used to align text.
-	 */
-	float getTextOffsetY();
-
-	/**
-	 * @return Text vbo.
-	 */
-	SIZE getTextVBO();
-
-	/**
-	 * @return Vertex count in text VBO.
-	 */
-	SIZE getTextVertexCount();
+	SIZE getTextVertexCount() const;
 private:
-	string text_;
-	SIZE size_, textOffsetX_, textOffsetY_;
-	UINT32 vbo_, vertexCount_;
-	float textWidth_, textHeight_;
-	vector<VertexPT> vertices_;
+	string text;
+	SIZE size;
+	SIZE textOffsetX;
+	SIZE textOffsetY;
+	UINT32 vbo;
+	UINT32 vertexCount;
+	float textWidth;
+	float textHeight;
+	vector<VertexPT> vertices;
 };
 
 #endif

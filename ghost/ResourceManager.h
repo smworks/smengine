@@ -52,8 +52,7 @@ public:
 	 * @param name - name of the resource.
 	 */
 	void remove(Resource::Type type, const string& name);
-
-public:
+private:
 	unordered_map<string, Resource*> resources;
 };
 

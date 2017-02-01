@@ -42,6 +42,10 @@ public:
 	void clearColorAndDepthBuffers();
 	void setViewPort(float width, float height);
 	bool checkSupport(Support key);
+	pair<string, string> getDefaultSpriteShader();
+	pair<string, string> getDefaultModelShader();
+	pair<string, string> getDefaultTextShader();
+	pair<string, string> getDefaultSurfaceShader();
 };
 
 #endif

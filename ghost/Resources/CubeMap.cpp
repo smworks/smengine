@@ -67,7 +67,7 @@ bool CubeMap::create() {
 	//	success = false;
 	//}
 	//if (success && !getServiceLocator()->getGraphicsManager()->setCubeMap(
-	//	id_, sides, width, height, false, false, true))
+	//	id, sides, width, height, false, false, true))
 	//{
 	//	LOGW("Unable to create cube map.");
 	//	success = false;

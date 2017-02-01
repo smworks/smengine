@@ -99,3 +99,23 @@ void NullGraphicsManager::setViewPort(float width, float height) {
 bool NullGraphicsManager::checkSupport(Support key) {
 	return true;
 }
+
+pair<string, string> NullGraphicsManager::getDefaultSpriteShader()
+{
+	return pair<string, string>("", "");
+}
+
+pair<string, string> NullGraphicsManager::getDefaultModelShader()
+{
+	return pair<string, string>("", "");
+}
+
+pair<string, string> NullGraphicsManager::getDefaultTextShader()
+{
+	return pair<string, string>("", "");
+}
+
+pair<string, string> NullGraphicsManager::getDefaultSurfaceShader()
+{
+	return pair<string, string>("", "");
+}

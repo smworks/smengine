@@ -117,8 +117,16 @@ void Engine::loadScene(string script)
 	getThreadManager()->joinAll();
 
 	// Load scene hierarchy.
-	Resource* resource = NEW NullResource(getServiceLocator());
-	getResourceManager()->add(Database::ROOT_NODE, resource);
+	Resource* resource = nullptr;
+	if (getResourceManager()->has(Resource::NULL_RESOURCE, Database::ROOT_NODE))
+	{
+		resource = getResourceManager()->get(Resource::NULL_RESOURCE, Database::ROOT_NODE);
+	}
+	else
+	{
+		resource = NEW NullResource(getServiceLocator());
+		getResourceManager()->add(Database::ROOT_NODE, resource);
+	}
 	getServiceLocator()->provide(NEW Node(getDatabase()->getString(Database::ROOT_NODE), resource));
 	Resource* scriptResource = NEW Script(getServiceLocator());
 	scriptResource->setAttribute(Resource::ATTR_FILE, script);

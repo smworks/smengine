@@ -169,11 +169,11 @@ void Node::toRenderArray(vector<Node*>& arr) {
 }
 
 void Node::toGUIArray(vector<Node*>& arr) {
-	if (resource->isGUIElement()) {
+	if (resource->isGUIElement() && getState(Node::RENDERABLE))
+	{
 		arr.push_back(this);
 	}
-	for (vector<Node*>::const_iterator it = children.begin();
-		it != children.end(); it++) {
+	for (auto it = children.begin(); it != children.end(); it++) {
 		(*it)->toGUIArray(arr);
 	}
 }

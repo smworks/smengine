@@ -739,7 +739,7 @@
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">true</ExcludedFromBuild>
     </None>
-    <None Include="resources\scripts\logic.lua" />
+    <None Include="resources\scripts\main.lua" />
     <None Include="resources\scripts\second.lua" />
     <None Include="resources\shaders\default_model.frag" />
     <None Include="resources\shaders\default_model.vert" />

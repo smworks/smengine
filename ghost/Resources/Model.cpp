@@ -15,6 +15,7 @@
 #include "../Utils.h"
 #include "../Multiplatform/GraphicsManager.h"
 #include "ModelFactory.h"
+#include "../ResourceManager.h"
 
 Model::Model(ServiceLocator* services) :
 	Resource(services),
@@ -188,7 +189,17 @@ int Model::getUVOffset() {
 }
 
 Shader* Model::getDefaultShader() {
-	return Shader::getDefaultModelShader(getServiceLocator());
+	string name = "default_model_shader";
+	Shader* shader = dynamic_cast<Shader*>(getResourceManager()->get(SHADER, name));
+	if (shader == nullptr)
+	{
+		auto pair = getGraphicsManager()->getDefaultSpriteShader();
+		shader = NEW Shader(getServiceLocator());
+		shader->setVertexAndFragment(pair.first, pair.second);
+		shader->create();
+		getResourceManager()->add(name, shader);
+	}
+	return shader;
 }
 
 ModelData* Model::getData() {

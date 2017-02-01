@@ -43,82 +43,74 @@ class GraphicsManager;
 #define SHADER_TEXTURE_2D "texture_"
 #define SHADER_CUBE_MAP "cubeMap_0"
 
-class Shader : public Resource {
+class Shader : public Resource
+{
 public:
-	enum VariableType {
-		MATRIX3, MATRIX4,
-		VECTOR3, VECTOR4,
-		FLOAT, INT
+	enum VariableType
+	{
+		MATRIX3,
+		MATRIX4,
+		VECTOR3,
+		VECTOR4,
+		FLOAT,
+		INT
 	};
-	enum HandleType {
-		WVP, W, N,
-		LIGHT_POS, LIGHT_COUNT, EYE_POS,
-		AMBIENT, DIFFUSE, SPECULAR,
-		SPECULARITY, TRANSPARENCY,
-		FOG_COLOR, FOG_DENSITY,
+
+	enum HandleType
+	{
+		WVP,
+		W,
+		N,
+		LIGHT_POS,
+		LIGHT_COUNT,
+		EYE_POS,
+		AMBIENT,
+		DIFFUSE,
+		SPECULAR,
+		SPECULARITY,
+		TRANSPARENCY,
+		FOG_COLOR,
+		FOG_DENSITY,
 		TIMER,
-		POS, NORMAL, UV, COL,
-		FOREGROUND, BACKGROUND,
+		POS,
+		NORMAL,
+		UV,
+		COL,
+		FOREGROUND,
+		BACKGROUND,
 		CUBE_MAP,
 		MAIN_TEXTURE, // Used to indicate whether renderable has texture.
-		TEXTURE_0, TEXTURE_1, TEXTURE_2, TEXTURE_3,
-		TEXTURE_4, TEXTURE_5, TEXTURE_6, TEXTURE_7,
-		SCREEN_WIDTH, SCREEN_HEIGHT,
-		COLOR_BUFFER, DEPTH_BUFFER,
+		TEXTURE_0,
+		TEXTURE_1,
+		TEXTURE_2,
+		TEXTURE_3,
+		TEXTURE_4,
+		TEXTURE_5,
+		TEXTURE_6,
+		TEXTURE_7,
+		SCREEN_WIDTH,
+		SCREEN_HEIGHT,
+		COLOR_BUFFER,
+		DEPTH_BUFFER,
 		HANDLE_COUNT
 	};
+
 	static const string ATTR_VERTEX_SHADER;
 	static const string ATTR_FRAGMENT_SHADER;
-public:
-	Shader(ServiceLocator* services);
+	
+	explicit Shader(ServiceLocator* services);
 	~Shader();
 
-	/**
-	 * @see Resource
-	 */
-	bool create();
+	bool create() override;
+	void release() override;
+	SIZE getSize() override;
+	Type getType() override;
+	bool isValid() override;
 
-	/**
-	 * @see Resource
-	 */
-	void release();
-
-	/**
-	 * @see Resource
-	 */
-	SIZE getSize();
-
-	/**
-	 * @see Resource
-	 */
-	Resource::Type getType();
-
-	/**
-	 * @see Resource
-	 */
-	bool isValid();
-
-	/**
-	 * @return Shader id.
-	 */
-	UINT32 getId();
-
-	/**
-	 * @param type - handle type.
-	 * @return True if handle is used by shader.
-	 */
-	bool hasHandle(HandleType type);
-
-	/**
-	 * @param type - handle type.
-	 * @param data - pointer to 3x3 matrix array.
-	 */
+	UINT32 getId() const;
+	void setVertexAndFragment(string vertex, string fragment);
+	bool hasHandle(HandleType type) const;
 	void setMatrix3(HandleType type, float* data);
-
-	/**
-	 * @param type - handle type.
-	 * @param data - pointer to 4x4 matrix array.
-	 */
 	void setMatrix4(HandleType type, float* data);
 
 	/**
@@ -135,10 +127,6 @@ public:
 	 */
 	void setVector4(HandleType type, float* data, UINT32 count = 1);
 
-	/**
-	 * @param type - handle type.
-	 * @param data - float value.
-	 */
 	void setFloat(HandleType type, float data);
 
 	/**
@@ -148,33 +136,11 @@ public:
 	 */
 	void setFloat(HandleType type, float* data, UINT32 count = 1);
 
-	/**
-	 * @param type - handle type.
-	 * @param data - int value.
-	 */
 	void setInt(HandleType type, int data);
-
-	/**
-	 * @param type - handle type.
-	 * @return Reference to specified handle.
-	 */
 	int& getHandle(HandleType type);
-
-	/**
-	 * @param services - service locator object.
-	 * @return Default sprite shader.
-	 */
-	static Shader* getDefaultSpriteShader(ServiceLocator* services);
-
-	/**
-	 * @param services - service locator object.
-	 * @return Default model shader.
-	 */
-	static Shader* getDefaultModelShader(ServiceLocator* services);
 protected:
-	UINT32 id_;
-	int handles_[HANDLE_COUNT];
-	GraphicsManager* graphicsManager_;
+	UINT32 id;
+	int handles[HANDLE_COUNT];
 };
 
-#endif /* SHADER_H_ */
+#endif

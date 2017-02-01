@@ -30,7 +30,7 @@ HttpResponse::HttpResponse(INT8* data, SIZE size) :
 		memcpy(content_, data, size);
 	}
 	//LOGD("Header: %s", header_.c_str());
-	//LOGD("Content: %s", string(reinterpret_cast<const char*>(content_), size_).c_str());
+	//LOGD("Content: %s", string(reinterpret_cast<const char*>(content_), size).c_str());
 	delete [] data;
 }
 

@@ -1,11 +1,4 @@
-﻿/*
- * GUISurface.cpp
- *
- *  Created on: 2013.07.03
- *      Author: Martynas Šustavičius
- */
-
-#include "../Multiplatform/ServiceLocator.h"
+﻿#include "../Multiplatform/ServiceLocator.h"
 #include "../Multiplatform/GraphicsManager.h"
 #include "GUISurface.h"
 #include "Vertex.h"
@@ -18,69 +11,39 @@
 
 GUISurface::GUISurface(ServiceLocator* services) :
 	Resource(services),
-	surfaceId_(0),
-	widthSize_(DEFAULT),
-	heightSize_(DEFAULT),
-	marginLeft_(0.0f),
-	marginBottom_(0.0f),
-	marginRight_(0.0f),
-	marginTop_(0.0f),
-	posX_(0.0f),
-	posY_(0.0f),
-	width_(0.0f),
-	height_(0.0f),
-	update_(true),
-	textureBackground_(0),
-	cbo_(0)
+	surfaceId(0),
+	widthSize(DEFAULT),
+	heightSize(DEFAULT),
+	marginLeft(0.0f),
+	marginBottom(0.0f),
+	marginRight(0.0f),
+	marginTop(0.0f),
+	posX(0.0f),
+	posY(0.0f),
+	width(0.0f),
+	height(0.0f),
+	shouldUpdate(true),
+	textureBackground(nullptr),
+	cbo(0)
 {}
 
 GUISurface::~GUISurface() {
-	release();
+	GUISurface::release();
 }
 
 bool GUISurface::create() {
- //   marginLeft_ = getSize(getAttribute(ATTR_MARGIN_LEFT),
-	//	(float) getServiceLocator()->getScreenWidth());
-	//marginBottom_ = getSize(getAttribute(ATTR_MARGIN_BOTTOM),
-	//	(float) getServiceLocator()->getScreenHeight());
- //   marginRight_ = getSize(getAttribute(ATTR_MARGIN_RIGHT),
-	//	(float) getServiceLocator()->getScreenWidth());
-	//marginTop_ = getSize(getAttribute(ATTR_MARGIN_TOP),
-	//	(float) getServiceLocator()->getScreenHeight());
-	//width_ = getSize(getAttribute(ATTR_WIDTH),
-	//	(float) getServiceLocator()->getScreenHeight());
-	//height_ = getSize(getAttribute(ATTR_HEIGHT),
-	//	(float) getServiceLocator()->getScreenHeight());
-	// 	if (getAttribute(ATTR_TRANSPARENCY).length() > 0) {
-	//	setTransparency(toFloat(getAttribute(ATTR_TRANSPARENCY).c_str()));
-	//}
-	marginLeft_ = getAttributes().getFloat(ATTR_MARGIN_LEFT, marginLeft_);
-	marginBottom_ = getAttributes().getFloat(ATTR_MARGIN_BOTTOM, marginBottom_);
-    marginRight_ = getAttributes().getFloat(ATTR_MARGIN_RIGHT, marginRight_);
-	marginTop_ = getAttributes().getFloat(ATTR_MARGIN_TOP, marginTop_);
-	width_ = getAttributes().getFloat(ATTR_WIDTH, width_);
-	height_ = getAttributes().getFloat(ATTR_HEIGHT, height_);
+	marginLeft = getAttributes().getFloat(ATTR_MARGIN_LEFT, marginLeft);
+	marginBottom = getAttributes().getFloat(ATTR_MARGIN_BOTTOM, marginBottom);
+    marginRight = getAttributes().getFloat(ATTR_MARGIN_RIGHT, marginRight);
+	marginTop = getAttributes().getFloat(ATTR_MARGIN_TOP, marginTop);
+	width = getAttributes().getFloat(ATTR_WIDTH, width);
+	height = getAttributes().getFloat(ATTR_HEIGHT, height);
 	setTransparency(getAttributes().getFloat(ATTR_TRANSPARENCY, 1.0f));
-	posX_ = marginLeft_;
-	posY_ = marginTop_;
+	posX = marginLeft;
+	posY = marginTop;
 	setBackground(getAttribute(ATTR_BACKGROUND));
-	//string attrWidth = getAttribute(ATTR_WIDTH);
-	//width_ = getSize(
-	//	attrWidth,	getServiceLocator()->getScreenWidth());
-	//if (VAL_FILL == attrWidth) {
-	//	widthSize_ = FILL;
-	//}
-	//string attrHeight = getAttribute(ATTR_HEIGHT);
-	//height_ = getSize(
-	//	attrHeight, getServiceLocator()->getScreenHeight());
-	//if (VAL_FILL == attrHeight) {
-	//	heightSize_ = FILL;
-	//}
-   // if (width_ == 0 ||  height_ == 0) {
-   //     LOGW("Invalid width or height specified for GUI element: %s. "
-			//"Width = %d, height = %d.", getName().c_str(), width_, height_);
-   // }
-			// Genereate separate uv coordinates.
+	
+	// Genereate separate uv coordinates.
     vector<VertexPT> vert;
     VertexPT tmp;
 	float vertices[] = {
@@ -100,8 +63,8 @@ bool GUISurface::create() {
         tmp.pos[2] = vertices[j * 3 + 2];
         vert.push_back(tmp);
     }
-    getServiceLocator()->getGraphicsManager()->setVertexBuffer(
-		cbo_, &vert[0], (UINT32) vert.size() * sizeof(VertexPT));
+    getGraphicsManager()->setVertexBuffer(
+		cbo, &vert[0], vert.size() * sizeof(VertexPT));
 	if (checkGLError("Creating GUI surface resource.")) {
 		release();
 		return false;
@@ -111,10 +74,10 @@ bool GUISurface::create() {
 
 
 void GUISurface::release() {
-	textureBackground_ = 0;
-	update_ = true;
-	if (cbo_ != 0) {
-		getServiceLocator()->getGraphicsManager()->unsetVertexBuffer(cbo_);
+	textureBackground = 0;
+	shouldUpdate = true;
+	if (cbo != 0) {
+		getGraphicsManager()->unsetVertexBuffer(cbo);
 	}
 }
 
@@ -123,7 +86,7 @@ SIZE GUISurface::getSize() {
 }
 
 Resource::Type GUISurface::getType() {
-	return Resource::GUI_SURFACE;
+	return GUI_SURFACE;
 }
 
 bool GUISurface::isValid() {
@@ -138,13 +101,8 @@ SIZE GUISurface::getVertexCount() {
 	return 6;
 }
 
-
-SIZE GUISurface::getNormalCount() {
-	return 0;
-}
-
 SIZE GUISurface::getTexture() {
-	return textureBackground_ == 0 ? 0 : textureBackground_->getId();
+	return textureBackground == nullptr ? 0 : textureBackground->getId();
 }
 
 SIZE GUISurface::getIBO() {
@@ -152,11 +110,11 @@ SIZE GUISurface::getIBO() {
 }
 
 BoundingVolume* GUISurface::getBV() {
-	return 0;
+	return nullptr;
 }
 
 SIZE GUISurface::getCBO() {
-	return cbo_;
+	return cbo;
 }
 
 SIZE GUISurface::getIndexCount() {
@@ -191,33 +149,38 @@ Shader* GUISurface::getDefaultShader() {
 	return 0;
 }
 
-Texture* GUISurface::getPointerToTexture() {
-	return textureBackground_;
+Texture* GUISurface::getPointerToTexture() const
+{
+	return textureBackground;
 }
 
 void GUISurface::setMargins(float left, float top, float right, float bottom) {
-	marginLeft_ = left;
-	marginBottom_ = bottom;
-	marginRight_ = right;
-	marginTop_ = top;
-	posX_ = left;
-	posY_ = top;
+	marginLeft = left;
+	marginBottom = bottom;
+	marginRight = right;
+	marginTop = top;
+	posX = left;
+	posY = top;
 }
 
-float GUISurface::getMarginLeft() {
-	return marginLeft_;
+float GUISurface::getMarginLeft() const
+{
+	return marginLeft;
 }
 
-float GUISurface::getMarginBottom() {
-	return marginBottom_;
+float GUISurface::getMarginBottom() const
+{
+	return marginBottom;
 }
 
-float GUISurface::getMarginRight() {
-	return marginRight_;
+float GUISurface::getMarginRight() const
+{
+	return marginRight;
 }
 
-float GUISurface::getMarginTop() {
-	return marginTop_;
+float GUISurface::getMarginTop() const
+{
+	return marginTop;
 }
 
 void GUISurface::setBackground(string background) {
@@ -229,36 +192,36 @@ void GUISurface::setBackground(string background) {
 			getAmbient().setRGBA(background);
         }
 		Shader* shader = static_cast<Shader*>(
-			getServiceLocator()->getRM()->get(SHADER, SURFACE_BCKG_COLOR));
+			getResourceManager()->get(SHADER, SURFACE_BCKG_COLOR));
 		if (shader == 0) {
 			shader = NEW Shader(getServiceLocator());
 			shader->getAttributes().setString(
 				ATTR_FILE, SURFACE_BCKG_COLOR);
 			shader->create();
-			getServiceLocator()->getRM()->add(SURFACE_BCKG_COLOR, shader);
+			getResourceManager()->add(SURFACE_BCKG_COLOR, shader);
 		}
 		setShader(shader);
     } else {
-        textureBackground_ = static_cast<TextureRGBA*>(
-			getServiceLocator()->getRM()->get(
+        textureBackground = static_cast<TextureRGBA*>(
+			getResourceManager()->get(
 				TEXTURE_2D, background));
-		if (textureBackground_ == 0) {
-			textureBackground_ = Texture::load(getServiceLocator(), background);
-			getServiceLocator()->getRM()->add(background,
-				textureBackground_);
+		if (textureBackground == 0) {
+			textureBackground = Texture::load(getServiceLocator(), background);
+			getResourceManager()->add(background,
+				textureBackground);
 		}
 		Shader* shader = static_cast<Shader*>(
-			getServiceLocator()->getRM()->get(SHADER, SURFACE_BCKG_IMAGE));
+			getResourceManager()->get(SHADER, SURFACE_BCKG_IMAGE));
 		if (shader == 0) {
 			shader = NEW Shader(getServiceLocator());
 			shader->getAttributes().setString(
 				ATTR_FILE, SURFACE_BCKG_IMAGE);
 			shader->create();
-			getServiceLocator()->getRM()->add(SURFACE_BCKG_IMAGE, shader);
+			getResourceManager()->add(SURFACE_BCKG_IMAGE, shader);
 		}
 		setShader(shader);
     }
-	update_ = true;
+	shouldUpdate = true;
 }
 
 string GUISurface::getBackground() {
@@ -266,29 +229,33 @@ string GUISurface::getBackground() {
 }
 
 void GUISurface::setWidth(float width) {
-	width_ = width;
-	update_ = true;
+	this->width = width;
+	shouldUpdate = true;
 }
 
-float GUISurface::getWidth() {
-    return width_;
+float GUISurface::getWidth() const
+{
+    return width;
 }
 
 void GUISurface::setHeight(float height) {
-	height_ = height;
-	update_ = true;
+	this->height = height;
+	shouldUpdate = true;
 }
 
-float GUISurface::getHeight() {
-    return height_;
+float GUISurface::getHeight() const
+{
+    return height;
 }
 
-float GUISurface::getPosX() {
-    return posX_;
+float GUISurface::getPosX() const
+{
+    return posX;
 }
 
-float GUISurface::getPosY() {
-    return posY_;
+float GUISurface::getPosY() const
+{
+    return posY;
 }
 
 UINT32 GUISurface::convertUnitsToPixels(UINT32 units, UnitType type) {

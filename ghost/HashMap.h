@@ -235,7 +235,7 @@
 // Hash map class template
 //class ByteBufferHashMap {
 //public:
-//    ByteBufferHashMap(SIZE length, SIZE size) : size_(size), collisions_(0), longestCollision_(0) {
+//    ByteBufferHashMap(SIZE length, SIZE size) : size(size), collisions_(0), longestCollision_(0) {
 //		LOGD("Size of hashmap: %f MB.", (sizeof(HashNode<INT8*, int>) + sizeof(INT8*) + sizeof(int) + size) * TABLE_SIZE / 1024.0f / 1024.0f);
 //        // construct zero initialized hash table of size
 //        table = NEW HashNode<INT8*, int> *[TABLE_SIZE]();
@@ -258,7 +258,7 @@
 //
 //	UINT64 hash(INT8* buffer) {
 //		UINT64 h = 0;
-//		for (UINT32 i = 0; i < size_; i++) {
+//		for (UINT32 i = 0; i < size; i++) {
 //			h = 5 * h + buffer[i];
 //		}
 //		return UINT64(h) % TABLE_SIZE;
@@ -270,7 +270,7 @@
 //		INT8* memkey = entry->getKey();
 //
 //        while (entry != NULL) {
-//            if (memcmp(&memkey, &key, size_) == 0) {
+//            if (memcmp(&memkey, &key, size) == 0) {
 //                value = entry->getValue();
 //				LOGD("TWO");
 //                return true;
@@ -286,7 +286,7 @@
 //        HashNode<INT8*, int> *entry = table[hashValue];
 //		INT8* memkey = entry->getKey();
 //		int c = 0;
-//        while (entry != NULL && memcmp(&memkey, &key, size_) > 0) {
+//        while (entry != NULL && memcmp(&memkey, &key, size) > 0) {
 //			collisions_++;
 //			c++;
 //            prev = entry;
@@ -350,7 +350,7 @@
 //private:
 //    // hash table
 //    HashNode<INT8*, int>** table;
-//	SIZE size_;
+//	SIZE size;
 //public:
 //	UINT32 collisions_;
 //	UINT32 longestCollision_;

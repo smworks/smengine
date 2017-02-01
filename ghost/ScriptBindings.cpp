@@ -284,18 +284,6 @@ int playSound(lua_State* L) {
 	return 0;
 }
 
-int getTexture(lua_State* L) {
-	ASSERT(SM_GET_ARGUMENT_COUNT(L) == 1, "No texture name specified for getTexture()");
-	string val = SM_GET_STRING(L, 0);
-	Texture* texture = static_cast<Texture*>(SM_GET_RM()->get(Resource::TEXTURE_2D, val));
-	if (texture == 0) {
-		SM_RETURN_NIL(L);
-	} else {
-		SM_RETURN_OBJECT(L, "Texture", Texture, texture);
-	}
-	return 1;
-}
-
 int loadScene(lua_State* L) {
 	string val = SM_GET_STRING(L, 0);
 	SM_GET_SL()->getDB()->setString(Database::LOAD_SECOND_SCRIPT, val);
@@ -326,7 +314,6 @@ void registerFunctions() {
 	ScriptManager::addFunction("print", print);
 	ScriptManager::addFunction("pointerIsOver", pointerIsOver);
 	ScriptManager::addFunction("playSound", playSound);
-	ScriptManager::addFunction("getTexture", getTexture);
 	ScriptManager::addFunction("loadScene", loadScene);
 	ScriptManager::addFunction("exit", exit);
 	ScriptManager::addFunction("getScreenWidth", getScreenWidth);
@@ -594,6 +581,7 @@ int setVisibility(lua_State* L) {
 	Node* node = SM_GET_OBJECT(L, 0, Node);
 	bool state = SM_GET_BOOL(L, 1);
 	node->setState(Node::RENDERABLE, state);
+	SM_GET_SL()->getGUIManager()->refreshNodes(SM_GET_SL()->getRootNode());
 	return 0;
 }
 
@@ -790,7 +778,7 @@ int nodeSetHeight(lua_State* L) {
 		return 0;
 	}
 	float val = SM_GET_FLOAT(L, 1);
-	surface->setWidth(val);
+	surface->setHeight(val);
 	return 0;
 }
 
@@ -1169,9 +1157,8 @@ int newSprite(lua_State* L) {
 	int argc = SM_GET_ARGUMENT_COUNT(L);
 	ASSERT(argc >= 1 && argc <= 4, "Argument count for Sprite constructor is invalid.");
 	string val = SM_GET_STRING(L, 0);
-	Sprite* sprite = static_cast<Sprite*>(SM_GET_RM()->get(
-		Resource::SPRITE, val));
-	if (sprite == 0) {
+	Sprite* sprite = static_cast<Sprite*>(SM_GET_RM()->get(Resource::SPRITE, val));
+	if (sprite == nullptr) {
 		sprite = NEW Sprite(SM_GET_SL());
 		if (argc == 3 || argc == 4) {
 			float width = SM_GET_FLOAT(L, 1);
@@ -1412,7 +1399,7 @@ int newGUIText(lua_State* L) {
 void registerGUIText() {
     unordered_map<string, int (*)(lua_State*)> methods;
 	ADD_METHOD(methods, "new", newGUIText);
-    ScriptManager::addClass("GUIText", methods);
+    ScriptManager::addClass("Label", methods);
 }
 
 int newGUIButton(lua_State* L) {

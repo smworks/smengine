@@ -138,7 +138,17 @@ int Sprite::getUVOffset() {
 }
 
 Shader* Sprite::getDefaultShader() {
-	return Shader::getDefaultSpriteShader(getServiceLocator());
+	string name = "default_sprite_shader";
+	Shader* shader = dynamic_cast<Shader*>(getResourceManager()->get(SHADER, name));
+	if (shader == nullptr)
+	{
+		auto pair = getGraphicsManager()->getDefaultSpriteShader();
+		shader = NEW Shader(getServiceLocator());
+		shader->setVertexAndFragment(pair.first, pair.second);
+		shader->create();
+		getResourceManager()->add(name, shader);
+	}
+	return shader;
 }
 
 void Sprite::setTexture(Texture* texture) {

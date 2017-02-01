@@ -11,217 +11,160 @@
 #include "../Multiplatform/FileManager.h"
 #include "../ResourceManager.h"
 #include "../ScriptManager.h"
-#include "../Utils.h"
 
 const string Shader::ATTR_VERTEX_SHADER = "vertex_shader";
 const string Shader::ATTR_FRAGMENT_SHADER = "fragment_shader";
 
 Shader::Shader(ServiceLocator* services) :
 	Resource(services),
-	id_(0),
-	graphicsManager_(0)
-{}
-
-Shader::~Shader() {
-	release();
+	id(0)
+{
 }
 
-bool Shader::create() {
-	graphicsManager_ = getServiceLocator()->getGraphicsManager();
-	FileManager* fm = getServiceLocator()->getFileManager();
+Shader::~Shader()
+{
+	Shader::release();
+}
+
+bool Shader::create()
+{
 	string file = getAttribute(ATTR_FILE);
-	string vert, frag;
-	if (file.length() > 0) {
-		vert = fm->loadText(GHOST_SHADERS + file + SHADER_VERTEX_SUFFIX);
-		frag = fm->loadText(GHOST_SHADERS + file + SHADER_FRAGMENT_SUFFIX);
-		if (!graphicsManager_->setShader(id_, vert, frag, handles_)) {
-			LOGW("Unable to compile shader: %s.", file.c_str());
-			return false;
-		}
-		LOGD("Loaded \"%s\" shader.", file.c_str());
-	} else {
+	string vert, frag, name;
+
+	if (file.length() > 0)
+	{
+		vert = getFileManager()->loadText(GHOST_SHADERS + file + SHADER_VERTEX_SUFFIX);
+		frag = getFileManager()->loadText(GHOST_SHADERS + file + SHADER_FRAGMENT_SUFFIX);
+		name = file;
+	}
+	else
+	{
 		vert = getAttribute(ATTR_VERTEX_SHADER);
 		frag = getAttribute(ATTR_FRAGMENT_SHADER);
-		if (vert.length() > 0 && frag.length() > 0) {
-			if (!graphicsManager_->setShader(id_, vert, frag, handles_)) {
-				LOGW("Unable to compile shader: %s.", getName().c_str());
-				return false;
-			}
-		} else {
-			LOGW("Neither shader file nor vertex and fragment codes specified for node: %s.",
-				getName().c_str());
-			return false;
-		}
+		name = getName();
 	}
+
+	ASSERT(vert.length() > 0 && frag.length() > 0,
+		"Neither shader file nor vertex and fragment codes specified for node: %s.",
+		name.c_str());
+	ASSERT(getGraphicsManager()->setShader(id, vert, frag, handles),
+		"Unable to compile shader: %s.", name.c_str());
+
+	LOGD("Loaded \"%s\" shader.", name.c_str());
 	return true;
 }
 
-void Shader::release() {
-	if (id_ != 0) {
-		getServiceLocator()->getGraphicsManager()->unsetShader(id_);
-		id_ = 0;
+void Shader::release()
+{
+	if (id != 0)
+	{
+		getGraphicsManager()->unsetShader(id);
+		id = 0;
 	}
 }
 
-SIZE Shader::getSize() {
+SIZE Shader::getSize()
+{
 	return sizeof(Shader);
 }
 
-Resource::Type Shader::getType() {
-	return Resource::SHADER;
+Resource::Type Shader::getType()
+{
+	return SHADER;
 }
 
-bool Shader::isValid() {
-	return id_ > 0;
+bool Shader::isValid()
+{
+	return id > 0;
 }
 
-UINT32 Shader::getId() {
-	return id_;
+UINT32 Shader::getId() const
+{
+	return id;
 }
 
-bool Shader::hasHandle(HandleType type) {
-	return handles_[type] != -1;
+void Shader::setVertexAndFragment(string vertex, string fragment)
+{
+	getAttributes().setString(ATTR_VERTEX_SHADER, vertex);
+	getAttributes().setString(ATTR_FRAGMENT_SHADER, fragment);
 }
 
-void Shader::setMatrix3(HandleType type, float* data) {
-	if (handles_[type] == -1) {
+bool Shader::hasHandle(HandleType type) const
+{
+	return handles[type] != -1;
+}
+
+void Shader::setMatrix3(HandleType type, float* data)
+{
+	if (handles[type] == -1)
+	{
 		return;
 	}
-	graphicsManager_->setShaderValue(
-		id_, handles_[type], MATRIX3, 1, data);
+	getGraphicsManager()->setShaderValue(
+		id, handles[type], MATRIX3, 1, data);
 }
 
-void Shader::setMatrix4(HandleType type, float* data) {
-	if (handles_[type] == -1) {
+void Shader::setMatrix4(HandleType type, float* data)
+{
+	if (handles[type] == -1)
+	{
 		return;
 	}
-	graphicsManager_->setShaderValue(
-		id_, handles_[type], MATRIX4, 1, data);
+	getGraphicsManager()->setShaderValue(
+		id, handles[type], MATRIX4, 1, data);
 }
 
-void Shader::setVector3(HandleType type, float* data, UINT32 count) {
-	if (handles_[type] == -1) {
+void Shader::setVector3(HandleType type, float* data, UINT32 count)
+{
+	if (handles[type] == -1)
+	{
 		return;
 	}
-	graphicsManager_->setShaderValue(
-		id_, handles_[type], VECTOR3, count, data);
+	getGraphicsManager()->setShaderValue(
+		id, handles[type], VECTOR3, count, data);
 }
 
-void Shader::setVector4(HandleType type, float* data, UINT32 count) {
-	if (handles_[type] == -1) {
+void Shader::setVector4(HandleType type, float* data, UINT32 count)
+{
+	if (handles[type] == -1)
+	{
 		return;
 	}
-	graphicsManager_->setShaderValue(
-		id_, handles_[type], VECTOR4, count, data);
+	getGraphicsManager()->setShaderValue(
+		id, handles[type], VECTOR4, count, data);
 }
 
-void Shader::setFloat(HandleType type, float data) {
-	if (handles_[type] == -1) {
+void Shader::setFloat(HandleType type, float data)
+{
+	if (handles[type] == -1)
+	{
 		return;
 	}
-	graphicsManager_->setShaderValue(
-		id_, handles_[type], FLOAT, 1, &data);
+	getGraphicsManager()->setShaderValue(
+		id, handles[type], FLOAT, 1, &data);
 }
 
-void Shader::setFloat(HandleType type, float* data, UINT32 count) {
-	if (handles_[type] == -1) {
+void Shader::setFloat(HandleType type, float* data, UINT32 count)
+{
+	if (handles[type] == -1)
+	{
 		return;
 	}
-	graphicsManager_->setShaderValue(
-		id_, handles_[type], FLOAT, 1, data);
+	getGraphicsManager()->setShaderValue(
+		id, handles[type], FLOAT, 1, data);
 }
 
-void Shader::setInt(HandleType type, int data) {
-	if (handles_[type] == -1) {
+void Shader::setInt(HandleType type, int data)
+{
+	if (handles[type] == -1)
+	{
 		return;
 	}
-	graphicsManager_->setShaderValue(
-		id_, handles_[type], INT, 1, &data);
+	getGraphicsManager()->setShaderValue(
+		id, handles[type], INT, 1, &data);
 }
 
-int& Shader::getHandle(HandleType type) {
-	return handles_[type];
-}
-
-Shader* Shader::getDefaultSpriteShader(ServiceLocator* services) {
-	string name = "default_sprite_shader";
-	string vert = "uniform mat4 uWVP;\
-attribute vec4 attrPos;\
-attribute vec2 attrUV;\
-varying vec2 varTexCoords;\
-void main(void) {\
-   gl_Position = uWVP * attrPos;\
-   varTexCoords = attrUV;\
-}";
-	string frag = "uniform sampler2D mainTexture;\
-varying vec2 varTexCoords;\
-void main(void) {\
-	vec4 col = texture2D(mainTexture, varTexCoords);\
-	gl_FragColor = col;\
-}\
-";
-	Shader* shader = dynamic_cast<Shader*>(services->getRM()->get(SHADER, name));
-	if (shader == 0) {
-		shader = NEW Shader(services);
-		shader->getAttributes().setString(ATTR_VERTEX_SHADER, vert);
-		shader->getAttributes().setString(ATTR_FRAGMENT_SHADER, frag);
-		shader->create();
-		services->getRM()->add(name, shader);
-	}
-	return shader;
-}
-
-Shader* Shader::getDefaultModelShader(ServiceLocator* services) {
-	string name = "default_model_shader";
-	string vert = "uniform mat4 uWVP;\
-attribute vec4 attrPos;\
-attribute vec2 attrUV;\
-varying vec2 varTexCoords;\
-void main(void)\
-{\
-	varTexCoords = attrUV;\
-	gl_Position = uWVP * attrPos;\
-}";
-	string frag = "uniform vec3 uAmbient;\
-uniform vec3 uDiffuse;\
-// Texture data.\
-uniform sampler2D mainTexture;\
-uniform float uMainTexture;\
-varying vec2 varTexCoords;\
-//---------------------------------------------------------\
-// Calculates fog factor for specified pixel.\
-// Value 1.442695 is the result of log2.\
-//---------------------------------------------------------\
-/*float fogFactor() {\
-	float z = gl_FragCoord.z / gl_FragCoord.w;\
-	float fogFactor = exp2(\
-		-uFogDensity * uFogDensity * z * z * 1.442695);\
-	return clamp(fogFactor, 0.0, 1.0);\
-}*/\
-float linearDepth() {\
-	float n = 0.1; // camera z near\
-	float f = 300.0; // camera z far\
-	float zoverw =gl_FragCoord.z;\
-	return (2.0 * n) / (f + n - zoverw * (f - n));\
-}\
-void main(void)\
-{\
-	float depth = 1.0 - linearDepth();\
-	vec4 col = vec4(depth, depth, depth, 1.0);\
-	\
-	if (uMainTexture > 0.5) {\
-		gl_FragColor = col * texture2D(mainTexture, varTexCoords);\
-	} else {\
-		gl_FragColor = col;\
-	}\
-}";
-	Shader* shader = dynamic_cast<Shader*>(services->getRM()->get(SHADER, name));
-	if (shader == 0) {
-		shader = NEW Shader(services);
-		shader->getAttributes().setString(ATTR_VERTEX_SHADER, vert);
-		shader->getAttributes().setString(ATTR_FRAGMENT_SHADER, frag);
-		shader->create();
-		services->getRM()->add(name, shader);
-	}
-	return shader;
+int& Shader::getHandle(HandleType type)
+{
+	return handles[type];
 }

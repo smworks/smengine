@@ -1,4 +1,5 @@
 ﻿#include "WindowsGraphicsManager.h"
+#include "../../Input.h"
 
 #ifdef ENABLE_GRAPHICS
 
@@ -7,21 +8,25 @@
 #include "../../Resources/Shader.h"
 #include "../../Resources/Texture.h"
 
-bool isExtensionSupported(string extension) {
+bool isExtensionSupported(string extension)
+{
 	const char* ext = (const char*) glGetString(GL_EXTENSIONS);
 	string extensions(ext == 0 ? "" : ext);
-	if (extensions.find(extension) != string::npos) {
+	if (extensions.find(extension) != string::npos)
+	{
 		return true;
 	}
 	return false;
 }
 
-const char* getGLString(GLenum id) {
-    const char *info = (const char *) glGetString(id);
+const char* getGLString(GLenum id)
+{
+	const char* info = (const char *) glGetString(id);
 	return info;
 }
 
-WindowsGraphicsManager::WindowsGraphicsManager(ServiceLocator* services) : GraphicsManager(services) {
+WindowsGraphicsManager::WindowsGraphicsManager(ServiceLocator* services) : GraphicsManager(services)
+{
 	LOGD("OpenGL information:");
 	LOGD("Version: %s.", getGLString(GL_VERSION));
 	LOGD("Vendor: %s.", getGLString(GL_VENDOR));
@@ -30,11 +35,13 @@ WindowsGraphicsManager::WindowsGraphicsManager(ServiceLocator* services) : Graph
 	LOGD("Created Windows graphics manager.");
 }
 
-WindowsGraphicsManager::~WindowsGraphicsManager() {
+WindowsGraphicsManager::~WindowsGraphicsManager()
+{
 	LOGD("Deleted Windows graphics manager.");
 }
 
-bool WindowsGraphicsManager::isGraphicsContextAvailable() {
+bool WindowsGraphicsManager::isGraphicsContextAvailable()
+{
 	return wglGetCurrentContext() != 0;
 }
 
@@ -45,10 +52,13 @@ bool WindowsGraphicsManager::setTexture(
 	glGenTextures(1, &id);
 	bindTexture(id);
 	int type = GL_RGBA;
-	if (textureType == Texture::MONO) {
+	if (textureType == Texture::MONO)
+	{
 		type = GL_ALPHA;
 		glPixelStorei(GL_UNPACK_ALIGNMENT, 1);
-	} else if (textureType == Texture::RGB) {
+	}
+	else if (textureType == Texture::RGB)
+	{
 		type = GL_RGB;
 	}
 	glTexImage2D(
@@ -56,22 +66,23 @@ bool WindowsGraphicsManager::setTexture(
 		width, height, 0, type,
 		GL_UNSIGNED_BYTE, image);
 	int minFilter = GL_LINEAR;
-	if (useMipmaps) {
+	if (useMipmaps)
+	{
 		glGenerateMipmap(GL_TEXTURE_2D);
 		minFilter = GL_LINEAR_MIPMAP_LINEAR;
 	}
 	glTexParameteri(GL_TEXTURE_2D,
-		GL_TEXTURE_MIN_FILTER, minFilter);
+	                             GL_TEXTURE_MIN_FILTER, minFilter);
 	glTexParameteri(GL_TEXTURE_2D,
-		GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+	                             GL_TEXTURE_MAG_FILTER, GL_LINEAR);
 	int wrap_u = wrapURepeat ?
-		GL_REPEAT : GL_CLAMP_TO_EDGE;
+		             GL_REPEAT : GL_CLAMP_TO_EDGE;
 	int wrap_v = wrapVRepeat ?
-		GL_REPEAT : GL_CLAMP_TO_EDGE;
+		             GL_REPEAT : GL_CLAMP_TO_EDGE;
 	glTexParameteri(GL_TEXTURE_2D,
-		GL_TEXTURE_WRAP_S, wrap_u);
+	                             GL_TEXTURE_WRAP_S, wrap_u);
 	glTexParameteri(GL_TEXTURE_2D,
-		GL_TEXTURE_WRAP_T, wrap_v);
+	                             GL_TEXTURE_WRAP_T, wrap_v);
 	return !checkGLError("Loading texture.");
 }
 
@@ -80,15 +91,19 @@ bool WindowsGraphicsManager::updateTexture(
 	UINT32 width, UINT32 height, bool useMipmaps, int textureType)
 {
 	int type = GL_RGBA;
-	if (textureType == Texture::MONO) {
+	if (textureType == Texture::MONO)
+	{
 		type = GL_ALPHA;
-	} else if (textureType == Texture::RGB) {
+	}
+	else if (textureType == Texture::RGB)
+	{
 		type = GL_RGB;
 	}
 	bindTexture(id);
 	glTexSubImage2D(GL_TEXTURE_2D, 0, colOffset, rowOffset,
-		width, height, type, GL_UNSIGNED_BYTE, partBuffer);
-	if (useMipmaps) {
+	                             width, height, type, GL_UNSIGNED_BYTE, partBuffer);
+	if (useMipmaps)
+	{
 		glGenerateMipmap(GL_TEXTURE_2D);
 	}
 	return !checkGLError("Updating texture.");
@@ -100,24 +115,26 @@ bool WindowsGraphicsManager::setCubeMap(
 {
 	glGenTextures(1, &id);
 	bindTexture(id, 0, CUBE_MAP);
-	for (int i = 0; i < 6; i++) {
+	for (int i = 0; i < 6; i++)
+	{
 		glTexImage2D(GL_TEXTURE_CUBE_MAP_POSITIVE_X + i,
-			0, GL_RGBA, width, height,
-			0, GL_RGBA, GL_UNSIGNED_BYTE, images[i]);
+		                                           0, GL_RGBA, width, height,
+		                                           0, GL_RGBA, GL_UNSIGNED_BYTE, images[i]);
 	}
 	int minFilter = GL_LINEAR;
-	if (useMipmaps) {
+	if (useMipmaps)
+	{
 		glGenerateMipmap(GL_TEXTURE_CUBE_MAP);
 		minFilter = GL_LINEAR_MIPMAP_LINEAR;
 	}
 	glTexParameteri(GL_TEXTURE_CUBE_MAP,
-		GL_TEXTURE_MIN_FILTER, minFilter);
+	                                   GL_TEXTURE_MIN_FILTER, minFilter);
 	glTexParameteri(GL_TEXTURE_CUBE_MAP,
-	GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+	                                   GL_TEXTURE_MAG_FILTER, GL_LINEAR);
 	int wrap_u = wrapURepeat ?
-		GL_REPEAT : GL_CLAMP_TO_EDGE;
+		             GL_REPEAT : GL_CLAMP_TO_EDGE;
 	int wrap_v = wrapVRepeat ?
-		GL_REPEAT : GL_CLAMP_TO_EDGE;
+		             GL_REPEAT : GL_CLAMP_TO_EDGE;
 	glTexParameteri(
 		GL_TEXTURE_CUBE_MAP,
 		GL_TEXTURE_WRAP_S, wrap_u);
@@ -131,7 +148,8 @@ bool WindowsGraphicsManager::setCubeMap(
 	return !checkGLError("Loading cube map.");
 }
 
-void WindowsGraphicsManager::unsetTexture(UINT32 id) {
+void WindowsGraphicsManager::unsetTexture(UINT32 id)
+{
 	glDeleteTextures(1, &id);
 }
 
@@ -142,27 +160,32 @@ void WindowsGraphicsManager::unsetTexture(UINT32 id) {
  * @return Id of the shader, or
  * zero if method failed.
  */
-int loadShader(GLuint type, const char* source) {
+int loadShader(GLuint type, const char* source)
+{
 	GLuint id;
 	GLint compiled;
-	if ((id = glCreateShader(type)) == 0) {
+	if ((id = glCreateShader(type)) == 0)
+	{
 		LOGW("Call to glCreateShader failed.");
 		return 0;
 	}
 	glShaderSource(id, 1, (const GLchar**) &source, 0);
 	glCompileShader(id);
 	glGetShaderiv(id, GL_COMPILE_STATUS, &compiled);
-	if (compiled == GL_FALSE) {
+	if (compiled == GL_FALSE)
+	{
 		GLint infoLen = 0;
 		glGetShaderiv(id, GL_INFO_LOG_LENGTH, &infoLen);
-		if (infoLen > 1) {
+		if (infoLen > 1)
+		{
 			char* infoLog = (char*) malloc(sizeof(char) * infoLen);
 			glGetShaderInfoLog(id, infoLen, 0, infoLog);
 			LOGE("Error compiling shader: %s", infoLog);
 			LOGE("Shader content:\n%s", source);
 			free(infoLog);
 		}
-		else {
+		else
+		{
 			LOGW("Unsuccessful shader compilation with no error description.");
 		}
 		glDeleteShader(id);
@@ -176,16 +199,19 @@ bool WindowsGraphicsManager::setShader(
 {
 	GLuint vertexId, fragmentId;
 	GLint linked;
-	if ((vertexId = loadShader(GL_VERTEX_SHADER, vert.c_str())) == 0) {
+	if ((vertexId = loadShader(GL_VERTEX_SHADER, vert.c_str())) == 0)
+	{
 		LOGW("Vertex part of shader not loaded for \"%s\".", vert.c_str());
 		return false;
 	}
-	if ((fragmentId = loadShader(GL_FRAGMENT_SHADER, frag.c_str())) == 0) {
+	if ((fragmentId = loadShader(GL_FRAGMENT_SHADER, frag.c_str())) == 0)
+	{
 		LOGW("Fragment part of shader not loaded for \"%s\".", frag.c_str());
 		glDeleteShader(vertexId);
 		return false;
 	}
-	if ((id = glCreateProgram()) == 0) {
+	if ((id = glCreateProgram()) == 0)
+	{
 		LOGW("Unable to create shader program.");
 		glDeleteShader(vertexId);
 		glDeleteShader(fragmentId);
@@ -199,16 +225,19 @@ bool WindowsGraphicsManager::setShader(
 	glDeleteShader(fragmentId);
 	// Check the link status
 	glGetProgramiv(id, GL_LINK_STATUS, &linked);
-	if (!linked) {
+	if (!linked)
+	{
 		GLint infoLen = 0;
 		glGetProgramiv(id, GL_INFO_LOG_LENGTH, &infoLen);
-		if (infoLen > 1) {
+		if (infoLen > 1)
+		{
 			char* infoLog = (char*) malloc(sizeof(char) * infoLen);
 			glGetProgramInfoLog(id, infoLen, NULL, infoLog);
 			LOGW("Error linking program: %s.", infoLog);
 			free(infoLog);
 		}
-		else {
+		else
+		{
 			LOGW("Failed to link shader. No error description available.");
 		}
 		glDeleteProgram(id);
@@ -234,8 +263,8 @@ bool WindowsGraphicsManager::setShader(
 	handles[Shader::FOG_DENSITY] = glGetUniformLocation(id, SHADER_FOG_DENSITY);
 	handles[Shader::TIMER] = glGetUniformLocation(id, SHADER_TIMER);
 	handles[Shader::POS] = glGetAttribLocation(id, SHADER_POS);
-	handles[Shader::NORMAL] = glGetAttribLocation(id,	SHADER_NORMAL);
-	handles[Shader::UV] = glGetAttribLocation(id,	SHADER_UV);
+	handles[Shader::NORMAL] = glGetAttribLocation(id, SHADER_NORMAL);
+	handles[Shader::UV] = glGetAttribLocation(id, SHADER_UV);
 	handles[Shader::COL] = glGetAttribLocation(id, SHADER_COL);
 	handles[Shader::FOREGROUND] = glGetUniformLocation(id, SHADER_FOREGROUND);
 	handles[Shader::BACKGROUND] = glGetUniformLocation(id, SHADER_BACKGROUND);
@@ -250,7 +279,8 @@ bool WindowsGraphicsManager::setShader(
 	return !checkGLError("Loading shader.");
 }
 
-void WindowsGraphicsManager::unsetShader(UINT32 id) {
+void WindowsGraphicsManager::unsetShader(UINT32 id)
+{
 	glDeleteProgram(id);
 }
 
@@ -258,7 +288,8 @@ void WindowsGraphicsManager::setShaderValue(
 	UINT32 id, int& handle, int type,
 	UINT32 count, void* data)
 {
-	switch (type) {
+	switch (type)
+	{
 	case Shader::INT:
 		glUniform1i(handle, *(int*) data);
 		break;
@@ -331,7 +362,8 @@ bool WindowsGraphicsManager::setFrameBuffer(
 		GL_TEXTURE_2D, depth, 0);
 	GLenum status;
 	status = glCheckFramebufferStatus(GL_DRAW_FRAMEBUFFER);
-	switch (status) {
+	switch (status)
+	{
 	case GL_FRAMEBUFFER_COMPLETE:
 		// Success.
 		break;
@@ -367,51 +399,63 @@ bool WindowsGraphicsManager::setFrameBuffer(
 	return !checkGLError("Setting frame buffer.");
 }
 
-void WindowsGraphicsManager::unsetFrameBuffer(UINT32& id, UINT32& color, UINT32& depth) {
-	if (id != 0) {
+void WindowsGraphicsManager::unsetFrameBuffer(UINT32& id, UINT32& color, UINT32& depth)
+{
+	if (id != 0)
+	{
 		glDeleteFramebuffers(1, &id);
 		id = 0;
 	}
-	if (color != 0) {
+	if (color != 0)
+	{
 		glDeleteTextures(1, &color);
 		color = 0;
 	}
-	if (depth != 0) {
+	if (depth != 0)
+	{
 		glDeleteTextures(1, &depth);
 		depth = 0;
 	}
 }
 
-void WindowsGraphicsManager::useFrameBuffer(UINT32 id) {
+void WindowsGraphicsManager::useFrameBuffer(UINT32 id)
+{
 	glBindFramebuffer(GL_FRAMEBUFFER, id);
 }
 
-bool WindowsGraphicsManager::setVertexBuffer(UINT32& id, void* buffer, int size) {
-	if (id == 0) {
+bool WindowsGraphicsManager::setVertexBuffer(UINT32& id, void* buffer, int size)
+{
+	if (id == 0)
+	{
 		glGenBuffers(1, &id);
 	}
 	bindBuffer(id);
-	glBufferData(GL_ARRAY_BUFFER, size,	buffer, GL_STATIC_DRAW);
+	glBufferData(GL_ARRAY_BUFFER, size, buffer, GL_STATIC_DRAW);
 	return !checkGLError("Setting vertex buffer");
 }
 
-void WindowsGraphicsManager::unsetVertexBuffer(UINT32& id) {
-	if (id != 0) {
+void WindowsGraphicsManager::unsetVertexBuffer(UINT32& id)
+{
+	if (id != 0)
+	{
 		bindBuffer(0);
 		glDeleteBuffers(1, &id);
 		id = 0;
 	}
 }
 
-void WindowsGraphicsManager::unsetVertexBuffers(UINT32 count, UINT32*& buffers) {
+void WindowsGraphicsManager::unsetVertexBuffers(UINT32 count, UINT32*& buffers)
+{
 	bindBuffer(0);
 	glDeleteBuffers(count, buffers);
 	delete [] buffers;
 	buffers = 0;
 }
 
-bool WindowsGraphicsManager::setIndexBuffer(UINT32& id, void* buffer, int size) {
-	if (id == 0) {
+bool WindowsGraphicsManager::setIndexBuffer(UINT32& id, void* buffer, int size)
+{
+	if (id == 0)
+	{
 		glGenBuffers(1, &id);
 	}
 	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, id);
@@ -420,20 +464,25 @@ bool WindowsGraphicsManager::setIndexBuffer(UINT32& id, void* buffer, int size) 
 	return !checkGLError("Setting index buffer");
 }
 
-void WindowsGraphicsManager::unsetIndexBuffer(UINT32& id) {
+void WindowsGraphicsManager::unsetIndexBuffer(UINT32& id)
+{
 	unsetVertexBuffer(id);
 }
 
-void WindowsGraphicsManager::clearColorAndDepthBuffers() {
+void WindowsGraphicsManager::clearColorAndDepthBuffers()
+{
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 }
 
-void WindowsGraphicsManager::setViewPort(float width, float height) {
+void WindowsGraphicsManager::setViewPort(float width, float height)
+{
 	glViewport(0, 0, int(width), int(height));
 }
 
-bool WindowsGraphicsManager::checkSupport(Support key) {
-	switch (key) {
+bool WindowsGraphicsManager::checkSupport(Support key)
+{
+	switch (key)
+	{
 	case SUPPORT_NPOT_TEXTURES:
 		return isExtensionSupported("ARB_texture_non_power_of_two");
 		break;
@@ -443,6 +492,73 @@ bool WindowsGraphicsManager::checkSupport(Support key) {
 	default:
 		return false;
 	}
+}
+
+pair<string, string> WindowsGraphicsManager::getDefaultSpriteShader()
+{
+	string vert =
+		"uniform mat4 uWVP;"
+		"attribute vec4 attrPos;"
+		"attribute vec2 attrUV;"
+		"varying vec2 varTexCoords;"
+		"void main(void) {"
+		"	gl_Position = uWVP * attrPos;"
+		"	varTexCoords = attrUV;"
+		"}";
+	string frag =
+		"uniform sampler2D mainTexture;"
+		"varying vec2 varTexCoords;"
+		"void main(void) {"
+		"	vec4 col = texture2D(mainTexture, varTexCoords);"
+		"	gl_FragColor = col;"
+		"}";
+	return pair<string, string>(vert, frag);
+}
+
+pair<string, string> WindowsGraphicsManager::getDefaultModelShader()
+{
+	string vert =
+		"uniform mat4 uWVP;"
+		"attribute vec4 attrPos;"
+		"attribute vec2 attrUV;"
+		"varying vec2 varTexCoords;"
+		"void main(void)"
+		"{"
+		"	varTexCoords = attrUV;"
+		"	gl_Position = uWVP * attrPos;"
+		"}";
+	string frag = "uniform vec3 uAmbient;"
+		"uniform vec3 uDiffuse;"
+		"uniform sampler2D mainTexture;"
+		"uniform float uMainTexture;"
+		"varying vec2 varTexCoords;"
+		"float linearDepth() {"
+		"	float n = 0.1; // camera z near"
+		"	float f = 300.0; // camera z far"
+		"	float zoverw = gl_FragCoord.z;"
+		"	return (2.0 * n) / (f + n - zoverw * (f - n));"
+		"}"
+		"void main(void)"
+		"{"
+		"	float depth = 1.0 - linearDepth();"
+		"	vec4 col = vec4(depth, depth, depth, 1.0);"
+		"	if (uMainTexture > 0.5) {"
+		"		gl_FragColor = col * texture2D(mainTexture, varTexCoords);"
+		"	} else {"
+		"		gl_FragColor = col;"
+		"	}"
+		"}";
+	return pair<string, string>(vert, frag);
+}
+
+pair<string, string> WindowsGraphicsManager::getDefaultTextShader()
+{
+	return pair<string, string>("", "");
+}
+
+pair<string, string> WindowsGraphicsManager::getDefaultSurfaceShader()
+{
+	return pair<string, string>("", "");
 }
 
 #else

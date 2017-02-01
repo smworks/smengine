@@ -20,7 +20,7 @@ function start()
     plane:setType("plane")
     plane:setAmbient("#FFFFFFFF")
     plane:setShader(Shader.new("temp_model"))
-    plane:setTexture(getTexture("lab_floor.png"))
+    plane:setTexture(Texture.new("lab_floor.png"))
     plane:setPosY(0.0)
 	plane:setScaleXYZ(100, 1, 100)
     plane:enablePhysics()
@@ -57,6 +57,34 @@ function start()
 	pun:setString("cull_face", "false");
 	pun:setType("mesh")
 	pun:setString("mass", "10000.0f")
+	pun:enablePhysics()
+
+	print "Loading car_body"
+	pun = Model.new("car_body")
+	pun:setPosY(100.0)
+	pun:setPosZ(-1.0)
+	pun:setShader(Shader.new("default_model"))
+	pun:setString("file", "car_body.sm")
+	pun:setType("mesh")
+	pun:setString("mass", "1000.0f")
+	pun:enablePhysics()
+
+	print "Loading dungeon"
+	pun = Model.new("dungeon")
+	pun:setShader(Shader.new("default_model"))
+	pun:setString("file", "dungeon.sm")
+	pun:setType("mesh")
+	pun:setScaleXYZ(10, 10, 10)
+
+	print "Loading car wheel"
+	pun = Model.new("car_wheel")
+	pun:setPosY(100.0)
+	pun:setPosX(5.0)
+	pun:setPosZ(-5.0)
+	pun:setShader(Shader.new("default_model"))
+	pun:setString("file", "car_wheel.sm")
+	pun:setType("mesh")
+	pun:setString("mass", "35.0f")
 	pun:enablePhysics()
 
 	camera:setPosZ(5)

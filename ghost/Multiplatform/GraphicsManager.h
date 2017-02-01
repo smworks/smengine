@@ -272,6 +272,11 @@ public:
 	virtual void unsetIndexBuffer(UINT32& id) = 0;
 	virtual void clearColorAndDepthBuffers() = 0;
 	virtual void setViewPort(float width, float height) = 0;
+
+	virtual pair<string, string> getDefaultSpriteShader() = 0;
+	virtual pair<string, string> getDefaultModelShader() = 0;
+	virtual pair<string, string> getDefaultTextShader() = 0;
+	virtual pair<string, string> getDefaultSurfaceShader() = 0;
 protected:
 	/**
 	 * Checks support for specified extension or attribute.
@@ -280,7 +285,6 @@ protected:
 public:
 	enum NodeType {NONE, MODEL, SPRITE, TEXT, SPRITE_TEXT, ALL};
 	enum TextureType {T2D, CUBE_MAP};
-public:
 
 	/** 
 	 * Called to setup object.
@@ -314,9 +318,6 @@ public:
 	 */
 	void render();
 
-	/**
-	 * Renders graphic user interface element with text.
-	 */
 	void renderGuiText(Node* node);
 
 	/**
@@ -362,17 +363,17 @@ public:
 	 * and 2D projection matrix for sprites.
 	 */
 	void renderNode(Node* node, Mat4 mat);
-	bool isOutsideCameraView(Node* node);
+	bool isOutsideCameraView(Node* node) const;
 	void prepareShader(Shader* shader, Node* node, Mat4 in);
 	void prepareMatrix(Node* node, Mat4 in, Mat4 out);
 	void bindCombinedBufferObject(Renderable* renderable);
 	void bindCubeMap();
-	void bindTextures(Shader* shader, int textures[]);
+	static void bindTextures(Shader* shader, int textures[]);
 	void renderParts(Renderable* renderable, int textures[]);
 	void drawViaVertices(Renderable* renderable);
 	void drawViaIndices(Renderable* renderable);
-	int getRenderType(Renderable* renderable);
-	void releaseResources(Renderable* renderable);
+	int getRenderType(Renderable* renderable) const;
+	static void releaseResources(Renderable* renderable);
 
 	/**
 	 * Render quad all over the screen.
@@ -410,21 +411,21 @@ public:
 protected:
 	ServiceLocator* services;
 	Database* database_;
-	Camera* camera_;
+	Camera* camera;
 	ResourceManager* resourceManager_;
 	TextManager* textManager_;
-	vector<Node*> modelArray_;
-	vector<Node*> spriteArray_;
-	vector<Node*> guiArray_;
-	vector<Node*> lights_;
+	vector<Node*> models;
+	vector<Node*> sprites;
+	vector<Node*> guiElements;
+	vector<Node*> lights;
 	Color vertexColor_;
 	vector<float> vertices;
 	vector<float> colors_;
 	Mat4 screenMatrix_;
-	Mat4 viewMatrix_;
+	Mat4 viewMatrix;
 	Renderable* screenPlane_;
-	Shader* immediateShader_;
-	Shader* textShader_;
+	Shader* immediateShader;
+	Shader* textShader;
 	vector<RenderPass*> passes_;
 	FrameBuffer* frontBuffer_;
 	FrameBuffer* backBuffer_;
@@ -439,7 +440,7 @@ protected:
 	Mat4 matPos, matScale, matPosScale, matProjPos, matProjPosScale;
 	SIZE maxValues_[MAX_COUNT];
 	INT8 supportValues_[SUPPORT_COUNT];
-	INT64 startTime_;
+	INT64 startTime;
 };
 
 #endif

@@ -63,7 +63,6 @@ void Color::setRGB(float r, float g, float b) {
 
 void Color::setRGBA(const string& color) {
 	if (color.length() != 7 && color.length() != 9) {
-		Color();
 		return;
 	}
 	static stringstream ss;

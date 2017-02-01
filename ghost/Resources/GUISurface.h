@@ -1,11 +1,4 @@
-﻿/*
- * GUISurface.h
- *
- *  Created on: 2013.07.03
- *      Author: Martynas Šustavičius
- */
-
-#ifndef GUISURFACE_H_
+﻿#ifndef GUISURFACE_H_
 #define GUISURFACE_H_
 
 #include "../Multiplatform/Ghost.h"
@@ -24,118 +17,41 @@ public:
 		DEFAULT, PERCENT, FILL, WRAP
 	};
 public:
-	GUISurface(ServiceLocator* services);
+	explicit GUISurface(ServiceLocator* services);
 	~GUISurface();
 
-	/**
-	 * @see Resource
-	 */
-	virtual bool create();
+
+	bool create() override;
+	void release() override;
+	SIZE getSize() override;
+	Type getType() override;
+	bool isValid() override;
+	void resize() override;
+
+	SIZE getVertexCount() override;
+	
+	SIZE getTexture() override;
+	SIZE getIBO() override;
+	BoundingVolume* getBV() override;
+	SIZE getCBO() override;
+	SIZE getIndexCount() override;
+	SIZE getRenderCount() override;
+	void setRenderable(SIZE i) override;
+	SIZE getVertexStride() override;
+	int getPosOffset() override;
+	int getNormalOffset() override;
+	int getUVOffset() override;
+	Shader* getDefaultShader() override;
 
 	/**
-	 * @see Resource
-	 */
-	void release();
-
-	/**
-	 * @see Resource
-	 */
-	SIZE getSize();
-
-	/**
-	 * @see Resource
-	 */
-	Resource::Type getType();
-
-	/**
-	 * @see Resource
-	 */
-	bool isValid();
-
-	/**
-	 * @see Resource
-	 */
-	virtual void resize();
-
-	/**
-	 * Called whenever GUI element position or size changes.
-	 */
+	* Called whenever GUI element position or size changes.
+	*/
 	virtual void update() = 0;
-
-	/**
-	 * @see Renderable
-	 */
-	SIZE getVertexCount();
-
-	/**
-	 * @see Renderable
-	 */
-	SIZE getNormalCount();
-
-	/**
-	 * @see Renderable
-	 */
-	SIZE getTexture();
-
-	/**
-	 * @see Renderable
-	 */
-	SIZE getIBO();
-
-	/**
-	 * @see Renderable.
-	 */
-	BoundingVolume* getBV();
-
-	/**
-	 * @see Renderable
-	 */
-	SIZE getCBO();
-
-	/**
-	 * @see Renderable
-	 */
-	SIZE getIndexCount();
-
-	/**
-	 * @see Renderable
-	 */
-	SIZE getRenderCount();
-
-	/**
-	 * @see Renderable
-	 */
-	void setRenderable(SIZE i);
-
-	/**
-	 * @see Renderable.
-	 */
-	SIZE getVertexStride();
-
-	/**
-	 * @see Renderable
-	 */
-	int getPosOffset();
-
-	/**
-	 * @see Renderable
-	 */
-	int getNormalOffset();
-
-	/**
-	 * @see Renderable
-	 */
-	int getUVOffset();
-
-	/**
-	 * @see Renderable
-	 */
-	virtual Shader* getDefaultShader();
 
 	/**
 	 * @return Pointer to surface texture.
 	 */
-	Texture* getPointerToTexture();
+	Texture* getPointerToTexture() const;
 
 	/**
 	 * Specify surface margins.
@@ -149,22 +65,22 @@ public:
 	/**
 	 * @return Left surface margin in pixels.
 	 */
-	float getMarginLeft();
+	float getMarginLeft() const;
 
 	/**
 	 * @return Bottom surface margin in pixels.
 	 */
-	float getMarginBottom();
+	float getMarginBottom() const;
 
 	/**
 	 * @return Right surface margin in pixels.
 	 */
-	float getMarginRight();
+	float getMarginRight() const;
 
 	/**
 	 * @return Top surface margin in pixels.
 	 */
-	float getMarginTop();
+	float getMarginTop() const;
 
 	/**
 	 * Specify what to use for background.
@@ -192,7 +108,7 @@ public:
 	/**
 	 * @return Width of surface in pixels.
 	 */
-	float getWidth();
+	float getWidth() const;
 
 	/**
 	 * @param height - height of surface in pixels.
@@ -202,17 +118,17 @@ public:
 	/**
 	 * @return Height of surface in pixels.
 	 */
-	float getHeight();
+	float getHeight() const;
 	
 	/**
 	 * @return Absolute position on X axis on screen.
 	 */
-	float getPosX();
+	float getPosX() const;
 
 	/**
 	 * @return Absolute position on Y axis on screen.
 	 */
-	float getPosY();
+	float getPosY() const;
 
 protected:
 	/**
@@ -221,7 +137,7 @@ protected:
 	 * @param type - type of the units.
 	 * @return Units converted into pixels.
 	 */
-	UINT32 convertUnitsToPixels(UINT32 units, UnitType type);
+	static UINT32 convertUnitsToPixels(UINT32 units, UnitType type);
 
 	/**
 	 * Converts specified string to size in pixels.
@@ -231,15 +147,15 @@ protected:
 	 * original size is specified in percents.
 	 * @return Size converted to pixels.
 	 */
-	float getSize(string size, float maxSize = 0);
-protected:
-    UINT32 surfaceId_;
-	UnitType widthSize_, heightSize_;
-	float marginLeft_, marginBottom_, marginRight_, marginTop_;
-	float posX_, posY_, width_, height_;
-	bool update_;
-	Texture* textureBackground_;
-	UINT32 cbo_;
+	static float getSize(string size, float maxSize = 0);
+
+    UINT32 surfaceId;
+	UnitType widthSize, heightSize;
+	float marginLeft, marginBottom, marginRight, marginTop;
+	float posX, posY, width, height;
+	bool shouldUpdate;
+	Texture* textureBackground;
+	UINT32 cbo;
 };
 
 #endif

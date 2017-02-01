@@ -9,6 +9,7 @@
 #define GUIMANAGER_H_
 
 #include "Multiplatform/Ghost.h"
+#include "ServiceProvider.h"
 class ServiceLocator;
 class Node;
 class GUISurface;
@@ -19,7 +20,7 @@ class GUIText;
 /**
  * Class handles GUI elements.
  */
-class GUIManager {
+class GUIManager : public ServiceProvider {
 public:
 	enum Action {CLICK, ACTION_COUNT};
 public:
@@ -46,9 +47,8 @@ public:
 	 */
 	GUISurface* getSelectedSurface();
 private:
-    ServiceLocator* services_;
-	GUISurface* selectedSurface_;
-    vector<Node*> nodes_;
+	GUISurface* selectedSurface;
+    vector<Node*> nodes;
 };
 
 #endif

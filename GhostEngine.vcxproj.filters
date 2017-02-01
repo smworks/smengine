@@ -2019,9 +2019,6 @@
     <None Include="resources\shaders\water.vert">
       <Filter>Resource Files\shaders</Filter>
     </None>
-    <None Include="resources\scripts\logic.lua">
-      <Filter>Resource Files\scripts</Filter>
-    </None>
     <None Include="resources\shaders\temp_model.frag">
       <Filter>Resource Files\shaders</Filter>
     </None>
@@ -2029,6 +2026,9 @@
       <Filter>Resource Files\shaders</Filter>
     </None>
     <None Include="resources\scripts\second.lua">
+      <Filter>Resource Files\scripts</Filter>
+    </None>
+    <None Include="resources\scripts\main.lua">
       <Filter>Resource Files\scripts</Filter>
     </None>
   </ItemGroup>
