@@ -87,7 +87,7 @@ Engine::Engine(ServiceLocator* services) :
 	fpsText->setAttribute(GUIText::ATTR_SCREEN_TOP, "true");
 	fpsText->create();
 	getResourceManager()->add("debug text", fpsText);
-
+    
 	loadScene(getDatabase()->getString(Database::START_SCRIPT));
 	time = 0;
 	console = new Console(services);
@@ -106,7 +106,7 @@ Engine::~Engine()
 
 void Engine::loadScene(string script)
 {
-	PROFILE("Started loading scene.");
+	PROFILE("Started loading scene: %s", script.c_str());
 	getSoundManager()->reset();
 	getPhysicsManager()->reset();
 

@@ -4,8 +4,8 @@
  *  Created on: 2013.08.24
  *      Author: Martynas Šustavičius
  */
-#ifndef MACOSXSOUNDMANAGER_H_
-#define MACOSXSOUNDMANAGER_H_
+#ifndef MACOSSOUNDMANAGER_H_
+#define MACOSSOUNDMANAGER_H_
 
 #include "../Ghost.h"
 #include "../../Resources/Sound.h"
@@ -14,15 +14,17 @@
 
 #include "../SoundManager.h"
 
-class MacOSXSoundManager : public SoundManager {
+class MacOSSoundManager : public SoundManager {
 public:
-    MacOSXSoundManager() {}
-    ~MacOSXSoundManager() {}
+    MacOSSoundManager() {}
+    ~MacOSSoundManager() {}
 
 	/**
 	 * @see SoundManager
 	 */
     void reset() {}
+    
+    void play(Sound* sound) {};
 
 	/**
 	 * @see SoundManager

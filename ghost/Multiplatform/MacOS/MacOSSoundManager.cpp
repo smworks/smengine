@@ -1,11 +1,11 @@
-﻿/*
+/*
  * SoundManager.cpp
  *
  *  Created on: 2013.08.24
  *      Author: Martynas Šustavičius
  */
 
-//#include "SoundManager.h"
+//#include "MacOSSoundManager.h"
 //
 //MacOSXSoundManager::MacOSXSoundManager() :
 //	soundSystem_(0),

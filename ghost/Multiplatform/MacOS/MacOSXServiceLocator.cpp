@@ -6,6 +6,7 @@
 #include "../../Resources/TextureRGBA.h"
 #include "../NullGraphicsManager.h"
 #include "MacOSDatabase.h"
+#include "MacOSSoundManager.h"
 
 MacOSXServiceLocator::MacOSXServiceLocator() :
     graphicsManager_(0),
@@ -75,7 +76,7 @@ FileManager* MacOSXServiceLocator::getFileManager() {
 
 SoundManager* MacOSXServiceLocator::getSoundManager() {
     if (soundManager_ == 0) {
-        soundManager_ = nullptr;
+        soundManager_ = new MacOSSoundManager();
     }
     return soundManager_;
 }
