@@ -1,10 +1,3 @@
-/*
- * ThreadManager.cpp
- *
- *  Created on: 2013.04.14
- *      Author: Martynas Ðustavièius
- */
-
 #include "ThreadManager.h"
 #include "Multiplatform/ServiceLocator.h"
 #include "Thread.h"

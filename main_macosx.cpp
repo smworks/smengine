@@ -1,10 +1,9 @@
-#include <GL/glew.h>
+#include "ghost/Input.h"
+#include "ghost/Engine.h"
+#include "ghost/Multiplatform/MacOS/MacOSXServiceLocator.h"
 #include <OpenGL/glu.h>
 #include "AGL/agl.h"
 #include <GLUT/glut.h>
-#include "ghost/Input.h"
-#include "ghost/Engine.h"
-#include "ghost/Multiplatform/MacOSX/MacOSXServiceLocator.h"
 
 Engine* GHOST = 0;
 bool fullscreen = false;
@@ -23,13 +22,9 @@ void computeFrame();
 void close();
 
 void load() {
-	MacOSXServiceLocator* sl = new MacOSXServiceLocator();
-	GHOST = new Engine(sl);
-	if (!*GHOST) {
-		delete GHOST;
-		GHOST = 0;
-		LOGE("Engine terminated due to error.");
-	}
+    auto* wsl = new MacOSXServiceLocator();
+    GHOST = new Engine(wsl);
+    ASSERT(GHOST != nullptr, "Engine instance not created");
     GHOST->resume();
 }
 
@@ -237,15 +232,15 @@ int main(int argc, char** argv) {
 	glutSpecialUpFunc(handleSpecialKeyUp);
 	atexit(close);
     PROFILE("Main window created and ready for use.");
-	GLenum err = glewInit();
-	if (err != GLEW_OK) {
-		LOGE("GLEW not initialized. Error: %s.", glewGetErrorString(err));
-		return false;
-	}
-	if (!GLEW_VERSION_2_1) {
-		LOGE("GLEW doesn't support OpenGL 2.1");
-		return false;
-	}
+//	GLenum err = glewInit();
+//	if (err != GLEW_OK) {
+//		LOGE("GLEW not initialized. Error: %s.", glewGetErrorString(err));
+//		return false;
+//	}
+//	if (!GLEW_VERSION_2_1) {
+//		LOGE("GLEW doesn't support OpenGL 2.1");
+//		return false;
+//	}
 	load();
     PROFILE("Entering main loop.");
 	glutMainLoop();

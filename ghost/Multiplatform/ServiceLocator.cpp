@@ -39,16 +39,6 @@ ServiceLocator::ServiceLocator() :
 	LOGD("Service locator created.");
 }
 
-ServiceLocator::ServiceLocator(const ServiceLocator& services)
-{
-	THROWEX("ServiceLocator class does not support copy constructor.");
-}
-
-const ServiceLocator& ServiceLocator::operator=(const ServiceLocator& services) const
-{
-	THROWEX("Assignment operation is not supported for ServiceLocator.");
-}
-
 void ServiceLocator::setScreenWidth(int width)
 {
 	screenWidth = width;

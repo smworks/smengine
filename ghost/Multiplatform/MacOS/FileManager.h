@@ -17,26 +17,10 @@ public:
 	MacOSXFileManager();
 	~MacOSXFileManager();
 	
-	/**
-	 * @see FileManager
-	 */
-	bool loadRaw(
-		INT8*& bytes, SIZE& size, const char* path);
-
-	/**
-	 * @see FileManager
-	 */
-	void loadText(string& text, const char* path);
-
-	/**
-	 * @see FileManager
-	 */
-	vector<string> getFiles(const char* path);
-
-	/**
-	 * @see FileManager
-	 */
-	bool fileExists(const char* path);
+    bool loadRaw(INT8*& bytes, SIZE& size, const char* path);
+    string loadText(string path);
+    vector<string> getFiles(const char* path);
+    bool fileExists(const char* path);
 };
 
 #endif

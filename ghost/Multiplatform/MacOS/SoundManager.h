@@ -9,34 +9,34 @@
 
 #include "../Ghost.h"
 #include "../../Resources/Sound.h"
-#include "../../../dependencies/includes/fmod/osx/fmod.hpp"
-#include "../../../dependencies/includes/fmod/osx/fmod_errors.h"
+//#include "../../../dependencies/includes/fmod/osx/fmod.hpp"
+//#include "../../../dependencies/includes/fmod/osx/fmod_errors.h"
 
 #include "../SoundManager.h"
 
 class MacOSXSoundManager : public SoundManager {
 public:
-	MacOSXSoundManager();
-	~MacOSXSoundManager();
+    MacOSXSoundManager() {}
+    ~MacOSXSoundManager() {}
 
 	/**
 	 * @see SoundManager
 	 */
-	void reset();
+    void reset() {}
 
 	/**
 	 * @see SoundManager
 	 */
-	void play(string name, bool repeat);
+    void play(string name, bool repeat) {}
 
 	/**
 	 * @see SoundManager
 	 */
-	void update();
+    void update() {}
 protected:
-	FMOD::System *soundSystem_;
-    FMOD::Channel* soundChannel_;
-	FMOD::Sound* sound_;
+	//FMOD::System *soundSystem_;
+    //FMOD::Channel* soundChannel_;
+	//FMOD::Sound* sound_;
 };
 
 #endif

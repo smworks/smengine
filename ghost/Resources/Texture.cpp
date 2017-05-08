@@ -249,15 +249,18 @@ struct PngBuffer {
 };
 
 void readPng(png_structp png, png_bytep data, png_size_t size) {
+#ifdef ENABLE_GRAPHICS
 	png_voidp a = png_get_io_ptr(png);
 	PngBuffer* pngBuffer = (PngBuffer*) a;
 	memcpy(data, pngBuffer->buffer + pngBuffer->bytesRead, size);
 	pngBuffer->bytesRead += size;
+#endif
 }
 
 #define HEADER_SIZE 8
 Texture::PNGData Texture::pngToRaw(INT8* in, bool upperLeft) {
 	PNGData png;
+#ifdef ENABLE_GRAPHICS
 	int res;
 	ASSERT(in != 0, "No PNG byte buffer specified.");
 	png_byte header[HEADER_SIZE];
@@ -376,5 +379,6 @@ Texture::PNGData Texture::pngToRaw(INT8* in, bool upperLeft) {
 	delete[] image_data;
 	delete[] row_pointers;
 	png.buffer = reinterpret_cast<UINT8*>(buffer);
+#endif
 	return png;
 }

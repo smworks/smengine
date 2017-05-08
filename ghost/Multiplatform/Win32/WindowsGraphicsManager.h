@@ -1,11 +1,4 @@
-﻿/*
- * WindowsGraphicsManager.h
- *
- *  Created on: 2012.06.19
- *      Author: Martynas Šustavičius
- */
-
-#ifndef WINDOWSGRAPHICSMANAGER_H_
+﻿#ifndef WINDOWSGRAPHICSMANAGER_H_
 #define WINDOWSGRAPHICSMANAGER_H_
 
 #include "../Ghost.h"

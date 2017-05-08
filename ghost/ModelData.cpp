@@ -1,4 +1,4 @@
-﻿/*
+/*
  * ModelData.cpp
  *
  *  Created on: 2014.01.07
@@ -25,7 +25,7 @@ ModelData::Material::Material(string name):
 	texture(nullptr)
 {
 	ASSERT(name.size() < sizeof(this->name),
-		"File name %s exceeds %d symbol limit", name.c_str(), sizeof(this->name));
+		"File name %s exceeds %lu symbol limit", name.c_str(), sizeof(this->name));
 	strcpy(this->name, name.c_str());
 }
 

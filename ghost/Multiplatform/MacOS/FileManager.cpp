@@ -1,10 +1,4 @@
-﻿/*
- * FileManager.cpp
- *
- *  Created on: 2013.08.24
- *      Author: Martynas Šustavičius
- */
-
+﻿
 #include "FileManager.h"
 
 MacOSXFileManager::MacOSXFileManager() {
@@ -31,17 +25,25 @@ bool MacOSXFileManager::loadRaw(
 	return true;
 }
 
-void MacOSXFileManager::loadText(string& text, const char* path) {
-	ifstream input(path, ios::in);
-	if (!input) {
-		LOGW("Text file \"%s\" not found.", path);
-		text = "";
-	}
-	else {
-		stringstream content;
-		content << input.rdbuf();
-		text =  content.str();
-	}
+string MacOSXFileManager::loadText(string path)
+{
+    PROFILE("Started loading text file: %s.", path.c_str());
+    ios_base::openmode params = ios::in;
+    string text;
+    ifstream input(path.c_str(), params);
+    if (!input) {
+        LOGW("Text file \"%s\" not found.", path.c_str());
+        text = "";
+    }
+    else
+    {
+        stringstream content;
+        content << input.rdbuf();
+        text =  content.str();
+    }
+    input.close();
+    PROFILE("Finished loading text file to string.");
+    return text;
 }
 
 vector<string> MacOSXFileManager::getFiles(const char* path) {

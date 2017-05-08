@@ -8,6 +8,7 @@
 #include "DynamicObject.h"
 #include "Vertex.h"
 #include "Texture.h"
+#include "Vec3.h"
 #include "../ResourceManager.h"
 #include "../MD2Parser.h"
 #include "../Multiplatform/Database.h"
@@ -117,8 +118,7 @@ int DynamicObject::getUVOffset() {
 
 Shader* DynamicObject::getDefaultShader() {
 	ServiceLocator* sl = getServiceLocator();
-	string& name = sl->getDB()->getString(
-		Database::DEFAULT_MODEL_SHADER);
+	string name = sl->getDB()->getString(Database::DEFAULT_MODEL_SHADER);
 	Shader* shader = dynamic_cast<Shader*>(sl->getRM()->get(SHADER, name));
 	if (shader == 0) {
 		shader = NEW Shader(sl);

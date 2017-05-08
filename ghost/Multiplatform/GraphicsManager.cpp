@@ -113,7 +113,7 @@ void GraphicsManager::create()
 	screenPlane_ = obj;
 	// Load immediate mode shader.
 	immediateShader = NEW Shader(services);
-	string& immediateShaderName = database_->getString(
+	string immediateShaderName = database_->getString(
 		Database::IMMEDIATE_MODE_SHADER);
 	immediateShader->getAttributes().setString(
 		Resource::ATTR_FILE, immediateShaderName);
@@ -121,7 +121,7 @@ void GraphicsManager::create()
 	resourceManager_->add(immediateShaderName, immediateShader);
 	// Load text shader.
 	textShader = NEW Shader(services);
-	string& textShaderName = database_->getString(Database::DEFAULT_TEXT_SHADER);
+	string textShaderName = database_->getString(Database::DEFAULT_TEXT_SHADER);
 	textShader->getAttributes().setString(Resource::ATTR_FILE, textShaderName);
 	textShader->create();
 	resourceManager_->add(textShaderName, textShader);

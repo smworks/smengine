@@ -28,7 +28,7 @@ public:
 	void remove(Node* node) {}
 	bool has(Node* node) { return false; }
 	void updateNode(Node* node) {}
-	Node* rayCast(Vec3& start, Vec3& end) {}
+    Node* rayCast(Vec3& start, Vec3& end) { return nullptr; }
 	void setDebug(bool state) {}
 	void setGraphicsManager(GraphicsManager* gm) {}
 	void setDebugRendering(bool state) {}

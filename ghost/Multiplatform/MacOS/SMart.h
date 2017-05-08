@@ -8,6 +8,15 @@
 #ifndef MACOSXSMART_H_
 #define MACOSXSMART_H_
 
+// ENGINE SUBSYSTEMS
+#ifndef DISABLE_ALL
+//#define ENABLE_FONTS
+//#define ENABLE_PHYSICS
+#define ENABLE_DATABASE
+#define ENABLE_SOUND
+//#define ENABLE_GRAPHICS
+#endif
+
 #ifdef DEBUG
 #define SMART_DEBUG
 #endif
@@ -56,6 +65,13 @@
 #include <netinet/in.h>
 #include <resolv.h>
 #include <queue>
+#include <thread>
+#include <mutex>
+#include <numeric>
+
+#ifdef ENABLE_GRAPHICS
+#include <OpenGL/gl3.h>
+#endif
 
 using namespace std;
 
@@ -80,8 +96,10 @@ typedef SIZE* POINTER;
 #ifdef SMART_DEBUG
     #define LOGD(...) {\
         std::cout << "DEBUG: "; printf(__VA_ARGS__); cout << endl; }
+    #define LOGDEXT LOGD
 #else
     #define LOGD(...)
+    #define LOGDEXT LOGD
 #endif
 
 // PROFILER
@@ -97,15 +115,24 @@ typedef SIZE* POINTER;
     #define PROFILE(msg)
 #endif
 
-// GRAPHICS.
-#define GLEW_STATIC
-#include <GL/glew.h>
+#define RETURN(val, cond, ...) \
+if (cond) { \
+    LOGW(__VA_ARGS__); \
+    return val; \
+}
 
 #ifdef SMART_DEBUG
-	#define CHECK_GL_ERROR(msg) //checkGLError(msg)
+    #include <assert.h>
+    #define CHECK_GL_ERROR(msg) checkGLError(msg)
+    #define ASSERT(expression, ...) \
+        if (!(expression)) { LOGE(__VA_ARGS__); } //assert(expression)
 #else
-	#define CHECK_GL_ERROR(msg)
+    #define CHECK_GL_ERROR(msg)
+    #define ASSERT(expression, ...) if (!(expression)) { LOGE(__VA_ARGS__); }
 #endif
+
+#define THROWEX(...)
+#define THROWONASSERT(...)
 
 // GLOBAL METHODS.
 
@@ -126,6 +153,6 @@ bool checkGLError(string name);
  * @param name - name of the component.
  * @param id - OpenGL id of the component.
  */
-inline void printGLString(string name, GLenum id);
+inline void printGLString(string name, int id);
 
 #endif

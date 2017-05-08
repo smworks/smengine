@@ -1,11 +1,4 @@
-﻿/*
- * TextManager.cpp
- *
- *  Created on: 2012.07.11
- *      Author: Martynas Šustavičius
- */
-
-#include "TextManager.h"
+﻿#include "TextManager.h"
 
 #ifdef ENABLE_FONTS
 

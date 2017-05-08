@@ -1,10 +1,3 @@
-/*
- * WindowsServiceLocator.cpp
- *
- *  Created on: 2012.07.05
- *      Author: MS
- */
-
 #include "WindowsSoundManager.h"
 #include "WindowsServiceLocator.h"
 #include "WindowsSocket.h"
@@ -26,7 +19,7 @@ WindowsServiceLocator::WindowsServiceLocator() :
 	QueryPerformanceCounter(&timeBefore_);
 	// Reset timer.
 	updateTimer(0.0f);
-	LOGD("Created Windows service locator.");
+	LOGD("Created WindowsServiceLocator");
 }
 
 WindowsServiceLocator::~WindowsServiceLocator() {
@@ -45,7 +38,7 @@ WindowsServiceLocator::~WindowsServiceLocator() {
 		delete fileManager_;
 		fileManager_ = 0;
 	}
-	LOGD("Deleted Windows service locator.");
+	LOGD("Deleted WindowsServiceLocator");
 }
 
 double WindowsServiceLocator::getFrameTime() {
@@ -66,7 +59,6 @@ double WindowsServiceLocator::updateTimer(float sleep) {
 
 Socket* WindowsServiceLocator::createSocket(SocketParams params)
 {
-
 	return NEW WindowsSocket(params);
 }
 

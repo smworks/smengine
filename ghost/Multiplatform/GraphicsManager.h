@@ -57,6 +57,10 @@ public:
 	virtual void unsetIndexBuffer(UINT32& id) = 0;
 	virtual void clearColorAndDepthBuffers() = 0;
 	virtual void setViewPort(float width, float height) = 0;
+    virtual pair<string, string> getDefaultSpriteShader() = 0;
+    virtual pair<string, string> getDefaultModelShader() = 0;
+    virtual pair<string, string> getDefaultTextShader() = 0;
+    virtual pair<string, string> getDefaultSurfaceShader() = 0;
 protected:
 	virtual bool checkSupport(Support key) = 0;
 public:

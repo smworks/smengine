@@ -1,15 +1,10 @@
-﻿/*
- * MacOSXGraphicsManger.cpp
- *
- *  Created on: 2013.08.24
- *      Author: Martynas Šustavičius
- */
-
 #include "MacOSXGraphicsManager.h"
 #include "../ServiceLocator.h"
 #include "../FileManager.h"
 #include "../../Resources/Shader.h"
 #include "../../Resources/TextureRGBA.h"
+
+#ifdef ENABLE_GRAPHICS
 
 bool isExtensionSupported(string extension) {
 	string extensions((const char*) glGetString(GL_EXTENSIONS));
@@ -24,28 +19,20 @@ const char* getGLString(GLenum id) {
 	return info;
 }
 
-
 MacOSXGraphicsManager::MacOSXGraphicsManager(ServiceLocator* services) : GraphicsManager(services) {
 	LOGD("OpenGL information:");
 	LOGD("Version: %s.", getGLString(GL_VERSION));
 	LOGD("Vendor: %s.", getGLString(GL_VENDOR));
 	LOGD("Renderer: %s.", getGLString(GL_RENDERER));
-	LOGD("Extensions: %s.", getGLString(GL_EXTENSIONS));
-	LOGD("NPOT support: %s.", isNPOTSupported()  ? "true" : "false");
-	LOGD("UINT index support: %s.", isUintIndexSupported()  ? "true" : "false");
+	LOGDEXT("Extensions: %s.", getGLString(GL_EXTENSIONS));
+	LOGD("NPOT support: %s.", isExtensionSupported("ARB_texture_non_power_of_two")  ? "true" : "false");
 	LOGD("Created MacOSX graphics manager.");
 }
 
 MacOSXGraphicsManager::~MacOSXGraphicsManager() {
 }
 
-bool MacOSXGraphicsManager::isNPOTSupported() {
-	return isExtensionSupported("ARB_texture_non_power_of_two");
-}
 
-bool MacOSXGraphicsManager::isUintIndexSupported() {
-	return true;
-}
 
 bool MacOSXGraphicsManager::isGraphicsContextAvailable() {
 	return true; //aglGetCurrentContext() != 0;
@@ -120,7 +107,7 @@ bool MacOSXGraphicsManager::setCubeMap(
 	}
 	int minFilter = GL_LINEAR;
 	if (useMipmaps) {
-		glGenerateMipmapEXT(GL_TEXTURE_CUBE_MAP);
+		glGenerateMipmap(GL_TEXTURE_CUBE_MAP);
 		minFilter = GL_LINEAR_MIPMAP_LINEAR;
 	}
 	glTexParameteri(GL_TEXTURE_CUBE_MAP,
@@ -185,27 +172,16 @@ int loadShader(GLuint type, const char* source) {
 }
 
 bool MacOSXGraphicsManager::setShader(
-	UINT32& id, const string& name, int handles[])
+	UINT32& id, string vert, string frag, int handles[])
 {
-	string vertex, fragment;
-	services_->getFileManager()->loadText(vertex, (GHOST_SHADERS + name + SHADER_VERTEX_SUFFIX).c_str());
-	services_->getFileManager()->loadText(fragment, (GHOST_SHADERS + name + SHADER_FRAGMENT_SUFFIX).c_str());
-	if (vertex.length() == 0) {
-		LOGW("Vertex shader is empty for \"%s\".", name.c_str());
-		return false;
-	}
-	if (fragment.length() == 0) {
-		LOGW("Fragment shader is empty for \"%s\".", name.c_str());
-		return false;
-	}
 	GLuint vertexId, fragmentId;
 	GLint linked;
-	if ((vertexId = loadShader(GL_VERTEX_SHADER, vertex.c_str())) == 0) {
-		LOGW("Vertex part of shader not loaded for \"%s\".", name.c_str());
+	if ((vertexId = loadShader(GL_VERTEX_SHADER, vert.c_str())) == 0) {
+		LOGW("Vertex part of shader not loaded for \"%s\".", vert.c_str());
 		return false;
 	}
-	if ((fragmentId = loadShader(GL_FRAGMENT_SHADER, fragment.c_str())) == 0) {
-		LOGW("Fragment part of shader not loaded for \"%s\".", name.c_str());
+	if ((fragmentId = loadShader(GL_FRAGMENT_SHADER, frag.c_str())) == 0) {
+		LOGW("Fragment part of shader not loaded for \"%s\".", frag.c_str());
 		glDeleteShader(vertexId);
 		return false;
 	}
@@ -320,10 +296,10 @@ bool MacOSXGraphicsManager::setFrameBuffer(
 	UINT32& id, UINT32& color, UINT32& depth, UINT32 width, UINT32 height)
 {
 	unsetFrameBuffer(id, color, depth);
-	glGenFramebuffersEXT(1, &id);
+	glGenFramebuffers(1, &id);
 	glGenTextures(1, &color);
 	glGenTextures(1, &depth);
-	glBindFramebufferEXT(GL_FRAMEBUFFER, id);
+	glBindFramebuffer(GL_FRAMEBUFFER, id);
 	bindTexture(color);
 	glTexImage2D(
 		GL_TEXTURE_2D,
@@ -363,7 +339,7 @@ bool MacOSXGraphicsManager::setFrameBuffer(
 		GL_DEPTH_ATTACHMENT,
 		GL_TEXTURE_2D, depth, 0);
 	GLenum status;
-	status = glCheckFramebufferStatusEXT(GL_DRAW_FRAMEBUFFER);
+	status = glCheckFramebufferStatus(GL_DRAW_FRAMEBUFFER);
 	switch(status) {
 	case GL_FRAMEBUFFER_COMPLETE:
 		// Success.
@@ -375,7 +351,7 @@ bool MacOSXGraphicsManager::setFrameBuffer(
 		LOGE("Frame buffer error.");
 		break;
 	}
-	glBindFramebufferEXT(GL_FRAMEBUFFER, 0);
+	glBindFramebuffer(GL_FRAMEBUFFER, 0);
 	return !checkGLError("Setting frame buffer.");
 }
 
@@ -383,7 +359,7 @@ void MacOSXGraphicsManager::unsetFrameBuffer(
 	UINT32& id, UINT32& color, UINT32& depth)
 {
 	if (id != 0) {
-		glDeleteFramebuffersEXT(1, &id);
+		glDeleteFramebuffers(1, &id);
 		id = 0;
 	}
 	if (color != 0) {
@@ -397,7 +373,7 @@ void MacOSXGraphicsManager::unsetFrameBuffer(
 }
 
 void MacOSXGraphicsManager::useFrameBuffer(UINT32 id) {
-	glBindFramebufferEXT(GL_FRAMEBUFFER, id);
+	glBindFramebuffer(GL_FRAMEBUFFER, id);
 }
 
 bool MacOSXGraphicsManager::setVertexBuffer(
@@ -417,4 +393,225 @@ void MacOSXGraphicsManager::unsetVertexBuffer(UINT32& id) {
 		glDeleteBuffers(1, &id);
 		id = 0;
 	}
+}
+
+void MacOSXGraphicsManager::unsetVertexBuffers(UINT32 count, UINT32*& buffers)
+{
+    bindBuffer(0);
+    glDeleteBuffers(count, buffers);
+    delete [] buffers;
+    buffers = 0;
+}
+
+bool MacOSXGraphicsManager::setIndexBuffer(UINT32& id, void* buffer, int size)
+{
+    if (id == 0)
+    {
+        glGenBuffers(1, &id);
+    }
+    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, id);
+    glBufferData(GL_ELEMENT_ARRAY_BUFFER, size, buffer, GL_STATIC_DRAW);
+    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
+    return !checkGLError("Setting index buffer");
+}
+
+void MacOSXGraphicsManager::unsetIndexBuffer(UINT32& id)
+{
+    unsetVertexBuffer(id);
+}
+
+void MacOSXGraphicsManager::clearColorAndDepthBuffers()
+{
+    glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+}
+
+void MacOSXGraphicsManager::setViewPort(float width, float height)
+{
+    glViewport(0, 0, int(width), int(height));
+}
+
+bool MacOSXGraphicsManager::checkSupport(Support key)
+{
+    switch (key)
+    {
+        case SUPPORT_NPOT_TEXTURES:
+            return isExtensionSupported("ARB_texture_non_power_of_two");
+            break;
+        case SUPPORT_UINT_INDEX:
+            return true;
+            break;
+        default:
+            return false;
+    }
+}
+
+#else
+
+MacOSXGraphicsManager::MacOSXGraphicsManager(ServiceLocator* services) : GraphicsManager(services) {
+    LOGD("Created null WindowsGraphicsManager manager.");
+}
+
+MacOSXGraphicsManager::~MacOSXGraphicsManager() {
+    LOGD("Deleted null graphics manager.");
+}
+
+bool MacOSXGraphicsManager::isGraphicsContextAvailable() {
+    return true;
+}
+
+bool MacOSXGraphicsManager::setTexture(
+                                        UINT32& id, UINT8* image, UINT32 width, UINT32 height,
+                                        bool wrapURepeat, bool wrapVRepeat, bool useMipmaps, int textureType)
+{
+    id = 0;
+    return true;
+}
+
+bool MacOSXGraphicsManager::updateTexture(
+                                           UINT32 id, UINT8* partBuffer, UINT32 rowOffset, UINT32 colOffset,
+                                           UINT32 width, UINT32 height, bool useMipmaps, int textureType)
+{
+    return true;
+}
+
+bool MacOSXGraphicsManager::setCubeMap(
+                                        UINT32& id, UINT8** images, UINT32 width, UINT32 height,
+                                        bool wrapURepeat, bool wrapVRepeat, bool useMipmaps)
+{
+    return true;
+}
+
+void MacOSXGraphicsManager::unsetTexture(UINT32 id) {}
+
+bool MacOSXGraphicsManager::setShader(
+                                       UINT32& id, string vert, string frag, int handles[])
+{
+    id = 0;
+    return true;
+}
+
+void MacOSXGraphicsManager::unsetShader(UINT32 id) {}
+
+void MacOSXGraphicsManager::setShaderValue(
+                                            UINT32 id, int& handle, int type,
+                                            UINT32 count, void* data)
+{
+    handle = 0;
+}
+
+bool MacOSXGraphicsManager::setFrameBuffer(
+                                            UINT32& id, UINT32& color, UINT32& depth, UINT32 width, UINT32 height)
+{
+    id = 0;
+    color = 0;
+    depth = 0;
+    return true;
+}
+
+void MacOSXGraphicsManager::unsetFrameBuffer(UINT32& id, UINT32& color, UINT32& depth) {
+    id = 0;
+}
+
+void MacOSXGraphicsManager::useFrameBuffer(UINT32 id) {}
+
+bool MacOSXGraphicsManager::setVertexBuffer(UINT32& id, void* buffer, int size) {
+    id = 0;
+    return true;
+}
+
+void MacOSXGraphicsManager::unsetVertexBuffer(UINT32& id) {
+    id = 0;
+}
+
+void MacOSXGraphicsManager::unsetVertexBuffers(UINT32 count, UINT32*& buffers) {
+    delete[] buffers;
+    buffers = 0;
+}
+
+bool MacOSXGraphicsManager::setIndexBuffer(UINT32& id, void* buffer, int size) {
+    id = 0;
+    return true;
+}
+
+void MacOSXGraphicsManager::unsetIndexBuffer(UINT32& id) {
+    id = 0;
+}
+
+void MacOSXGraphicsManager::clearColorAndDepthBuffers() {
+}
+
+void MacOSXGraphicsManager::setViewPort(float width, float height) {
+}
+
+bool MacOSXGraphicsManager::checkSupport(Support key) {
+    return true;
+}
+
+#endif
+
+pair<string, string> MacOSXGraphicsManager::getDefaultSpriteShader()
+{
+    string vert =
+    "uniform mat4 uWVP;"
+    "attribute vec4 attrPos;"
+    "attribute vec2 attrUV;"
+    "varying vec2 varTexCoords;"
+    "void main(void) {"
+    "	gl_Position = uWVP * attrPos;"
+    "	varTexCoords = attrUV;"
+    "}";
+    string frag =
+    "uniform sampler2D mainTexture;"
+    "varying vec2 varTexCoords;"
+    "void main(void) {"
+    "	vec4 col = texture2D(mainTexture, varTexCoords);"
+    "	gl_FragColor = col;"
+    "}";
+    return pair<string, string>(vert, frag);
+}
+
+pair<string, string> MacOSXGraphicsManager::getDefaultModelShader()
+{
+    string vert =
+    "uniform mat4 uWVP;"
+    "attribute vec4 attrPos;"
+    "attribute vec2 attrUV;"
+    "varying vec2 varTexCoords;"
+    "void main(void)"
+    "{"
+    "	varTexCoords = attrUV;"
+    "	gl_Position = uWVP * attrPos;"
+    "}";
+    string frag = "uniform vec3 uAmbient;"
+    "uniform vec3 uDiffuse;"
+    "uniform sampler2D mainTexture;"
+    "uniform float uMainTexture;"
+    "varying vec2 varTexCoords;"
+    "float linearDepth() {"
+    "	float n = 0.1; // camera z near"
+    "	float f = 300.0; // camera z far"
+    "	float zoverw = gl_FragCoord.z;"
+    "	return (2.0 * n) / (f + n - zoverw * (f - n));"
+    "}"
+    "void main(void)"
+    "{"
+    "	float depth = 1.0 - linearDepth();"
+    "	vec4 col = vec4(depth, depth, depth, 1.0);"
+    "	if (uMainTexture > 0.5) {"
+    "		gl_FragColor = col * texture2D(mainTexture, varTexCoords);"
+    "	} else {"
+    "		gl_FragColor = col;"
+    "	}"
+    "}";
+    return pair<string, string>(vert, frag);
+}
+
+pair<string, string> MacOSXGraphicsManager::getDefaultTextShader()
+{
+    return pair<string, string>("", "");
+}
+
+pair<string, string> MacOSXGraphicsManager::getDefaultSurfaceShader()
+{
+    return pair<string, string>("", "");
 }

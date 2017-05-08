@@ -61,6 +61,11 @@ struct VertexP {
 	VertexP(const VertexPNT& vert) {
 		memcpy(pos, vert.pos, sizeof(pos));
 	}
+    VertexP(float x, float y, float z) {
+        pos[0] = x;
+        pos[1] = y;
+        pos[2] = z;
+    }
 	bool operator ==(const VertexP& vert) {
 		if (memcmp(pos, vert.pos, sizeof(pos)) != 0) {
 			return false;

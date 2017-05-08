@@ -1,10 +1,3 @@
-/*
- * WindowsServiceLocator.h
- *
- *  Created on: 2012.06.19
- *      Author: MS
- */
-
 #ifndef WINDOWSSYSTEM_H_
 #define WINDOWSSYSTEM_H_
 

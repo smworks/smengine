@@ -68,8 +68,6 @@ public:
 	virtual Database* getDB() = 0;
 public:
 	ServiceLocator();
-	ServiceLocator(const ServiceLocator& services);
-	const ServiceLocator& operator=(const ServiceLocator& services) const;
 	virtual ~ServiceLocator();
 
 	/**

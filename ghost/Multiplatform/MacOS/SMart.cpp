@@ -1,11 +1,4 @@
-﻿/*
- * SMart.cpp
- *
- *  Created on: 2013.08.24
- *      Author: Martynas Šustavičius
- */
-
-#include "SMart.h"
+﻿#include "SMart.h"
 
 #ifdef SMART_DEBUG
     void profile(string& msg) {
@@ -24,7 +17,8 @@ SIZE getMicroseconds() {
 
 bool checkGLError(string name) {
 	bool hasErrors = false;
-    for (GLint error = glGetError(); error != 0; error = glGetError()) {
+#ifdef ENABLE_GRAPHICS
+    for (int error = glGetError(); error != 0; error = glGetError()) {
 		hasErrors = true;
     	if (error == GL_INVALID_ENUM) {
 			LOGE("%s: glError (GL_INVALID_ENUM)", name.c_str());
@@ -42,10 +36,13 @@ bool checkGLError(string name) {
     		LOGE("%s: glError (0x%x).", name.c_str(), error);
     	}
     }
+#endif
 	return hasErrors;
 }
 
-void printGLString(string name, GLenum id) {
+void printGLString(string name, int id) {
+#ifdef ENABLE_PHYSICS
     const char *info = (const char *) glGetString(id);
     LOGI("GL %s = %s.", name.c_str(), info);
+#endif
 }

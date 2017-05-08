@@ -1,11 +1,4 @@
-﻿/*
- * WindowsGhost.h
- *
- *  Created on: 2013.03.27
- *      Author: Martynas Šustavičius
- */
-
-#ifndef WINDOWSGHOST_H_
+﻿#ifndef WINDOWSGHOST_H_
 #define WINDOWSGHOST_H_
 
 // ENGINE SUBSYSTEMS

@@ -20,7 +20,7 @@
 		#include "Linux/LinuxGhost.h"
         #else
             #ifdef __MACH__
-            #include "MacOSX/SMart.h"
+            #include "MacOS/SMart.h"
             #endif
 		#endif
 	#endif
