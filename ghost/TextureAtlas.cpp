@@ -19,8 +19,8 @@ TextureAtlas::TextureAtlas(ServiceLocator* serviceLocator) :
 	textureMono_(nullptr)
 
 {
-	textureRGBA_ = Texture::createRGBA(serviceLocator, STARTING_WIDTH, STARTING_HEIGHT);
-	textureMono_ = Texture::createMono(serviceLocator, STARTING_WIDTH, STARTING_HEIGHT);
+	textureRGBA_ = Texture::createRGBA(serviceLocator, "RGBA texture atlas", STARTING_WIDTH, STARTING_HEIGHT);
+	textureMono_ = Texture::createMono(serviceLocator, "Mono texture atlas", STARTING_WIDTH, STARTING_HEIGHT);
 	byteMap_ = NEW bool[STARTING_WIDTH * STARTING_HEIGHT];
 	skylineRGBA_.push_back(Skyline(0, 0, STARTING_WIDTH));
 	skylineMono_.push_back(Skyline(0, 0, STARTING_WIDTH));

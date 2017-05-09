@@ -14,7 +14,7 @@
 //#define ENABLE_PHYSICS
 #define ENABLE_DATABASE
 #define ENABLE_SOUND
-//#define ENABLE_GRAPHICS
+#define ENABLE_GRAPHICS
 #endif
 
 #ifdef DEBUG

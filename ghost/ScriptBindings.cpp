@@ -1207,18 +1207,17 @@ int newTexture(lua_State* L) {
 		LOGI("Texture with name %s already exists. Reusing old one", name.c_str());
 		SM_RETURN_OBJECT(L, "Texture", Texture, texture);
 	}
-	bool alpha = false;
 	if (argc == 1) {
 		texture = Texture::load(SM_GET_SL(), name, false);
 	} else if (argc == 2) {
 		if (SM_IS_STRING(L, 1)) {
 			string type = SM_GET_STRING(L, 1);
 			if (type == Texture::VAL_MONO) {
-				texture = Texture::createMono(SM_GET_SL());
+				texture = Texture::createMono(SM_GET_SL(), name);
 			} else if (type == Texture::VAL_RGB) {
-				texture = Texture::createRGB(SM_GET_SL());
+				texture = Texture::createRGB(SM_GET_SL(), name);
 			} else {
-				texture = Texture::createRGBA(SM_GET_SL());
+				texture = Texture::createRGBA(SM_GET_SL(), name);
 			}
 		} else {
 			HttpResponse* response = SM_GET_OBJECT(L, 1, HttpResponse);
@@ -1229,11 +1228,11 @@ int newTexture(lua_State* L) {
 		int width = SM_GET_INT(L, 2);
 		int height = SM_GET_INT(L, 3);
 		if (type == Texture::VAL_MONO) {
-			texture = Texture::createMono(SM_GET_SL(), width, height);
+			texture = Texture::createMono(SM_GET_SL(), name, width, height);
 		} else if (type == Texture::VAL_RGB) {
-			texture = Texture::createRGB(SM_GET_SL(), width, height);
+			texture = Texture::createRGB(SM_GET_SL(), name, width, height);
 		} else {
-			texture = Texture::createRGBA(SM_GET_SL(), width, height);
+			texture = Texture::createRGBA(SM_GET_SL(), name, width, height);
 		}
 	}
 	if (argc == 7) {
@@ -1955,7 +1954,7 @@ int databaseExecute(lua_State* L) {
 		"Function execute() takes SQL query as parameter.");
 	string query = SM_GET_STRING(L, 1);
 	Database::ResultSet rs = db->execute(query);
-	int size = rs.vec.size();
+	UINT64 size = rs.vec.size();
 	lua_newtable(L);
 	for (int i = 0; i < size; i++) {
 		unordered_map<string, string>& map = rs.vec[i];

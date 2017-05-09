@@ -448,7 +448,7 @@ bool MacOSXGraphicsManager::checkSupport(Support key)
 #else
 
 MacOSXGraphicsManager::MacOSXGraphicsManager(ServiceLocator* services) : GraphicsManager(services) {
-    LOGD("Created null WindowsGraphicsManager manager.");
+    LOGD("Created null MacOSGraphicsManager manager.");
 }
 
 MacOSXGraphicsManager::~MacOSXGraphicsManager() {

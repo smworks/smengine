@@ -12,14 +12,6 @@
 #include "Resource.h"
 
 class Texture : public Resource  {
-protected:
-	struct PNGData {
-		PNGData() : buffer(0), width(0), height(0), alpha(false) {}
-		UINT8* buffer;
-		UINT32 width;
-		UINT32 height;
-		bool alpha;
-	};
 public:
 	enum Type {MONO, RGB, RGBA};
 	static const string ATTR_WRAP_U;
@@ -218,7 +210,7 @@ public:
 	 * @param h - height in pixels.
 	 * @return Texture object.
 	 */
-	static Texture* createRGBA(ServiceLocator* sl, UINT32 w = 1, UINT32 h = 1);
+	static Texture* createRGBA(ServiceLocator* sl, string name, UINT32 w = 1, UINT32 h = 1);
 
 	/**
 	 * Creates new RGB texture.
@@ -227,7 +219,7 @@ public:
 	 * @param h - height in pixels.
 	 * @return Texture object.
 	 */
-	static Texture* createRGB(ServiceLocator* sl, UINT32 w = 1, UINT32 h = 1);
+	static Texture* createRGB(ServiceLocator* sl, string name, UINT32 w = 1, UINT32 h = 1);
 
 	/**
 	 * Creates new monochrome texture.
@@ -236,7 +228,7 @@ public:
 	 * @param h - height in pixels.
 	 * @return Texture object.
 	 */
-	static Texture* createMono(ServiceLocator* sl, UINT32 w = 1, UINT32 h = 1);
+	static Texture* createMono(ServiceLocator* sl, string name, UINT32 w = 1, UINT32 h = 1);
 
 	/**
 	 * Creates new texture for texture atlas.
@@ -264,17 +256,6 @@ protected:
 	virtual UINT8* createBuffer(UINT32 width, UINT32 height) = 0;
 
 	/**
-	 * Loads PNG image from specified path, converts it to raw format and
-	 * returns pointer to raw image with additional information.
-	 * @param services - pointer to system service locator.
-	 * @param path - image path.
-	 * @param upperLeft - optional parameter that specifies from which corner to load image.
-	 * Default is lower left. Specify true for upper left.
-	 * @return Object containing png buffer and information.
-	 */
-	static PNGData loadPng(ServiceLocator* sl, const char* path, bool upperLeft = false);
-
-	/**
 	 * @see Resource
 	 */
 	virtual bool create();
@@ -282,16 +263,7 @@ protected:
 private:
 	
 	static void addDimensions(Texture* texture, UINT32 w, UINT32 h);
-	static Texture* prepareNewTexture(Texture* texture, UINT32 w, UINT32 h);
-
-	/**
-	 * Converts PNG image to raw uncompressed image.
-	 * @param in - pointer to PNG data.
-	 * @param upperLeft - optional parameter that specifies from which corner to load image.
-	 * Default is lower left. Specify true for upper left.
-	 * @return Pointer to raw image, or 0 if error occurred.
-	 */
-	static PNGData pngToRaw(INT8* in, bool upperLeft = false);
+	static Texture* prepareNewTexture(Texture* texture, string name, UINT32 w, UINT32 h);
 
 protected:
 	/** Width of the texture in pixels. */
