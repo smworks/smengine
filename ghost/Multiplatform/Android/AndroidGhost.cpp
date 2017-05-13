@@ -11,7 +11,7 @@
     void profile(string& msg) {
         static UINT64 lastCheck = getMicroseconds();
         UINT64 now = getMicroseconds();
-        LOGD("%s Time: %llu (ms).", msg.c_str(), (now - lastCheck) / 1000);
+        LOGD("%s Time: %lu (ms).", msg.c_str(), (now - lastCheck) / 1000);
         lastCheck = now;
     }
 #endif

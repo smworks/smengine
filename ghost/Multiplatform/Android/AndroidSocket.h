@@ -15,7 +15,12 @@ class AndroidSocket : public Socket {
 public:
 	AndroidSocket();
 	~AndroidSocket();
-	HttpResponse* send(HttpRequest* request);
+	void send(HttpRequest* request);
+	HttpResponse* receive();
+	void shutdown();
+	bool isAvailable();
+private:
+	int sock;
 };
 
 #endif

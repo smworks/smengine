@@ -8,7 +8,7 @@
 #include "DynamicObject.h"
 #include "Vertex.h"
 #include "Texture.h"
-#include "Vec3.h"
+#include "../Vec3.h"
 #include "../ResourceManager.h"
 #include "../MD2Parser.h"
 #include "../Multiplatform/Database.h"

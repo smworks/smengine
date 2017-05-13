@@ -8,19 +8,22 @@
 #ifndef ANDROIDGHOST_H_
 #define ANDROIDGHOST_H_
 
+// ENGINE SUBSYSTEMS
+#ifndef DISABLE_ALL
+//#define ENABLE_FONTS
+//#define ENABLE_PHYSICS
+#define ENABLE_DATABASE
+//#define ENABLE_SOUND
+#define ENABLE_GRAPHICS
+#endif
+
 #ifndef NDEBUG
 #define SMART_DEBUG
 #endif
 
 // BASIC CONSTANTS.
 #define GHOST_NEWLINE '\n'
-#define GHOST_DEBUG true
-#define GHOST_FRUSTUM_CULLING true
 #define GHOST_DELTA 0.0000000001f
-#define GHOST_LUA_KEYS "keys"
-#define TO_STRING(x) #x
-#define GHOST_DELETE(pointer)\
-	if (pointer != 0) delete pointer; pointer = 0;
 
 #define GHOST_RESOURCES(x) x "/"
 #define GHOST_SHADERS GHOST_RESOURCES("shaders")
@@ -28,7 +31,6 @@
 #define GHOST_SCRIPTS GHOST_RESOURCES("scripts")
 #define GHOST_SPRITES GHOST_RESOURCES("textures")
 #define GHOST_SOUNDS GHOST_RESOURCES("sounds")
-#define GHOST_SCENES GHOST_RESOURCES("scenes")
 #define GHOST_FONTS GHOST_RESOURCES("fonts")
 
 #define NEW new
@@ -50,10 +52,9 @@
 #include <stdarg.h>
 #include <android/log.h>
 #include <jni.h>
-#include <hash_map>
 #include <sys/time.h>
 #include <stdint.h>
-#define unordered_map hash_map
+#include <unordered_map>
 #include <pthread.h>
 #include <sys/socket.h>
 #include <arpa/inet.h>
@@ -63,6 +64,8 @@
 #include <errno.h>
 #include <queue>
 #include <assert.h>
+#include <thread>
+#include <mutex>
 
 using namespace std;
 
@@ -100,6 +103,12 @@ typedef SIZE* POINTER;
     #define PROFILE(...)
 #endif
 
+#define RETURN(val, cond, ...) \
+if (cond) { \
+    LOGW(__VA_ARGS__); \
+    return val; \
+}
+
 #ifdef SMART_DEBUG
 	#define CHECK_GL_ERROR(msg) checkGLError(msg)
 #define ASSERT(expression, ...) \
@@ -113,11 +122,8 @@ typedef SIZE* POINTER;
 #include <GLES2/gl2.h>
 #include <GLES2/gl2ext.h>
 
-#ifdef SMART_DEBUG
-	#define CHECK_GL_ERROR(msg) checkGLError(msg)
-#else
-	#define CHECK_GL_ERROR(msg)
-#endif
+#define THROWEX(...)
+#define THROWONASSERT(...)
 
 // GLOBAL METHODS.
 

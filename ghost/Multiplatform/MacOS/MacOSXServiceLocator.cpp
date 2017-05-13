@@ -53,7 +53,7 @@ double MacOSXServiceLocator::updateTimer(float sleep) {
 	return frameDuration_ = timeElapsed;
 }
 
-Socket* MacOSXServiceLocator::createSocket(SocketParams paramss) {
+Socket* MacOSXServiceLocator::createSocket(SocketParams params) {
     return NEW MacOSXSocket();
 }
 

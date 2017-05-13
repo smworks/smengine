@@ -57,10 +57,10 @@ void GraphicsManager::create()
 {
 	if (!services->isGuiAvailable())
 	{
-		LOGD("Graphics manager not properly created.")
+		LOGD("Graphics manager not properly created.");
 		return;
 	}
-	LOGD("Max texture units: %u (%u combined).",
+	LOGD("Max texture units: %lu (%lu combined).",
 		getMax(MAX_TEXTURE_UNITS), getMax(MAX_COMBINED_TEXTURE_UNITS));
 	LOGD("Max texture width and height: %upx (%upx for cube map).",
 		getMax(MAX_TEXTURE_SIZE), getMax(MAX_CUBE_MAP_SIZE));

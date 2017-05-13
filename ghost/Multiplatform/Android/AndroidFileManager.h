@@ -22,25 +22,9 @@ public:
 	AndroidFileManager(JNIEnv* env, jobject obj);
 	~AndroidFileManager();
 
-	/**
-	 * @see FileManager
-	 */
-	bool loadRaw(
-		INT8*& bytes, SIZE& size, const char* path);
-
-	/**
-	 * @see FileManager
-	 */
-	void loadText(string& text, const char* path);
-
-	/**
-	 * @see FileManager
-	 */
+	bool loadRaw(INT8*& bytes, SIZE& size, const char* path);
+	string loadText(string path);
 	vector<string> getFiles(const char* path);
-
-	/**
-	 * @see FileManager
-	 */
 	bool fileExists(const char* path);
 private:
 	JNIEnv* env_;

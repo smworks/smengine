@@ -50,12 +50,12 @@ void ModelFactory::createModel(ModelData* md, Attributes& attr, ServiceLocator* 
 		THROWEX("3D model name not specified.");
 	}
 
-	char* bytes;
+	INT8* bytes;
 	SIZE size;
 	sl->getFileManager()->loadRaw(bytes, size, (GHOST_MODELS + file).c_str());
 	if (size > 0)
 	{
-		md->deserialize(sl, bytes);
+		md->deserialize(sl, reinterpret_cast<const char*>(bytes));
 	}
 	delete[] bytes;
 }

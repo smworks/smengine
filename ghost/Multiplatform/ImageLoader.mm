@@ -1,6 +1,7 @@
 #include "ImageLoader.h"
 #include "ServiceLocator.h"
 
+#ifdef __MACH__
 #include <CoreData/CoreData.h>
 #include <ApplicationServices/ApplicationServices.h>
 #include <CoreFoundation/CoreFoundation.h>
@@ -43,4 +44,4 @@ ImageLoader::RawImage ImageLoader::loadPng(ServiceLocator* services, const char*
         CFRelease(data);
         return png;
     }
-
+#endif

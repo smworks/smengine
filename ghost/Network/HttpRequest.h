@@ -19,7 +19,7 @@ public:
 		RAW, FORM
 	};
 	struct Header {
-		Header(string n, string v) : name(n), value(v) {}
+		Header(string n, string val) : name(n), value(val) {}
 		string name;
 		string value;
 	};

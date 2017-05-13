@@ -45,12 +45,12 @@ bool AndroidFileManager::loadRaw(
 	return true;
 }
 
-void AndroidFileManager::loadText(string& text, const char* path) {
+string AndroidFileManager::loadText(string path) {
 	INT8* charArr;
 	SIZE len;
-	loadRaw(charArr, len, path);
+	loadRaw(charArr, len, path.c_str());
 	string tmp(reinterpret_cast<char*>(charArr), len);
-	text = tmp;
+	return tmp;
 }
 
 vector<string> AndroidFileManager::getFiles(const char* path) {

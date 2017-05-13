@@ -9,7 +9,7 @@
 
 #include "../SoundManager.h"
 
-#ifdef DISABLE_SOUND
+#ifndef ENABLE_SOUND
 class AndroidSoundManager : public SoundManager {
 public:
 	AndroidSoundManager() {}

@@ -6,20 +6,17 @@
  */
 
 #include "AndroidServiceLocator.h"
-#include "AndroidThread.h"
 #include "AndroidSoundManager.h"
 #include "AndroidGraphicsManager.h"
 #include "AndroidFileManager.h"
 #include "AndroidSocket.h"
-#include "../../Resources/TextureRGBA.h"
+#include "AndroidDatabase.h"
 
 AndroidServiceLocator::AndroidServiceLocator(JNIEnv* env, jobject obj) :
-	nScreenWidth_(0),
-	nScreenHeight_(0),
-	exit_(false),
 	graphicsManager_(0),
 	fileManager_(0),
 	soundManager_(0),
+    database_(0),
 	env_(env),
 	obj_(obj)
 {
@@ -29,14 +26,16 @@ AndroidServiceLocator::AndroidServiceLocator(JNIEnv* env, jobject obj) :
 }
 
 AndroidServiceLocator::~AndroidServiceLocator() {
-	if (graphicsManager_ != 0) {
-		delete graphicsManager_;
-		graphicsManager_ = 0;
-	}
+	graphicsManager_->release();
+    delete graphicsManager_;
 	if (fileManager_ != 0) {
 		delete fileManager_;
 		fileManager_ = 0;
 	}
+    if (database_ != 0) {
+        delete database_;
+        database_ = 0;
+    }
 	if (soundManager_ != 0) {
 		delete soundManager_;
 		soundManager_ = 0;
@@ -44,38 +43,8 @@ AndroidServiceLocator::~AndroidServiceLocator() {
 	LOGD("Deleted Android system.");
 }
 
-double AndroidServiceLocator::getTimeElapsed() {
-	clock_gettime(CLOCK_MONOTONIC, &timeElapsed_);
-	double timeElapsed = (timeElapsed_.tv_sec * 1000.0f + timeElapsed_.tv_nsec / 1000000.0f);
-	return timeElapsed;
-}
-
 double AndroidServiceLocator::getFrameTime() {
 	return frameDuration_;
-}
-
-void AndroidServiceLocator::setScreenWidth(int width) {
-	nScreenWidth_ = width;
-}
-
-void AndroidServiceLocator::setScreenHeight(int height) {
-	nScreenHeight_ = height;
-}
-
-int AndroidServiceLocator::getScreenWidth() {
-	return nScreenWidth_;
-}
-
-int AndroidServiceLocator::getScreenHeight() {
-	return nScreenHeight_;
-}
-
-void AndroidServiceLocator::exit() {
-	exit_ = true;
-}
-
-bool AndroidServiceLocator::isFinished() {
-	return exit_;
 }
 
 double AndroidServiceLocator::updateTimer(float sleep) {
@@ -90,15 +59,7 @@ double AndroidServiceLocator::updateTimer(float sleep) {
 	return frameDuration_ = timeElapsed;
 }
 
-Thread* AndroidServiceLocator::createThread() {
-	return NEW AndroidThread();
-}
-
-UINT32 AndroidServiceLocator::getCurrentThreadId() {
-	return static_cast<UINT32>(pthread_self());
-}
-
-Socket* AndroidServiceLocator::createSocket() {
+Socket* AndroidServiceLocator::createSocket(SocketParams params) {
 	return NEW AndroidSocket();
 }
 
@@ -124,4 +85,11 @@ SoundManager* AndroidServiceLocator::getSoundManager() {
 		LOGD("Sound manager initialized.");
 	}
 	return soundManager_;
+}
+
+Database* AndroidServiceLocator::getDB() {
+    if (database_ == 0) {
+        database_ = NEW AndroidDatabase();
+    }
+    return database_;
 }

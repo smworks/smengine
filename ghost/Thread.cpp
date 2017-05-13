@@ -32,7 +32,7 @@ bool Thread::isRunning() {
 }
 
 void Thread::run() {
-	LOGD("Created thread with id: %u.", hash<thread::id>()(this_thread::get_id()));
+	LOGD("Created thread with id: %lu.", hash<thread::id>()(this_thread::get_id()));
 	task->run();
 	workerMutex.lock();
 	running = false;

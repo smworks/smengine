@@ -15,15 +15,11 @@
 
 bool isExtensionSupported(string extension) {
 	string extensions((const char*) glGetString(GL_EXTENSIONS));
-	if (extensions.find(extension) != string::npos) {
-		return true;
-	}
-	return false;
+	return extensions.find(extension) != string::npos;
 }
 
 const char* getGLString(GLenum id) {
-    const char *info = (const char *) glGetString(id);
-	return info;
+	return (const char *) glGetString(id);
 }
 
 string shaderSupport() {
@@ -72,7 +68,7 @@ AndroidGraphicsManager::~AndroidGraphicsManager() {
 }
 
 bool AndroidGraphicsManager::isGraphicsContextAvailable() {
-	return false; //eglGetCurrentContext() != EGL_NO_CONTEXT;
+	return true; //eglGetCurrentContext() != EGL_NO_CONTEXT;
 }
 
 bool AndroidGraphicsManager::setTexture(
@@ -470,15 +466,116 @@ void AndroidGraphicsManager::unsetVertexBuffer(UINT32& id) {
 	}
 }
 
+void AndroidGraphicsManager::unsetVertexBuffers(UINT32 count, UINT32*& buffers)
+{
+	bindBuffer(0);
+	glDeleteBuffers(count, buffers);
+	delete [] buffers;
+	buffers = 0;
+}
+
+bool AndroidGraphicsManager::setIndexBuffer(UINT32& id, void* buffer, int size)
+{
+	if (id == 0)
+	{
+		glGenBuffers(1, &id);
+	}
+	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, id);
+	glBufferData(GL_ELEMENT_ARRAY_BUFFER, size, buffer, GL_STATIC_DRAW);
+	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
+	return !checkGLError("Setting index buffer");
+}
+
+void AndroidGraphicsManager::unsetIndexBuffer(UINT32& id)
+{
+	unsetVertexBuffer(id);
+}
+
+void AndroidGraphicsManager::clearColorAndDepthBuffers()
+{
+	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+}
+
+void AndroidGraphicsManager::setViewPort(float width, float height)
+{
+	glViewport(0, 0, int(width), int(height));
+}
+
 bool AndroidGraphicsManager::checkSupport(Support key) {
 	switch (key) {
 	case SUPPORT_NPOT_TEXTURES:
 		return isExtensionSupported("ARB_texture_non_power_of_two") || isExtensionSupported("GL_OES_texture_npot");
-		break;
 	case SUPPORT_UINT_INDEX:
 		return isExtensionSupported("GL_OES_element_index_uint");
-		break;
 	default:
 		return false;
 	}
+}
+
+
+pair<string, string> AndroidGraphicsManager::getDefaultSpriteShader()
+{
+	string vert =
+			"uniform mat4 uWVP;"
+					"attribute vec4 attrPos;"
+					"attribute vec2 attrUV;"
+					"varying vec2 varTexCoords;"
+					"void main(void) {"
+					"	gl_Position = uWVP * attrPos;"
+					"	varTexCoords = attrUV;"
+					"}";
+	string frag =
+			"uniform sampler2D mainTexture;"
+					"varying vec2 varTexCoords;"
+					"void main(void) {"
+					"	vec4 col = texture2D(mainTexture, varTexCoords);"
+					"	gl_FragColor = col;"
+					"}";
+	return pair<string, string>(vert, frag);
+}
+
+pair<string, string> AndroidGraphicsManager::getDefaultModelShader()
+{
+	string vert =
+			"uniform mat4 uWVP;"
+					"attribute vec4 attrPos;"
+					"attribute vec2 attrUV;"
+					"varying vec2 varTexCoords;"
+					"void main(void)"
+					"{"
+					"	varTexCoords = attrUV;"
+					"	gl_Position = uWVP * attrPos;"
+					"}";
+	string frag = "uniform vec3 uAmbient;"
+			"uniform vec3 uDiffuse;"
+			"uniform sampler2D mainTexture;"
+			"uniform float uMainTexture;"
+			"varying vec2 varTexCoords;"
+			"float linearDepth() {"
+			"	float n = 0.1; // camera z near"
+			"	float f = 300.0; // camera z far"
+			"	float zoverw = gl_FragCoord.z;"
+			"	return (2.0 * n) / (f + n - zoverw * (f - n));"
+			"}"
+			"void main(void)"
+			"{"
+			"	float depth = 1.0 - linearDepth();"
+			"	vec4 col = vec4(depth, depth, depth, 1.0);"
+			"	if (uMainTexture > 0.5) {"
+			"		gl_FragColor = col * texture2D(mainTexture, varTexCoords);"
+			"	} else {"
+			"		gl_FragColor = col;"
+			"	}"
+			"}";
+	return pair<string, string>(vert, frag);
+}
+
+pair<string, string> AndroidGraphicsManager::getDefaultTextShader()
+{
+	return pair<string, string>("", "");
+}
+
+pair<string, string> AndroidGraphicsManager::getDefaultSurfaceShader()
+{
+	return pair<string, string>("", "");
 }

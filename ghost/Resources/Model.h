@@ -16,8 +16,6 @@ class Vec3;
 class ModelData;
 class Texture;
 
-#define GHOST_TERRAIN_HEIGHT_MAP "heightMap"
-
 class Model :
 	public Resource,
 	public Renderable {
@@ -37,20 +35,20 @@ public:
 	/**
 	 * @see Renderable
 	 */
-	SIZE getVertexCount();
-	SIZE getTexture();
-	SIZE getIBO();
-	SIZE getIndexOffset();
+	SIZE getVertexCount() override;
+	SIZE getTexture() override;
+	SIZE getIBO() override;
+	SIZE getIndexOffset() override;
 	BoundingVolume* getBV() override;
-	SIZE getCBO();
-	SIZE getIndexCount();
-	SIZE getRenderCount();
-	void setRenderable(SIZE i);
-	SIZE getVertexStride();
-	int getPosOffset();
-	int getNormalOffset();
-	int getUVOffset();
-	Shader* getDefaultShader();
+	SIZE getCBO() override;
+	SIZE getIndexCount() override;
+	SIZE getRenderCount() override;
+	void setRenderable(SIZE i) override;
+	SIZE getVertexStride() override;
+	int getPosOffset() override;
+	int getNormalOffset() override;
+	int getUVOffset() override;
+	Shader* getDefaultShader() override;
 
 	ModelData* getData();
 	void setTexture(Texture* texture, UINT32 index);

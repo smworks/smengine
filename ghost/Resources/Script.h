@@ -16,54 +16,16 @@ public:
 	Script(ServiceLocator* services);
 	~Script();
 
-	/**
-	 * @see Resource
-	 */
-	void release();
-
-	/**
-	 * @see Resource
-	 */
-	SIZE getSize();
-
-	/**
-	 * @see Resource
-	 */
-	Resource::Type getType();
-
-	/**
-	 * @see Resource
-	 */
-	bool isValid();
-
-	/**
-	 * @param script - string containing script.
-	 */
+	void release() override;
+	SIZE getSize() override;
+	Type getType() override;
+	bool isValid() override;
 	void setScript(string& script);
-
-	/**
-	 * @return String containing script.
-	 */
 	string& getScript();
-
-	/**
-	 * @param id - script id.
-	 */
 	void setId(int id);
-
-	/**
-	 * @return Id of the logic.
-	 */
 	int getId();
-
-	/**
-	 * Releases and creates resource again.
-	 */
 	void reset();
 protected:
-	/**
-	 * @see Resource
-	 */
 	bool create() override;
 	
 	int id_;

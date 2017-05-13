@@ -165,7 +165,7 @@ void TextureRGBA::setPixel(UINT8* color, SIZE row, SIZE column) {
 
 UINT8* TextureRGBA::getPixel(SIZE row, SIZE column) {
 	if (buffer_ == 0 || row >= height_ || column >= width_) {
-		LOGW("Unable to get pixel on row %d, column %d.", row, column);
+		LOGW("Unable to get pixel on row %lu, column %lu.", row, column);
 		static UINT8 empty[] = {0, 0, 0, 0};
 		return empty;
 	}

@@ -223,7 +223,7 @@ bool TextureMono::commit() {
 			height = maxSize;
 			width = (UINT32) (width_ * ((float) maxSize / height_));
 		}
-		LOGW("Texture will be resized to: %ux%zupx.", width, height);
+		LOGW("Texture will be resized to: %lupx%lupx.", width, height);
 		resize((UINT32)width, (UINT32)height);
 	}
 	if (left_ == width_) {

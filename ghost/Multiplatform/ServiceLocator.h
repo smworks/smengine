@@ -35,7 +35,7 @@ public:
 
 
 	void setScreenWidth(int width);
-	void setScreenHeight(int height) ;
+	void setScreenHeight(int height);
 	int	getScreenWidth() const;
 	int getScreenHeight() const;
 	void exit();

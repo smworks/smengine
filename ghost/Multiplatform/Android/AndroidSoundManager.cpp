@@ -5,7 +5,7 @@
  *      Author: Martynas Šustavičius
  */
 
-#ifndef DISABLE_SOUND
+#ifdef ENABLE_SOUND
 #include "AndroidSoundManager.h"
 #include "../../Resources/Sound.h"
 

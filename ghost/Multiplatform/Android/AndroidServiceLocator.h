@@ -10,6 +10,7 @@
 
 #include "../Ghost.h"
 #include "../ServiceLocator.h"
+#include "../../Thread.h"
 
 class AndroidServiceLocator : public ServiceLocator {
 public:
@@ -22,85 +23,13 @@ public:
 	AndroidServiceLocator(JNIEnv* env, jobject obj);
 	~AndroidServiceLocator();
 
-	/**
-	 * @see System
-	 */
-	double getTimeElapsed();
-
-	/**
-	 * @see System
-	 */
-	double getFrameTime();
-
-	/**
-	 * @see System
-	 */
-	void setScreenWidth(int width);
-
-	/**
-	 * @see System
-	 */
-	void setScreenHeight(int height);
-
-	/**
-	 * @see System
-	 */
-	int	getScreenWidth();
-
-	/**
-	 * @see System
-	 */
-	int getScreenHeight();
-
-	/**
-	 * @see System
-	 */
-	void exit();
-
-	/**
-	 * @see System
-	 */
-	bool isFinished();
-
-	/**
-	 * @see System
-	 */
-	double updateTimer(float sleep = 0.0f);
-
-	/**
-	 * @see System
-	 */
-	Thread* createThread();
-	
-	/**
-	 * @see System
-	 */
-	 UINT32 getCurrentThreadId();
-	 
-	/**
-	 * @see System.
-	 */
-	Socket* createSocket();
-
-	/**
-	 * @see System
-	 */
+    double getFrameTime();
+    double updateTimer(float sleep = 0.0f);
+    Socket* createSocket(SocketParams params);
 	GraphicsManager* getGraphicsManager();
-
-	/**
-	 * @see System
-	 */
 	FileManager* getFileManager();
-
-	/**
-	 * @see System
-	 */
 	SoundManager* getSoundManager();
-private:
-private:
-	int nScreenWidth_;
-	int nScreenHeight_;
-	bool exit_;
+    Database* getDB();
 private:
 	timespec timeBefore_,
 			timeAfter_, timeElapsed_;
@@ -108,6 +37,7 @@ private:
 	GraphicsManager* graphicsManager_;
 	FileManager* fileManager_;
 	SoundManager* soundManager_;
+    Database* database_;
 	JNIEnv* env_;
 	jobject obj_;
 };

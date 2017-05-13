@@ -132,7 +132,7 @@ Texture* Texture::load(ServiceLocator* sl, string name, bool useRM) {
 	}
     ImageLoader::RawImage data = ImageLoader::loadPng(sl, (GHOST_SPRITES + name).c_str());
 	ASSERT(data.buffer != 0, "Unable to load file \"%s\".", name.c_str());
-	Texture* texture = data.alpha ? static_cast<Texture*>(NEW TextureRGBA(sl)) : NEW TextureRGB(sl);
+	Texture* texture = data.alpha ? static_cast<Texture*>(NEW TextureRGBA(sl)) : static_cast<Texture*>(NEW TextureRGB(sl));
 	addDimensions(texture, data.width, data.height);
 	texture->getAttributes().setString(ATTR_FILE, name);
 	texture->getAttributes().setPointer(ATTR_BUFFER, data.buffer);
