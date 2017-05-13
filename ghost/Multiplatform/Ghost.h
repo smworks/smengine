@@ -37,7 +37,7 @@ using namespace std;
 
 // ENGINE SUBSYSTEMS
 #ifndef DISABLE_ALL
-//#define ENABLE_FONTS
+#define ENABLE_FONTS
 //#define ENABLE_PHYSICS
 #define ENABLE_DATABASE
 //#define ENABLE_SOUND

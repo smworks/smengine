@@ -9,6 +9,7 @@ file(GLOB files
     "../../ghost/Multiplatform/*.cpp"
     "../../ghost/Multiplatform/Android/*.cpp"
     "../../dependencies/includes/sqlite/sqlite3.c"
+    "../../dependencies/includes/freetype/*.c"
 )
 
 #add_library(fmod SHARED IMPORTED)
