@@ -38,8 +38,7 @@ TextureAtlas::~TextureAtlas() {
 }
 
 bool TextureAtlas::create(UINT32& id, UINT32 width, UINT32 height, int type) {
-	Texture* texture = type == Texture::MONO ?
-		dynamic_cast<Texture*>(textureMono_) : dynamic_cast<Texture*>(textureRGBA_);
+	Texture* texture = type == Texture::MONO ? textureMono_ : textureRGBA_;
 	TextureHeader th = {};
     th.width = width;
     th.height = height;
@@ -127,14 +126,12 @@ UINT32 TextureAtlas::getId(int type) {
 }
 
 Texture* TextureAtlas::getTexture(int type) {
-	return type == Texture::MONO ?
-		dynamic_cast<Texture*>(textureMono_) : dynamic_cast<Texture*>(textureRGBA_);
+	return type == Texture::MONO ? textureMono_ : textureRGBA_;
 }
 
 bool TextureAtlas::findSpace(TextureHeader& th) {
-	Texture* texture = th.type == Texture::MONO ?
-		dynamic_cast<Texture*>(textureMono_) : dynamic_cast<Texture*>(textureRGBA_);
-	vector<Skyline>& skyline = Texture::MONO ? skylineMono_ : skylineRGBA_;
+	Texture* texture = th.type == Texture::MONO ? textureMono_ : textureRGBA_;
+	vector<Skyline>& skyline = th.type == Texture::MONO ? skylineMono_ : skylineRGBA_;
 	UINT32 height = texture->getHeight();
 	SIZE size = skyline.size();
 	INT32 fitIndex = -1;

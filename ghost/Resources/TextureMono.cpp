@@ -70,7 +70,7 @@ bool TextureMono::isValid() {
 }
 
 UINT32 TextureMono::getId() {
-	if (left_ != width_) {
+	if (left_ != width_ && buffer_ != 0) {
 		commit();
 	}
 	return id_;
@@ -227,7 +227,7 @@ bool TextureMono::commit() {
 		resize((UINT32)width, (UINT32)height);
 	}
 	if (left_ == width_) {
-		LOGD("Commiting with zero changes.");
+		LOGD("Committing with zero changes.");
 		return false;
 	}
 	SIZE updateRegionWidth = right_ - left_ + 1;

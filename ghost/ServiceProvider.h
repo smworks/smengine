@@ -26,7 +26,8 @@ class ServiceProvider
 {
 public:
 	explicit ServiceProvider(ServiceLocator* serviceLocator);
-	ServiceLocator* getServiceLocator() const;
+    ServiceLocator* getServiceLocator() const;
+protected:
 	GraphicsManager* getGraphicsManager() const;
 	FileManager* getFileManager() const;
 	SoundManager* getSoundManager() const;

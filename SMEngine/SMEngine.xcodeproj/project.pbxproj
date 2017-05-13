@@ -114,8 +114,8 @@
 		9382B1631E8376FC0072F690 /* MacOSDatabase.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9382B1561E8376FC0072F690 /* MacOSDatabase.cpp */; };
 		9382B1641E8376FC0072F690 /* MacOSXGraphicsManager.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9382B1581E8376FC0072F690 /* MacOSXGraphicsManager.cpp */; };
 		9382B1651E8376FC0072F690 /* MacOSXServiceLocator.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9382B15A1E8376FC0072F690 /* MacOSXServiceLocator.cpp */; };
-		9382B1661E8376FC0072F690 /* SMart.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9382B15C1E8376FC0072F690 /* SMart.cpp */; };
 		9382B1671E8376FC0072F690 /* Socket.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9382B15E1E8376FC0072F690 /* Socket.cpp */; };
+		93A479AB1EC78A95004E3BFA /* Ghost.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 93A479AA1EC78A95004E3BFA /* Ghost.cpp */; };
 		93BFD4DB1EC13924007E00A2 /* sqlite3.c in Sources */ = {isa = PBXBuildFile; fileRef = 93BFD4D91EC13924007E00A2 /* sqlite3.c */; };
 		93BFD4E51EC153E3007E00A2 /* ImageLoader.mm in Sources */ = {isa = PBXBuildFile; fileRef = 93BFD4E41EC153E3007E00A2 /* ImageLoader.mm */; };
 		93BFD4E71EC15634007E00A2 /* CoreData.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 93BFD4E61EC15633007E00A2 /* CoreData.framework */; };
@@ -353,10 +353,9 @@
 		9382B1591E8376FC0072F690 /* MacOSXGraphicsManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MacOSXGraphicsManager.h; path = ../../ghost/Multiplatform/MacOS/MacOSXGraphicsManager.h; sourceTree = "<group>"; };
 		9382B15A1E8376FC0072F690 /* MacOSXServiceLocator.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = MacOSXServiceLocator.cpp; path = ../../ghost/Multiplatform/MacOS/MacOSXServiceLocator.cpp; sourceTree = "<group>"; };
 		9382B15B1E8376FC0072F690 /* MacOSXServiceLocator.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MacOSXServiceLocator.h; path = ../../ghost/Multiplatform/MacOS/MacOSXServiceLocator.h; sourceTree = "<group>"; };
-		9382B15C1E8376FC0072F690 /* SMart.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = SMart.cpp; path = ../../ghost/Multiplatform/MacOS/SMart.cpp; sourceTree = "<group>"; };
-		9382B15D1E8376FC0072F690 /* SMart.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SMart.h; path = ../../ghost/Multiplatform/MacOS/SMart.h; sourceTree = "<group>"; };
 		9382B15E1E8376FC0072F690 /* Socket.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = Socket.cpp; path = ../../ghost/Multiplatform/MacOS/Socket.cpp; sourceTree = "<group>"; };
 		9382B15F1E8376FC0072F690 /* Socket.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Socket.h; path = ../../ghost/Multiplatform/MacOS/Socket.h; sourceTree = "<group>"; };
+		93A479AA1EC78A95004E3BFA /* Ghost.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = Ghost.cpp; path = ../../ghost/Multiplatform/Ghost.cpp; sourceTree = "<group>"; };
 		93BFD4D61EC132EE007E00A2 /* resources */ = {isa = PBXFileReference; lastKnownFileType = folder; path = resources; sourceTree = "<group>"; };
 		93BFD4D91EC13924007E00A2 /* sqlite3.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = sqlite3.c; sourceTree = "<group>"; };
 		93BFD4DA1EC13924007E00A2 /* sqlite3.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = sqlite3.h; sourceTree = "<group>"; };
@@ -577,6 +576,7 @@
 				9382B1431E8376B80072F690 /* Database.h */,
 				9382B1441E8376B80072F690 /* FileManager.h */,
 				9382B1451E8376B80072F690 /* Ghost.h */,
+				93A479AA1EC78A95004E3BFA /* Ghost.cpp */,
 				9382B1461E8376B80072F690 /* GraphicsManager.cpp */,
 				9382B1471E8376B80072F690 /* GraphicsManager.h */,
 				9382B1481E8376B80072F690 /* NullGraphicsManager.cpp */,
@@ -679,8 +679,6 @@
 				9382B1591E8376FC0072F690 /* MacOSXGraphicsManager.h */,
 				9382B15A1E8376FC0072F690 /* MacOSXServiceLocator.cpp */,
 				9382B15B1E8376FC0072F690 /* MacOSXServiceLocator.h */,
-				9382B15C1E8376FC0072F690 /* SMart.cpp */,
-				9382B15D1E8376FC0072F690 /* SMart.h */,
 				9382B15E1E8376FC0072F690 /* Socket.cpp */,
 				93405D891EC1318800E294A3 /* MacOSSoundManager.cpp */,
 				93405D8A1EC1318800E294A3 /* MacOSSoundManager.h */,
@@ -808,7 +806,6 @@
 				93405D8B1EC1318800E294A3 /* MacOSSoundManager.cpp in Sources */,
 				9382B12C1E8376710072F690 /* Sprite.cpp in Sources */,
 				93405D751EC09EC300E294A3 /* lgc.c in Sources */,
-				9382B1661E8376FC0072F690 /* SMart.cpp in Sources */,
 				9382B0C61E83761E0072F690 /* Console.cpp in Sources */,
 				9382B12E1E8376710072F690 /* Texture.cpp in Sources */,
 				9382B12A1E8376710072F690 /* Shader.cpp in Sources */,
@@ -825,6 +822,7 @@
 				9382B14F1E8376B80072F690 /* Database.cpp in Sources */,
 				9382B0C81E83761E0072F690 /* Environment.cpp in Sources */,
 				93405D7F1EC09EC300E294A3 /* lparser.c in Sources */,
+				93A479AB1EC78A95004E3BFA /* Ghost.cpp in Sources */,
 				93405D7C1EC09EC300E294A3 /* lobject.c in Sources */,
 				93405D7B1EC09EC300E294A3 /* loadlib.c in Sources */,
 				9382B1511E8376B80072F690 /* NullGraphicsManager.cpp in Sources */,

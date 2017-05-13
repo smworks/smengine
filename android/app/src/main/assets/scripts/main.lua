@@ -2,6 +2,7 @@ function eventResponse(response)
 end
 
 function eventGUI(node, eventType)
+	print ("Ok, wassup")
 	loadScene(node:getName() .. ".lua")
 	print("Loading script: " .. node:getName())
 end
