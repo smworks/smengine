@@ -1,12 +1,20 @@
 /*
 !android/
 android/*
-!android/jni/
-!android/libs/
-!android/res/
-!android/src/
-!android/AndroidManifest.xml
-!android/project.properties
+!android/app/
+android/app/*
+!android/app/build.gradle
+!android/app/CMakeLists.txt
+!android/app/libs
+!android/app/proguard-rules.pro
+!android/app/src
+!android/build.gradle
+!android/gradle
+!android/gradle.properties
+!android/gradlew
+!android/gradlew.bat
+!android/local.properties
+!android/settings.gradle
 !dependencies/
 !ghost/
 !resources/
@@ -27,9 +35,9 @@ android/*
 !GhostEngine.vcxproj.filters
 !GhostEngine.vcxproj.user
 # XCode project file.
-!SMart Engine/
-SMart Engine/*
-!SMart Engine/SMart Engine.xcodeproj
+!SMEngine/
+SMEngine/*
+!SMEngine/SMengine.xcodeproj
 # Release projects.
 !releases/
 # Utility projects
