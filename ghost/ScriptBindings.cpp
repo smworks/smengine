@@ -256,14 +256,15 @@ int pointerIsOver(lua_State* L) {
 		}
 	} else if (node->getResource()->getType() == Resource::GUI_SURFACE) {
 		GUISurface* surface = dynamic_cast<GUIText*>(node->getResource());
-		if (x > surface->getMarginLeft()
-			&& x < surface->getMarginLeft() + surface->getWidth()
-			&& y > surface->getMarginBottom()
-			&& y < surface->getMarginBottom() + surface->getHeight())
-		{
-			lua_pushboolean(L, true);
-			return 1;
-		}
+//		if (x > node->getPos().getX()
+//			&& x < node->getPos().getX() + node->getScale().getX()
+//			&& y > surface->getMarginBottom()
+//			&& y < surface->getMarginBottom() + surface->getHeight())
+//		{
+//			lua_pushboolean(L, true);
+//			return 1;
+//		}
+		ASSERT(false, "NOT IMPLEMENTED");
 	}
 	lua_pushboolean(L, false);
 	return 1;
@@ -667,7 +668,7 @@ int nodeMoveViaCameraDirection(lua_State* L) {
 	return 0;
 }
 
-int nodeGuiTextSetSize(lua_State* L) {
+int nodeGuiTextSetFontSize(lua_State *L) {
 	Node* node = SM_GET_OBJECT(L, 0, Node);
 	GUIText* text = dynamic_cast<GUIText*>(node->getResource());
 	if (text == 0) {
@@ -675,7 +676,7 @@ int nodeGuiTextSetSize(lua_State* L) {
 		return 0;
 	}
 	INT32 size = SM_GET_INT(L, 1);
-	text->setTextSize(size);
+    text->setFontSize(size);
     return 0;
 }
 
@@ -738,96 +739,29 @@ int nodeGuiGetBackground(lua_State* L) {
 
 int nodeGetWidth(lua_State* L) {
 	Node* node = SM_GET_OBJECT(L, 0, Node);
-	GUISurface* surface = dynamic_cast<GUISurface*>(node->getResource());
-	if (surface == 0) {
-		LOGW("Node does not contain GUISurface resource.");
-		return 0;
-	}
-	SM_RETURN_FLOAT(L, surface->getWidth());
+	SM_RETURN_FLOAT(L, node->getScale().getX());
 	return 1;
 }
 
 int nodeGetHeight(lua_State* L) {
 	Node* node = SM_GET_OBJECT(L, 0, Node);
-	GUISurface* surface = dynamic_cast<GUISurface*>(node->getResource());
-	if (surface == 0) {
-		LOGW("Node does not contain GUISurface resource.");
-		return 0;
-	}
-	SM_RETURN_FLOAT(L, surface->getHeight());
+	SM_RETURN_FLOAT(L, node->getScale().getY());
 	return 1;
 }
 
 int nodeSetWidth(lua_State* L) {
     Node* node = SM_GET_OBJECT(L, 0, Node);
-	GUISurface* surface = dynamic_cast<GUISurface*>(node->getResource());
-	if (surface == 0) {
-		LOGW("Node does not contain GUISurface resource.");
-		return 0;
-	}
 	float val = SM_GET_FLOAT(L, 1);
-	surface->setWidth(val);
+    node->getScale().setX(val);
+
 	return 0;
 }
 
 int nodeSetHeight(lua_State* L) {
     Node* node = SM_GET_OBJECT(L, 0, Node);
-	GUISurface* surface = dynamic_cast<GUISurface*>(node->getResource());
-	if (surface == 0) {
-		LOGW("Node does not contain GUISurface resource.");
-		return 0;
-	}
 	float val = SM_GET_FLOAT(L, 1);
-	surface->setHeight(val);
+    node->getScale().setY(val);
 	return 0;
-}
-
-int nodeSetMarginLeft(lua_State* L) {
-    Node* node = SM_GET_OBJECT(L, 0, Node);
-	GUISurface* surface = dynamic_cast<GUISurface*>(node->getResource());
-	if (surface == 0) {
-		LOGW("Node does not contain GUISurface resource.");
-		return 0;
-	}
-	float val = SM_GET_FLOAT(L, 1);
-	surface->setMargins(val, surface->getMarginBottom(),
-		surface->getMarginRight(), surface->getMarginTop());
-	return 0;
-}
-
-int nodeGetMarginLeft(lua_State* L) {
-	Node* node = SM_GET_OBJECT(L, 0, Node);
-	GUISurface* surface = dynamic_cast<GUISurface*>(node->getResource());
-	if (surface == 0) {
-		LOGW("Node does not contain GUISurface resource.");
-		return 0;
-	}
-	SM_RETURN_FLOAT(L, surface->getMarginLeft());
-	return 1;
-}
-
-int nodeSetMarginBottom(lua_State* L) {
-    Node* node = SM_GET_OBJECT(L, 0, Node);
-	GUISurface* surface = dynamic_cast<GUISurface*>(node->getResource());
-	if (surface == 0) {
-		LOGW("Node does not contain GUISurface resource.");
-		return 0;
-	}
-	float val = SM_GET_FLOAT(L, 1);
-	surface->setMargins(surface->getMarginLeft(), val,
-		surface->getMarginRight(), surface->getMarginTop());
-	return 0;
-}
-
-int nodeGetMarginBottom(lua_State* L) {
-	Node* node = SM_GET_OBJECT(L, 0, Node);
-	GUISurface* surface = dynamic_cast<GUISurface*>(node->getResource());
-	if (surface == 0) {
-		LOGW("Node does not contain GUISurface resource.");
-		return 0;
-	}
-	SM_RETURN_FLOAT(L, surface->getMarginBottom());
-	return 1;
 }
 
 int nodeSetAmbient(lua_State* L) {
@@ -976,7 +910,7 @@ void registerNode() {
     ADD_METHOD(methods, "setVisibility", setVisibility);
     ADD_METHOD(methods, "getVisibility", getVisibility);
 	//ADD_METHOD(methods, "getVehicle", getVehicle);
-	ADD_METHOD(methods, "setFontSize", nodeGuiTextSetSize);
+	ADD_METHOD(methods, "setFontSize", nodeGuiTextSetFontSize);
 	ADD_METHOD(methods, "setText", nodeGuiTextSetText);
 	ADD_METHOD(methods, "setColor", nodeGuiTextSetColor);
 	ADD_METHOD(methods, "setBackground", nodeGuiSetBackground);
@@ -985,10 +919,6 @@ void registerNode() {
 	ADD_METHOD(methods, "getHeight", nodeGetHeight);
 	ADD_METHOD(methods, "setWidth", nodeSetWidth);
 	ADD_METHOD(methods, "setHeight", nodeSetHeight);
-	ADD_METHOD(methods, "setMarginLeft", nodeSetMarginLeft);
-	ADD_METHOD(methods, "getMarginLeft", nodeGetMarginLeft);
-	ADD_METHOD(methods, "setMarginBottom", nodeSetMarginBottom);
-	ADD_METHOD(methods, "getMarginBottom", nodeGetMarginBottom);
 	ADD_METHOD(methods, "setAmbient", nodeSetAmbient);
 	ADD_METHOD(methods, "setDiffuse", nodeSetDiffuse);
 	ADD_METHOD(methods, "setSpecular", nodeSetSpecular);
@@ -1344,19 +1274,6 @@ void registerTexture() {
     ScriptManager::addClass("Texture", methods);
 }
 
-int surfaceSetWidth(lua_State* L) {
-    GUISurface* surface = SM_GET_OBJECT(L, 0, GUISurface);
-	float val = SM_GET_FLOAT(L, 1);
-	surface->setWidth(val);
-    return 0;
-}
-
-int surfaceGetWidth(lua_State* L) {
-	GUISurface* surface = SM_GET_OBJECT(L, 0, GUISurface);
-	SM_RETURN_INT(L, (int) surface->getWidth());
-	return 1;
-}
-
 void registerGUISurface() {
     unordered_map<string, int (*)(lua_State*)> methods;
 	//ADD_METHOD(methods, "new", newContainer);
@@ -1418,14 +1335,16 @@ int newGUIButton(lua_State* L) {
 		ASSERT(SM_IS_NUMBER(L, 1) && SM_IS_NUMBER(L, 2)
 			&& SM_IS_NUMBER(L, 3) && SM_IS_NUMBER(L, 4),
 			"Arguments from second to fifth must be numbers for GUIButton constructor.");
-		button->getAttributes().setFloat(GUIText::ATTR_MARGIN_LEFT, SM_GET_FLOAT(L, 1));
-		button->getAttributes().setFloat(GUIText::ATTR_MARGIN_BOTTOM, SM_GET_FLOAT(L, 2));
 		button->getAttributes().setFloat(GUIText::ATTR_WIDTH, SM_GET_FLOAT(L, 3));
 		button->getAttributes().setFloat(GUIText::ATTR_HEIGHT, SM_GET_FLOAT(L, 4));
 	}
 	button->create();
 	SM_GET_RM()->add(name, button);
 	Node* node = NEW Node(name, button);
+    if (argc == 5) {
+        node->getPos().setX(SM_GET_FLOAT(L, 1));
+        node->getPos().setY(SM_GET_FLOAT(L, 2));
+    }
 	SM_GET_SL()->getRootNode()->addChild(node);
 	node->setParent(SM_GET_SL()->getRootNode());
 	SM_GET_SL()->getGUIManager()->refreshNodes(SM_GET_SL()->getRootNode());

@@ -48,7 +48,7 @@ TextManager::TextManager(ServiceLocator* services) :
 	if (services->getFileManager()->loadRaw(
 		fontBuffer_, size, path.c_str()))
 	{
-		LOGD("Loading font with size: %u.", (UINT32) size);
+		LOGD("Loading font with size: %u Bytes.", (UINT32) size);
 		err_ = FT_New_Memory_Face(
 			lib_, (const FT_Byte*) fontBuffer_, size, 0, &face_);
 		if (err_) {

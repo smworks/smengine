@@ -24,6 +24,8 @@ void close();
 void load() {
     auto* wsl = new MacOSXServiceLocator();
     GHOST = new Engine(wsl);
+    GHOST->getServiceLocator()->setScreenWidth(glutGet(GLUT_WINDOW_WIDTH));
+    GHOST->getServiceLocator()->setScreenHeight(glutGet(GLUT_WINDOW_HEIGHT));
     ASSERT(GHOST != nullptr, "Engine instance not created");
     GHOST->resume();
 }

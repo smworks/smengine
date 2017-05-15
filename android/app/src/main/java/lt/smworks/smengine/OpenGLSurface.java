@@ -294,7 +294,7 @@ class OpenGLSurface extends GLSurfaceView {
 		}
 
 		public void onSurfaceChanged(GL10 gl, int width, int height) {
-			Log.d(MainActivity.TAG, "Surface changed.");
+			Log.d(MainActivity.TAG, "Surface changed. New width = " + width + ", height=" + height);
 			jni.resize(width, height, engine);
 		}
 
@@ -303,9 +303,9 @@ class OpenGLSurface extends GLSurfaceView {
 			Log.d(MainActivity.TAG, "Surface created.");
 			Display display = ((WindowManager) context.getSystemService(Context.WINDOW_SERVICE))
 				.getDefaultDisplay();
-			Log.d(MainActivity.TAG, "Starting engine with resolution: "
-				+ display.getWidth() + "x" + display.getHeight() + ".");
-			engine = jni.onCreate(display.getHeight(), display.getWidth());
+			Log.d(MainActivity.TAG, "Starting engine with resolution. Width="
+				+ display.getWidth() + ", height=" + display.getHeight());
+			engine = jni.onCreate(display.getWidth(), display.getHeight());
 			jni.onResume(engine);
 		}
 		

@@ -7,6 +7,19 @@
 
 #include "AndroidFileManager.h"
 
+//        Signature	                Java Type
+//        Z	                        boolean
+//        B	                        byte
+//        C	                        char
+//        S	                        short
+//        I	                        int
+//        J	                        long
+//        F	                        float
+//        D	                        double
+//        L fully-qualified-class ;	fully-qualified-class
+//        [ type	                type[]
+//        ( arg-types ) ret-type	method type
+
 AndroidFileManager::AndroidFileManager(JNIEnv* env, jobject obj) :
 	env_(env),
 	obj_(obj)
@@ -49,35 +62,19 @@ string AndroidFileManager::loadText(string path) {
 	INT8* charArr;
 	SIZE len;
 	loadRaw(charArr, len, path.c_str());
-	string tmp(reinterpret_cast<char*>(charArr), len);
+	string tmp(charArr, len);
 	return tmp;
 }
 
 vector<string> AndroidFileManager::getFiles(const char* path) {
-	/*char p[path.length()];
-	for (int i = 0; i < path.length() - 1; i++) {
-		p[i] = path[i];
-	}
-	p[path.length()] = '\0';
-	AAssetDir* dir = AAssetManager_openDir(assetManager_, "shaders");
-	vector<string> files;
-	const char* filename;
-	while ((filename = AAssetDir_getNextFileName(dir)) != 0) {
-		string file(filename);
-		files.push_back(file);
-
-	}
-	AAssetDir_close(dir);*/
 	vector<string> files;
 	return files;
 }
 
 bool AndroidFileManager::fileExists(const char* path) {
-	/*AAsset* asset = AAssetManager_open(assetManager_, path.c_str(),
-				AASSET_MODE_UNKNOWN);
-	if (asset == 0) {
-		return false;
-	}
-	AAsset_close(asset);*/
-	return true;
+	jstring jstr = env_->NewStringUTF(path);
+	jclass objClass = env_->GetObjectClass(obj_);
+	jmethodID messageMe = env_->GetMethodID(objClass, "fileExists", "(Ljava/lang/String;)Z");
+	jboolean result = env_->CallBooleanMethod(obj_, messageMe, jstr);
+	return result == JNI_TRUE;
 }

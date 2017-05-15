@@ -1,10 +1,3 @@
-/*
- * GUIText.cpp
- *
- *  Created on: 2013.07.13
- *      Author: Martynas Ðustavièius
- */
-
 #include "GUIText.h"
 #include "Vertex.h"
 #include "TextureRGBA.h"
@@ -32,8 +25,8 @@ GUIText::~GUIText() {
 }
 
 bool GUIText::create() {
-    size = static_cast<SIZE>(getSize(getAttribute(ATTR_SIZE)));
-	if (size == 0) {
+    size = toInt(getAttribute(ATTR_SIZE).c_str());
+	if (size <= 0) {
 		size = DEFAULT_TEXT_SIZE;
 	}
     setText(getAttribute(ATTR_TEXT));
@@ -144,14 +137,22 @@ string& GUIText::getText() {
 	return text;
 }
 
-void GUIText::setTextSize(SIZE size) {
+void GUIText::setFontSize(SIZE size) {
     this->size = size;
     setText(text);
 }
 
-SIZE GUIText::getTextSize() const
+SIZE GUIText::getFontSize() const
 {
 	return size;
+}
+
+SIZE GUIText::getTextWidth() const {
+	return textWidth;
+}
+
+SIZE GUIText::getTextHeight() const {
+    return textHeight;
 }
 
 float GUIText::getTextOffsetX() const

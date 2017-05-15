@@ -81,7 +81,7 @@ JNIEXPORT void JNICALL Java_lt_smworks_smengine_JNI_onDestroy(JNIEnv* env, jobje
 }
 
 JNIEXPORT void JNICALL Java_lt_smworks_smengine_JNI_resize(JNIEnv* env, jobject obj,  jint width, jint height, jlong engine) {
-	LOGI("Native resize: %lld", engine);
+	LOGI("Native resize called for object: %lld", engine);
 	Engine* e = (Engine*) engine;
 	if (e == 0) {
 		LOGW("Engine instance not provided by Java runtime.");

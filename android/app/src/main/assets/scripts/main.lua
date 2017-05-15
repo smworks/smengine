@@ -2,7 +2,6 @@ function eventResponse(response)
 end
 
 function eventGUI(node, eventType)
-	print ("Ok, wassup")
 	loadScene(node:getName() .. ".lua")
 	print("Loading script: " .. node:getName())
 end
@@ -11,15 +10,17 @@ function start()
 	print("Called start()")
 	input = getInput()
 
-	textButton = Button.new("text")
-	textButton:setText("Sprites")
-	--textButton:setBackground(Texture.new("grass_1.png"))
-	textButton:setBackground("#ffffff")
+	textButton = Button.new("second")
+	textButton:setText("Models")
+	--textButton:setBackground(Texture.new("tree_1.png"))
+	textButton:setBackground("#99ff9955")
 	textButton:setColor("#ff00ff")
-	textButton:setWidth(100.0)
-	textButton:setHeight(25.0)
-	textButton:setMarginLeft(100.0)
-	textButton:setMarginBottom(100.0)
+	textButton:setWidth(getScreenWidth())
+    buttonHeight = getScreenHeight() * 0.1
+	textButton:setHeight(buttonHeight)
+    textButton:setPosX(0)
+    textButton:setPosY(buttonHeight * 2)
+    textButton:setFontSize(buttonHeight * 0.6)
 
 end
 
@@ -33,7 +34,7 @@ end
 
 function update()
 	if input:keyReleased(constants["N"]) then
-		loadScene("second.lua")
+		loadScene("text.lua")
 		print "Loading second.lua"
 	end
 end

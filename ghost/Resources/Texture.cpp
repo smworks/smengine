@@ -184,7 +184,6 @@ Texture::Texture(ServiceLocator* services) :
 {}
 
 bool Texture::create() {
-	ASSERT(getServiceLocator() != 0, "Service locator not specified for TextureRGB object.");
 	string file = getAttribute(ATTR_FILE);
 	buffer_ = reinterpret_cast<UINT8*>(getAttributes().getPointer(ATTR_BUFFER));
 	width_ = getAttributes().getInt(Texture::ATTR_WIDTH, 0);
@@ -209,7 +208,7 @@ bool Texture::create() {
 	}
 	vector<VertexPT>* cbo = static_cast<vector<VertexPT>*>(
         Shapes::getShape(Shapes::SHAPE_SCREEN_PLANE, Shapes::VERTEX_POS_TEX));
-    getServiceLocator()->getGraphicsManager()->setVertexBuffer(
+    getGraphicsManager()->setVertexBuffer(
         cbo_, &(*cbo)[0], (UINT32) cbo->size() * sizeof(VertexPT));
     delete cbo;
 	

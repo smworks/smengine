@@ -41,11 +41,13 @@ ServiceLocator::ServiceLocator() :
 
 void ServiceLocator::setScreenWidth(int width)
 {
+    LOGD("Setting screen width to: %d px", width);
 	screenWidth = width;
 }
 
 void ServiceLocator::setScreenHeight(int height)
 {
+    LOGD("Setting screen height to: %d px", height);
 	screenHeight = height;
 }
 

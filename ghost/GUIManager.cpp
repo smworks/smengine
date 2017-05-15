@@ -31,15 +31,15 @@ void GUIManager::refreshNodes(Node* node) {
 
 void GUIManager::update() {
     int x = getInput()->getPointerX();
-    int y = getInput()->getPointerY();
+    int y = getServiceLocator()->getScreenHeight() - getInput()->getPointerY();
 	for (auto it = nodes.rbegin(); it != nodes.rend(); it++) {
 		Node* node = *it;
-		GUISurface* surface = dynamic_cast<GUISurface*>(node->getResource());
-    	if (surface->getPosX() < x
-			&& surface->getWidth() + surface->getPosX() > x
-			&& surface->getPosY() < y
-			&& surface->getHeight() + surface->getPosY() > y)
+    	if (node->getPos().getX() < x
+			&& node->getScale().getX() + node->getPos().getX() > x
+			&& node->getPos().getY() < y
+			&& node->getScale().getY() + node->getPos().getY() > y)
 		{
+            GUISurface* surface = dynamic_cast<GUISurface*>(node->getResource());
 			surface->hasFocus();
 			if (getInput()->keyReleased(Input::MOUSE_L)
 				|| getInput()->keyReleased(Input::TOUCH))

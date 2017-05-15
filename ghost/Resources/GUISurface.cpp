@@ -4,7 +4,6 @@
 #include "Vertex.h"
 #include "AtlasTexture.h"
 #include "TextureRGBA.h"
-#include "Shader.h"
 #include "../Shapes.h"
 #include "../ResourceManager.h"
 #include "../Node.h"
@@ -12,16 +11,6 @@
 GUISurface::GUISurface(ServiceLocator* services) :
 	Resource(services),
 	surfaceId(0),
-	widthSize(DEFAULT),
-	heightSize(DEFAULT),
-	marginLeft(0.0f),
-	marginBottom(0.0f),
-	marginRight(0.0f),
-	marginTop(0.0f),
-	posX(0.0f),
-	posY(0.0f),
-	width(0.0f),
-	height(0.0f),
 	shouldUpdate(true),
 	textureBackground(nullptr),
 	cbo(0)
@@ -32,15 +21,7 @@ GUISurface::~GUISurface() {
 }
 
 bool GUISurface::create() {
-	marginLeft = getAttributes().getFloat(ATTR_MARGIN_LEFT, marginLeft);
-	marginBottom = getAttributes().getFloat(ATTR_MARGIN_BOTTOM, marginBottom);
-    marginRight = getAttributes().getFloat(ATTR_MARGIN_RIGHT, marginRight);
-	marginTop = getAttributes().getFloat(ATTR_MARGIN_TOP, marginTop);
-	width = getAttributes().getFloat(ATTR_WIDTH, width);
-	height = getAttributes().getFloat(ATTR_HEIGHT, height);
 	setTransparency(getAttributes().getFloat(ATTR_TRANSPARENCY, 1.0f));
-	posX = marginLeft;
-	posY = marginTop;
 	setBackground(getAttribute(ATTR_BACKGROUND));
 	
 	// Genereate separate uv coordinates.
@@ -154,35 +135,6 @@ Texture* GUISurface::getPointerToTexture() const
 	return textureBackground;
 }
 
-void GUISurface::setMargins(float left, float top, float right, float bottom) {
-	marginLeft = left;
-	marginBottom = bottom;
-	marginRight = right;
-	marginTop = top;
-	posX = left;
-	posY = top;
-}
-
-float GUISurface::getMarginLeft() const
-{
-	return marginLeft;
-}
-
-float GUISurface::getMarginBottom() const
-{
-	return marginBottom;
-}
-
-float GUISurface::getMarginRight() const
-{
-	return marginRight;
-}
-
-float GUISurface::getMarginTop() const
-{
-	return marginTop;
-}
-
 void GUISurface::setBackground(string background) {
 	setAttribute(ATTR_BACKGROUND, background);
 	if (background.length() == 0 || background[0] == '#') {
@@ -226,54 +178,4 @@ void GUISurface::setBackground(string background) {
 
 string GUISurface::getBackground() {
 	return getAttribute(ATTR_BACKGROUND);
-}
-
-void GUISurface::setWidth(float width) {
-	this->width = width;
-	shouldUpdate = true;
-}
-
-float GUISurface::getWidth() const
-{
-    return width;
-}
-
-void GUISurface::setHeight(float height) {
-	this->height = height;
-	shouldUpdate = true;
-}
-
-float GUISurface::getHeight() const
-{
-    return height;
-}
-
-float GUISurface::getPosX() const
-{
-    return posX;
-}
-
-float GUISurface::getPosY() const
-{
-    return posY;
-}
-
-UINT32 GUISurface::convertUnitsToPixels(UINT32 units, UnitType type) {
-	switch (type) {
-	case DEFAULT:
-		return units;
-	default:
-		return units;
-	}
-}
-
-float GUISurface::getSize(string size, float maxSize) {
-	if (VAL_FILL == size) {
-		return maxSize;
-	}
-	float rawSize = toFloat(size.c_str());
-	if (string::npos != size.find("%")) {
-		return maxSize / 100.0f * rawSize;
-	}
-	return rawSize;
 }

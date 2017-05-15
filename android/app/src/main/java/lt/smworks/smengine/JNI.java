@@ -4,11 +4,16 @@
  */
 package lt.smworks.smengine;
 
+import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.Arrays;
 
 import android.content.Context;
 import android.util.Log;
+
+import org.xml.sax.InputSource;
 
 
 /**
@@ -124,4 +129,13 @@ public class JNI {
 			return new byte[0];
 		}
 	}
+
+	public boolean fileExists(String path) {
+        try (InputStream is = context.getResources().getAssets().open(path)) {
+            is.close();
+            return true;
+        } catch (IOException e) {
+            return false;
+        }
+    }
 }

@@ -291,15 +291,12 @@ void GraphicsManager::render()
 
 void GraphicsManager::renderGuiText(Node* node)
 {
-	
 	renderNode(node, camera->getProjection2D());
 	GUIText* text = dynamic_cast<GUIText*>(node->getResource());
 	if (text == nullptr)
 	{
 		return;
 	}
-	LOGI("x=%f, y=%f", node->getPos().getX(), node->getPos().getY());
-	LOGI("tx=%f, ty=%f", text->getPosX(), text->getPosY() + text->getHeight() * 0.5f);
 	useProgram(textShader->getId());
 	int texture = glGetUniformLocation(textShader->getId(), "texture_0");
 	textShader->setVector4(Shader::FOREGROUND, text->getDiffuse().toArray());
@@ -308,7 +305,18 @@ void GraphicsManager::renderGuiText(Node* node)
 	glUniform1i(texture, 0);
 	glEnableVertexAttribArray(textShader->getHandle(Shader::POS));
 	glEnableVertexAttribArray(textShader->getHandle(Shader::UV));
-	Matrix::translate(matPosScale, text->getPosX(), text->getPosY() + text->getHeight() * 0.5f, 0.0);
+
+    float textPosXOffset = text->getTextWidth() > node->getScale().getX()
+                     ? 0.0f
+                     : (node->getScale().getX() - text->getTextWidth()) * 0.5f;
+
+    float textPosY = services->getScreenHeight() - node->getPos().getY()
+                     - node->getScale().getY() * 0.5f;
+    float textPosYOffset = text->getTextHeight() > node->getScale().getY()
+                    ? 0.0f
+                    : (node->getScale().getY() - text->getTextHeight()) * 0.5f;
+
+	Matrix::translate(matPosScale, node->getPos().getX() + textPosXOffset, textPosY + textPosYOffset, 0.0);
 	Matrix::multiply(camera->getProjection2D(), matPosScale, matProjPosScale);
 	textShader->setMatrix4(Shader::WVP, matProjPosScale);
 	bindBuffer(text->getTextVBO());
@@ -527,11 +535,11 @@ void GraphicsManager::prepareMatrix(Node* node, Mat4 in, Mat4 out)
 {
 	if (node->getResource()->getType() == Resource::GUI_SURFACE)
 	{
-		GUISurface* surface = dynamic_cast<GUISurface*>(node->getResource());
 		Mat4 pos, scale, posScale;
-		float posY = surface->getPosY();
-		Matrix::translate(pos, surface->getPosX(), posY, 0.0f);
-		Matrix::scale(scale, surface->getWidth(), surface->getHeight(), 1.0);
+		Matrix::translate(pos,
+            node->getPos().getX(),
+            services->getScreenHeight() - node->getPos().getY() - node->getScale().getY(), 0.0f);
+		Matrix::scale(scale, node->getScale().getX(), node->getScale().getY(), 1.0);
 		Matrix::multiply(pos, scale, posScale);
 		Matrix::multiply(in, posScale, out);
 	}

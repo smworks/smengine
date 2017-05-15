@@ -74,6 +74,7 @@ typedef SIZE* POINTER;
 //typedef size_t SIZE;
 //typedef SIZE* POINTER;
 
+    #include <android/asset_manager.h>
     #include <android/log.h>
     #include <jni.h>
     #include <GLES2/gl2.h>

@@ -31,9 +31,13 @@ public:
 
 	string& getText();
 
-    void setTextSize(SIZE size);
+    void setFontSize(SIZE size);
 
-	SIZE getTextSize() const;
+	SIZE getFontSize() const;
+
+    SIZE getTextWidth() const;
+
+    SIZE getTextHeight() const;
 
 	float getTextOffsetX() const;
 

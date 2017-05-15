@@ -18,6 +18,7 @@
 #include "Camera.h"
 #include "GUIManager.h"
 #include "Resources/GUIText.h"
+#include "Resources/GUIButton.h"
 #include "TextureAtlas.h"
 #include "ScenarioManager.h"
 #include "SceneManager.h"
@@ -76,13 +77,14 @@ Engine::Engine(ServiceLocator* services) :
 	services->getScriptManager()->initialize(services);
 	PROFILE("Finished creating engine object.");
 
-	fpsText = NEW GUIText(getServiceLocator());
-	fpsText->setAttribute(GUIText::ATTR_WIDTH, "512px");
-	fpsText->setAttribute(GUIText::ATTR_HEIGHT, "32px");
+	fpsText = NEW GUIButton(getServiceLocator());
 	fpsText->setAttribute(GUIText::ATTR_TEXT, "fps");
 	fpsText->setAttribute(GUIText::ATTR_COLOR, "#FFFF00FF");
-	fpsText->setAttribute(GUIText::ATTR_BACKGROUND, "#00000088");
+	fpsText->setAttribute(GUIText::ATTR_BACKGROUND, "#0000FF88");
 	fpsText->setAttribute(GUIText::ATTR_SIZE, "12px");
+    fpsText->setFontSize(36);
+    fpsText->setBackground("#FFFFFF");
+    fpsText->setText("HAKOONA MATATA");
 	fpsText->setAttribute(GUIText::ATTR_SCREEN_LEFT, "true");
 	fpsText->setAttribute(GUIText::ATTR_SCREEN_TOP, "true");
 	fpsText->create();
@@ -137,6 +139,9 @@ void Engine::loadScene(string script)
 	getRootNode()->addChild(scriptNode);
 	getScriptManager()->add(scriptNode);
 	fpsNode = NEW Node("fps", fpsText);
+	fpsNode->getScale().setX(512.f);
+	fpsNode->getScale().setY(64.f);
+    fpsNode->getPos().setY(620.0f);
 	fpsText->setNode(fpsNode);
 	fpsNode->setState(Node::RENDERABLE, false);
 	getRootNode()->addChild(fpsNode);

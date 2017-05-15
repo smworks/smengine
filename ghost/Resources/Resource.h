@@ -81,10 +81,6 @@ public:
 	static const string VAL_LINEAR;
 	static const string VAL_FILL;
 	static const string VAL_WRAP;
-	static const string ATTR_MARGIN_LEFT;
-	static const string ATTR_MARGIN_BOTTOM;
-	static const string ATTR_MARGIN_RIGHT;
-	static const string ATTR_MARGIN_TOP;
 	static const string ATTR_BACKGROUND;
 	static const string ATTR_ALIGNMENT;
 	static const string VAL_LEFT;

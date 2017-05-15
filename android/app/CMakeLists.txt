@@ -1,6 +1,7 @@
 cmake_minimum_required(VERSION 3.4.1)
 
 file(GLOB luafiles "../../dependencies/includes/lua/*.c")
+file(GLOB libpngfiles "../../dependencies/includes/libpng/*.c" "../../dependencies/includes/zlib/*.c")
 file(GLOB files
     "../../main_android.cpp"
     "../../ghost/*.cpp"
@@ -15,7 +16,9 @@ file(GLOB files
 #add_library(fmod SHARED IMPORTED)
 #set_target_properties(fmod PROPERTIES IMPORTED_LOCATION
 #    ${CMAKE_SOURCE_DIR}/../../dependencies/libs/android/${ANDROID_ABI}/libfmodex.so)
+
 add_library(lua SHARED ${luafiles})
+add_library(libpng SHARED ${libpngfiles})
 add_library(smengine SHARED ${files})
 
 find_library(log-lib log)
@@ -24,4 +27,5 @@ find_library(log-lib log)
 #    smengine PRIVATE ${CMAKE_SOURCE_DIR}/../../dependencies/includes/fmod/android)
 
 target_link_libraries(lua)
-target_link_libraries(smengine lua ${log-lib} EGL GLESv2)
+target_link_libraries(libpng)
+target_link_libraries(smengine libpng lua ${log-lib} EGL GLESv2)
