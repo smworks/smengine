@@ -23,9 +23,9 @@ void close();
 
 void load() {
     auto* wsl = new MacOSXServiceLocator();
+    wsl->setScreenWidth(glutGet(GLUT_WINDOW_WIDTH));
+    wsl->setScreenHeight(glutGet(GLUT_WINDOW_HEIGHT));
     GHOST = new Engine(wsl);
-    GHOST->getServiceLocator()->setScreenWidth(glutGet(GLUT_WINDOW_WIDTH));
-    GHOST->getServiceLocator()->setScreenHeight(glutGet(GLUT_WINDOW_HEIGHT));
     ASSERT(GHOST != nullptr, "Engine instance not created");
     GHOST->resume();
 }
@@ -43,54 +43,38 @@ void handleMouseMove(int x, int y) {
 }
 
 void handleKey(UINT32 key, bool keyUp) {
-	switch (key) {
-    case 0:
-        key = Input::RETURN;
-        break;
-	case 8:
-		key = Input::BACK;
-		break;
-	case 32:
-		key = Input::SPACE;
-		break;
-	case 27:
-		key = Input::ESC;
-		break;
-	case 97:
-	case 98:
-	case 99:
-	case 100:
-	case 101:
-	case 102:
-	case 103:
-	case 104:
-	case 105:
-	case 106:
-	case 107:
-	case 108:
-	case 109:
-	case 110:
-	case 111:
-	case 112:
-	case 113:
-	case 114:
-	case 115:
-	case 116:
-	case 117:
-	case 118:
-	case 119:
-	case 120:
-	case 121:
-	case 122:
-		key -= 96; // Handle English letters.
-		break;
-	default:
-		key = Input::NONE;
-		break;
-	}
-	int modifierKeys = glutGetModifiers();
+    Input* input = GHOST->getServiceLocator()->getInput();
+    int modifierKeys = glutGetModifiers();
+    if (key < 65) {
+        switch (key) {
+            case 0:
+                key = Input::RETURN;
+                break;
+            case 8:
+                key = Input::BACK;
+                break;
+            case 32:
+                key = Input::SPACE;
+                break;
+            case 27:
+                key = Input::ESC;
+                break;
+        }
+    }
+    else if (key >= 65 && key <= 122) {
+        key -= 86;
+        if (modifierKeys == GLUT_ACTIVE_SHIFT) {
+            key += 32;
+        }
+        input->provideButton(Input::SHIFT, modifierKeys == GLUT_ACTIVE_SHIFT ? Input::PRESSED : Input::RELEASED);
+        
+    }
+    else {
+        key = Input::NONE;
+    }
+	
 	if (modifierKeys == GLUT_ACTIVE_ALT) {
-		GHOST->getServiceLocator()->getInput()->provideButton(Input::ALT, Input::PRESSED);
+		input->provideButton(Input::ALT, Input::PRESSED);
         if (key == 0 && keyUp) {
             if (!fullscreen) {
                 glutFullScreen();
@@ -102,8 +86,9 @@ void handleKey(UINT32 key, bool keyUp) {
                 fullscreen = false;
             }
         }
-	}
-	GHOST->getServiceLocator()->getInput()->provideButton(key, keyUp ? Input::RELEASED : Input::PRESSED);
+    }
+    
+	input->provideButton(key, keyUp ? Input::RELEASED : Input::PRESSED);
 }
 
 void handleSpecialKey(UINT32 key, bool keyUp) {

@@ -393,7 +393,7 @@ void GraphicsManager::renderScene(NodeType type)
 		glEnable(GL_DEPTH_TEST);
 		for (Node* node : models)
 		{
-			renderNode(node, camera->getProjection2D());
+			renderNode(node, viewMatrix);
 		}
 		glDisable(GL_DEPTH_TEST);
 	}

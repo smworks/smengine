@@ -317,11 +317,15 @@ void ModelData::deserialize(ServiceLocator* sl, const char* binary)
 	PROFILE("Deserializing binary to model");
 	UINT32 offset = 0;
 	memcpy(&vertexStride, binary, sizeof(UINT32));
+    
 	memcpy(&vertexType, binary + (offset += sizeof(UINT32)), sizeof(VertexType));
 	memcpy(&posOffset, binary + (offset += sizeof(VertexType)), sizeof(UINT32));
 	memcpy(&normalOffset, binary + (offset += sizeof(UINT32)), sizeof(UINT32));
 	memcpy(&uvOffset, binary + (offset += sizeof(UINT32)), sizeof(UINT32));
 	memcpy(&vertexCount, binary + (offset += sizeof(UINT32)), sizeof(SIZE));
+    
+    LOGD("VertexStride=%d, VertexType=%d, PosOffset=%d, NormalOffset=%d, uvOffset=%d, vertexCount=%d",
+         vertexStride, vertexType, posOffset, normalOffset, uvOffset, vertexCount);
 
 	SIZE sizeOfVertices;
 	if (vertexType == P)
@@ -344,6 +348,7 @@ void ModelData::deserialize(ServiceLocator* sl, const char* binary)
 	{
 		THROWEX("Unable to deserialize model with unknown vertex type");
 	}
+    LOGI("SizeOfVertices: %zu", sizeOfVertices);
 
 	vertices = NEW UINT8[sizeOfVertices];
 	memcpy(vertices, binary + (offset += sizeof(SIZE)), sizeOfVertices);

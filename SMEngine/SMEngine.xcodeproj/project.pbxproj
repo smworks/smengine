@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		932065151EC95E420034AFCE /* main_macosx.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 932065141EC95E420034AFCE /* main_macosx.cpp */; };
+		932065171EC960750034AFCE /* Engine.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 932065161EC960750034AFCE /* Engine.cpp */; };
 		93405D2C1EC09E4100E294A3 /* GLUT.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 93405D2B1EC09E4100E294A3 /* GLUT.framework */; };
 		93405D2E1EC09E4800E294A3 /* OpenGL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 93405D2D1EC09E4800E294A3 /* OpenGL.framework */; };
 		93405D691EC09EC300E294A3 /* lapi.c in Sources */ = {isa = PBXBuildFile; fileRef = 93405D301EC09EC300E294A3 /* lapi.c */; };
@@ -42,13 +44,11 @@
 		93405D871EC09EC300E294A3 /* lvm.c in Sources */ = {isa = PBXBuildFile; fileRef = 93405D651EC09EC300E294A3 /* lvm.c */; };
 		93405D881EC09EC300E294A3 /* lzio.c in Sources */ = {isa = PBXBuildFile; fileRef = 93405D671EC09EC300E294A3 /* lzio.c */; };
 		93405D8B1EC1318800E294A3 /* MacOSSoundManager.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 93405D891EC1318800E294A3 /* MacOSSoundManager.cpp */; };
-		9382B0731E83741D0072F690 /* main_macosx.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9382B0721E83741D0072F690 /* main_macosx.cpp */; };
 		9382B0C21E83761E0072F690 /* BoundingBox.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9382B07C1E83761E0072F690 /* BoundingBox.cpp */; };
 		9382B0C31E83761E0072F690 /* BoundingSphere.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9382B07E1E83761E0072F690 /* BoundingSphere.cpp */; };
 		9382B0C41E83761E0072F690 /* Camera.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9382B0811E83761E0072F690 /* Camera.cpp */; };
 		9382B0C51E83761E0072F690 /* Color.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9382B0831E83761E0072F690 /* Color.cpp */; };
 		9382B0C61E83761E0072F690 /* Console.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9382B0851E83761E0072F690 /* Console.cpp */; };
-		9382B0C71E83761E0072F690 /* Engine.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9382B0871E83761E0072F690 /* Engine.cpp */; };
 		9382B0C81E83761E0072F690 /* Environment.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9382B0891E83761E0072F690 /* Environment.cpp */; };
 		9382B0C91E83761E0072F690 /* FrameBuffer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9382B08B1E83761E0072F690 /* FrameBuffer.cpp */; };
 		9382B0CA1E83761E0072F690 /* GUIManager.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9382B08D1E83761E0072F690 /* GUIManager.cpp */; };
@@ -155,11 +155,11 @@
 		93A47A501EC791B6004E3BFA /* type1cid.c in Sources */ = {isa = PBXBuildFile; fileRef = 93A47A291EC791B6004E3BFA /* type1cid.c */; };
 		93A47A511EC791B6004E3BFA /* type42.c in Sources */ = {isa = PBXBuildFile; fileRef = 93A47A2A1EC791B6004E3BFA /* type42.c */; };
 		93A47A521EC791B6004E3BFA /* winfnt.c in Sources */ = {isa = PBXBuildFile; fileRef = 93A47A2B1EC791B6004E3BFA /* winfnt.c */; };
-		93BFD4DB1EC13924007E00A2 /* sqlite3.c in Sources */ = {isa = PBXBuildFile; fileRef = 93BFD4D91EC13924007E00A2 /* sqlite3.c */; };
 		93BFD4E51EC153E3007E00A2 /* ImageLoader.mm in Sources */ = {isa = PBXBuildFile; fileRef = 93BFD4E41EC153E3007E00A2 /* ImageLoader.mm */; };
 		93BFD4E71EC15634007E00A2 /* CoreData.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 93BFD4E61EC15633007E00A2 /* CoreData.framework */; };
 		93BFD4E91EC15662007E00A2 /* CoreFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 93BFD4E81EC15662007E00A2 /* CoreFoundation.framework */; };
 		93BFD4EB1EC15671007E00A2 /* ApplicationServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 93BFD4EA1EC15670007E00A2 /* ApplicationServices.framework */; };
+		93D4E1D51EC95AAA0031C023 /* sqlite3.c in Sources */ = {isa = PBXBuildFile; fileRef = 93D4E1D41EC95AAA0031C023 /* sqlite3.c */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -175,6 +175,8 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		932065141EC95E420034AFCE /* main_macosx.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = main_macosx.cpp; path = ../main_macosx.cpp; sourceTree = SOURCE_ROOT; };
+		932065161EC960750034AFCE /* Engine.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = Engine.cpp; path = ../../ghost/Engine.cpp; sourceTree = "<group>"; };
 		93405D241EC09BAE00E294A3 /* smengine */ = {isa = PBXFileReference; lastKnownFileType = folder; name = smengine; path = ..; sourceTree = "<group>"; };
 		93405D2B1EC09E4100E294A3 /* GLUT.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = GLUT.framework; path = System/Library/Frameworks/GLUT.framework; sourceTree = SDKROOT; };
 		93405D2D1EC09E4800E294A3 /* OpenGL.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenGL.framework; path = System/Library/Frameworks/OpenGL.framework; sourceTree = SDKROOT; };
@@ -238,8 +240,7 @@
 		93405D891EC1318800E294A3 /* MacOSSoundManager.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = MacOSSoundManager.cpp; path = ../../ghost/Multiplatform/MacOS/MacOSSoundManager.cpp; sourceTree = "<group>"; };
 		93405D8A1EC1318800E294A3 /* MacOSSoundManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MacOSSoundManager.h; path = ../../ghost/Multiplatform/MacOS/MacOSSoundManager.h; sourceTree = "<group>"; };
 		9382B0681E8373D40072F690 /* SMEngine */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = SMEngine; sourceTree = BUILT_PRODUCTS_DIR; };
-		9382B0721E83741D0072F690 /* main_macosx.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = main_macosx.cpp; path = ../../main_macosx.cpp; sourceTree = "<group>"; };
-		9382B07C1E83761E0072F690 /* BoundingBox.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = BoundingBox.cpp; path = ../../ghost/BoundingBox.cpp; sourceTree = "<group>"; };
+		9382B07C1E83761E0072F690 /* BoundingBox.cpp */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.cpp; fileEncoding = 4; name = BoundingBox.cpp; path = ../../ghost/BoundingBox.cpp; sourceTree = "<group>"; };
 		9382B07D1E83761E0072F690 /* BoundingBox.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = BoundingBox.h; path = ../../ghost/BoundingBox.h; sourceTree = "<group>"; };
 		9382B07E1E83761E0072F690 /* BoundingSphere.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = BoundingSphere.cpp; path = ../../ghost/BoundingSphere.cpp; sourceTree = "<group>"; };
 		9382B07F1E83761E0072F690 /* BoundingSphere.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = BoundingSphere.h; path = ../../ghost/BoundingSphere.h; sourceTree = "<group>"; };
@@ -250,7 +251,6 @@
 		9382B0841E83761E0072F690 /* Color.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Color.h; path = ../../ghost/Color.h; sourceTree = "<group>"; };
 		9382B0851E83761E0072F690 /* Console.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = Console.cpp; path = ../../ghost/Console.cpp; sourceTree = "<group>"; };
 		9382B0861E83761E0072F690 /* Console.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Console.h; path = ../../ghost/Console.h; sourceTree = "<group>"; };
-		9382B0871E83761E0072F690 /* Engine.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = Engine.cpp; path = ../../ghost/Engine.cpp; sourceTree = "<group>"; };
 		9382B0881E83761E0072F690 /* Engine.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Engine.h; path = ../../ghost/Engine.h; sourceTree = "<group>"; };
 		9382B0891E83761E0072F690 /* Environment.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = Environment.cpp; path = ../../ghost/Environment.cpp; sourceTree = "<group>"; };
 		9382B08A1E83761E0072F690 /* Environment.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Environment.h; path = ../../ghost/Environment.h; sourceTree = "<group>"; };
@@ -435,13 +435,12 @@
 		93A47A2A1EC791B6004E3BFA /* type42.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = type42.c; path = ../../dependencies/includes/freetype/type42.c; sourceTree = "<group>"; };
 		93A47A2B1EC791B6004E3BFA /* winfnt.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = winfnt.c; path = ../../dependencies/includes/freetype/winfnt.c; sourceTree = "<group>"; };
 		93BFD4D61EC132EE007E00A2 /* resources */ = {isa = PBXFileReference; lastKnownFileType = folder; path = resources; sourceTree = "<group>"; };
-		93BFD4D91EC13924007E00A2 /* sqlite3.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = sqlite3.c; sourceTree = "<group>"; };
-		93BFD4DA1EC13924007E00A2 /* sqlite3.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = sqlite3.h; sourceTree = "<group>"; };
 		93BFD4DD1EC1457C007E00A2 /* ImageLoader.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = ImageLoader.h; path = ../../ghost/Multiplatform/ImageLoader.h; sourceTree = "<group>"; };
 		93BFD4E41EC153E3007E00A2 /* ImageLoader.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = ImageLoader.mm; path = ../../ghost/Multiplatform/ImageLoader.mm; sourceTree = "<group>"; };
 		93BFD4E61EC15633007E00A2 /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = System/Library/Frameworks/CoreData.framework; sourceTree = SDKROOT; };
 		93BFD4E81EC15662007E00A2 /* CoreFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreFoundation.framework; path = System/Library/Frameworks/CoreFoundation.framework; sourceTree = SDKROOT; };
 		93BFD4EA1EC15670007E00A2 /* ApplicationServices.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ApplicationServices.framework; path = System/Library/Frameworks/ApplicationServices.framework; sourceTree = SDKROOT; };
+		93D4E1D41EC95AAA0031C023 /* sqlite3.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = sqlite3.c; path = ../../dependencies/includes/sqlite/sqlite3.c; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -552,7 +551,7 @@
 			children = (
 				9382B07B1E8375E80072F690 /* ghost */,
 				9382B0751E8374D10072F690 /* dependencies */,
-				9382B0721E83741D0072F690 /* main_macosx.cpp */,
+				932065141EC95E420034AFCE /* main_macosx.cpp */,
 			);
 			path = SMEngine;
 			sourceTree = "<group>";
@@ -560,8 +559,8 @@
 		9382B0751E8374D10072F690 /* dependencies */ = {
 			isa = PBXGroup;
 			children = (
+				93D4E1D61EC95AEC0031C023 /* sqlite */,
 				93A479AC1EC7910C004E3BFA /* freetype */,
-				93BFD4D81EC138E7007E00A2 /* sqlite */,
 				93405D2F1EC09E9700E294A3 /* lua */,
 			);
 			name = dependencies;
@@ -582,9 +581,9 @@
 				9382B0821E83761E0072F690 /* Camera.h */,
 				9382B0831E83761E0072F690 /* Color.cpp */,
 				9382B0841E83761E0072F690 /* Color.h */,
+				932065161EC960750034AFCE /* Engine.cpp */,
 				9382B0851E83761E0072F690 /* Console.cpp */,
 				9382B0861E83761E0072F690 /* Console.h */,
-				9382B0871E83761E0072F690 /* Engine.cpp */,
 				9382B0881E83761E0072F690 /* Engine.h */,
 				9382B0891E83761E0072F690 /* Environment.cpp */,
 				9382B08A1E83761E0072F690 /* Environment.h */,
@@ -812,11 +811,10 @@
 			name = freetype;
 			sourceTree = "<group>";
 		};
-		93BFD4D81EC138E7007E00A2 /* sqlite */ = {
+		93D4E1D61EC95AEC0031C023 /* sqlite */ = {
 			isa = PBXGroup;
 			children = (
-				93BFD4D91EC13924007E00A2 /* sqlite3.c */,
-				93BFD4DA1EC13924007E00A2 /* sqlite3.h */,
+				93D4E1D41EC95AAA0031C023 /* sqlite3.c */,
 			);
 			name = sqlite;
 			sourceTree = "<group>";
@@ -880,6 +878,7 @@
 				93A47A3F1EC791B6004E3BFA /* ftpfr.c in Sources */,
 				93A47A401EC791B6004E3BFA /* ftstroke.c in Sources */,
 				93405D731EC09EC300E294A3 /* ldump.c in Sources */,
+				932065151EC95E420034AFCE /* main_macosx.cpp in Sources */,
 				93A47A3E1EC791B6004E3BFA /* ftpatent.c in Sources */,
 				9382B0CC1E83761E0072F690 /* Matrix.cpp in Sources */,
 				9382B11C1E8376710072F690 /* CubeMap.cpp in Sources */,
@@ -901,7 +900,6 @@
 				9382B1301E8376710072F690 /* TextureRGB.cpp in Sources */,
 				9382B0D91E83761E0072F690 /* ServiceProvider.cpp in Sources */,
 				9382B0D71E83761E0072F690 /* ScriptBindings.cpp in Sources */,
-				93BFD4DB1EC13924007E00A2 /* sqlite3.c in Sources */,
 				93405D701EC09EC300E294A3 /* ldblib.c in Sources */,
 				9382B1201E8376710072F690 /* GUIImage.cpp in Sources */,
 				93405D741EC09EC300E294A3 /* lfunc.c in Sources */,
@@ -915,7 +913,6 @@
 				93A47A491EC791B6004E3BFA /* pshinter.c in Sources */,
 				93A47A3D1EC791B6004E3BFA /* ftotval.c in Sources */,
 				93405D861EC09EC300E294A3 /* lundump.c in Sources */,
-				9382B0731E83741D0072F690 /* main_macosx.cpp in Sources */,
 				9382B0CD1E83761E0072F690 /* MD2Parser.cpp in Sources */,
 				9382B1271E8376710072F690 /* Resource.cpp in Sources */,
 				93A47A3B1EC791B6004E3BFA /* ftlzw.c in Sources */,
@@ -962,12 +959,12 @@
 				93405D771EC09EC300E294A3 /* liolib.c in Sources */,
 				93A47A391EC791B6004E3BFA /* ftinit.c in Sources */,
 				9382B0E11E83761E0072F690 /* Utils.cpp in Sources */,
-				9382B0C71E83761E0072F690 /* Engine.cpp in Sources */,
 				93405D711EC09EC300E294A3 /* ldebug.c in Sources */,
 				9382B14F1E8376B80072F690 /* Database.cpp in Sources */,
 				93A47A371EC791B6004E3BFA /* ftgxval.c in Sources */,
 				9382B0C81E83761E0072F690 /* Environment.cpp in Sources */,
 				93405D7F1EC09EC300E294A3 /* lparser.c in Sources */,
+				932065171EC960750034AFCE /* Engine.cpp in Sources */,
 				93A47A511EC791B6004E3BFA /* type42.c in Sources */,
 				93A47A2F1EC791B6004E3BFA /* ftbase.c in Sources */,
 				93A47A2C1EC791B6004E3BFA /* autofit.c in Sources */,
@@ -989,6 +986,7 @@
 				9382B13D1E8376A30072F690 /* HttpRequest.cpp in Sources */,
 				9382B0D41E83761E0072F690 /* ResourceManager.cpp in Sources */,
 				9382B0D11E83761E0072F690 /* PhysicsManager.cpp in Sources */,
+				93D4E1D51EC95AAA0031C023 /* sqlite3.c in Sources */,
 				93405D6A1EC09EC300E294A3 /* lauxlib.c in Sources */,
 				9382B0C31E83761E0072F690 /* BoundingSphere.cpp in Sources */,
 				93A47A4F1EC791B6004E3BFA /* type1.c in Sources */,
@@ -1113,6 +1111,7 @@
 		9382B0701E8373D40072F690 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CONFIGURATION_BUILD_DIR = "$(BUILD_DIR)/$(CONFIGURATION)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
 			name = Debug;

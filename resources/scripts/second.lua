@@ -16,14 +16,14 @@ function start()
     networkManager = getNetworkManager()
 	db = getDB()
 
---    plane = Model.new("floor")
---    plane:setType("plane")
---    plane:setAmbient("#FFFFFFFF")
---    plane:setShader(Shader.new("temp_model"))
---    plane:setTexture(Texture.new("lab_floor.png"))
---    plane:setPosY(0.0)
---	plane:setScaleXYZ(1000, 1, 1000)
---    plane:enablePhysics()
+    plane = Model.new("floor")
+    plane:setType("plane")
+    plane:setAmbient("#FFFFFFFF")
+    plane:setShader(Shader.new("temp_model"))
+    plane:setTexture(Texture.new("lab_floor.png"))
+    plane:setPosY(0.0)
+    plane:setScaleXYZ(1000, 1, 1000)
+    plane:enablePhysics()
 
 --	print "Loading cube"
 --	pun = Model.new("colored_cube")
@@ -74,18 +74,18 @@ function start()
 	pun:setShader(Shader.new("default_model"))
 	pun:setString("file", "dungeon.sm")
 	pun:setType("mesh")
-	pun:setScaleXYZ(100, 100, 100)
+	pun:setScaleXYZ(10, 10, 10)
 
---	print "Loading car wheel"
---	pun = Model.new("car_wheel")
---	pun:setPosY(100.0)
---	pun:setPosX(5.0)
---	pun:setPosZ(-5.0)
---	pun:setShader(Shader.new("default_model"))
---	pun:setString("file", "car_wheel.sm")
---	pun:setType("mesh")
---	pun:setString("mass", "35.0f")
---	pun:enablePhysics()
+	print "Loading car wheel"
+    pun = Model.new("car_wheel")
+	pun:setPosY(100.0)
+	pun:setPosX(5.0)
+	pun:setPosZ(-5.0)
+	pun:setShader(Shader.new("default_model"))
+    pun:setString("file", "car_wheel.sm")
+	pun:setType("mesh")
+	pun:setString("mass", "35.0f")
+	pun:enablePhysics()
 
 	camera:setPosZ(5)
 	camera:setPosY(2)
@@ -106,6 +106,11 @@ end
 -- Called every frame.
 function update()
 	local offset = 0.1
+
+    if input:keyPressed(constants["SHIFT"]) then
+        offset = 1.5
+    end
+
 	if input:keyPressed(constants["W"]) then
 		camera:moveZ(-offset)
 	end
@@ -119,19 +124,8 @@ function update()
 		camera:moveX(offset)
 	end
 
-	if input:keyReleased(constants["N"]) then
-		loadScene("logic.lua")
-		print "Loading logic.lua"
-	end
-
-    --camera:moveX(input:getPointerDeltaX())
-    --camera:moveY(input:getPointerDeltaY())
-
-    --print("Pointer x: " .. input:getPointerDeltaX())
-    --print("Pointer y: " .. input:getPointerDeltaY())
-    camera:addRotX(10.0) --input:getPointerDeltaY() * 0.2)
-    camera:addRotY(10.0) --input:getPointerDeltaX() * 0.2)
-    camera:addPosY(10.0)
+    camera:addRotX(input:getPointerDeltaY() * 0.2)
+    camera:addRotY(input:getPointerDeltaX() * 0.2)
 end
 
 -- Called when program is brought to background.

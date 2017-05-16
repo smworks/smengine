@@ -54,7 +54,7 @@ typedef long long INT64;
 typedef int INT32;
 typedef short INT16;
 typedef char INT8;
-typedef size_t SIZE;
+typedef UINT32 SIZE;
 typedef SIZE* POINTER;
 
 

@@ -1027,24 +1027,14 @@ int inputGetPointerDeltaY(lua_State* L) {
 int inputKeyPressed(lua_State* L) {
 	Input* input = SM_GET_OBJECT(L, 0, Input);
 	int key = SM_GET_INT(L, 1);
-	if (input->keyPressed(key)) {
-		SM_RETURN_BOOL(L, true);
-	}
-	else {
-		SM_RETURN_BOOL(L, false);
-	}
+    SM_RETURN_BOOL(L, input->keyPressed(key));
 	return 1;
 }
 
 int inputKeyReleased(lua_State* L) {
 	Input* input = SM_GET_OBJECT(L, 0, Input);
 	int key = SM_GET_INT(L, 1);
-	if (input->keyReleased(key)) {
-		SM_RETURN_BOOL(L, true);
-	}
-	else {
-		SM_RETURN_BOOL(L, false);
-	}
+    SM_RETURN_BOOL(L, input->keyReleased(key));
 	return 1;
 }
 
