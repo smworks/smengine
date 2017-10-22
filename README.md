@@ -78,7 +78,19 @@ function update()
 end
 
 ```
+## Working with 2D models ##
 
+### Loading simple sprite with texture ###
+```
+#!Lua
+texture = Texture.new("texture.png")
+sprite = Sprite.new("Sprite name")
+sprite:setWidth(200);
+sprite:setHeight(200);
+sprite:setPosX(300)
+sprite:setPosY(300)
+sprite:setTexture(texture)
+```
 
 ## Working with 3D models ##
 

@@ -21,6 +21,15 @@ function start()
     textButton:setPosX(0)
     textButton:setPosY(buttonHeight * 2)
     textButton:setFontSize(buttonHeight * 0.6)
+    
+    texture = Texture.new("smworks.png")
+    sprite = Sprite.new("Sprite name")
+    sprite:setWidth(200);
+    sprite:setHeight(200);
+    sprite:setPosX(300)
+    sprite:setPosY(300)
+    sprite:setTexture(texture)
+    
 
 end
 

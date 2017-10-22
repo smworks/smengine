@@ -434,7 +434,6 @@
 		93A47A291EC791B6004E3BFA /* type1cid.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = type1cid.c; path = ../../dependencies/includes/freetype/type1cid.c; sourceTree = "<group>"; };
 		93A47A2A1EC791B6004E3BFA /* type42.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = type42.c; path = ../../dependencies/includes/freetype/type42.c; sourceTree = "<group>"; };
 		93A47A2B1EC791B6004E3BFA /* winfnt.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = winfnt.c; path = ../../dependencies/includes/freetype/winfnt.c; sourceTree = "<group>"; };
-		93BFD4D61EC132EE007E00A2 /* resources */ = {isa = PBXFileReference; lastKnownFileType = folder; path = resources; sourceTree = "<group>"; };
 		93BFD4DD1EC1457C007E00A2 /* ImageLoader.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = ImageLoader.h; path = ../../ghost/Multiplatform/ImageLoader.h; sourceTree = "<group>"; };
 		93BFD4E41EC153E3007E00A2 /* ImageLoader.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = ImageLoader.mm; path = ../../ghost/Multiplatform/ImageLoader.mm; sourceTree = "<group>"; };
 		93BFD4E61EC15633007E00A2 /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = System/Library/Frameworks/CoreData.framework; sourceTree = SDKROOT; };
@@ -529,7 +528,6 @@
 				93BFD4EA1EC15670007E00A2 /* ApplicationServices.framework */,
 				93BFD4E81EC15662007E00A2 /* CoreFoundation.framework */,
 				93BFD4E61EC15633007E00A2 /* CoreData.framework */,
-				93BFD4D61EC132EE007E00A2 /* resources */,
 				93405D2D1EC09E4800E294A3 /* OpenGL.framework */,
 				93405D2B1EC09E4100E294A3 /* GLUT.framework */,
 				93405D241EC09BAE00E294A3 /* smengine */,
