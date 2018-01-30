@@ -35,10 +35,6 @@ Engine::Engine(ServiceLocator* services) :
 	ServiceProvider(services),
 	time(0.0f),
 	running(false),
-	fpsText(nullptr),
-	fpsNode(nullptr),
-	fpsCount(0),
-	fpsTime(0.0),
 	console(nullptr)
 
 {
@@ -76,20 +72,6 @@ Engine::Engine(ServiceLocator* services) :
 	services->getPhysicsManager()->setGraphicsManager(services->getGraphicsManager());
 	services->getScriptManager()->initialize(services);
 	PROFILE("Finished creating engine object.");
-
-	fpsText = NEW GUIButton(getServiceLocator());
-	fpsText->setAttribute(GUIText::ATTR_TEXT, "fps");
-	fpsText->setAttribute(GUIText::ATTR_COLOR, "#FFFF00FF");
-	fpsText->setAttribute(GUIText::ATTR_BACKGROUND, "#0000FF88");
-	fpsText->setAttribute(GUIText::ATTR_SIZE, "12px");
-    fpsText->setFontSize(36);
-    fpsText->setBackground("#FFFFFF");
-    fpsText->setText("HAKOONA MATATA");
-	fpsText->setAttribute(GUIText::ATTR_SCREEN_LEFT, "true");
-	fpsText->setAttribute(GUIText::ATTR_SCREEN_TOP, "true");
-	fpsText->create();
-	getResourceManager()->add("debug text", fpsText);
-    
 	loadScene(getDatabase()->getString(Database::START_SCRIPT));
 	time = 0;
 	console = new Console(services);
@@ -101,7 +83,6 @@ Engine::~Engine()
 	getScriptManager()->quit();
 	getServiceLocator()->release();
 	delete getServiceLocator();
-	fpsNode = nullptr;
 	delete tasks;
 	delete mut;
 }
@@ -138,14 +119,6 @@ void Engine::loadScene(string script)
 	scriptResource->setNode(scriptNode);
 	getRootNode()->addChild(scriptNode);
 	getScriptManager()->add(scriptNode);
-	fpsNode = NEW Node("fps", fpsText);
-	fpsNode->getScale().setX(512.f);
-	fpsNode->getScale().setY(64.f);
-    fpsNode->getPos().setY(620.0f);
-	fpsText->setNode(fpsNode);
-	fpsNode->setState(Node::RENDERABLE, false);
-	getRootNode()->addChild(fpsNode);
-
 
 	// Other data creation.
 	getGUIManager()->refreshNodes(getRootNode());
@@ -167,8 +140,6 @@ void Engine::computeFrame()
 	getServiceLocator()->updateTimer(getDatabase()->getFloat(Database::FRAME_DURATION));
 	time = getServiceLocator()->getFrameTime();
 
-	updateFPS();
-
 	if (getDatabase()->getString(Database::LOAD_SECOND_SCRIPT).length() > 0)
 	{
 		loadScene(getDatabase()->getString(Database::LOAD_SECOND_SCRIPT));
@@ -182,10 +153,6 @@ void Engine::computeFrame()
 	else if (getInput()->keyReleased(Input::P))
 	{
 		getPhysicsManager()->setDebugRendering(!getPhysicsManager()->isDebugRenderingEnabled());
-	}
-	else if (getInput()->keyReleased(Input::F))
-	{
-		fpsNode->setState(Node::RENDERABLE, !fpsNode->getState(Node::RENDERABLE));
 	}
 	getSoundManager()->update();
 	getPhysicsManager()->update(time);
@@ -201,23 +168,6 @@ void Engine::computeFrame()
 
 	executeTasks();
 	getMutex().unlock();
-}
-
-
-void Engine::updateFPS()
-{
-	fpsCount++;
-	fpsTime += time;
-	if (fpsTime >= 1000.0f)
-	{
-		stringstream ss;
-		ss << "FPS: " << fpsCount << fixed << setprecision(3) << "\n"
-			<< "Resolution: " << getServiceLocator()->getScreenWidth()
-			<< "x" << getServiceLocator()->getScreenHeight() << "px\n";
-		fpsText->setText(ss.str());
-		fpsCount = 0;
-		fpsTime = 0.0f;
-	}
 }
 
 void Engine::resume()
@@ -309,7 +259,6 @@ void Engine::resizeScreen(UINT32 width, UINT32 height)
 	}
 	resizeResources(getRootNode());
 	getScriptManager()->resize();
-	fpsTime = 1001.0f;
 	PROFILE("Window resized.");
 }
 

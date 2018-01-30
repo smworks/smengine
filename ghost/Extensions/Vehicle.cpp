@@ -175,6 +175,27 @@ Vehicle::~Vehicle() {
 	//delete vehicleCompoundShape_;
 }
 
+void Vehicle::accelerate(float delta) {
+    btRaycastVehicle* raycastVehicle = getRaycastVehicle();
+    raycastVehicle->applyEngineForce(delta, 2);
+    raycastVehicle->applyEngineForce(delta, 3);
+    raycastVehicle->setBrake(0.0f, 0);
+    raycastVehicle->setBrake(0.0f, 1);
+}
+
+void Vehicle::turn(float delta) {
+    btRaycastVehicle* raycastVehicle = getRaycastVehicle();
+    float maxRot = DEG_TO_RAD(getWheelTurn());
+    float rot = raycastVehicle->getSteeringValue(0) + DEG_TO_RAD(delta);
+    if (rot > maxRot) {
+        rot = maxRot;
+    } else if (rot < -maxRot) {
+        rot = -maxRot;
+    }
+    raycastVehicle->setSteeringValue(rot, 0);
+    raycastVehicle->setSteeringValue(rot, 1);
+}
+
 void Vehicle::update() {
 	float f1 = vehicle_->getWheelInfo(2).m_engineForce;
 	float time = static_cast<float>(

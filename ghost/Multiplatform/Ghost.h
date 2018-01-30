@@ -1,4 +1,4 @@
-﻿#ifndef GHOST_H_
+#ifndef GHOST_H_
 #define GHOST_H_
 
 #include <stdio.h>
@@ -38,7 +38,7 @@ using namespace std;
 // ENGINE SUBSYSTEMS
 #ifndef DISABLE_ALL
 #define ENABLE_FONTS
-//#define ENABLE_PHYSICS
+#define ENABLE_PHYSICS
 #define ENABLE_DATABASE
 //#define ENABLE_SOUND
 #define ENABLE_GRAPHICS

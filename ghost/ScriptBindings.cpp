@@ -1,4 +1,4 @@
-﻿/*
+/*
  * ScriptBindings.cpp
  *
  *  Created on: 2013.11.03
@@ -336,7 +336,7 @@ void registerClasses() {
 	registerNetworkManager();
 	registerHttpRequest();
 	registerHttpResponse();
-	//registerVehicle();
+	registerVehicle();
 	registerScenario();
 	registerScenarioManager();
 	registerSceneManager();
@@ -1660,7 +1660,7 @@ void registerHttpResponse() {
     ScriptManager::addClass("Response", methods);
 }
 
-/**int newVehicle(lua_State* L) {
+int newVehicle(lua_State* L) {
 	LOGW("Unimplemented vehicle creation in script side.");
 	return 0;
 }
@@ -1672,27 +1672,14 @@ int deleteVehicle(lua_State* L) {
 int vehicleAccelerate(lua_State* L) {
 	Vehicle* vehicle = SM_GET_OBJECT(L, 0, Vehicle);
 	float acceleration = SM_GET_FLOAT(L, 1);
-	btRaycastVehicle* raycastVehicle = vehicle->getRaycastVehicle();
-	raycastVehicle->applyEngineForce(acceleration, 2);
-	raycastVehicle->applyEngineForce(acceleration, 3);
-	raycastVehicle->setBrake(0.0f, 0);
-	raycastVehicle->setBrake(0.0f, 1);
+    vehicle->accelerate(acceleration);
 	return 0;
 }
 
 int vehicleTurn(lua_State* L) {
 	Vehicle* vehicle = SM_GET_OBJECT(L, 0, Vehicle);
-	float rotation = SM_GET_FLOAT(L, 1);;
-	btRaycastVehicle* raycastVehicle = vehicle->getRaycastVehicle();
-	float maxRot = DEG_TO_RAD(vehicle->getWheelTurn());
-	float rot = raycastVehicle->getSteeringValue(0) + DEG_TO_RAD(rotation);
-	if (rot > maxRot) {
-		rot = maxRot;
-	} else if (rot < -maxRot) {
-		rot = -maxRot;
-	}
-	raycastVehicle->setSteeringValue(rot, 0);
-	raycastVehicle->setSteeringValue(rot, 1);
+	float rotation = SM_GET_FLOAT(L, 1);
+    vehicle->turn(rotation);
 	return 0;
 }
 
@@ -1703,7 +1690,7 @@ void registerVehicle() {
 	ADD_METHOD(methods, "accelerate", vehicleAccelerate);
 	ADD_METHOD(methods, "turn", vehicleTurn);
     ScriptManager::addClass("Vehicle", methods);
-}*/
+}
 
 int newScenario(lua_State* L) {
 	Scenario* scenario = new Scenario(SM_GET_SL());

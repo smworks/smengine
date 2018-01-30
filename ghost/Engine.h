@@ -16,7 +16,6 @@ public:
 
 	void loadScene(string script);
 	void computeFrame();
-	void updateFPS();
 	void resume();
 	void pause();
 
@@ -41,10 +40,6 @@ private:
 
 	double time;
 	bool running;
-	GUIText* fpsText;
-	Node* fpsNode;
-	UINT32 fpsCount;
-	double fpsTime;
 	Console* console;
 	static queue<Task*>* tasks;
 	static mutex* mut;

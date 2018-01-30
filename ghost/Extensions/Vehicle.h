@@ -40,6 +40,8 @@ public:
 public:
 	Vehicle(Node* container, btDynamicsWorld* dynamicsWorld, vector<btRigidBody*>* rigidBodies);
 	~Vehicle();
+    void accelerate(float delta);
+    void turn(float delta);
 	void update();
 	vector<Node*>& getWheels();
 	void setRaycastVehicle(btRaycastVehicle* vehicle);
