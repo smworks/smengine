@@ -148,11 +148,11 @@ SIZE GUIText::getFontSize() const
 }
 
 SIZE GUIText::getTextWidth() const {
-	return textWidth;
+	return (SIZE) textWidth;
 }
 
 SIZE GUIText::getTextHeight() const {
-    return textHeight;
+    return (SIZE) textHeight;
 }
 
 float GUIText::getTextOffsetX() const

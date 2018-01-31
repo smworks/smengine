@@ -5,15 +5,11 @@
 #ifndef __MACH__
 #include "../../dependencies/includes/libpng/png.h"
 
-struct PngBuffer {
-    INT8* buffer;
-    SIZE bytesRead;
-};
-
+#include "ImageLoader.h"
 
 void readPng(png_structp png, png_bytep data, png_size_t size) {
     png_voidp a = png_get_io_ptr(png);
-    PngBuffer* pngBuffer = (PngBuffer*) a;
+    ImageLoader::PngBuffer* pngBuffer = (ImageLoader::PngBuffer*) a;
     memcpy(data, pngBuffer->buffer + pngBuffer->bytesRead, size);
     pngBuffer->bytesRead += size;
 }
@@ -131,6 +127,8 @@ ImageLoader::RawImage ImageLoader::loadPng(ServiceLocator* services, const char*
     delete[] image_data;
     delete[] row_pointers;
     png.buffer = reinterpret_cast<UINT8*>(buffer);
+	delete[] in;
     return png;
+	
 }
 #endif

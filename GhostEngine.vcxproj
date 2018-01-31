@@ -14,8 +14,8 @@
     <ProjectGuid>{E8CB018D-9AC8-4F67-BDF7-468173257EF8}</ProjectGuid>
     <Keyword>Win32Proj</Keyword>
     <RootNamespace>GhostEngine</RootNamespace>
-    <TargetPlatformVersion>10.0.14393.0</TargetPlatformVersion>
-    <WindowsTargetPlatformVersion>10.0.14393.0</WindowsTargetPlatformVersion>
+    <TargetPlatformVersion>10.0.16299.0</TargetPlatformVersion>
+    <WindowsTargetPlatformVersion>10.0.16299.0</WindowsTargetPlatformVersion>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
@@ -43,7 +43,6 @@
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <LinkIncremental>true</LinkIncremental>
-    <IncludePath>$(SolutionDir)\dependencies\includes\freetype;$(SolutionDir)\dependencies\includes\lua;$(IncludePath)</IncludePath>
     <LibraryPath>$(SolutionDir)\dependencies\libs\win32;$(LibraryPath)</LibraryPath>
     <CodeAnalysisRuleSet>MixedRecommendedRules.ruleset</CodeAnalysisRuleSet>
     <OutDir>C:\Cache\Visual Studio\$(Configuration)\</OutDir>
@@ -54,7 +53,6 @@
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <LinkIncremental>false</LinkIncremental>
-    <IncludePath>$(SolutionDir)\dependencies\includes\devil;$(SolutionDir)\dependencies\includes\freetype;$(SolutionDir)\dependencies\includes\lua;$(IncludePath)</IncludePath>
     <LibraryPath>$(SolutionDir)\dependencies\libs\win32;$(LibraryPath)</LibraryPath>
     <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
     <OutDir>C:\Cache\Visual Studio\$(Configuration)\</OutDir>
@@ -321,7 +319,6 @@
     <ClCompile Include="dependencies\includes\lua\lundump.c" />
     <ClCompile Include="dependencies\includes\lua\lvm.c" />
     <ClCompile Include="dependencies\includes\lua\lzio.c" />
-    <ClCompile Include="dependencies\includes\sqlite\shell.c" />
     <ClCompile Include="dependencies\includes\sqlite\sqlite3.c" />
     <ClCompile Include="dependencies\includes\zlib\adler32.c" />
     <ClCompile Include="dependencies\includes\zlib\compress.c" />
@@ -343,7 +340,9 @@
     <ClCompile Include="ghost\Extensions\Vehicle.cpp" />
     <ClCompile Include="ghost\ModelData.cpp" />
     <ClCompile Include="ghost\Multiplatform\Database.cpp" />
+    <ClCompile Include="ghost\Multiplatform\Ghost.cpp" />
     <ClCompile Include="ghost\Multiplatform\GraphicsManager.cpp" />
+    <ClCompile Include="ghost\Multiplatform\ImageLoader.cpp" />
     <ClCompile Include="ghost\Multiplatform\NullGraphicsManager.cpp" />
     <ClCompile Include="ghost\Multiplatform\ServiceLocator.cpp" />
     <ClCompile Include="ghost\Multiplatform\Win32\WindowsDatabase.cpp" />
@@ -372,7 +371,6 @@
     <ClCompile Include="ghost\FrameBuffer.cpp" />
     <ClCompile Include="ghost\GUIManager.cpp" />
     <ClCompile Include="ghost\MD2Parser.cpp" />
-    <ClCompile Include="ghost\Multiplatform\Win32\WindowsGhost.cpp" />
     <ClCompile Include="ghost\Multiplatform\Win32\WindowsFileManager.cpp" />
     <ClCompile Include="ghost\Multiplatform\Win32\WindowsGraphicsManager.cpp" />
     <ClCompile Include="ghost\Multiplatform\Win32\WindowsServiceLocator.cpp" />
@@ -642,6 +640,8 @@
     <ClInclude Include="ghost\Extensions\Vehicle.h" />
     <ClInclude Include="ghost\ModelData.h" />
     <ClInclude Include="ghost\Multiplatform\Database.h" />
+    <ClInclude Include="ghost\Multiplatform\Ghost.h" />
+    <ClInclude Include="ghost\Multiplatform\ImageLoader.h" />
     <ClInclude Include="ghost\Multiplatform\NullGraphicsManager.h" />
     <ClInclude Include="ghost\Multiplatform\ServiceLocator.h" />
     <ClInclude Include="ghost\Multiplatform\Socket.h" />
@@ -674,9 +674,7 @@
     <ClInclude Include="ghost\GUIManager.h" />
     <ClInclude Include="ghost\MD2Parser.h" />
     <ClInclude Include="ghost\Multiplatform\FileManager.h" />
-    <ClInclude Include="ghost\Multiplatform\Ghost.h" />
     <ClInclude Include="ghost\Multiplatform\GraphicsManager.h" />
-    <ClInclude Include="ghost\Multiplatform\Win32\WindowsGhost.h" />
     <ClInclude Include="ghost\Multiplatform\Win32\WindowsFileManager.h" />
     <ClInclude Include="ghost\Multiplatform\Win32\WindowsGraphicsManager.h" />
     <ClInclude Include="ghost\Multiplatform\Win32\WindowsServiceLocator.h" />

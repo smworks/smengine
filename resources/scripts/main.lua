@@ -62,7 +62,9 @@ function update()
         fpsCounter:setFontSize(fontSize)
     end
     fpsTime = fpsTime + getTimeDelta()
+	fpsCount = fpsCount + 1
     if fpsTime >= 1000 then
+		print("SETTING")
         fpsCounter:setText("FPS: " .. fpsCount .. "\nResolution: " .. getScreenWidth() .. "x" .. getScreenHeight() .. "px")
         fpsCount = 0
         fpsTime = 0
