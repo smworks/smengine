@@ -1,19 +1,45 @@
 ﻿#include "Ghost.h"
 
+#ifdef _WIN32
+	#ifdef SMART_DEBUG
+	void profile(string msg) {
+		static UINT64 lastCheck = getMicroseconds();
+		UINT64 now = getMicroseconds();
+		LOGI("%s Time: %llu (ms).", msg.c_str(), (now - lastCheck) / 1000);
+		lastCheck = now;
+	}
+	#endif
+
+	void logToFile(char* msg) {
+		static ofstream ofs("log.txt");
+		ofs << msg;
+	}
+
+	INT64 getMicroseconds() {
+		auto time = chrono::system_clock::now();
+		auto since_epoch = time.time_since_epoch();
+		auto microseconds = chrono::duration_cast<chrono::microseconds>(
+			since_epoch);
+		return microseconds.count();
+	}
+#else
 #ifdef SMART_DEBUG
 void profile(string& msg) {
-        static UINT64 lastCheck = getMicroseconds();
-        UINT64 now = getMicroseconds();
-        LOGD("%s Time: %lu (ms).", msg.c_str(), (now - lastCheck) / 1000);
-        lastCheck = now;
-    }
+	static UINT64 lastCheck = getMicroseconds();
+	UINT64 now = getMicroseconds();
+	LOGD("%s Time: %lu (ms).", msg.c_str(), (now - lastCheck) / 1000);
+	lastCheck = now;
+}
 #endif
 
-SIZE getMicroseconds() {
+INT64 getMicroseconds() {
     timeval time;
     gettimeofday(&time, 0);
     return time.tv_sec * 1000000 + time.tv_usec;
 }
+#endif
+
+
 
 bool checkGLError(string name) {
     bool hasErrors = false;

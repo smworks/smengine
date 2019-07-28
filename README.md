@@ -4,8 +4,7 @@
 
 Everytime engine is launched, it will load **logic.lua** file in scripts folder.
 This is how **logic.lua** should look like at its simplest form:
-```
-#!Lua
+```Lua
 
 -- Called when network response is available.
 function eventResponse(response)
@@ -48,13 +47,23 @@ function quit()
 end
 ```
 
+## General functions ##
+```lua
+print(text) -- used for printing text
+pointerIsOver(node) -- returns true if mouse or other pointer is over specific node
+playSound("file.mp3", true) -- plays sound file. Second parameter indicates 
+loadScene("scene.lua") -- loads specified lua scene file
+exit() -- closes program
+getScreenWidth() -- returns screen width in pixels
+getScreenHeight() -- returns screen height in pixels
+getTimeDelta() -- returns elapsed time in milliseconds
+```
+
 ## Camera controls ##
 
 ### Moving along camera directions and looking around ###
 
-```
-#!Lua
-
+```Lua
 function update()
 	camera = getCamera()
 	input = getInput()
@@ -73,16 +82,14 @@ function update()
 		camera:moveX(offset)
 	end
 
-    camera:addRotX(input:getPointerDeltaY() * 0.2)
-    camera:addRotY(input:getPointerDeltaX() * 0.2)
+	camera:addRotX(input:getPointerDeltaY() * 0.2)
+	camera:addRotY(input:getPointerDeltaX() * 0.2)
 end
-
 ```
 ## Working with 2D models ##
 
 ### Loading simple sprite with texture ###
-```
-#!Lua
+```Lua
 texture = Texture.new("texture.png")
 sprite = Sprite.new("Sprite name")
 sprite:setWidth(200);
@@ -95,9 +102,7 @@ sprite:setTexture(texture)
 ## Working with 3D models ##
 
 ### Loading simple plane with texture ###
-```
-#!Lua
-
+```Lua
 plane = Model.new("model_name")
 plane:setType("plane")
 plane:setAmbient("#FFFFFFFF")
@@ -109,8 +114,7 @@ plane:setScaleXYZ(100.0, 100.0, 100.0)
 ## Enabling physics ##
 Physics only work for nodes with **Model** resource.
 Call **enablePhysics()** after setting model type and other attributes.
-```
-#!Lua
+```Lua
 node:setType("plane")
 node:setScaleXYZ(10.0, 1.0, 3.0)
 node:enablePhysics()
