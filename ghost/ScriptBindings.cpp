@@ -314,7 +314,7 @@ int getTimeDelta(lua_State* L) {
 void registerFunctions() {
 	ScriptManager::addFunction("print", print);
 	ScriptManager::addFunction("pointerIsOver", pointerIsOver);
-	ScriptManager::addFunction("playSound", playSound);
+	ScriptManager::addFunction("pla ySound", playSound);
 	ScriptManager::addFunction("loadScene", loadScene);
 	ScriptManager::addFunction("exit", exit);
 	ScriptManager::addFunction("getScreenWidth", getScreenWidth);
