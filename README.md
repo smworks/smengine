@@ -99,6 +99,18 @@ sprite:setPosY(300)
 sprite:setTexture(texture)
 ```
 
+### Loading simple text ###
+```Lua
+text = Text.new("text name")
+text:setText("Hello world")
+text:setColor("#CC0000FF")
+text:setPosX(200) -- Position from left
+text:setPosY(50) -- Position from top
+text:setFontSize(46)
+text:setBackground("#000000FF")
+text:setVisibility(true)
+```
+
 ## Working with 3D models ##
 
 ### Loading simple plane with texture ###
