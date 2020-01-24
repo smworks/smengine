@@ -94,10 +94,6 @@ public:
 	static const string ATTR_RIGHT;
 	static const string ATTR_TOP;
 	static const string ATTR_BOTTOM;
-	static const string ATTR_SCREEN_LEFT;
-	static const string ATTR_SCREEN_RIGHT;
-	static const string ATTR_SCREEN_TOP;
-	static const string ATTR_SCREEN_BOTTOM;
 	static const string ATTR_BACKGROUND_SELECTED;
 	static const string ATTR_TEXT;
 	static const string ATTR_SIZE;
@@ -220,6 +216,7 @@ private:
 	string name_;
 	/** Pointer to all engine services. */
 	ServiceLocator* services_;
+protected:
 	/** Pointer to node that contains this resource. */
 	Node* node_;
 };

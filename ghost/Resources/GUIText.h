@@ -39,18 +39,12 @@ public:
 
     SIZE getTextHeight() const;
 
-	float getTextOffsetX() const;
-
-	float getTextOffsetY() const;
-
 	SIZE getTextVBO() const;
 
 	SIZE getTextVertexCount() const;
 private:
 	string text;
 	SIZE size;
-	SIZE textOffsetX;
-	SIZE textOffsetY;
 	UINT32 vbo;
 	UINT32 vertexCount;
 	float textWidth;

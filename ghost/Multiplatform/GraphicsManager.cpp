@@ -291,7 +291,6 @@ void GraphicsManager::render()
 
 void GraphicsManager::renderGuiText(Node* node)
 {
-	renderNode(node, camera->getProjection2D());
 	GUIText* text = dynamic_cast<GUIText*>(node->getResource());
 	if (text == nullptr)
 	{

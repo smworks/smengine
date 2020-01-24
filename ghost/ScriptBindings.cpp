@@ -314,7 +314,7 @@ int getTimeDelta(lua_State* L) {
 void registerFunctions() {
 	ScriptManager::addFunction("print", print);
 	ScriptManager::addFunction("pointerIsOver", pointerIsOver);
-	ScriptManager::addFunction("pla ySound", playSound);
+	ScriptManager::addFunction("playSound", playSound);
 	ScriptManager::addFunction("loadScene", loadScene);
 	ScriptManager::addFunction("exit", exit);
 	ScriptManager::addFunction("getScreenWidth", getScreenWidth);
@@ -1283,29 +1283,44 @@ void registerGUISurface() {
 
 int newGUIText(lua_State* L) {
 	int argc = SM_GET_ARGUMENT_COUNT(L);
-	ASSERT(argc == 1, "Wrong argument count for GUIText.new");
+	ASSERT(argc == 1 || argc == 3 || argc == 5, "Wrong argument count for GUIText constructor.");
+	ASSERT(SM_IS_STRING(L, 0), "First argument for GUIText must be string type.");
 	string name = SM_GET_STRING(L, 0);
-	GUIText* text = dynamic_cast<GUIText*>(SM_GET_RM()->get(Resource::GUI_SURFACE, name));
-	if (text == 0) {
-		text = NEW GUIText(SM_GET_SL());
-		text->getAttributes().setString(GUIText::ATTR_TEXT, "");
-        text->getAttributes().setString(GUIText::ATTR_SCREEN_LEFT, "true");
-        text->getAttributes().setString(GUIText::ATTR_SCREEN_RIGHT, "true");
-        text->getAttributes().setString(GUIText::ATTR_SCREEN_TOP, "true");
-		text->create();
-		SM_GET_RM()->add(name, text);
+	ASSERT(dynamic_cast<GUIText*>(SM_GET_RM()->get(Resource::GUI_SURFACE, name)) == 0,
+		"GUISurface object with this name already exists.");
+	GUIText* text = NEW GUIText(SM_GET_SL());
+	if (argc == 3) {
+		ASSERT(SM_IS_NUMBER(L, 1) && SM_IS_NUMBER(L, 2),
+			"Second and third arguments must be numbers for GUIText constructor.");
+		text->getAttributes().setFloat(GUIText::ATTR_WIDTH, SM_GET_FLOAT(L, 1));
+		text->getAttributes().setFloat(GUIText::ATTR_HEIGHT, SM_GET_FLOAT(L, 2));
 	}
-	Node* node = NEW Node(name + "_TextResource", text);
+	else if (argc == 5) {
+		ASSERT(SM_IS_NUMBER(L, 1) && SM_IS_NUMBER(L, 2)
+			&& SM_IS_NUMBER(L, 3) && SM_IS_NUMBER(L, 4),
+			"Arguments from second to fifth must be numbers for GUIText constructor.");
+		text->getAttributes().setFloat(GUIText::ATTR_WIDTH, SM_GET_FLOAT(L, 3));
+		text->getAttributes().setFloat(GUIText::ATTR_HEIGHT, SM_GET_FLOAT(L, 4));
+	}
+	SM_GET_RM()->add(name, text);
+	Node* node = NEW Node(name, text);
+	if (argc == 5) {
+		node->getPos().setX(SM_GET_FLOAT(L, 1));
+		node->getPos().setY(SM_GET_FLOAT(L, 2));
+	}
+	text->setNode(node);
+	text->create();
 	SM_GET_SL()->getRootNode()->addChild(node);
 	node->setParent(SM_GET_SL()->getRootNode());
+	SM_GET_SL()->getGUIManager()->refreshNodes(SM_GET_SL()->getRootNode());
 	SM_RETURN_OBJECT(L, "Node", Node, node);
-    return 1;
+	return 1;
 }
 
 void registerGUIText() {
     unordered_map<string, int (*)(lua_State*)> methods;
 	ADD_METHOD(methods, "new", newGUIText);
-    ScriptManager::addClass("Label", methods);
+    ScriptManager::addClass("Text", methods);
 }
 
 int newGUIButton(lua_State* L) {
@@ -1328,13 +1343,14 @@ int newGUIButton(lua_State* L) {
 		button->getAttributes().setFloat(GUIText::ATTR_WIDTH, SM_GET_FLOAT(L, 3));
 		button->getAttributes().setFloat(GUIText::ATTR_HEIGHT, SM_GET_FLOAT(L, 4));
 	}
-	button->create();
 	SM_GET_RM()->add(name, button);
 	Node* node = NEW Node(name, button);
     if (argc == 5) {
         node->getPos().setX(SM_GET_FLOAT(L, 1));
         node->getPos().setY(SM_GET_FLOAT(L, 2));
     }
+	button->setNode(node);
+	button->create();
 	SM_GET_SL()->getRootNode()->addChild(node);
 	node->setParent(SM_GET_SL()->getRootNode());
 	SM_GET_SL()->getGUIManager()->refreshNodes(SM_GET_SL()->getRootNode());

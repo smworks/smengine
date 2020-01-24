@@ -138,7 +138,7 @@ vector<string> stringSplit(const string& str, char delimiter) {
 
 string trim(string str)
 {
-	str.erase(str.begin(), find_if(str.begin(), str.end(), not1(ptr_fun<int, int>(isspace))));
+	//str.erase(str.begin(), find_if(str.begin(), str.end(), not1(ptr_fun<int, int>(isspace))));
 	return str;
 }
 

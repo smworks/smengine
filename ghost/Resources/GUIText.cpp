@@ -12,8 +12,6 @@ GUIText::GUIText(ServiceLocator* services) :
 	GUISurface(services),
 	text(""),
 	size(10),
-	textOffsetX(0),
-	textOffsetY(0),
 	vbo(0),
 	vertexCount(0),
 	textWidth(0.0f),
@@ -38,31 +36,6 @@ bool GUIText::create() {
 void GUIText::update() {
 	UINT32 screenWidth = getServiceLocator()->getScreenWidth();
 	UINT32 screenHeight = getServiceLocator()->getScreenHeight();
-	float posX = 0.0f, posY = 0.0f, width = 0.0f, height = 0.0f;
-	bool screenLeft = toBool(getAttribute(ATTR_SCREEN_LEFT)),
-		screenRight = toBool(getAttribute(ATTR_SCREEN_RIGHT)),
-		screenTop = toBool(getAttribute(ATTR_SCREEN_TOP)),
-		screenBottom = toBool(getAttribute(ATTR_SCREEN_BOTTOM));
-	if (screenLeft && screenRight) {
-		posX = 0.0f;
-		width = static_cast<float>(screenWidth);
-	}
-	else if (screenRight) {
-		posX = static_cast<float>(screenWidth) - width;
-	}
-	else if (screenLeft) {
-		posX = 0.0f;
-	}
-	if (screenTop && screenBottom) {
-		posY = 0.0f;
-		height = static_cast<float>(screenHeight);
-	}
-	else if (screenTop) {
-		posY = static_cast<float>(screenHeight);
-	}
-	else if (screenBottom) {
-		posY = 0.0;
-	}
 	float maxHeight = static_cast<float>(size);
 	float maxWidth = 0.0f;
 	SIZE symbolOffset = 0;
@@ -84,8 +57,8 @@ void GUIText::update() {
 		if (symbol == 0) {
 			continue;
 		}
-		startX = posX + getTextOffsetX() + (float) symbolOffset + symbol->getOffsetX();
-		startY = posY + getTextOffsetY() + symbol->getOffsetY() + textOffsetY - size;
+		startX = (float) symbolOffset + symbol->getOffsetX();
+		startY = symbol->getOffsetY() + textOffsetY - size;
 		float sWidth = (float) symbol->getWidth();
 		float sHeight = (float) symbol->getHeight();
 		symbolOffset += symbol->getAdvance();
@@ -121,7 +94,7 @@ void GUIText::update() {
 		getGraphicsManager()->setVertexBuffer(
 			vbo, &vertices[0], vertexCount * sizeof(VertexPT));
 	}
-	textWidth = maxWidth > width ? maxWidth : width;
+	textWidth = maxWidth;
 	textHeight = maxHeight;
 }
 
@@ -153,16 +126,6 @@ SIZE GUIText::getTextWidth() const {
 
 SIZE GUIText::getTextHeight() const {
     return (SIZE) textHeight;
-}
-
-float GUIText::getTextOffsetX() const
-{
-	return static_cast<float>(textOffsetX);
-}
-
-float GUIText::getTextOffsetY() const
-{
-	return static_cast<float>(textOffsetY);
 }
 
 SIZE GUIText::getTextVBO() const
