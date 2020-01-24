@@ -8,6 +8,8 @@
 		LOGI("%s Time: %llu (ms).", msg.c_str(), (now - lastCheck) / 1000);
 		lastCheck = now;
 	}
+    #else
+    void profile(string msg) {}
 	#endif
 
 	void logToFile(char* msg) {
