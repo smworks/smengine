@@ -176,3 +176,38 @@ node:setType("plane")
 node:setScaleXYZ(10.0, 1.0, 3.0)
 node:enablePhysics()
 ```
+
+## Working with shaders ##
+List of available parameters:
+```C
+#define SHADER_MAIN_TEXTURE "mainTexture"
+#define SHADER_HAS_MAIN_TEXTURE "uMainTexture"
+#define SHADER_VERTEX_SUFFIX ".vert"
+#define SHADER_FRAGMENT_SUFFIX ".frag"
+#define SHADER_WVP "uWVP"
+#define SHADER_W "uW"
+#define SHADER_N "uN"
+#define SHADER_COLOR_BUFFER "colorBuffer"
+#define SHADER_DEPTH_BUFFER "depthBuffer"
+#define SHADER_SCREEN_WIDTH "uScreenWidth"
+#define SHADER_SCREEN_HEIGHT "uScreenHeight"
+#define SHADER_LIGHT_POS "uLightPos"
+#define SHADER_LIGHT_COUNT "uLightCount"
+#define SHADER_EYE_POS "uEyePos"
+#define SHADER_AMBIENT "uAmbient"
+#define SHADER_DIFFUSE "uDiffuse"
+#define SHADER_SPECULAR "uSpecular"
+#define SHADER_SPEC_INTENSITY "uSpecIntensity"
+#define SHADER_TRANSPARENCY "uTransparency"
+#define SHADER_FOG_COLOR "uFogColor"
+#define SHADER_FOG_DENSITY "uFogDensity"
+#define SHADER_TIMER "uTimer"
+#define SHADER_POS "attrPos"
+#define SHADER_NORMAL "attrNorm"
+#define SHADER_UV "attrUV"
+#define SHADER_COL "attrCol"
+#define SHADER_FOREGROUND "uForeground"
+#define SHADER_BACKGROUND "uBackground"
+#define SHADER_TEXTURE_2D "texture_"
+#define SHADER_CUBE_MAP "cubeMap_0"
+```
