@@ -101,7 +101,7 @@ node:setBool("paramName", true) -- sets attribute for underlying resource
 node:setInt("paramName", 5) -- sets attribute for underlying resource
 node:setFloat("paramName", 5.5) -- sets attribute for underlying resource
 node:setString("paramName", "paramValue") -- sets attribute for underlying resource
-node:setShader(shaderObject) -- sets shader. Applies to model and sprite only.
+node:setShader(shaderObject) -- sets shader. Applies to model, GUISurface and sprite.
 shader = node:getShader(shaderObject) -- returns shader used by resource
 node:setTexture(textureObject) -- applies to model or sprite only.
 node:setIndex(spriteIndex) -- allows to specify animation frame for animated sprite resources.
