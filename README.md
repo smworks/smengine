@@ -86,6 +86,51 @@ function update()
 	camera:addRotY(input:getPointerDeltaX() * 0.2)
 end
 ```
+## Working with nodes ##
+Every object in the scene belongs to a **Node** object.
+As a result all of these methods can be called on each object:
+```Lua
+node = getNode("resource name") -- node and it's corresponding resource share same name
+node:setParent(parentNode)
+node:addChild(childNode)
+node:enablePhysics(massInKg) -- enables physics. Can be used only on Model resources
+node:disablePhysics()
+node:setMass(99.9) -- sets physics mass in kg
+node:accelerate(0.0, 100.0, 0.0) -- accelerates physics object in specified vector direction and speed
+node:setBool("paramName", true) -- sets attribute for underlying resource
+node:setInt("paramName", 5) -- sets attribute for underlying resource
+node:setFloat("paramName", 5.5) -- sets attribute for underlying resource
+node:setString("paramName", "paramValue") -- sets attribute for underlying resource
+node:setShader(shaderObject) -- sets shader. Applies to model and sprite only.
+shader = node:getShader(shaderObject) -- returns shader used by resource
+node:setTexture(textureObject) -- applies to model or sprite only.
+node:setIndex(spriteIndex) -- allows to specify animation frame for animated sprite resources.
+node:getCount() -- returns number of frames in sprite resources.
+node:getName() -- returns node name
+node:setVisibility(true) -- sets visibility flag to indicate whether node should be rendered
+isNodeVisible = node:getVisibility() -- returns visibility flag
+node:setFontSize(16) -- sets text size for Text and Button nodes
+node:setText("hello world") -- sets text for Text and Button nodes
+node:setColor("#FFFFFFFF") -- sets text color for Text and Button nodes. Format - ARGB
+node:setBackground("#FF000000") -- sets background for any GUISurface (Button, Text)
+node:setBackground(textureObject) -- sets background texture for any GUISurface (Button, Text)
+backgroundColor = node:getBackground() -- returns background color of GUISurface
+nodeWidth = node:getWidth() -- returns width, same as node:getScaleX()
+nodeHeight = node:getHeight() -- returns height, same as node:getScaleY()
+node:setWidth(500) -- sets node width. Same as node:setScaleX(500)
+node:setHeight(500) -- sets node height. Same as node:setScaleY(500)
+node:setAmbient("#FFFFFFFF") -- sets ambient color. Applies to model resources only.
+node:setDiffuse("#FFFFFFFF") -- sets diffuse color. Applies to model resources only.
+node:setSpecular("#FFFFFFFF") -- sets specular color. Applies to model resources only.
+node:setType("mesh") -- sets model type(mesh|shape|plane|sphere|terrain|water). Applies to model resources only.
+node:moveX(100.0) -- move node on it's direction X axis
+node:moveY(100.0) -- move node on it's direction Y axis
+node:moveZ(100.0) -- move node on it's direction Z axis
+node:moveViewCameraDirection(100.0) -- move node in camera look at direction.
+node:(add|set|get)(Pos|Scale|Rot)(X|Y|Z)(100) -- use any combination of method parts to construct required call. XYZ can be combined together, or in parts of XY, YZ, XZ.
+
+```
+
 ## Working with 2D models ##
 
 ### Loading simple sprite with texture ###
