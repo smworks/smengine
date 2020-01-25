@@ -112,15 +112,7 @@ void* Shapes::getShape(ShapeType shapeType, VertexType vertexType) {
         break;
     case SHAPE_SCREEN_PLANE:
     {
-        static float positions[] = {
-            0.0f, 0.0f, 0.0f,
-            1.0f, 0.0f, 0.0f,
-            1.0f, 1.0f, 0.0f,
-            1.0f, 1.0f, 0.0f,
-            0.0f, 1.0f, 0.0f,
-            0.0f, 0.0f, 0.0f
-        };
-        return createShape(vertexType, positions, 0, (float*) g_planeUV, sizeof(positions) / 3);
+        return createShape(vertexType, g_planePositions, 0, (float*) g_planeUV, 6);
         break;
     }
     default:

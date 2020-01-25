@@ -96,6 +96,12 @@ void GUIText::update() {
 	}
 	textWidth = maxWidth;
 	textHeight = maxHeight;
+	if (node_->getScale().getX() < textWidth) {
+		node_->getScale().setX(textWidth);
+	}
+	if (node_->getScale().getY() < textHeight) {
+		node_->getScale().setY(textHeight);
+	}
 }
 
 void GUIText::hasFocus() {

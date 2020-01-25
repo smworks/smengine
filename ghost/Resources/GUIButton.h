@@ -24,9 +24,10 @@ public:
 	 * @see GUISurface
 	 */
 	void hasFocus();
+
+    void setBackgroundSelected(string color);
 private:
 	Color colorBckgSelected_;
-	Color colorBckg_;
 };
 
 #endif

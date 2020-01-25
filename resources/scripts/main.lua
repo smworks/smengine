@@ -14,21 +14,21 @@ function start()
 	textButton:setText("Models")
     --textButton:setBackground(Texture.new("tree_1.png"))
 	textButton:setBackground("#99ff9955")
+	textButton:setBackgroundSelected("#00FF00FF")
 	textButton:setColor("#ff00ff")
 	textButton:setWidth(getScreenWidth())
-    buttonHeight = getScreenHeight() * 0.1
+    buttonHeight = getScreenHeight() * 0.2
+	textButton:setPosY(200)
 	textButton:setHeight(buttonHeight)
-    textButton:setPosX(0)
-    textButton:setPosY(buttonHeight * 2)
     textButton:setFontSize(buttonHeight * 0.6)
     
     fpsCounter = Button.new("fpsCounter")
     fpsCounter:setColor("#FFFF00FF")
     fpsCounter:setBackground("#33333333")
+	fpsCounter:setPosX(10)
+	fpsCounter:setPosY(10)
     fontSize = 14
     fpsCounter:setFontSize(14)
-    fpsCounter:setWidth(256)
-    fpsCounter:setHeight(64)
     fpsCount = 0
     fpsTime = 0
     
@@ -39,8 +39,6 @@ function start()
     sprite:setPosX(300)
     sprite:setPosY(300)
     sprite:setTexture(texture)
-    
-
 end
 
 function resume()
@@ -57,6 +55,12 @@ function update()
 		loadScene("text.lua")
 		print "Loading second.lua"
 	end
+	if input:keyReleased(constants["U"]) then
+		fpsCounter:addPosX(0.5)
+	end
+	if input:keyReleased(constants["D"]) then
+		fpsCounter:addPosX(-0.5)
+	end 
     if input:keyReleased(constants["T"]) then
         fontSize = fontSize + 1
         fpsCounter:setFontSize(fontSize)

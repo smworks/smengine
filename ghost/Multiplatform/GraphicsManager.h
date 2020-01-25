@@ -108,6 +108,7 @@ class Camera;
 class ResourceManager;
 class TextManager;
 class Node;
+class GUIText;
 class Renderable;
 class TextureRGBA;
 class RenderPass;
@@ -321,6 +322,8 @@ public:
 	 * Render scene.
 	 */
 	void render();
+
+	void renderGuiBackground(GUIText* text, Node* node);
 
 	void renderGuiText(Node* node);
 

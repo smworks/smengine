@@ -289,6 +289,49 @@ void GraphicsManager::render()
 	renderVertices(viewMatrix);
 }
 
+void GraphicsManager::renderGuiBackground(GUIText* text, Node* node) {
+	auto shader = text->getShader();
+	useProgram(shader->getId());
+
+	auto posX = node->getPos().getX();
+	auto posY = node->getPos().getY();
+	Matrix::translate(matPos, posX, posY, 0.0);
+	Matrix::scale(matScale, node->getScale().getX(), node->getScale().getY(), 1.0);
+	Matrix::multiply(matPos, matScale, matPosScale);
+	Matrix::multiply(camera->getProjection2D(), matPosScale, matProjPosScale);
+
+	prepareShader(shader, node, matProjPosScale);
+	int texture = glGetUniformLocation(shader->getId(), "texture_0");
+	shader->setVector4(Shader::FOREGROUND, text->getDiffuse().toArray());
+	shader->setVector4(Shader::BACKGROUND, text->getAmbient().toArray());
+	shader->setVector3(Shader::AMBIENT, text->getAmbient().toArray());
+	bindTexture(services->getTextureAtlas()->getId(Texture::MONO));
+	if (texture != -1) {
+		glUniform1i(texture, 0);
+	}
+	auto posHandle = shader->getHandle(Shader::POS);
+	glEnableVertexAttribArray(posHandle);
+	auto uvHandler = shader->getHandle(Shader::UV);
+	if (uvHandler != -1) {
+		glEnableVertexAttribArray(uvHandler);
+	}
+
+	
+	bindBuffer(text->getCBO());
+	glVertexAttribPointer(shader->getHandle(Shader::POS), 3, GL_FLOAT, GL_FALSE,
+		sizeof(VertexPT), ((char*) text->getPosOffset()));
+	if (uvHandler != -1) {
+		glVertexAttribPointer(shader->getHandle(Shader::UV), 2, GL_FLOAT, GL_FALSE,
+			sizeof(VertexPT), ((char*)text->getUVOffset()));
+	}
+	glDrawArrays(GL_TRIANGLES, 0, (GLsizei) text->getVertexCount());
+	glDisableVertexAttribArray(shader->getHandle(Shader::POS));
+	if (uvHandler != -1) {
+		glDisableVertexAttribArray(shader->getHandle(Shader::UV));
+	}
+	CHECK_GL_ERROR("Problem with GUI background renderer");
+}
+
 void GraphicsManager::renderGuiText(Node* node)
 {
 	GUIText* text = dynamic_cast<GUIText*>(node->getResource());
@@ -296,6 +339,7 @@ void GraphicsManager::renderGuiText(Node* node)
 	{
 		return;
 	}
+	renderGuiBackground(text, node);
 	useProgram(textShader->getId());
 	int texture = glGetUniformLocation(textShader->getId(), "texture_0");
 	textShader->setVector4(Shader::FOREGROUND, text->getDiffuse().toArray());
@@ -305,17 +349,17 @@ void GraphicsManager::renderGuiText(Node* node)
 	glEnableVertexAttribArray(textShader->getHandle(Shader::POS));
 	glEnableVertexAttribArray(textShader->getHandle(Shader::UV));
 
-    float textPosXOffset = text->getTextWidth() > node->getScale().getX()
-                     ? 0.0f
-                     : (node->getScale().getX() - text->getTextWidth()) * 0.5f;
-
-    float textPosY = services->getScreenHeight() - node->getPos().getY()
-                     - node->getScale().getY() * 0.5f;
-    float textPosYOffset = text->getTextHeight() > node->getScale().getY()
-                    ? 0.0f
-                    : (node->getScale().getY() - text->getTextHeight()) * 0.5f;
-
-	Matrix::translate(matPosScale, node->getPos().getX() + textPosXOffset, textPosY + textPosYOffset, 0.0);
+	auto width = node->getScale().getX();
+	auto height = node->getScale().getY();
+	auto posXOffset = text->getTextWidth() < width ?
+		(width - text->getTextWidth()) * 0.5f :
+		0;
+	auto posYOffset = text->getTextHeight() < height ?
+		(height - text->getTextHeight()) * 0.5f :
+		0;
+	auto posX = int(node->getPos().getX() + posXOffset);
+	auto posY = int(node->getPos().getY() + posYOffset + text->getTextHeight());
+	Matrix::translate(matPosScale, posX, posY, 0.0);
 	Matrix::multiply(camera->getProjection2D(), matPosScale, matProjPosScale);
 	textShader->setMatrix4(Shader::WVP, matProjPosScale);
 	bindBuffer(text->getTextVBO());
@@ -453,7 +497,9 @@ void GraphicsManager::renderNode(Node* node, Mat4 in)
 	ASSERT(renderable != 0, "Node %s does not contain renderable resource", node->getName().c_str());
 	if (isOutsideCameraView(node)) return;
 	ASSERT(renderable->getShader() != 0, "Renderable from %s has no shader", node->getName().c_str());
-	prepareShader(renderable->getShader(), node, in);
+	Mat4 mat;
+	prepareMatrix(node, in, mat);
+	prepareShader(renderable->getShader(), node, mat);
 	ASSERT(renderable->getCBO() > 0, "Renderable from %s has no CBO", node->getName().c_str());
 	bindCombinedBufferObject(renderable);
 	bindCubeMap();
@@ -482,11 +528,9 @@ bool GraphicsManager::isOutsideCameraView(Node* node) const
 	return false;
 }
 
-void GraphicsManager::prepareShader(Shader* shader, Node* node, Mat4 in)
+void GraphicsManager::prepareShader(Shader* shader, Node* node, Mat4 mat)
 {
 	useProgram(shader->getId());
-	Mat4 mat;
-	prepareMatrix(node, in, mat);
 	// World * View * Projection matrix.
 	shader->setMatrix4(Shader::WVP, mat);
 	// World matrix.
@@ -527,6 +571,8 @@ void GraphicsManager::prepareShader(Shader* shader, Node* node, Mat4 in)
 	//shader->setFloat(Shader::FOG_DENSITY,
 	//	services->getEnv()->getFogDensity());
 	// Timer.
+	shader->setFloat(Shader::SCREEN_WIDTH, (float)services->getScreenWidth());
+	shader->setFloat(Shader::SCREEN_HEIGHT, (float)services->getScreenHeight());
 	shader->setFloat(Shader::TIMER, (getMicroseconds() - startTime) * 0.000001f);
 }
 

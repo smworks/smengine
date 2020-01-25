@@ -25,27 +25,11 @@ bool GUISurface::create() {
 	setBackground(getAttribute(ATTR_BACKGROUND));
 	
 	// Genereate separate uv coordinates.
-    vector<VertexPT> vert;
-    VertexPT tmp;
-	float vertices[] = {
-		0.0f, 0.0f, 0.0f,
-		1.0f, 0.0f, 0.0f,
-		1.0f, 1.0f, 0.0f,
-		1.0f, 1.0f, 0.0f,
-		0.0f, 1.0f, 0.0f,
-		0.0f, 0.0f, 0.0f
-	};
-    SIZE vertexCount = sizeof(vertices) / 3;
-    for (SIZE j = 0; j < vertexCount; j++) {
-        tmp.uv[0] = g_planeUV[j * 2 + 0];
-        tmp.uv[1] = g_planeUV[j * 2 + 1];
-		tmp.pos[0] = vertices[j * 3 + 0];
-        tmp.pos[1] = vertices[j * 3 + 1];
-        tmp.pos[2] = vertices[j * 3 + 2];
-        vert.push_back(tmp);
-    }
+	vector<VertexPT>* uvbo = static_cast<vector<VertexPT>*>(
+		Shapes::getShape(Shapes::SHAPE_SCREEN_PLANE, Shapes::VERTEX_POS_TEX));
     getGraphicsManager()->setVertexBuffer(
-		cbo, &vert[0], vert.size() * sizeof(VertexPT));
+		cbo, &(*uvbo)[0], (UINT32)uvbo->size() * sizeof(VertexPT));
+	delete uvbo;
 	if (checkGLError("Creating GUI surface resource.")) {
 		release();
 		return false;
@@ -127,7 +111,17 @@ int GUISurface::getUVOffset() {
 }
 
 Shader* GUISurface::getDefaultShader() {
-	return 0;
+	string name = "default_model_shader";
+	Shader* shader = dynamic_cast<Shader*>(getResourceManager()->get(SHADER, name));
+	if (shader == nullptr)
+	{
+		auto pair = getGraphicsManager()->getDefaultSpriteShader();
+		shader = NEW Shader(getServiceLocator());
+		shader->setVertexAndFragment(pair.first, pair.second);
+		shader->create();
+		getResourceManager()->add(name, shader);
+	}
+	return shader;
 }
 
 Texture* GUISurface::getPointerToTexture() const
@@ -139,9 +133,9 @@ void GUISurface::setBackground(string background) {
 	setAttribute(ATTR_BACKGROUND, background);
 	if (background.length() == 0 || background[0] == '#') {
         if (background.length() == 0) {
-            getAmbient().setRGBA(1.0f);
+			backgroundColor.setRGBA(1.0f);
         } else {
-			getAmbient().setRGBA(background);
+			backgroundColor.setRGBA(background);
         }
 		Shader* shader = static_cast<Shader*>(
 			getResourceManager()->get(SHADER, SURFACE_BCKG_COLOR));
@@ -153,6 +147,7 @@ void GUISurface::setBackground(string background) {
 			getResourceManager()->add(SURFACE_BCKG_COLOR, shader);
 		}
 		setShader(shader);
+		setAmbient(backgroundColor);
     } else {
         textureBackground = static_cast<TextureRGBA*>(
 			getResourceManager()->get(

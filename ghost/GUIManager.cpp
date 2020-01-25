@@ -31,7 +31,7 @@ void GUIManager::refreshNodes(Node* node) {
 
 void GUIManager::update() {
     int x = getInput()->getPointerX();
-    int y = getServiceLocator()->getScreenHeight() - getInput()->getPointerY();
+    int y = getInput()->getPointerY();
 	for (auto it = nodes.rbegin(); it != nodes.rend(); it++) {
 		Node* node = *it;
     	if (node->getPos().getX() < x

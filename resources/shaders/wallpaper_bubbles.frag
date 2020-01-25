@@ -1,6 +1,7 @@
 uniform float uTimer;
 uniform float uScreenWidth;
 uniform float uScreenHeight;
+varying vec2 varTexCoords;
 
 // rakesh@picovico.com : www.picovico.com
 

@@ -30,6 +30,15 @@ const float g_planeUV[] = {
 		0.0f, 0.0f
 };
 
+static float g_planePositions[] = {
+	0.0f, 0.0f, 0.0f,
+	1.0f, 0.0f, 0.0f,
+	1.0f, 1.0f, 0.0f,
+	1.0f, 1.0f, 0.0f,
+	0.0f, 1.0f, 0.0f,
+	0.0f, 0.0f, 0.0f
+};
+
 class Shapes {
 public:
     enum ShapeType {SHAPE_GROUND_PLANE, SHAPE_SCREEN_PLANE};

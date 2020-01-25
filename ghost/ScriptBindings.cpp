@@ -726,6 +726,21 @@ int nodeGuiSetBackground(lua_State* L) {
 	return 0;
 }
 
+int nodeGuiSetBackgroundSelected(lua_State* L) {
+	Node* node = SM_GET_OBJECT(L, 0, Node);
+	ASSERT(SM_IS_STRING(L, 1) || SM_IS_OBJECT(L, 1),
+		"Argument type for setBackground() must be string or texture object.");
+	GUIButton* surface = dynamic_cast<GUIButton*>(node->getResource());
+	if (surface == 0) {
+		LOGW("Node does not contain GUISurface or its children resource.");
+		return 0;
+	}
+	if (SM_IS_STRING(L, 1)) {
+		surface->setBackgroundSelected(SM_GET_STRING(L, 1));
+	}
+	return 0;
+}
+
 int nodeGuiGetBackground(lua_State* L) {
 	Node* node = SM_GET_OBJECT(L, 0, Node);
 	GUISurface* surface = dynamic_cast<GUISurface*>(node->getResource());
@@ -914,6 +929,7 @@ void registerNode() {
 	ADD_METHOD(methods, "setText", nodeGuiTextSetText);
 	ADD_METHOD(methods, "setColor", nodeGuiTextSetColor);
 	ADD_METHOD(methods, "setBackground", nodeGuiSetBackground);
+	ADD_METHOD(methods, "setBackgroundSelected", nodeGuiSetBackgroundSelected);
 	ADD_METHOD(methods, "getBackground", nodeGuiGetBackground);
 	ADD_METHOD(methods, "getWidth", nodeGetWidth);
 	ADD_METHOD(methods, "getHeight", nodeGetHeight);

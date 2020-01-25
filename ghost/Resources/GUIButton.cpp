@@ -23,7 +23,6 @@ bool GUIButton::create() {
 		colorBckgSelected_.setRGBA(bckgSelected);
 	}
     bool ret = GUIText::create();
-	colorBckg_ = getAmbient();
 	return ret;
 }
 
@@ -32,6 +31,11 @@ void GUIButton::hasFocus() {
 		setAmbient(colorBckgSelected_);
 	}
 	else {
-		setAmbient(colorBckg_);
+		setAmbient(backgroundColor);
 	}
+}
+
+void GUIButton::setBackgroundSelected(string color) {
+	setAttribute(ATTR_BACKGROUND_SELECTED, color);
+	colorBckgSelected_ = Color(color);
 }

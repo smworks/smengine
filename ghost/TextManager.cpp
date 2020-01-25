@@ -260,8 +260,8 @@ Symbol* TextManager::getSymbol(char symbol) {
 			" Error code: %d", err_);
 		return 0;
 	}
-	s->setWidth(bitmap.width);
-	s->setHeight(bitmap.rows);
+	s->setWidth(bitmap.width + 1); // +1 to avoid rasterisation issues during rendering
+	s->setHeight(bitmap.rows + 1); // this happens when symbols are nearby in texture
 	s->setOffsetX(glyphSlot->bitmap_left);
 	s->setOffsetY(glyphSlot->bitmap_top - bitmap.rows);
 	s->setAdvance(glyphSlot->advance.x >> 6);

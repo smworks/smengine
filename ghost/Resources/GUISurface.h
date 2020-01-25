@@ -71,6 +71,7 @@ protected:
 	bool shouldUpdate;
 	Texture* textureBackground;
 	UINT32 cbo;
+	Color backgroundColor;
 };
 
 #endif
