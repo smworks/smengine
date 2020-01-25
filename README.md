@@ -101,7 +101,7 @@ node:setBool("paramName", true) -- sets attribute for underlying resource
 node:setInt("paramName", 5) -- sets attribute for underlying resource
 node:setFloat("paramName", 5.5) -- sets attribute for underlying resource
 node:setString("paramName", "paramValue") -- sets attribute for underlying resource
-node:setShader(shaderObject) -- sets shader. Applies to model and sprite only.
+node:setShader(shaderObject) -- sets shader. Applies to model, GUISurface and sprite.
 shader = node:getShader(shaderObject) -- returns shader used by resource
 node:setTexture(textureObject) -- applies to model or sprite only.
 node:setIndex(spriteIndex) -- allows to specify animation frame for animated sprite resources.
@@ -211,4 +211,40 @@ List of available parameters:
 #define SHADER_BACKGROUND "uBackground"
 #define SHADER_TEXTURE_2D "texture_"
 #define SHADER_CUBE_MAP "cubeMap_0"
+```
+
+## Samples ##
+### FPS counter ###
+```Lua
+function start()
+	print("Called start()")
+	input = getInput()
+    print("Screen width in lua: " .. getScreenWidth() .. ", height: " .. getScreenHeight())
+    fpsCounter = Button.new("fpsCounter")
+    fpsCounter:setColor("#FFFF00FF")
+    fpsCounter:setBackground("#33333333")
+    fontSize = 14
+    fpsCounter:setFontSize(14)
+    fpsCounter:setWidth(1256)
+    fpsCounter:setHeight(64)
+    fpsCount = 0
+    fpsTime = 0
+end
+
+function resume()
+	print("Called resume()")
+end
+
+function resize()
+	print("Called resize()")
+end
+
+function update()
+    fpsTime = fpsTime + getTimeDelta()
+    if fpsTime >= 1000 then
+        fpsCounter:setText("FPS: " .. fpsCount .. "\nResolution: " .. getScreenWidth() .. "x" .. getScreenHeight() .. "px")
+        fpsCount = 0
+        fpsTime = 0
+    end
+end
 ```
