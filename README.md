@@ -113,6 +113,7 @@ node:setFontSize(16) -- sets text size for Text and Button nodes
 node:setText("hello world") -- sets text for Text and Button nodes
 node:setColor("#FFFFFFFF") -- sets text color for Text and Button nodes. Format - ARGB
 node:setBackground("#FF000000") -- sets background for any GUISurface (Button, Text)
+node:setBackgroundSelected("#FF000000") -- sets color for selected background. Applies to Button
 node:setBackground(textureObject) -- sets background texture for any GUISurface (Button, Text)
 backgroundColor = node:getBackground() -- returns background color of GUISurface
 nodeWidth = node:getWidth() -- returns width, same as node:getScaleX()
