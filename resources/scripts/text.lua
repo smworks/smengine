@@ -8,7 +8,7 @@ end
 function start()
 	print("Called start()")
 	
-	helloWorldLabel = Label.new("helloWorldLabel")
+	helloWorldLabel = Text.new("helloWorldLabel")
 	helloWorldLabel:setText("Hello world")
 	helloWorldLabel:setShader(Shader.new("surface_bckg_color"))
 	

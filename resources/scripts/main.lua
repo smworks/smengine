@@ -2,18 +2,21 @@ function eventResponse(response)
 end
 
 function eventGUI(node, eventType)
-	loadScene(node:getName() .. ".lua")
-	print("Loading script: " .. node:getName())
+	if (node:getName() ~= "some text") then
+		loadScene(node:getName() .. ".lua")
+		print("Loading script: " .. node:getName())
+	end	
 end
 
 function start()
 	print("Called start()")
 	input = getInput()
     print("Screen width in lua: " .. getScreenWidth() .. ", height: " .. getScreenHeight())
+	
 	textButton = Button.new("second")
 	textButton:setText("Models")
-    --textButton:setBackground(Texture.new("tree_1.png"))
-	textButton:setBackground("#99ff9955")
+    textButton:setBackground(Texture.new("tree_1.png"))
+	--textButton:setBackground("#99ff9955")
 	textButton:setBackgroundSelected("#00FF00FF")
 	textButton:setColor("#ff00ff")
 	textButton:setWidth(getScreenWidth())
@@ -21,8 +24,16 @@ function start()
 	textButton:setPosY(200)
 	textButton:setHeight(buttonHeight)
     textButton:setFontSize(buttonHeight * 0.6)
+
+	randomText = Text.new("some text")
+	randomText:setText("Hello")
+	randomText:setWidth(300)
+	randomText:setHeight(300)
+	randomText:setPosX(400)
+	randomText:setPosY(100)
+	randomText:setShader(Shader.new("wallpaper_clouds_2"))
     
-    fpsCounter = Button.new("fpsCounter")
+    fpsCounter = Button.new("text")
     fpsCounter:setColor("#FFFF00FF")
     fpsCounter:setBackground("#33333333")
 	fpsCounter:setPosX(10)
@@ -31,7 +42,7 @@ function start()
     fpsCounter:setFontSize(14)
     fpsCount = 0
     fpsTime = 0
-    
+	
     texture = Texture.new("smworks.png")
     sprite = Sprite.new("Sprite name")
     sprite:setWidth(200);

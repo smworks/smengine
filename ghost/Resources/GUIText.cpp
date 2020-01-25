@@ -16,7 +16,9 @@ GUIText::GUIText(ServiceLocator* services) :
 	vertexCount(0),
 	textWidth(0.0f),
 	textHeight(0.0f)
-{}
+{
+	setDiffuse(Color(0.0, 0.0, 0.0));
+}
 
 GUIText::~GUIText() {
 	getGraphicsManager()->unsetVertexBuffer(vbo);

@@ -295,19 +295,22 @@ void GraphicsManager::renderGuiBackground(GUIText* text, Node* node) {
 
 	auto posX = node->getPos().getX();
 	auto posY = node->getPos().getY();
-	Matrix::translate(matPos, posX, posY, 0.0);
+	Matrix::translate(matPos, posX, posY, node->getPos().getZ());
 	Matrix::scale(matScale, node->getScale().getX(), node->getScale().getY(), 1.0);
 	Matrix::multiply(matPos, matScale, matPosScale);
 	Matrix::multiply(camera->getProjection2D(), matPosScale, matProjPosScale);
 
 	prepareShader(shader, node, matProjPosScale);
-	int texture = glGetUniformLocation(shader->getId(), "texture_0");
+	int hTextures[8];
+	bindTextures(shader, hTextures);
+	//int texture = glGetUniformLocation(shader->getId(), "texture_0");
+	hTextures[0] = glGetUniformLocation(shader->getId(), SHADER_MAIN_TEXTURE);
 	shader->setVector4(Shader::FOREGROUND, text->getDiffuse().toArray());
 	shader->setVector4(Shader::BACKGROUND, text->getAmbient().toArray());
 	shader->setVector3(Shader::AMBIENT, text->getAmbient().toArray());
-	bindTexture(services->getTextureAtlas()->getId(Texture::MONO));
-	if (texture != -1) {
-		glUniform1i(texture, 0);
+	if (hTextures[0] != -1) {
+		bindTexture(text->getTexture());
+		glUniform1i(hTextures[0], 0);
 	}
 	auto posHandle = shader->getHandle(Shader::POS);
 	glEnableVertexAttribArray(posHandle);
@@ -315,7 +318,6 @@ void GraphicsManager::renderGuiBackground(GUIText* text, Node* node) {
 	if (uvHandler != -1) {
 		glEnableVertexAttribArray(uvHandler);
 	}
-
 	
 	bindBuffer(text->getCBO());
 	glVertexAttribPointer(shader->getHandle(Shader::POS), 3, GL_FLOAT, GL_FALSE,
@@ -359,7 +361,7 @@ void GraphicsManager::renderGuiText(Node* node)
 		0;
 	auto posX = int(node->getPos().getX() + posXOffset);
 	auto posY = int(node->getPos().getY() + posYOffset + text->getTextHeight());
-	Matrix::translate(matPosScale, posX, posY, 0.0);
+	Matrix::translate(matPosScale, posX, posY, node->getPos().getZ());
 	Matrix::multiply(camera->getProjection2D(), matPosScale, matProjPosScale);
 	textShader->setMatrix4(Shader::WVP, matProjPosScale);
 	bindBuffer(text->getTextVBO());

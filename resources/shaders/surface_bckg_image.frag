@@ -4,6 +4,6 @@ uniform float uTransparency;
 
 void main(void) {
 	vec4 col = texture2D(mainTexture, varTexCoords);
-	col.a = uTransparency * col.a;
+	//col.a = uTransparency * col.a;
 	gl_FragColor = col;
 }

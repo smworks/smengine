@@ -515,6 +515,10 @@ int nodeSetShader(lua_State* L) {
 		Sprite* spr = static_cast<Sprite*>(resource);
 		spr->setShader(shader);
 	}
+	else if (resource->getType() == Resource::GUI_SURFACE) {
+		GUISurface* surf = static_cast<GUISurface*>(resource);
+		surf->setShader(shader);
+	}
 	SM_POP_ARGS(L, SM_GET_ARGUMENT_COUNT(L));
 	return 0;
 }
