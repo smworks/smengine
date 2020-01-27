@@ -29,6 +29,7 @@
 #include "../dependencies/includes/bullet/BulletCollision/Gimpact/btGImpactShape.h"
 #include "../dependencies/includes/bullet/BulletCollision/Gimpact/btGImpactCollisionAlgorithm.h"
 #include "../dependencies/includes/bullet/BulletCollision/CollisionShapes/btHeightfieldTerrainShape.h"
+#include "../dependencies/includes/bullet/BulletCollision/CollisionDispatch/btDefaultCollisionConfiguration.h"
 
 DebugDraw::DebugDraw(GraphicsManager* gm) : gm_(gm), debugMode_(0) {}
 

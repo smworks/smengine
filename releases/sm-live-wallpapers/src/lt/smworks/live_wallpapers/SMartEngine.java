@@ -1,14 +1,12 @@
 package lt.smworks.live_wallpapers;
 
-import java.util.List;
-
 import android.annotation.SuppressLint;
-import android.app.Activity;
 import android.hardware.Sensor;
 import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
 import android.hardware.SensorManager;
 import android.os.Bundle;
+import androidx.appcompat.app.AppCompatActivity;
 import android.util.Log;
 import android.view.Display;
 import android.view.MotionEvent;
@@ -16,9 +14,11 @@ import android.view.View;
 import android.view.View.OnTouchListener;
 import android.view.WindowManager;
 
+import java.util.List;
+
 
 @SuppressLint("ClickableViewAccessibility")
-public class SMartEngine extends Activity implements OnTouchListener, SensorEventListener {
+public class SMartEngine extends AppCompatActivity implements OnTouchListener, SensorEventListener {
 
 	public static final String TAG = "SMart Engine";
     private OpenGLSurface openGLSurface = null;

@@ -4,8 +4,8 @@
  *  Created on: 2013.03.31
  *      Author: Martynas Šustavičius
  */
-#ifndef WINDOWSSOUNDMANAGER_H_
-#define WINDOWSSOUNDMANAGER_H_
+#ifndef ANDROIDSOUNDMANAGER_H_
+#define ANDROIDSOUNDMANAGER_H_
 
 #include "../SoundManager.h"
 
@@ -20,7 +20,6 @@ public:
 	void update() {}
 };
 #else
-
 #include "../Ghost.h"
 #include "../../Resources/Sound.h"
 #include "../../../dependencies/includes/fmod/android/fmod.hpp"
@@ -28,6 +27,16 @@ public:
 
 #include <vector>
 #include <algorithm>
+
+class Martynas : public SoundManager {
+public:
+    Martynas();
+    ~Martynas();
+    	void reset() {}
+    	void play(Sound* sound) {}
+    	void play(string name, bool repeat) {}
+    	void update() {}
+};
 
 class AndroidSoundManager : public SoundManager {
 public:

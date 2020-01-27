@@ -5,10 +5,8 @@
  *      Author: Martynas Šustavičius
  */
 
-#ifdef ENABLE_SOUND
 #include "AndroidSoundManager.h"
-#include "../../Resources/Sound.h"
-
+#ifdef ENABLE_SOUND
 AndroidSoundManager::AndroidSoundManager() :
 	soundSystem_(0),
 	soundChannel_(0),

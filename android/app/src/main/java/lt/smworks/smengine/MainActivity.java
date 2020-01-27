@@ -5,14 +5,13 @@ import android.hardware.Sensor;
 import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
 import android.hardware.SensorManager;
-import android.support.v7.app.AppCompatActivity;
+import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Display;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.WindowManager;
-import android.widget.TextView;
 
 import java.util.List;
 
@@ -21,16 +20,6 @@ import static android.os.Environment.getExternalStorageDirectory;
 public class MainActivity extends AppCompatActivity implements View.OnTouchListener, SensorEventListener {
 
     public static final String TAG = "SMEngine";
-
-//    @Override
-//    protected void onCreate(Bundle savedInstanceState) {
-//        super.onCreate(savedInstanceState);
-//        setContentView(R.layout.activity_main);
-//
-//        // Example of a call to a native method
-//        TextView tv = (TextView) findViewById(R.id.sample_text);
-//        tv.setText("aksldjf");//stringFromJNI());
-//    }
 
     private OpenGLSurface openGLSurface = null;
     private JNI jni = null;

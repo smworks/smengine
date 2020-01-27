@@ -7,10 +7,23 @@ file(GLOB files
     "../../ghost/*.cpp"
     "../../ghost/Resources/*.cpp"
     "../../ghost/Network/*.cpp"
+    "../../ghost/Extensions/*.cpp"
     "../../ghost/Multiplatform/*.cpp"
     "../../ghost/Multiplatform/Android/*.cpp"
     "../../dependencies/includes/sqlite/sqlite3.c"
+    "../../dependencies/includes/fmod/android/*.hpp"
+    "../../dependencies/includes/fmod/android/*.h"
     "../../dependencies/includes/freetype/*.c"
+    "../../dependencies/includes/bullet/BulletDynamics/Vehicle/*.cpp"
+    "../../dependencies/includes/bullet/BulletDynamics/ConstraintSolver/*.cpp"
+    "../../dependencies/includes/bullet/BulletDynamics/Dynamics/*.cpp"
+    "../../dependencies/includes/bullet/BulletCollision/CollisionDispatch/*.cpp"
+    "../../dependencies/includes/bullet/BulletCollision/CollisionShapes/*.cpp"
+    "../../dependencies/includes/bullet/BulletCollision/NarrowPhaseCollision/*.cpp"
+    "../../dependencies/includes/bullet/BulletCollision/Gimpact/*.cpp"
+    "../../dependencies/includes/bullet/BulletCollision/BroadphaseCollision/*.cpp"
+    "../../dependencies/includes/bullet/BulletSoftBody/*.cpp"
+    "../../dependencies/includes/bullet/LinearMath/*.cpp"
 )
 
 #add_library(fmod SHARED IMPORTED)

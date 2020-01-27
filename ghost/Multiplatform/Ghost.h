@@ -229,6 +229,11 @@ typedef short INT16;
 
     #include <android/asset_manager.h>
     #include <android/log.h>
+    //#include <sys/socket.h>
+    #include <netinet/in.h>
+    #include <netdb.h>
+    #include <arpa/inet.h>
+    #include <unistd.h>
     #include <jni.h>
     #include <GLES2/gl2.h>
     #include <GLES2/gl2ext.h>
