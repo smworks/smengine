@@ -1307,7 +1307,7 @@ int newGUIText(lua_State* L) {
 	ASSERT(SM_IS_STRING(L, 0), "First argument for GUIText must be string type.");
 	string name = SM_GET_STRING(L, 0);
 	ASSERT(dynamic_cast<GUIText*>(SM_GET_RM()->get(Resource::GUI_SURFACE, name)) == 0,
-		"GUISurface object with this name already exists.");
+		"GUISurface object with this name (%s) already exists.", name.c_str());
 	GUIText* text = NEW GUIText(SM_GET_SL());
 	if (argc == 3) {
 		ASSERT(SM_IS_NUMBER(L, 1) && SM_IS_NUMBER(L, 2),
